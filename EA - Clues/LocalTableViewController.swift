@@ -1,0 +1,339 @@
+//
+//  Alt1LocalTableViewController.swift
+//  EA - Clues
+//
+//  Created by James Birtwell on 04/02/2016.
+//  Copyright © 2016 James Birtwell. All rights reserved.
+//
+
+import UIKit
+import Parse
+import CoreLocation
+import FBSDKCoreKit
+
+
+class LocalTableViewController: UITableViewController, CLLocationManagerDelegate{
+    
+    
+    let firstLaunchKey = "firstLaunch"
+    let howToVC = "HowToVC"
+    let liveAppventures = "liveAppventures"
+    let LocalAppventures = "LocalAppventures"
+    
+    struct StoryboardNames {
+        static let TextCellID = "TextCell"
+        static let startupLogin = "startupLogin"
+    }
+    
+    let locationManager = CLLocationManager()
+    var localAppventures = [Appventure] ()
+    var publicAppventures = [Appventure] ()
+    var friendsAppventures = [Appventure] ()
+    var searchController = UISearchController()
+    
+    @IBOutlet weak var localPublicControl: UISegmentedControl!
+    
+    //Don't neeed
+    var lastLocation: CLLocationCoordinate2D?
+    var filter = Filter()
+    var refreshing = false
+    
+    @IBOutlet weak var refreshSpinner: UIRefreshControl!
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        print("\(CLLocationManager.authorizationStatus())")
+        
+        //MARK: LocationManager
+        self.locationManager.delegate = self
+        self.locationManager.requestWhenInUseAuthorization()
+//        self.locationManager.requestAlwaysAuthorization()
+        
+
+        //Notifications
+        let notificationCenter = NSNotificationCenter.defaultCenter()
+        notificationCenter.addObserver(self, selector: Selector("beginRefresh"), name: User.userInitCompleteNotification, object: nil)
+
+//        notificationCenter.addObserver(self, selector: #selector(loadAppventures), name: User.userInitCompleteNotification, object: nil)
+//        notificationCenter.addObserver(self, selector: #selector(beginRefresh), name: User.userLoggedOutNotification, object: nil)
+        notificationCenter.addObserver(self, selector: Selector("beginRefresh"), name: User.userLoggedOutNotification, object: nil)
+
+        notificationCenter.addObserver(self, selector: Selector("beginRefresh"), name: skipLoginNotification, object: nil)
+
+//        notificationCenter.addObserver(self, selector: #selector(beginRefresh), name: skipLoginNotification, object: nil)
+
+        
+        if !User.checkLogin(true, vc: self) {
+            self.performSegueWithIdentifier(StoryboardNames.startupLogin, sender: nil)
+        }
+        
+        //MARK: TableViewLoad
+        
+        tableView.estimatedRowHeight = tableView.rowHeight
+        tableView.rowHeight = UITableViewAutomaticDimension
+        
+        tableView.dataSource = self
+        tableView.delegate = self
+
+    }
+    
+    
+    func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
+        locationManager.requestLocation()
+    }
+    
+    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        lastLocation = locations.first?.coordinate
+        print(lastLocation)
+        if refreshing == false {
+            loadAppventures()
+            refreshing = true
+        }
+    }
+    
+    func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
+        publicAppventuresMessage = "Update location settings to get adventures in your area."
+        let london = CLLocationCoordinate2D(latitude: 51.5072, longitude: 0.1275)
+        if lastLocation == nil {lastLocation = london}
+
+    }
+    
+    func beginRefresh() {
+        self.refreshSpinner.beginRefreshing()
+        self.refeshTable(refreshSpinner)
+    }
+    
+    
+    func loadLiveAdventures() {
+        if let location = lastLocation {
+            Appventure.loadLiveAdventures(location, handler: self, handlerCase: liveAppventures)            
+        }
+    }
+    
+    func loadUserAdventures() {
+        if let user = User.user {
+            Appventure.loadUserAppventure(user.pfObject, handler: self, handlerCase: LocalAppventures)
+            FriendsAdventures.fetchFriendAdventures({ (friendsAdventures) in
+                self.friendsAppventures = friendsAdventures
+                self.tableView.reloadData()
+            })
+            
+        }
+    }
+    
+    func loadAppventures() {
+        ratingsReturned = 0
+        self.loadLiveAdventures()
+        self.loadUserAdventures()
+    }
+
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+    
+    //MARK: Actions
+    
+    @IBAction func refeshTable(sender: UIRefreshControl) {
+        self.localAppventures.removeAll()
+        self.publicAppventures.removeAll()
+        self.friendsAppventures.removeAll()
+        self.tableView.reloadData()
+        locationManager.requestLocation()
+    }
+    
+    @IBAction func localPublicChange(sender: UISegmentedControl) {
+        tableView.reloadData()
+    }
+    
+    //MARK: Navigation
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        //segue to appventure details
+        if segue.identifier == "Alt1" {
+            if let indexPath = sender as? NSIndexPath {
+                if let aastvc = segue.destinationViewController as? AppventureStartViewController {
+                    switch localPublicControl.selectedSegmentIndex {
+                    case 0:
+                        aastvc.appventure = localAppventures[indexPath.row]
+                    case 1:
+                        aastvc.appventure = publicAppventures[indexPath.row]
+                    case 2:
+                        aastvc.appventure = friendsAppventures[indexPath.row]
+                    default:
+                        break
+                    }
+                }
+            }
+        }
+        if segue.identifier == StoryboardNames.startupLogin {
+            if let lvc = segue.destinationViewController as? LoginViewController {
+                lvc.delegate = self
+            }
+        }
+    }
+    
+    func checkFirstLaunch() {
+        print("checking")
+        let defaults = NSUserDefaults.standardUserDefaults()
+        print(defaults.boolForKey(firstLaunchKey))
+        if defaults.boolForKey(firstLaunchKey) == false {
+            let storyBoard = UIStoryboard(name: "LaunchAppventure", bundle:nil)
+            if let htvc = storyBoard.instantiateViewControllerWithIdentifier(howToVC) as? HowToViewController {
+                self.presentViewController(htvc, animated: true, completion: nil)
+            }
+        }
+        defaults.setBool(false, forKey: firstLaunchKey)
+    }
+
+    //MARK: Table functions
+    var publicAppventuresMessage = "There are no adventures available on our servers at the moment."
+    var friendsAppventuresMessage = "There are no adventures that your friends have shared with you."
+
+    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        switch localPublicControl.selectedSegmentIndex {
+        case 0:
+            if self.localAppventures.count > 0 {
+                self.tableView.separatorStyle = UITableViewCellSeparatorStyle.SingleLine
+                self.tableView.backgroundView = UIView()
+                return 1
+            } else {
+                if User.user == nil {
+                    let message = "You need to sign in to create your own adventures."
+                    HelperFunctions.noTableDataMessage(tableView, message: message)
+                } else {
+                    let message = "Go to the maker tab to create your own adventures."
+                    HelperFunctions.noTableDataMessage(tableView, message: message)
+                }
+           
+            }
+            return 0
+        case 1:
+            if self.publicAppventures.count > 0 {
+                self.tableView.separatorStyle = UITableViewCellSeparatorStyle.SingleLine
+                self.tableView.backgroundView = UIView()
+                return 1
+            } else {
+                HelperFunctions.noTableDataMessage(tableView, message: publicAppventuresMessage)
+            }
+            return 0
+        case 2:
+            if self.friendsAppventures.count > 0 {
+                self.tableView.separatorStyle = UITableViewCellSeparatorStyle.SingleLine
+                self.tableView.backgroundView = UIView()
+                return 1
+            } else {
+                HelperFunctions.noTableDataMessage(tableView, message: friendsAppventuresMessage)
+            }
+            return 0
+        default:
+            break
+        }
+        return 0
+    }
+    
+    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        var rows = 0
+        switch localPublicControl.selectedSegmentIndex {
+        case 0:
+           rows = localAppventures.count
+        case 1:
+            rows = publicAppventures.count
+        case 2:
+            rows = friendsAppventures.count
+        default:
+            break
+        }
+        return rows
+    }
+    
+    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCellWithIdentifier(StoryboardNames.TextCellID, forIndexPath: indexPath) as! LocalAppventureTableViewCell
+        let row = indexPath.row
+        switch localPublicControl.selectedSegmentIndex {
+        case 0:
+            cell.appventure = localAppventures[row]
+        case 1:
+            cell.appventure = publicAppventures[row]
+        case 2:
+            cell.appventure = friendsAppventures[row]
+        default:
+            break
+        }
+        return cell
+    }
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        performSegueWithIdentifier("Alt1", sender: indexPath)
+    }
+    
+}
+
+extension LocalTableViewController : ParseQueryHandler {
+    
+    func getRatings() {
+        
+    }
+    
+    func handleQueryResults(objects: [PFObject]?, handlerCase: String?) {
+        if let isPFArray = objects as [PFObject]! {
+            for object in isPFArray {
+                let appventure = Appventure(object: object)
+                let appventureLocation = CLLocation(latitude: appventure.coordinate!.latitude, longitude: appventure.coordinate!.longitude)
+//                if let gotLocation = lastLocation as CLLocation! {
+//                    appventure.distanceToSearch = gotLocation.distanceFromLocation(appventureLocation)
+//                }
+                
+                if let handle = handlerCase {
+                    switch handle {
+                    case liveAppventures:
+                        if appventure.liveStatus == .live {
+                            self.publicAppventures.append(appventure)
+                            AppventureRating.loadRating(appventure, handler: self)
+                        }
+                    case LocalAppventures:
+                        if appventure.liveStatus == .local {
+                            if appventure.userID == User.user?.pfObject {
+                                self.localAppventures.append(appventure)
+                                AppventureRating.loadRating(appventure, handler: self)
+                            }
+                        }
+                        if appventure.liveStatus == .waitingForApproval {
+                            if appventure.userID == User.user?.pfObject {
+                                self.localAppventures.append(appventure)
+                                AppventureRating.loadRating(appventure, handler: self)
+                            }
+                        }
+                    default:
+                        break
+                    }
+                }
+                
+            }
+        
+        }
+        
+    }
+}
+
+var ratingsReturned = 0
+
+extension LocalTableViewController : AppventureRatingDelegate {
+    func ratingLoaded() {
+        ratingsReturned += 1
+        if ratingsReturned == (self.localAppventures.count + self.publicAppventures.count) {
+            dispatch_async(dispatch_get_main_queue()) { () -> Void in
+                self.tableView.reloadData()
+                self.refreshSpinner.endRefreshing()
+                self.refreshing = false
+            }
+        }
+    }
+}
+
+extension LocalTableViewController : LoginViewControllerDelegate {
+    func skippedLogin() {
+         loadAppventures()
+    }
+}
+

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>SchemeUserState</key>
+	<dict>
+		<key>EA - Clues.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>0</integer>
+		</dict>
+		<key>EA Clues Client.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>8</integer>
+		</dict>
+	</dict>
+	<key>SuppressBuildableAutocreation</key>
+	<dict>
+		<key>6600553E1C5F44B60094F0A1</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>660055531C5F44B60094F0A1</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>66D7CD5A1C5B3F4E00ACB8E3</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>66D7CD6E1C5B3F4E00ACB8E3</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+	</dict>
+</dict>
+</plist>

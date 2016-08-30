@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AnswerHintViewController" customModule="EA___Clues" customModuleProvider="target">
+            <connections>
+                <outlet property="answerTextField" destination="zmW-dV-Z0p" id="z1R-Qf-t9x"/>
+                <outlet property="hintButton" destination="DkY-fa-owh" id="SCT-dL-7eU"/>
+                <outlet property="remainingLetterLabel" destination="ZKe-iB-YHI" id="WoO-N0-rPE"/>
+                <outlet property="submitButton" destination="hV2-PC-h5W" id="UI2-Vn-maf"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+                <outlet property="warningLabel" destination="DFa-Md-Vd5" id="zRr-ZU-lPW"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="answer" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="zmW-dV-Z0p">
+                    <rect key="frame" x="8" y="476" width="584" height="30"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <textInputTraits key="textInputTraits"/>
+                    <connections>
+                        <outlet property="delegate" destination="-1" id="7uS-tl-0p2"/>
+                    </connections>
+                </textField>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pay attention to spelling, use the format hint with no penalty." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fun-mH-9vs">
+                    <rect key="frame" x="8" y="514" width="510" height="17"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hV2-PC-h5W">
+                    <rect key="frame" x="526" y="514" width="66" height="29"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="66" id="iia-Lt-JPi"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="Palatino-Roman" family="Palatino" pointSize="15"/>
+                    <state key="normal" title="Submit">
+                        <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    </state>
+                    <connections>
+                        <action selector="submit:" destination="-1" eventType="touchUpInside" id="QZM-S7-8xi"/>
+                    </connections>
+                </button>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="warning label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DFa-Md-Vd5">
+                    <rect key="frame" x="8" y="539" width="86" height="17"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <color key="textColor" red="1" green="0.13277773384821012" blue="0.19708860749256452" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZKe-iB-YHI">
+                    <rect key="frame" x="562" y="480" width="21" height="21"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DkY-fa-owh">
+                    <rect key="frame" x="526" y="551" width="66" height="29"/>
+                    <constraints>
+                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="66" id="02A-mz-1mg"/>
+                        <constraint firstAttribute="width" constant="66" id="7Q0-iz-sol"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="Palatino-Roman" family="Palatino" pointSize="15"/>
+                    <state key="normal" title="Hint">
+                        <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    </state>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="02A-mz-1mg"/>
+                            <exclude reference="7Q0-iz-sol"/>
+                        </mask>
+                    </variation>
+                    <connections>
+                        <action selector="giveHint:" destination="-1" eventType="touchUpInside" id="gkm-mN-vwo"/>
+                    </connections>
+                </button>
+            </subviews>
+            <constraints>
+                <constraint firstItem="DFa-Md-Vd5" firstAttribute="leading" secondItem="Fun-mH-9vs" secondAttribute="leading" id="2Sy-2H-fwG"/>
+                <constraint firstItem="ZKe-iB-YHI" firstAttribute="leading" secondItem="zmW-dV-Z0p" secondAttribute="trailing" constant="-30" id="8Gn-Y7-j1f"/>
+                <constraint firstItem="DkY-fa-owh" firstAttribute="trailing" secondItem="hV2-PC-h5W" secondAttribute="trailing" id="ECM-Uv-vEi"/>
+                <constraint firstItem="Fun-mH-9vs" firstAttribute="top" secondItem="zmW-dV-Z0p" secondAttribute="bottom" constant="8" symbolic="YES" id="Eeg-LC-stv"/>
+                <constraint firstAttribute="trailing" secondItem="hV2-PC-h5W" secondAttribute="trailing" constant="8" id="F2U-Po-OPM"/>
+                <constraint firstItem="hV2-PC-h5W" firstAttribute="top" secondItem="zmW-dV-Z0p" secondAttribute="bottom" constant="8" id="Iyz-NR-9my"/>
+                <constraint firstItem="Fun-mH-9vs" firstAttribute="leading" secondItem="zmW-dV-Z0p" secondAttribute="leading" id="UVz-nv-uoQ"/>
+                <constraint firstItem="hV2-PC-h5W" firstAttribute="leading" secondItem="Fun-mH-9vs" secondAttribute="trailing" constant="8" symbolic="YES" id="Y31-ix-1d7"/>
+                <constraint firstItem="DFa-Md-Vd5" firstAttribute="top" secondItem="Fun-mH-9vs" secondAttribute="bottom" constant="8" symbolic="YES" id="Yrc-MQ-2kf"/>
+                <constraint firstItem="DkY-fa-owh" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="DFa-Md-Vd5" secondAttribute="trailing" constant="8" symbolic="YES" id="egX-4s-DUr"/>
+                <constraint firstItem="zmW-dV-Z0p" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leadingMargin" id="elX-ec-d64"/>
+                <constraint firstAttribute="bottom" secondItem="DkY-fa-owh" secondAttribute="bottom" constant="20" symbolic="YES" id="ff1-Hh-muM"/>
+                <constraint firstItem="DkY-fa-owh" firstAttribute="leading" secondItem="hV2-PC-h5W" secondAttribute="leading" id="kNF-SJ-TqS"/>
+                <constraint firstAttribute="trailingMargin" secondItem="zmW-dV-Z0p" secondAttribute="trailing" id="msw-OB-QI3"/>
+                <constraint firstItem="DkY-fa-owh" firstAttribute="top" secondItem="hV2-PC-h5W" secondAttribute="bottom" constant="8" symbolic="YES" id="oNj-lZ-7OT"/>
+                <constraint firstItem="ZKe-iB-YHI" firstAttribute="centerY" secondItem="zmW-dV-Z0p" secondAttribute="centerY" id="yI1-8j-Fdj"/>
+            </constraints>
+        </view>
+    </objects>
+</document>

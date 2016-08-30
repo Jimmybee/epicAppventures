@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="gnR-MF-dEl">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+    </dependencies>
+    <scenes>
+        <!--Login View Controller-->
+        <scene sceneID="XzI-t3-U58">
+            <objects>
+                <viewController storyboardIdentifier="Login View Controller" id="gnR-MF-dEl" customClass="LoginViewController" customModule="EA___Clues" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="deV-7M-r7l"/>
+                        <viewControllerLayoutGuide type="bottom" id="Vut-cB-ZpN"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="cSV-xO-Z83">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="i8v-Nd-Won">
+                                <rect key="frame" x="40" y="28" width="334" height="680"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5JB-aM-8Sl">
+                                        <rect key="frame" x="0.0" y="0.0" width="334" height="74"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                    </view>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="MapC" translatesAutoresizingMaskIntoConstraints="NO" id="ngK-hi-xjJ">
+                                        <rect key="frame" x="96" y="117" width="142" height="142"/>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Appventures" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xPU-zv-ij4">
+                                        <rect key="frame" x="69" y="301" width="196" height="42"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="35"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="UVq-rJ-XSb">
+                                        <rect key="frame" x="0.0" y="386" width="334" height="294"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="By continuing you agree with our Terms of Service" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="H8S-ht-Kfs">
+                                                <rect key="frame" x="15" y="0.0" width="305" height="16"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nca-4g-CGg">
+                                                <rect key="frame" x="65" y="71" width="204" height="46"/>
+                                                <state key="normal" image="facebook-login-blue"/>
+                                                <connections>
+                                                    <action selector="facebookLogin:" destination="gnR-MF-dEl" eventType="touchUpInside" id="VO8-O9-aZY"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cJk-US-uew">
+                                                <rect key="frame" x="84" y="173" width="166" height="34"/>
+                                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.88173036317567566" colorSpace="calibratedRGB"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="104" id="WpA-8F-DVE"/>
+                                                </constraints>
+                                                <state key="normal" title="Skip Sign Up">
+                                                    <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                                </state>
+                                                <variation key="default">
+                                                    <mask key="constraints">
+                                                        <exclude reference="WpA-8F-DVE"/>
+                                                    </mask>
+                                                </variation>
+                                                <connections>
+                                                    <action selector="skipSignIn:" destination="gnR-MF-dEl" eventType="touchUpInside" id="JzL-tW-IZC"/>
+                                                </connections>
+                                            </button>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="We don't post anything to Facebook unless you decide to." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="44H-mz-peG">
+                                                <rect key="frame" x="0.0" y="262" width="334" height="32"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" red="0.15686274510000001" green="0.4941176471" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="i8v-Nd-Won" firstAttribute="width" secondItem="cSV-xO-Z83" secondAttribute="width" id="0MR-CI-LSK"/>
+                            <constraint firstItem="i8v-Nd-Won" firstAttribute="leading" secondItem="cSV-xO-Z83" secondAttribute="leadingMargin" constant="20" id="AUF-Ab-d1q"/>
+                            <constraint firstItem="Vut-cB-ZpN" firstAttribute="top" secondItem="i8v-Nd-Won" secondAttribute="bottom" priority="999" constant="8" symbolic="YES" id="Egb-Dc-zPu"/>
+                            <constraint firstItem="cJk-US-uew" firstAttribute="width" secondItem="cSV-xO-Z83" secondAttribute="width" multiplier="0.4" id="IDR-UF-pO4"/>
+                            <constraint firstItem="UVq-rJ-XSb" firstAttribute="height" secondItem="cSV-xO-Z83" secondAttribute="height" multiplier="0.4" id="UEy-jS-tbA"/>
+                            <constraint firstItem="5JB-aM-8Sl" firstAttribute="height" secondItem="cSV-xO-Z83" secondAttribute="height" multiplier="0.1" id="Wcl-We-FFH"/>
+                            <constraint firstItem="i8v-Nd-Won" firstAttribute="centerX" secondItem="cSV-xO-Z83" secondAttribute="centerX" id="Wuz-Xm-sQ4"/>
+                            <constraint firstItem="i8v-Nd-Won" firstAttribute="centerY" secondItem="cSV-xO-Z83" secondAttribute="centerY" id="cf6-Ks-bzj"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="i8v-Nd-Won" secondAttribute="trailing" constant="20" id="fI8-r0-JNk"/>
+                            <constraint firstItem="i8v-Nd-Won" firstAttribute="height" secondItem="cSV-xO-Z83" secondAttribute="height" id="tI4-3V-9hc"/>
+                            <constraint firstItem="i8v-Nd-Won" firstAttribute="top" secondItem="deV-7M-r7l" secondAttribute="bottom" constant="8" symbolic="YES" id="v7v-nX-YJ4"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="0MR-CI-LSK"/>
+                                <exclude reference="Wuz-Xm-sQ4"/>
+                                <exclude reference="tI4-3V-9hc"/>
+                            </mask>
+                        </variation>
+                    </view>
+                    <navigationItem key="navigationItem" id="1YH-Bg-Hbb"/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="d6g-3p-Jed" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2077" y="1644"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="MapC" width="142" height="142"/>
+        <image name="facebook-login-blue" width="204" height="46"/>
+    </resources>
+</document>
