@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9532" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CheckInHintViewController" customModule="Appventures" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CheckInHintViewController" customModule="EA___Clues" customModuleProvider="target">
             <connections>
                 <outlet property="checkIn" destination="uxN-mN-uVP" id="8tl-sb-Glr"/>
                 <outlet property="hintButton" destination="xdB-77-iGL" id="aHl-92-2mP"/>
@@ -18,56 +19,83 @@
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uxN-mN-uVP">
-                    <rect key="frame" x="56" y="526" width="155" height="29"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="155" id="cnR-os-4Oo"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" name="Palatino-Roman" family="Palatino" pointSize="15"/>
-                    <state key="normal" title="Check In At Location">
-                        <color key="titleColor" red="1" green="0.96197258279999998" blue="0.91781411079999997" alpha="1" colorSpace="calibratedRGB"/>
-                    </state>
-                    <connections>
-                        <action selector="checkIn:" destination="-1" eventType="touchUpInside" id="oi5-zc-uNU"/>
-                    </connections>
-                </button>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="locationPinA1" translatesAutoresizingMaskIntoConstraints="NO" id="YMP-HR-2gc">
-                    <rect key="frame" x="20" y="527" width="28" height="28"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="28" id="6tc-4Z-yGr"/>
-                        <constraint firstAttribute="height" constant="28" id="f8j-Ua-swj"/>
-                    </constraints>
-                </imageView>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="warning label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iSB-Ho-EOV">
-                    <rect key="frame" x="20" y="563" width="560" height="17"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                    <color key="textColor" red="1" green="0.13277773379999999" blue="0.19708860750000001" alpha="1" colorSpace="calibratedRGB"/>
-                    <nil key="highlightedColor"/>
-                </label>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xdB-77-iGL">
-                    <rect key="frame" x="529" y="525" width="63" height="30"/>
+                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xdB-77-iGL" customClass="RoundedButton" customModule="EA___Clues" customModuleProvider="target">
+                    <rect key="frame" x="462" y="525" width="130" height="30"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="63" id="Qg2-2X-GhP"/>
                     </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="20"/>
                     <state key="normal" title="Hint">
                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                            <color key="value" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                            <real key="value" value="2"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                            <real key="value" value="17"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="Qg2-2X-GhP"/>
+                        </mask>
+                    </variation>
                     <connections>
                         <action selector="revealHint:" destination="-1" eventType="touchUpInside" id="Rry-c5-X2d"/>
                     </connections>
                 </button>
+                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uxN-mN-uVP" customClass="RoundedButton" customModule="EA___Clues" customModuleProvider="target">
+                    <rect key="frame" x="20" y="525" width="434" height="30"/>
+                    <color key="backgroundColor" red="0.53725490200000003" green="0.25490196079999999" blue="0.46274509800000002" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="30" id="ZoZ-MI-QG6"/>
+                        <constraint firstAttribute="width" constant="190" id="cnR-os-4Oo"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                    <inset key="imageEdgeInsets" minX="30" minY="3" maxX="180" maxY="3"/>
+                    <state key="normal" title="Check In At Location"/>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                            <real key="value" value="0.0"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                            <real key="value" value="17"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                            <color key="value" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="ZoZ-MI-QG6"/>
+                            <exclude reference="cnR-os-4Oo"/>
+                        </mask>
+                    </variation>
+                    <connections>
+                        <action selector="checkIn:" destination="-1" eventType="touchUpInside" id="oi5-zc-uNU"/>
+                    </connections>
+                </button>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="warning label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iSB-Ho-EOV">
+                    <rect key="frame" x="494" y="563" width="86" height="17"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <constraints>
                 <constraint firstItem="iSB-Ho-EOV" firstAttribute="top" secondItem="uxN-mN-uVP" secondAttribute="bottom" constant="8" symbolic="YES" id="0Hj-Oz-mH9"/>
-                <constraint firstItem="uxN-mN-uVP" firstAttribute="leading" secondItem="YMP-HR-2gc" secondAttribute="trailing" constant="8" id="2i2-l4-dpb"/>
-                <constraint firstItem="YMP-HR-2gc" firstAttribute="bottom" secondItem="uxN-mN-uVP" secondAttribute="bottom" id="A1P-Ua-aAI"/>
+                <constraint firstItem="xdB-77-iGL" firstAttribute="width" secondItem="uxN-mN-uVP" secondAttribute="width" multiplier="0.3" id="21K-YW-Af3"/>
+                <constraint firstItem="xdB-77-iGL" firstAttribute="leading" secondItem="uxN-mN-uVP" secondAttribute="trailing" constant="8" symbolic="YES" id="728-86-sVy"/>
                 <constraint firstItem="uxN-mN-uVP" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="EdA-wA-Z1v"/>
                 <constraint firstItem="iSB-Ho-EOV" firstAttribute="leading" secondItem="uxN-mN-uVP" secondAttribute="leading" id="GjC-6O-VRB"/>
-                <constraint firstItem="YMP-HR-2gc" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="20" symbolic="YES" id="J3W-iX-3gu"/>
                 <constraint firstAttribute="trailing" secondItem="iSB-Ho-EOV" secondAttribute="trailing" constant="20" symbolic="YES" id="L35-3O-fd1"/>
                 <constraint firstAttribute="trailing" secondItem="xdB-77-iGL" secondAttribute="trailing" constant="8" id="Uis-VN-wbD"/>
-                <constraint firstItem="iSB-Ho-EOV" firstAttribute="leading" secondItem="YMP-HR-2gc" secondAttribute="leading" id="Y1f-t5-I57"/>
                 <constraint firstItem="xdB-77-iGL" firstAttribute="bottom" secondItem="uxN-mN-uVP" secondAttribute="bottom" id="eXP-Qa-ATK"/>
+                <constraint firstItem="uxN-mN-uVP" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="20" symbolic="YES" id="mft-7g-SO7"/>
                 <constraint firstAttribute="bottom" secondItem="iSB-Ho-EOV" secondAttribute="bottom" constant="20" symbolic="YES" id="q2N-QK-A5h"/>
             </constraints>
             <variation key="default">
@@ -79,7 +107,4 @@
             <point key="canvasLocation" x="379" y="256"/>
         </view>
     </objects>
-    <resources>
-        <image name="locationPinA1" width="600" height="600"/>
-    </resources>
 </document>

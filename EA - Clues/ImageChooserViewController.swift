@@ -33,6 +33,11 @@ class ImageChooserViewController: UIViewController,UIImagePickerControllerDelega
     
     //MARK: IB Actions
     
+    @IBAction func changeImageTap(sender: AnyObject) {
+        print("tapped")
+        self.changeImage()
+        
+    }
     @IBAction func changeImage() {
         
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)

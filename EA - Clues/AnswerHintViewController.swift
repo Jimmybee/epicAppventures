@@ -25,10 +25,10 @@ class AnswerHintViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        submitButton.layer.borderWidth = 2.0
-        submitButton.layer.borderColor = UIColor.whiteColor().CGColor
-        hintButton.layer.borderWidth = 2.0
-        hintButton.layer.borderColor = UIColor.whiteColor().CGColor
+//        submitButton.layer.borderWidth = 2.0
+//        submitButton.layer.borderColor = UIColor.whiteColor().CGColor
+//        hintButton.layer.borderWidth = 2.0
+//        hintButton.layer.borderColor = UIColor.whiteColor().CGColor
         answerTextField.addTarget(self, action: Selector("textDidChange"), forControlEvents: UIControlEvents.EditingChanged)
 
 //        answerTextField.addTarget(self, action: #selector(AnswerHintViewController.textDidChange), forControlEvents: UIControlEvents.EditingChanged)
@@ -44,12 +44,14 @@ class AnswerHintViewController: UIViewController {
     }
 
     @IBAction func submit(_: AnyObject?) {
+//        print("submitted")
         var submission = answerTextField.text!
         submission = submission.stringByReplacingOccurrencesOfString(" ", withString: "").lowercaseString
         
         if answerTest.contains(submission) {
             if let pvc = self.parentViewController as? StepViewController{
                 pvc.stepComplete()
+                self.answerTextField.text = ""
             }
         } else {
             answerTextField.resignFirstResponder()
@@ -106,11 +108,11 @@ extension AnswerHintViewController : UITextFieldDelegate {
         return true
     }
     
-    func textFieldDidEndEditing(textField: UITextField) {
-        if textField == answerTextField {
-            submit(self)
-        }
-    }
+//    func textFieldDidEndEditing(textField: UITextField) {
+//        if textField == answerTextField {
+//            submit(self)
+//        }
+//    }
     
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         textField.resignFirstResponder()

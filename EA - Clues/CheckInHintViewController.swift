@@ -33,10 +33,10 @@ class CheckInHintViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        checkIn.layer.borderWidth = 2.0
-        checkIn.layer.borderColor = UIColor.whiteColor().CGColor
-        hintButton.layer.borderWidth = 2.0
-        hintButton.layer.borderColor = UIColor.whiteColor().CGColor
+//        checkIn.layer.borderWidth = 2.0
+//        checkIn.layer.borderColor = UIColor.whiteColor().CGColor
+//        hintButton.layer.borderWidth = 2.0
+//        hintButton.layer.borderColor = UIColor.whiteColor().CGColor
         // Do any additional setup after loading the view.
     }
     

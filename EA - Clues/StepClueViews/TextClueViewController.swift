@@ -10,9 +10,9 @@ import UIKit
 
 class TextClueViewController: UIViewController {
 
-    @IBOutlet weak var textClueLabe: UILabel!
     
     lazy var clueText : String = ""
+    @IBOutlet weak var clueTextView: UITextView!
    
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,8 +21,7 @@ class TextClueViewController: UIViewController {
     }
     
     func setup() {
-        textClueLabe.text = clueText
-
+        clueTextView.text = clueText    
     }
     
     

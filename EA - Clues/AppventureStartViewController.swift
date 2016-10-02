@@ -23,7 +23,7 @@ class AppventureStartViewController: UIViewController {
     var completedAppventures = [CompletedAppventure]()
     var reviews = [String]()
 
-    @IBOutlet weak var startAppventure: UIButton!
+//    @IBOutlet weak var startAppventure: UIButton!
     @IBOutlet weak var startButton: UIButton!
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var appventureTitle: UILabel!
@@ -42,18 +42,22 @@ class AppventureStartViewController: UIViewController {
     //MARK: Controller Lifecyele
     override func viewDidLoad() {
         updateUI()
-        startButton.enabled = false
-        startButton.alpha = 0.5
+//        startButton.enabled = false
+//        startButton.alpha = 0.5
        detailsSegmentControl.setTitleTextAttributes([NSFontAttributeName: UIFont(name: "Palatino", size: 15)!], forState: UIControlState.Normal) //, NSForegroundColorAttributeName:UIColor.whiteColor()
         detailsSegmentControl.selectedSegmentIndex = 0
         AppventureStep.loadSteps(appventure, vc: self)
         CompletedAppventure.loadAppventuresCompleted(appventure.PFObjectID!, handler: self)
         AppventureReviews.loadAppventuresReviews(appventure.PFObjectID!, handler: self)
-        
+        HelperFunctions.hideTabBar(self)
     }
+    
+   
     
     func updateUI () {
         
+        self.navigationItem.title = appventure.title
+//        self.navigationController?.navigationBarHidden = true
         self.appventureTitle.text = appventure.title
         descriptionLabel.text = appventure.subtitle!
         self.startingLocation.text = self.appventure.startingLocationName
@@ -63,8 +67,8 @@ class AppventureStartViewController: UIViewController {
         
         imageView.image = halfImage(appventure.image!)
         duration.text = appventure.duration
-        startButton.layer.borderWidth = 1.5
-        startButton.layer.borderColor = UIColor.whiteColor().CGColor
+//        startButton.layer.borderWidth = 1.5
+//        startButton.layer.borderColor = UIColor.whiteColor().CGColor
     }
     
     
@@ -132,11 +136,10 @@ extension AppventureStartViewController : ParseQueryHandler {
         case AppventureStep.appventureStepsHc:
             HelperFunctions.loadAllData(appventure)
             if appventure.appventureSteps.count == 0 {
-                startAppventure.enabled = false
+                startButton.enabled = false
             } else {
-                startAppventure.enabled = true
+                startButton.enabled = true
                 startButton.alpha = 1
-                
             }
         default:
             break

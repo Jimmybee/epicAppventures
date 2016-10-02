@@ -221,6 +221,44 @@ class HelperFunctions {
         tableView.backgroundView = messageLabel
         tableView.separatorStyle = UITableViewCellSeparatorStyle.None
     }
+    
+    //MARK: Tab functions
+    
+    class func unhideTabBar(vc: UIViewController){
+        if let mtvc = vc.tabBarController as? MainTabBarController {
+            if mtvc.stdFrame != nil {
+                if mtvc.tabBar.frame != mtvc.stdFrame {
+                    mtvc.tabBar.hidden = false
+
+                    UIView.animateWithDuration(0.3, animations: {
+                        mtvc.tabBar.frame = CGRectOffset(mtvc.stdFrame!, 0, 0)
+
+                        }, completion: { (complete) in
+                    })
+
+                }
+            }
+        }
+    }
+    
+    class func hideTabBar(vc: UIViewController){
+        if let mtvc = vc.tabBarController as? MainTabBarController {
+            if mtvc.stdFrame != nil {
+                if mtvc.tabBar.frame == mtvc.stdFrame {
+                    let height = mtvc.stdFrame?.size.height
+                    UIView.animateWithDuration(0.3, animations: {
+                        mtvc.tabBar.frame = CGRectOffset(mtvc.stdFrame!, 0, height!)
+                        mtvc.tabBar.hidden = true
+
+                        }, completion: { (complete) in
+                            
+                    })
+                }
+            }
+        }
+    }
+
+    
 }
 
 extension String {
@@ -230,8 +268,9 @@ extension String {
     
 }
 
-//ImageRotation.swift
 
+//MARK: View extensions
+//ImageRotation.swift
 import UIKit
 
 extension UIImage {
@@ -275,6 +314,18 @@ extension UIImage {
         return newImage
     }
 
+}
+
+//UIImage from view
+
+extension UIImage {
+    convenience init(view: UIView) {
+        UIGraphicsBeginImageContext(view.frame.size)
+        view.layer.renderInContext(UIGraphicsGetCurrentContext()!)
+        let image = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        self.init(CGImage: image.CGImage!)
+    }
 }
 
 //ScrollHolderClass

@@ -13,6 +13,7 @@ class EditTextClueViewController: UIViewController {
     var step = AppventureStep()
     
     @IBOutlet weak var reviewTextView: UITextView!
+    @IBOutlet weak var bottomConstraint: NSLayoutConstraint!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,6 +25,10 @@ class EditTextClueViewController: UIViewController {
         reviewTextView.layer.cornerRadius = 12
         reviewTextView.clipsToBounds = true
         reviewTextView.layer.borderColor = UIColor.blackColor().CGColor
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillShow:"), name:UIKeyboardWillShowNotification, object: nil);
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillHide:"), name:UIKeyboardWillHideNotification, object: nil);
+
 
     }
 
@@ -40,6 +45,22 @@ class EditTextClueViewController: UIViewController {
     
     @IBAction func cancel(sender: AnyObject) {
         self.navigationController?.popViewControllerAnimated(true)
+    }
+    
+    func keyboardWillShow(notification: NSNotification) {
+        let info = notification.userInfo!
+        let keyboardFrame: CGRect = (info[UIKeyboardFrameEndUserInfoKey] as! NSValue).CGRectValue()
+        
+        UIView.animateWithDuration(0.1, animations: { () -> Void in
+            self.bottomConstraint.constant = keyboardFrame.size.height + 20
+        })
+    }
+    
+    func keyboardWillHide(notification: NSNotification) {
+        UIView.animateWithDuration(0.1, animations: { () -> Void in
+            self.bottomConstraint.constant = 20
+
+        })
     }
     
   

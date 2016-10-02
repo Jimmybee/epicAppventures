@@ -75,9 +75,21 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
         
         tableView.dataSource = self
         tableView.delegate = self
+        
+
+        if let mtvc = self.tabBarController as? MainTabBarController {
+            mtvc.stdFrame  = self.tabBarController?.tabBar.frame
+
+        }
 
     }
     
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+         HelperFunctions.unhideTabBar(self)
+    }
+    
+
     
     func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
         locationManager.requestLocation()
@@ -101,6 +113,7 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
     
     func beginRefresh() {
         self.refreshSpinner.beginRefreshing()
+        self.tableView.userInteractionEnabled = false
         self.refeshTable(refreshSpinner)
     }
     
@@ -123,7 +136,6 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
     }
     
     func loadAppventures() {
-        ratingsReturned = 0
         self.loadLiveAdventures()
         self.loadUserAdventures()
     }
@@ -289,19 +301,16 @@ extension LocalTableViewController : ParseQueryHandler {
                     case liveAppventures:
                         if appventure.liveStatus == .live {
                             self.publicAppventures.append(appventure)
-                            AppventureRating.loadRating(appventure, handler: self)
                         }
                     case LocalAppventures:
                         if appventure.liveStatus == .local {
                             if appventure.userID == User.user?.pfObject {
                                 self.localAppventures.append(appventure)
-                                AppventureRating.loadRating(appventure, handler: self)
                             }
                         }
                         if appventure.liveStatus == .waitingForApproval {
                             if appventure.userID == User.user?.pfObject {
                                 self.localAppventures.append(appventure)
-                                AppventureRating.loadRating(appventure, handler: self)
                             }
                         }
                     default:
@@ -313,23 +322,14 @@ extension LocalTableViewController : ParseQueryHandler {
         
         }
         
+        self.tableView.reloadData()
+        self.tableView.userInteractionEnabled = true
+        self.refreshSpinner.endRefreshing()
+        self.refreshing = false
+        
     }
 }
 
-var ratingsReturned = 0
-
-extension LocalTableViewController : AppventureRatingDelegate {
-    func ratingLoaded() {
-        ratingsReturned += 1
-        if ratingsReturned == (self.localAppventures.count + self.publicAppventures.count) {
-            dispatch_async(dispatch_get_main_queue()) { () -> Void in
-                self.tableView.reloadData()
-                self.refreshSpinner.endRefreshing()
-                self.refreshing = false
-            }
-        }
-    }
-}
 
 extension LocalTableViewController : LoginViewControllerDelegate {
     func skippedLogin() {

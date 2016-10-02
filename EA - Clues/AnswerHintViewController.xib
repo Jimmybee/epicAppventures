@@ -4,6 +4,7 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AnswerHintViewController" customModule="EA___Clues" customModuleProvider="target">
@@ -29,47 +30,38 @@
                         <outlet property="delegate" destination="-1" id="7uS-tl-0p2"/>
                     </connections>
                 </textField>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pay attention to spelling, use the format hint with no penalty." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fun-mH-9vs">
-                    <rect key="frame" x="8" y="514" width="510" height="17"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                    <nil key="highlightedColor"/>
-                </label>
-                <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hV2-PC-h5W">
-                    <rect key="frame" x="526" y="514" width="66" height="29"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="66" id="iia-Lt-JPi"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" name="Palatino-Roman" family="Palatino" pointSize="15"/>
-                    <state key="normal" title="Submit">
-                        <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                    </state>
-                    <connections>
-                        <action selector="submit:" destination="-1" eventType="touchUpInside" id="QZM-S7-8xi"/>
-                    </connections>
-                </button>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="warning label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DFa-Md-Vd5">
-                    <rect key="frame" x="8" y="539" width="86" height="17"/>
+                    <rect key="frame" x="20" y="563" width="86" height="17"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                    <color key="textColor" red="1" green="0.13277773384821012" blue="0.19708860749256452" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZKe-iB-YHI">
-                    <rect key="frame" x="562" y="480" width="21" height="21"/>
+                    <rect key="frame" x="562" y="481" width="21" height="21"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DkY-fa-owh">
-                    <rect key="frame" x="526" y="551" width="66" height="29"/>
+                <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DkY-fa-owh" customClass="RoundedButton" customModule="EA___Clues" customModuleProvider="target">
+                    <rect key="frame" x="453" y="514" width="127" height="35"/>
                     <constraints>
                         <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="66" id="02A-mz-1mg"/>
                         <constraint firstAttribute="width" constant="66" id="7Q0-iz-sol"/>
                     </constraints>
-                    <fontDescription key="fontDescription" name="Palatino-Roman" family="Palatino" pointSize="15"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="20"/>
                     <state key="normal" title="Hint">
                         <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     </state>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                            <real key="value" value="17"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                            <real key="value" value="2"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                            <color key="value" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
                     <variation key="default">
                         <mask key="constraints">
                             <exclude reference="02A-mz-1mg"/>
@@ -80,25 +72,63 @@
                         <action selector="giveHint:" destination="-1" eventType="touchUpInside" id="gkm-mN-vwo"/>
                     </connections>
                 </button>
+                <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hV2-PC-h5W" customClass="RoundedButton" customModule="EA___Clues" customModuleProvider="target">
+                    <rect key="frame" x="20" y="514" width="425" height="36"/>
+                    <color key="backgroundColor" red="0.53725490200000003" green="0.25490196079999999" blue="0.46274509800000002" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="66" id="iia-Lt-JPi"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                    <state key="normal" title="Submit">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                            <real key="value" value="17"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                            <real key="value" value="0.0"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="iia-Lt-JPi"/>
+                        </mask>
+                    </variation>
+                    <connections>
+                        <action selector="submit:" destination="-1" eventType="touchUpInside" id="QZM-S7-8xi"/>
+                    </connections>
+                </button>
             </subviews>
             <constraints>
-                <constraint firstItem="DFa-Md-Vd5" firstAttribute="leading" secondItem="Fun-mH-9vs" secondAttribute="leading" id="2Sy-2H-fwG"/>
+                <constraint firstItem="DFa-Md-Vd5" firstAttribute="top" secondItem="hV2-PC-h5W" secondAttribute="bottom" constant="13" id="4JG-9t-ff8"/>
                 <constraint firstItem="ZKe-iB-YHI" firstAttribute="leading" secondItem="zmW-dV-Z0p" secondAttribute="trailing" constant="-30" id="8Gn-Y7-j1f"/>
                 <constraint firstItem="DkY-fa-owh" firstAttribute="trailing" secondItem="hV2-PC-h5W" secondAttribute="trailing" id="ECM-Uv-vEi"/>
-                <constraint firstItem="Fun-mH-9vs" firstAttribute="top" secondItem="zmW-dV-Z0p" secondAttribute="bottom" constant="8" symbolic="YES" id="Eeg-LC-stv"/>
-                <constraint firstAttribute="trailing" secondItem="hV2-PC-h5W" secondAttribute="trailing" constant="8" id="F2U-Po-OPM"/>
                 <constraint firstItem="hV2-PC-h5W" firstAttribute="top" secondItem="zmW-dV-Z0p" secondAttribute="bottom" constant="8" id="Iyz-NR-9my"/>
-                <constraint firstItem="Fun-mH-9vs" firstAttribute="leading" secondItem="zmW-dV-Z0p" secondAttribute="leading" id="UVz-nv-uoQ"/>
-                <constraint firstItem="hV2-PC-h5W" firstAttribute="leading" secondItem="Fun-mH-9vs" secondAttribute="trailing" constant="8" symbolic="YES" id="Y31-ix-1d7"/>
-                <constraint firstItem="DFa-Md-Vd5" firstAttribute="top" secondItem="Fun-mH-9vs" secondAttribute="bottom" constant="8" symbolic="YES" id="Yrc-MQ-2kf"/>
+                <constraint firstItem="DkY-fa-owh" firstAttribute="width" secondItem="hV2-PC-h5W" secondAttribute="width" multiplier="0.3" id="Per-63-ibX"/>
+                <constraint firstItem="DkY-fa-owh" firstAttribute="leading" secondItem="hV2-PC-h5W" secondAttribute="trailing" constant="8" symbolic="YES" id="QIz-8R-9Q2"/>
+                <constraint firstAttribute="trailing" secondItem="DkY-fa-owh" secondAttribute="trailing" constant="20" symbolic="YES" id="UXd-tt-Tzm"/>
+                <constraint firstAttribute="bottom" secondItem="DFa-Md-Vd5" secondAttribute="bottom" constant="20" symbolic="YES" id="YAw-OA-5Xw"/>
                 <constraint firstItem="DkY-fa-owh" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="DFa-Md-Vd5" secondAttribute="trailing" constant="8" symbolic="YES" id="egX-4s-DUr"/>
                 <constraint firstItem="zmW-dV-Z0p" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leadingMargin" id="elX-ec-d64"/>
                 <constraint firstAttribute="bottom" secondItem="DkY-fa-owh" secondAttribute="bottom" constant="20" symbolic="YES" id="ff1-Hh-muM"/>
+                <constraint firstItem="DkY-fa-owh" firstAttribute="top" secondItem="zmW-dV-Z0p" secondAttribute="bottom" constant="8" symbolic="YES" id="gfP-Wp-WlG"/>
+                <constraint firstItem="hV2-PC-h5W" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="20" symbolic="YES" id="iIn-sL-PYw"/>
                 <constraint firstItem="DkY-fa-owh" firstAttribute="leading" secondItem="hV2-PC-h5W" secondAttribute="leading" id="kNF-SJ-TqS"/>
                 <constraint firstAttribute="trailingMargin" secondItem="zmW-dV-Z0p" secondAttribute="trailing" id="msw-OB-QI3"/>
                 <constraint firstItem="DkY-fa-owh" firstAttribute="top" secondItem="hV2-PC-h5W" secondAttribute="bottom" constant="8" symbolic="YES" id="oNj-lZ-7OT"/>
+                <constraint firstItem="DFa-Md-Vd5" firstAttribute="leading" secondItem="hV2-PC-h5W" secondAttribute="leading" id="xdE-18-6W4"/>
                 <constraint firstItem="ZKe-iB-YHI" firstAttribute="centerY" secondItem="zmW-dV-Z0p" secondAttribute="centerY" id="yI1-8j-Fdj"/>
             </constraints>
+            <variation key="default">
+                <mask key="constraints">
+                    <exclude reference="ECM-Uv-vEi"/>
+                    <exclude reference="egX-4s-DUr"/>
+                    <exclude reference="ff1-Hh-muM"/>
+                    <exclude reference="kNF-SJ-TqS"/>
+                    <exclude reference="oNj-lZ-7OT"/>
+                </mask>
+            </variation>
         </view>
     </objects>
 </document>

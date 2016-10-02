@@ -21,6 +21,10 @@
 		6644AF3A1D6E35A2007B7AEF /* FriendsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6644AF391D6E35A2007B7AEF /* FriendsTableViewController.swift */; };
 		6644AF3C1D6E3974007B7AEF /* FriendsAdventures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6644AF3B1D6E3974007B7AEF /* FriendsAdventures.swift */; };
 		6644AF3E1D6F5BAF007B7AEF /* NonFacebookHeaderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6644AF3D1D6F5BAF007B7AEF /* NonFacebookHeaderViewController.swift */; };
+		6650D5121DA10194008EAD27 /* DistanceMarker.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6650D5111DA10194008EAD27 /* DistanceMarker.xib */; };
+		6650D5141DA102BA008EAD27 /* DistanceMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6650D5131DA102BA008EAD27 /* DistanceMarker.swift */; };
+		6650D5161DA10D22008EAD27 /* RoundedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6650D5151DA10D22008EAD27 /* RoundedButton.swift */; };
+		6650D5181DA12683008EAD27 /* video.mov in Resources */ = {isa = PBXBuildFile; fileRef = 6650D5171DA12683008EAD27 /* video.mov */; };
 		666117881C7C483D00F3B48D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6600554A1C5F44B60094F0A1 /* Assets.xcassets */; };
 		666149DA1C607D6B0068D416 /* Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 666149D91C607D6B0068D416 /* Filter.swift */; };
 		666149DD1C60A72C0068D416 /* AppventureReviews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 666149DC1C60A72C0068D416 /* AppventureReviews.swift */; };
@@ -123,6 +127,10 @@
 		6644AF391D6E35A2007B7AEF /* FriendsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendsTableViewController.swift; sourceTree = "<group>"; };
 		6644AF3B1D6E3974007B7AEF /* FriendsAdventures.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendsAdventures.swift; sourceTree = "<group>"; };
 		6644AF3D1D6F5BAF007B7AEF /* NonFacebookHeaderViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NonFacebookHeaderViewController.swift; sourceTree = "<group>"; };
+		6650D5111DA10194008EAD27 /* DistanceMarker.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DistanceMarker.xib; sourceTree = "<group>"; };
+		6650D5131DA102BA008EAD27 /* DistanceMarker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DistanceMarker.swift; sourceTree = "<group>"; };
+		6650D5151DA10D22008EAD27 /* RoundedButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoundedButton.swift; sourceTree = "<group>"; };
+		6650D5171DA12683008EAD27 /* video.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = video.mov; sourceTree = "<group>"; };
 		666149D91C607D6B0068D416 /* Filter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Filter.swift; sourceTree = "<group>"; };
 		666149DC1C60A72C0068D416 /* AppventureReviews.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppventureReviews.swift; sourceTree = "<group>"; };
 		6663EAC41D62E961000F7BF9 /* WriteReviewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WriteReviewViewController.swift; sourceTree = "<group>"; };
@@ -303,6 +311,7 @@
 				66D7CD801C5B400E00ACB8E3 /* Shared Model */,
 				66D7CDA91C5B40DB00ACB8E3 /* Shared Func */,
 				66D7CD651C5B3F4E00ACB8E3 /* Assets.xcassets */,
+				6650D5171DA12683008EAD27 /* video.mov */,
 				66ED85D31D5F442900A3F438 /* Storyboards */,
 				66DA2F2E1C5B6C6F00751528 /* Search/Do */,
 				66F32C901D57631800D99701 /* Profile */,
@@ -373,6 +382,8 @@
 		66D7CDA81C5B40D100ACB8E3 /* Shared Nib */ = {
 			isa = PBXGroup;
 			children = (
+				6650D5111DA10194008EAD27 /* DistanceMarker.xib */,
+				6650D5131DA102BA008EAD27 /* DistanceMarker.swift */,
 				66D7CDA41C5B40CC00ACB8E3 /* ImageController.storyboard */,
 			);
 			name = "Shared Nib";
@@ -385,6 +396,7 @@
 				66D7CD9E1C5B40BD00ACB8E3 /* ParseFunc.swift */,
 				66D7CD9F1C5B40BD00ACB8E3 /* HelperFunctions.swift */,
 				6663EAC81D64C4D4000F7BF9 /* largeTextContent.swift */,
+				6650D5151DA10D22008EAD27 /* RoundedButton.swift */,
 				666678C21C64821100C4309C /* ObjC */,
 			);
 			name = "Shared Func";
@@ -583,10 +595,12 @@
 				66F32C7E1D575A5C00D99701 /* PictureClueViewController.xib in Resources */,
 				66D7CDA51C5B40CC00ACB8E3 /* Login.storyboard in Resources */,
 				66D7CD691C5B3F4E00ACB8E3 /* LaunchScreen.storyboard in Resources */,
+				6650D5181DA12683008EAD27 /* video.mov in Resources */,
 				66F32C721D57589500D99701 /* Maker.storyboard in Resources */,
 				66F32C7F1D575A5C00D99701 /* SoundClueViewController.xib in Resources */,
 				66F32C7D1D575A5C00D99701 /* TextClueViewController.xib in Resources */,
 				66D7CDA71C5B40CC00ACB8E3 /* ImageController.storyboard in Resources */,
+				6650D5121DA10194008EAD27 /* DistanceMarker.xib in Resources */,
 				66F32C731D57595300D99701 /* LaunchAppventure.storyboard in Resources */,
 				66DA2F291C5B445600751528 /* TableSectionHeader.xib in Resources */,
 				66D7CD661C5B3F4E00ACB8E3 /* Assets.xcassets in Resources */,
@@ -676,6 +690,7 @@
 				66ED85D21D5BA30F00A3F438 /* ImageChooserViewController.swift in Sources */,
 				66DA2F2C1C5B445600751528 /* RatingControl.swift in Sources */,
 				66ED85D81D6236C600A3F438 /* AddHintTableViewController.swift in Sources */,
+				6650D5161DA10D22008EAD27 /* RoundedButton.swift in Sources */,
 				6663EACD1D64C9DF000F7BF9 /* RTFDisplayViewController.swift in Sources */,
 				66D7CDA61C5B40CC00ACB8E3 /* LoginViewController.swift in Sources */,
 				66F32C791D575A5C00D99701 /* SoundClueViewController.swift in Sources */,
@@ -716,6 +731,7 @@
 				6644AF3A1D6E35A2007B7AEF /* FriendsTableViewController.swift in Sources */,
 				6644AF3C1D6E3974007B7AEF /* FriendsAdventures.swift in Sources */,
 				66F32C7C1D575A5C00D99701 /* CheckInHintViewController.swift in Sources */,
+				6650D5141DA102BA008EAD27 /* DistanceMarker.swift in Sources */,
 				66D7CD991C5B409400ACB8E3 /* AppventureStep.swift in Sources */,
 				6644AF3E1D6F5BAF007B7AEF /* NonFacebookHeaderViewController.swift in Sources */,
 				66D7CD931C5B405400ACB8E3 /* UserSummaryViewController.swift in Sources */,

@@ -13,6 +13,8 @@ import FBSDKCoreKit
 
 class MainTabBarController: UITabBarController {
     
+    var stdFrame: CGRect?
+    
     override func viewDidLoad() {
         
 //        self.tabBar.tintColor = UIColor.redColor()
@@ -25,8 +27,6 @@ class MainTabBarController: UITabBarController {
                 pvc.showForUser()
             }
         }
-        
-
     }
 
     

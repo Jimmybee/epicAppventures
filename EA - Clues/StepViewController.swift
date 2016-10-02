@@ -25,10 +25,8 @@ class StepViewController: UIViewController {
     @IBOutlet weak var answerContainer: UIView!
     @IBOutlet weak var closeButton: UIButton!
     @IBOutlet weak var containerView: UIView!
-    @IBOutlet weak var compassImageView: UIImageView!
     @IBOutlet weak var timerLabel: UILabel!
-    @IBOutlet weak var distanceLabel: UILabel!
-    @IBOutlet weak var northLabel: UILabel!
+
     
     //ScrollOutlets
     @IBOutlet weak var scrollHolder: clickParentScroll!
@@ -67,7 +65,6 @@ class StepViewController: UIViewController {
     var activeViews = [UIView]()
     var activeScrollLabels = [UILabel]()
     
-    let compassImage = UIImage(named: "White_Arrow_Up")
 
     
     //Child View Controllers
@@ -82,19 +79,25 @@ class StepViewController: UIViewController {
     //MARK: Lifecycle
     override func viewDidLoad() {
 //        self.setNeedsStatusBarAppearanceUpdate
+        originalHeight = 55
         stepNumber = 0
-        distanceLabel.text = ""
-        compassImageView.alpha = 0
         timerLabel.text = HelperFunctions.formatTime(0, nano: false)
         step = appventure.appventureSteps[0]
         loadControllers()
         setupViews()
         scrollHolder.myScroll = self.scrollCluePicker
         setupScrollViews(0)
-        
         Appventure.setCurrentAppventure(self.appventure)
-        
+
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
+        view.addGestureRecognizer(tap)
     }
+    
+    
+    func dismissKeyboard() {
+        view.endEditing(true)
+    }
+    
 //    
 //    override func preferredStatusBarStyle() -> UIStatusBarStyle {
 //        return UIStatusBarStyle.LightContent
@@ -112,7 +115,7 @@ class StepViewController: UIViewController {
     func setupScrollViews(activeLabel: Int) {
         for label in activeScrollLabels {
             label.font = label.font.fontWithSize(13)
-            label.textColor = UIColor.grayColor()
+            label.textColor = UIColor.whiteColor()
         }
         activeScrollLabels[activeLabel].font = activeScrollLabels[activeLabel].font.fontWithSize(19)
         activeScrollLabels[activeLabel].textColor = UIColor.whiteColor()
@@ -146,19 +149,8 @@ class StepViewController: UIViewController {
     
     
     func setupViews() {
-        
         activeViews.removeAll()
         activeScrollLabels.removeAll()
-        
-        //Self Top Bar
-        if step.setup[AppventureStep.setup.compassShown]! {
-            compassImageView.alpha = 1
-            northLabel.alpha = 1
-        } else {
-            compassImageView.alpha = 0
-            northLabel.alpha = 0
-        }
-        if !step.setup[AppventureStep.setup.distanceShown]! {distanceLabel.text = ""}
         
         //Text
         if  step.setup[AppventureStep.setup.textClue]! {
@@ -214,21 +206,24 @@ class StepViewController: UIViewController {
             checkInHintView.setup()
             checkInHintView.view.alpha = 1
             answerHintView.view.alpha = 0
-            extendedHeight = originalHeight + 110
+            extendedHeight = 135
         } else {
             answerHintView.answers = self.step.answerText
             answerHintView.answerHint = self.step.answerHint
             answerHintView.setup()
             checkInHintView.view.alpha = 0
             answerHintView.view.alpha = 1
-            extendedHeight = originalHeight + 180
+            extendedHeight = 165
         }
         
         self.view.sendSubviewToBack(containerView)
         
+        //set scrollbar at bottom to clue
         containerView.bringSubviewToFront(activeViews[0])
+        setupScrollViews(0)
+        scrollCluePicker.contentOffset.x = 0
         
-        setupPan()
+        panEndDown()
 
 
     }
@@ -245,12 +240,6 @@ class StepViewController: UIViewController {
     @IBOutlet weak var answerViewHeight: NSLayoutConstraint!
     @IBOutlet weak var commentImage: UIImageView!
   
-    func setupPan() {
-        //panning
-        originalHeight = 55
-        maxPan = extendedHeight
-        panEndDown()
-    }
     
     @IBAction func panning(sender: UIPanGestureRecognizer) {
         
@@ -261,7 +250,7 @@ class StepViewController: UIViewController {
             yMoved = sender.translationInView(self.view).y
             
             if topExtended == false {
-                answerViewHeight.constant = max(min(originalHeight + yMoved, maxPan), originalHeight)
+                answerViewHeight.constant = max(min(originalHeight + yMoved, extendedHeight), originalHeight)
                 let strength = yMoved / (extendedHeight - originalHeight)
                 switch strength {
                 case let x where x < 0.3:
@@ -346,7 +335,6 @@ class StepViewController: UIViewController {
     
     //MARK: Actions for child VCs
     func updateLabel(distance: Double, lastLocation: CLLocation) {
-        distanceLabel.text = ("\(HelperFunctions.formatDistance(distance))")
         checkInHintView.lastLocation = lastLocation
     }
     
@@ -354,10 +342,7 @@ class StepViewController: UIViewController {
         checkInHintView.lastLocation = lastLocation
     }
     
-    func updateCompass(degree: CGFloat) {
-        compassImageView.image? = compassImage!.imageRotatedByDegrees(degree, flip: false)
 
-    }
     
     func updateHintText(hint: String, hintsRecieved: Int) {
         //Text
@@ -367,11 +352,11 @@ class StepViewController: UIViewController {
             activeScrollLabels.insert(scrollClueLabel, atIndex: 0)
             setupScrollViews(activeScrollLabels.count - 1)
             containerView.bringSubviewToFront(activeViews[0])
-            textClueView.textClueLabe.text = ""
+            textClueView.clueTextView.text = ""
         }
         
         if step.freeHints < hintsRecieved { self.ms += Double(step.hintPenalty)}
-        textClueView.textClueLabe.text = textClueView.textClueLabe.text! + "\n\nHint:\n" + hint
+        textClueView.clueTextView.text = textClueView.clueTextView.text! + "\n\nHint:\n" + hint
     }
     
     
@@ -396,6 +381,8 @@ class StepViewController: UIViewController {
                 timer?.invalidate()
                 timer = nil
                 containerView.bringSubviewToFront(answerCheckInView)
+
+
             }
         }
     }
@@ -454,9 +441,9 @@ extension StepViewController : UIScrollViewDelegate {
         func adjustLabels(current: UILabel, next: UILabel, movement: CGFloat) {
             print("movement \(movement)")
             next.font = next.font.fontWithSize(13 + 6*movement)
-            next.textColor = UIColor(white: 0.7 + 0.3*movement, alpha: 1)
+//            next.textColor = UIColor(white: 0.7 + 0.3*movement, alpha: 1)
             current.font = current.font.fontWithSize(19 - 6*movement)
-            current.textColor = UIColor(white: 1 - 0.3*movement, alpha: 1)
+//            current.textColor = UIColor(white: 1 - 0.3*movement, alpha: 1)
         }
         
         let scrollWidth = scrollView.frame.size.width

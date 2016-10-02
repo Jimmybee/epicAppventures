@@ -51,12 +51,24 @@
                 <constraint firstItem="mAP-lX-e7n" firstAttribute="centerX" secondItem="ptL-8y-UIc" secondAttribute="centerX" id="1lq-da-7S7"/>
                 <constraint firstItem="ptL-8y-UIc" firstAttribute="top" secondItem="mAP-lX-e7n" secondAttribute="bottom" constant="8" symbolic="YES" id="63A-M2-dw0"/>
                 <constraint firstItem="90P-ny-y8X" firstAttribute="width" secondItem="i5M-Pr-FkT" secondAttribute="width" id="7s9-j8-Obx"/>
+                <constraint firstItem="90P-ny-y8X" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="8l9-6g-HGD"/>
                 <constraint firstItem="90P-ny-y8X" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="AZf-Gx-2vi"/>
                 <constraint firstItem="ptL-8y-UIc" firstAttribute="trailing" secondItem="90P-ny-y8X" secondAttribute="trailing" constant="-30" id="DmD-wx-CQ9"/>
+                <constraint firstItem="90P-ny-y8X" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="Gd5-e5-RtD"/>
                 <constraint firstItem="ptL-8y-UIc" firstAttribute="bottomMargin" secondItem="90P-ny-y8X" secondAttribute="bottom" constant="-30" id="HTn-TU-qqC"/>
+                <constraint firstAttribute="bottom" secondItem="90P-ny-y8X" secondAttribute="bottom" id="Tny-kE-ffY"/>
                 <constraint firstItem="90P-ny-y8X" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="lls-w1-5rC"/>
+                <constraint firstItem="90P-ny-y8X" firstAttribute="width" secondItem="i5M-Pr-FkT" secondAttribute="width" id="omJ-Lm-lDk"/>
                 <constraint firstItem="90P-ny-y8X" firstAttribute="height" secondItem="i5M-Pr-FkT" secondAttribute="height" id="x57-uN-CNJ"/>
             </constraints>
+            <variation key="default">
+                <mask key="constraints">
+                    <exclude reference="7s9-j8-Obx"/>
+                    <exclude reference="AZf-Gx-2vi"/>
+                    <exclude reference="lls-w1-5rC"/>
+                    <exclude reference="x57-uN-CNJ"/>
+                </mask>
+            </variation>
         </view>
     </objects>
     <resources>

@@ -10,6 +10,8 @@ import UIKit
 import FBSDKCoreKit
 import FBSDKLoginKit
 import ParseFacebookUtilsV4
+import AVKit
+import AVFoundation
 
 protocol LoginViewControllerDelegate {
     func skippedLogin ()
@@ -18,10 +20,12 @@ protocol LoginViewControllerDelegate {
 class LoginViewController: UIViewController {
     
     var delegate: LoginViewControllerDelegate?
+    var player: AVPlayer?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.addVideoPlayer()
         // Do any additional setup after loading the view.
     }
 
@@ -61,7 +65,35 @@ class LoginViewController: UIViewController {
         })
         
     }
-
-
-
+    
+    func addVideoPlayer() {
+        
+        // Load the video from the app bundle.
+        let videoURL: NSURL = NSBundle.mainBundle().URLForResource("video", withExtension: "mov")!
+        
+        player = AVPlayer(URL: videoURL)
+        player?.actionAtItemEnd = .None
+        player?.muted = true
+        
+        let playerLayer = AVPlayerLayer(player: player)
+        playerLayer.videoGravity = AVLayerVideoGravityResizeAspectFill
+        playerLayer.zPosition = -1
+        
+        playerLayer.frame = view.frame
+        
+        view.layer.addSublayer(playerLayer)
+        
+        player?.play()
+        
+        //loop video
+        NSNotificationCenter.defaultCenter().addObserver(self,
+                                                         selector: "loopVideo",
+                                                         name: AVPlayerItemDidPlayToEndTimeNotification,
+                                                         object: nil)
+    }
+    
+    func loopVideo() {
+        player?.seekToTime(kCMTimeZero)
+        player?.play()
+    }
 }

@@ -87,6 +87,7 @@ import Parse
         if let status = object[pfAppventure.pfStatus] as? Int {
             self.liveStatus = LiveStatus(rawValue: status)!
         }
+        if let rating = object[pfAppventure.pfRating] as? Int {self.rating = rating}
     }
     
     init(appventure: Appventure) {
@@ -146,6 +147,7 @@ import Parse
         save[pfAppventure.pfKeyFeatures] = self.keyFeatures.joinWithSeparator(",")
         save[pfAppventure.pfRestrictions] = self.restrictions.joinWithSeparator(",")
         save[pfAppventure.pfStatus] = self.liveStatus.rawValue
+        save[pfAppventure.pfRating] = self.rating
         save.saveInBackgroundWithBlock { (success: Bool, error: NSError?) -> Void in
             if let error = error {
                 let errorString = error.userInfo["error"] as? NSString

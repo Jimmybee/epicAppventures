@@ -49,10 +49,9 @@ class ProfileTableViewController: UITableViewController {
         alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: { action in
             self.tabBarController?.selectedIndex = 1
         }))
-        
-        self.presentViewController(alert, animated: true, completion: nil)
-
         }
+        
+        HelperFunctions.unhideTabBar(self)
     }
     
     

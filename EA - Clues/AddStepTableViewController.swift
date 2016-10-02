@@ -17,6 +17,28 @@ protocol AddStepTableViewControllerDelegate: NSObjectProtocol  {
     func updateAppventureLocation(location: CLLocationCoordinate2D)
 }
 
+struct PlaceCache {
+    let name: String
+    let coordinate : CLLocationCoordinate2D
+    let address: String
+    
+    init (step: AppventureStep) {
+        self.name = step.nameOrLocation
+        self.coordinate = step.coordinate
+        self.address = step.locationSubtitle
+    }
+    
+    init (place: GMSPlace) {
+        self.name = place.name
+        self.coordinate = place.coordinate
+        if let formAddr = place.formattedAddress {
+            self.address = formAddr
+        } else {
+            self.address = ""
+        }
+    }
+}
+
 
 class AddStepTableViewController: UITableViewController, UITextFieldDelegate, UITextViewDelegate, AVAudioRecorderDelegate, AVAudioPlayerDelegate
 {
@@ -32,6 +54,9 @@ class AddStepTableViewController: UITableViewController, UITextFieldDelegate, UI
     //MARK: Model
     var appventureStep = AppventureStep()
     var lastLocation: CLLocation?
+    var soundDataCache: NSData?
+    var placeCache: PlaceCache?
+    
     //set
     lazy var currentStep = AppventureStep()
     lazy var editOfCurrentStep = false
@@ -102,40 +127,70 @@ class AddStepTableViewController: UITableViewController, UITextFieldDelegate, UI
         if editOfCurrentStep == true {
              appventureStep = AppventureStep(step: currentStep)
         }
-
+        
+        setCaches()
+        
+        initialUISetup()
+        
+        
     }
     
     override func viewDidAppear(animated: Bool)  {
-        updateUI()
+        updatePartUI()
         checkSaveButton()
     }
     
+    
+    func setCaches() {
+        soundDataCache = appventureStep.sound
+        placeCache = PlaceCache(step: appventureStep)
+    }
+    
     //MARK: Update UI
-    func updateUI () {
-        let stepNumber = String(appventureStep.stepNumber!)
-        self.navigationItem.title = ("Step: \(stepNumber)")
-        
+    func updatePartUI () {
         //section0 - Location
-        if appventureStep.nameOrLocation != ""  {
-            let location = appventureStep.nameOrLocation
-            self.locationNameLabel.text = location
+        if let place = placeCache  {
+            self.locationNameLabel.text = place.name
         } else {
             self.locationNameLabel.text = "Set Location..."
         }
         
+
         var locationSetupString = [String]()
         appventureStep.setup[AppventureStep.setup.locationShown]! ?  locationSetupString.append("Location on map") : locationSetupString.append("No location on map")
         appventureStep.setup[AppventureStep.setup.compassShown]! ?  locationSetupString.append("Show direction") : locationSetupString.append("No direction")
         appventureStep.setup[AppventureStep.setup.distanceShown]! ?  locationSetupString.append("Show distance") : locationSetupString.append("No distance")
-       locationSetupDetails.text = locationSetupString.joinWithSeparator(",")
+        locationSetupDetails.text = locationSetupString.joinWithSeparator(",")
         
         //section1 - Clues
-        appventureStep.initialText == "" ? (initialTextLabel.text = "Set instructions...") : (initialTextLabel.text = appventureStep.initialText)
+              appventureStep.initialText == "" ? (initialTextLabel.text = "Set instructions...") : (initialTextLabel.text = appventureStep.initialText)
+        
+        //ImageView
+        if let image = appventureStep.image {
+            stepThumbnail.image = image
+        }
+        
+        //section2 - Answer
+        self.checkInLabel.text = self.locationNameLabel.text
+        appventureStep.answerText.count == 0 ? (self.answersLabel.text = "Set answers...") :
+            (self.answersLabel.text = "Answers availabe: \(appventureStep.answerText.count)")
+        
+        //section3 - Hints
+        self.appventureStep.answerHint.count == 0 ? (self.hintsLabel.text = "Set hints...") : (self.hintsLabel.text = "Hints availabe: \(appventureStep.answerHint.count)")
+        
+    }
+    
+    func initialUISetup () {
+        let stepNumber = String(appventureStep.stepNumber!)
+        self.navigationItem.title = ("Step: \(stepNumber)")
+        
+        
+        //section1 - Clues
         soundSwitch.on = appventureStep.setup[AppventureStep.setup.soundClue]!
         pictureSwitch.on = appventureStep.setup[AppventureStep.setup.pictureClue]!
         intialTextSwitch.on = appventureStep.setup[AppventureStep.setup.textClue]!
         //SoundView
-        if let soundData = appventureStep.sound as NSData! {
+        if let soundData = soundDataCache {
             do {
                 audioPlayer = try AVAudioPlayer(data: soundData)
                 totalLength = audioPlayer.duration
@@ -149,23 +204,20 @@ class AddStepTableViewController: UITableViewController, UITextFieldDelegate, UI
             
         }
         
-        //ImageView
-        if let image = appventureStep.image as UIImage! {
-            stepThumbnail.image = image
-        } else {
-            
-        }
-        
         //section2 - Answer
-        self.checkInLabel.text = self.locationNameLabel.text
+        self.appventureStep.setup[AppventureStep.setup.checkIn] == true ? (self.checkInControl.selectedSegmentIndex = 0) : (self.checkInControl.selectedSegmentIndex = 1)
         self.checkInTextField.text = String(appventureStep.checkInProximity)
-        appventureStep.answerText.count == 0 ? (self.answersLabel.text = "Set answers...") :
-        (self.answersLabel.text = "Answers availabe: \(appventureStep.answerText.count)")
+
         
         //section3 - Hints
-        appventureStep.answerHint.count == 0 ? (self.hintsLabel.text = "Set hints...") : (self.hintsLabel.text = "Hints availabe: \(appventureStep.answerHint.count)")
+        self.appventureStep.answerHint.count == 0 ? (self.hintsLabel.text = "Set hints...") : (self.hintsLabel.text = "Hints availabe: \(appventureStep.answerHint.count)")
         self.freeHintsTextField.text = String(appventureStep.freeHints)
         self.hintPenalty.text = String(appventureStep.hintPenalty)
+        
+        //section4 - Completion Text
+        self.completionTextView.text = appventureStep.completionText
+        
+        self.updatePartUI()
         
         //Size cells
         sizeTableCells()
@@ -183,7 +235,8 @@ class AddStepTableViewController: UITableViewController, UITextFieldDelegate, UI
     
     func checkSaveButton() {
         var enableSave = true
-        if !CLLocationCoordinate2DIsValid(appventureStep.coordinate) {
+        
+        if placeCache == nil {
             enableSave = false
         }
 
@@ -191,23 +244,24 @@ class AddStepTableViewController: UITableViewController, UITextFieldDelegate, UI
             enableSave = false
         }
         
-        if appventureStep.setup[AppventureStep.setup.soundClue] == true {
-            if appventureStep.sound == nil {
+        if soundSwitch.on  == true {
+            if soundDataCache == nil {
                 enableSave = false
             }
         }
-        if appventureStep.setup[AppventureStep.setup.pictureClue] == true {
+        if pictureSwitch.on == true {
             if appventureStep.image == nil {
                 enableSave = false
             }
         }
-        if appventureStep.setup[AppventureStep.setup.textClue] == true {
+        if intialTextSwitch.on == true {
             if appventureStep.initialText == "" {
                 enableSave = false
             }
         }
-        if appventureStep.setup[AppventureStep.setup.checkIn] == false {
-            if appventureStep.answerText.count == 0{
+        
+        if self.checkInControl.selectedSegmentIndex == 1 {
+            if appventureStep.answerText.count == 0 {
                 enableSave = false
             }
         }
@@ -242,11 +296,38 @@ class AddStepTableViewController: UITableViewController, UITextFieldDelegate, UI
         if appventureStep.stepNumber == 1 {
             delegate?.updateAppventureLocation(appventureStep.coordinate)
         }
+
+        
     }
     
     func updateStep() {
-        if let penalty = Int(self.hintPenalty.text!) { appventureStep.hintPenalty = penalty }
-        if let freeHints = Int(self.freeHintsTextField.text!) { appventureStep.freeHints = freeHints }
+        //add in all step sections here 
+        if let penalty = Int(self.hintPenalty.text!) { self.appventureStep.hintPenalty = penalty }
+        if let freeHints = Int(self.freeHintsTextField.text!) { self.appventureStep.freeHints = freeHints }
+        if checkInControl.selectedSegmentIndex == 0 {
+            appventureStep.setup[AppventureStep.setup.checkIn] = true
+        } else {
+            appventureStep.setup[AppventureStep.setup.checkIn] = false
+        }
+        appventureStep.setup[AppventureStep.setup.soundClue] = soundSwitch.on
+        appventureStep.setup[AppventureStep.setup.pictureClue]  = pictureSwitch.on
+        appventureStep.setup[AppventureStep.setup.textClue] = intialTextSwitch.on
+        if let distanceText = checkInTextField.text {
+            if let distance = Int(distanceText) {
+                appventureStep.checkInProximity = distance
+            }
+        }
+        if let hintNumberText = freeHintsTextField.text {
+            if let freeHintsInt = Int(hintNumberText) {
+                appventureStep.freeHints = freeHintsInt
+            }
+        }
+        
+        self.appventureStep.completionText = self.completionTextView.text
+        self.appventureStep.sound = soundDataCache
+        self.appventureStep.coordinate = placeCache!.coordinate
+        self.appventureStep.nameOrLocation = placeCache!.name
+        self.appventureStep.locationSubtitle = placeCache!.address
     }
     
     
@@ -258,23 +339,16 @@ class AddStepTableViewController: UITableViewController, UITextFieldDelegate, UI
     }
     
     @IBAction func soundSwitched(sender: UISwitch) {
-        appventureStep.setup[AppventureStep.setup.soundClue] = sender.on
-//        soundClueCell.hidden = !sender.on
-//        tableView.reloadRowsAtIndexPaths([soundPath], withRowAnimation: .Automatic)
         tableView.reloadData()
         checkSaveButton()
     }
     
     @IBAction func pictureSwitched(sender: UISwitch) {
-        appventureStep.setup[AppventureStep.setup.pictureClue]  = sender.on
-//        pictureViewCell.hidden = !sender.on
         tableView.reloadData()
         checkSaveButton()
     }
     
     @IBAction func textSwitched(sender: UISwitch) {
-        
-        appventureStep.setup[AppventureStep.setup.textClue] = sender.on
         TextClueCell.hidden = !sender.on
         tableView.reloadData()
 
@@ -282,12 +356,6 @@ class AddStepTableViewController: UITableViewController, UITextFieldDelegate, UI
     }
     
     @IBAction func checkInControl(sender: UISegmentedControl) {
-        if sender.selectedSegmentIndex == 0 {
-            appventureStep.setup[AppventureStep.setup.checkIn] = true
-
-        } else {
-            appventureStep.setup[AppventureStep.setup.checkIn] = false
-        }
         tableView.reloadData()
         checkSaveButton()
     }
@@ -301,34 +369,12 @@ class AddStepTableViewController: UITableViewController, UITextFieldDelegate, UI
     }
     
     func textFieldDidEndEditing(textField: UITextField) {
-        
-        if let text = textField.text as String!{
-            switch textField {
-            case checkInTextField:
-                if checkInControl.selectedSegmentIndex == 0 {
-                    if let distance = Int(text) as Int! {
-                        appventureStep.checkInProximity = distance
-                    }
-                }
-    
-            case freeHintsTextField:
-                if let freeHintsInt = Int(textField.text!) {
-                      appventureStep.freeHints = freeHintsInt
-                }
-              
-            default: break
-            }
-        }
-        
         checkSaveButton()
     }
     
     //MARK: TextView Delegates
     
     func textViewDidEndEditing(textView: UITextView) {
-        if textView == completionTextView {
-            appventureStep.completionText = textView.text
-        }
         checkSaveButton()
     }
     
@@ -399,7 +445,8 @@ class AddStepTableViewController: UITableViewController, UITextFieldDelegate, UI
         if recorder.recording == true {
             recorder.stop()
             totalLength = ms
-            appventureStep.sound = NSData(contentsOfURL: soundFileURL)
+            
+            soundDataCache = NSData(contentsOfURL: soundFileURL)
             ms = 0
             self.timer.invalidate()
             self.timer = nil
@@ -436,7 +483,7 @@ class AddStepTableViewController: UITableViewController, UITextFieldDelegate, UI
     @IBAction func playSound(sender: UIButton) {
         
         if audioPlayer == nil {
-            if let soundData = appventureStep.sound as NSData! {
+            if let soundData = soundDataCache as NSData! {
                 do {
                         self.audioPlayer = try AVAudioPlayer(data: soundData)
                         self.audioPlayer.play()
@@ -444,6 +491,7 @@ class AddStepTableViewController: UITableViewController, UITextFieldDelegate, UI
                         self.audioPlayer.delegate = self
                 }
                 catch let error as NSError {
+                    //
                     print(error.localizedDescription)
                 }
             }
@@ -475,7 +523,6 @@ class AddStepTableViewController: UITableViewController, UITextFieldDelegate, UI
 
     
     //MARK: GMS Picker
-    
     func pickLocation() {
         var center: CLLocationCoordinate2D?
         
@@ -498,14 +545,7 @@ class AddStepTableViewController: UITableViewController, UITextFieldDelegate, UI
                 return
             }
             if let place = place {
-                self.appventureStep.coordinate = place.coordinate
-                self.appventureStep.nameOrLocation = place.name
-                if place.formattedAddress != nil {
-                    self.appventureStep.locationSubtitle = place.formattedAddress!
-
-                }
-                self.checkSaveButton()
-                self.updateUI()
+                self.placeCache = PlaceCache(place: place)
             } else {
                 print("No place selected")
             }

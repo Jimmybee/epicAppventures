@@ -19,7 +19,9 @@ class MapCompassViewController: UIViewController, CLLocationManagerDelegate {
     lazy var locationName = ""
     
     var firstLocationUpdate = true
-    
+    var compassMarker = GMSMarker()
+    var compassMarkerCircle = GMSMarker()
+    var distanceMarker = GMSMarker()
     
     @IBOutlet weak var showLocationButton: UIButton!
     @IBOutlet weak var mapView: GMSMapView! {
@@ -29,9 +31,15 @@ class MapCompassViewController: UIViewController, CLLocationManagerDelegate {
     }
 
     
+//    let compassRotateImage = UIImage(named: "White_Arrow_Up")
+    let mapPointer = UIImage(named: "White_Arrow_Up50")
+    let mapPointerCircel = UIImage(named: "MapPointerCircel")
+
+
+    let whiteQuestionMark = UIImage(named: "whiteQuestionMark")
+    
     let locationManager = CLLocationManager()
     var lastLocation = CLLocation()
-    var compassImage = UIImage()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -50,6 +58,11 @@ class MapCompassViewController: UIViewController, CLLocationManagerDelegate {
         } else {
             showLocationButton.alpha = 0
         }
+        self.addCompassMarker()
+//        self.distanceLabel.text = "?? m"
+//        self.compassImage.image? = whiteQuestionMark!
+
+
     }
     
     override func didReceiveMemoryWarning() {
@@ -63,6 +76,7 @@ class MapCompassViewController: UIViewController, CLLocationManagerDelegate {
 //        locationManager.requestAlwaysAuthorization()
         locationManager.requestWhenInUseAuthorization()
         locationManager.startUpdatingLocation()
+
     }
     
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
@@ -76,6 +90,10 @@ class MapCompassViewController: UIViewController, CLLocationManagerDelegate {
         }
         if showDistance {calculateDistanceCallParent()}
         if showCompass {compassUpdate()}
+        compassMarkerCircle.position = lastLocation.coordinate
+        compassMarker.position = lastLocation.coordinate
+        distanceMarker.position = lastLocation.coordinate
+        addDistanceTextMarker()
     }
     
     //MARK: Marker for Map
@@ -86,21 +104,54 @@ class MapCompassViewController: UIViewController, CLLocationManagerDelegate {
         marker.map = self.mapView
     }
     
+
+    
+    func addCompassMarker () {
+        compassMarkerCircle.map = self.mapView
+        compassMarkerCircle.icon = self.mapPointerCircel
+        compassMarkerCircle.groundAnchor = CGPoint(x: 0.5, y: 0.5)
+        compassMarkerCircle.zIndex = 1
+        
+        compassMarker.map = self.mapView
+        compassMarker.icon = self.mapPointer
+        compassMarker.groundAnchor = CGPoint(x: 0.5, y: 0.5)
+        compassMarker.zIndex = 2
+        
+        
+    }
+    
+    func addDistanceTextMarker() {
+        
+        if let distanceMarkerView:DistanceMarker = DistanceMarker.loadFromNibNamed("DistanceMarker")! as? DistanceMarker {
+            distanceMarkerView.distanceText.text = calculateDistanceCallParent()
+            distanceMarkerView.distanceText.sizeToFit()
+            let markerIcon = UIImage(view: distanceMarkerView)
+            distanceMarker.icon = markerIcon
+            distanceMarker.map = self.mapView
+            distanceMarker.zIndex = 3
+            distanceMarker.groundAnchor = CGPoint(x: 0.5, y: 0)
+        }
+    }
+
+    
     //MARK: Distance calculation
-    func calculateDistanceCallParent() {
+    func calculateDistanceCallParent() -> String {
         if let target = stepCoordinate as CLLocationCoordinate2D! {
             let lat = target.latitude
             let long = target.longitude
             let location = CLLocation(latitude: lat, longitude: long)
             let distance = location.distanceFromLocation(lastLocation)
-            if let pvc = self.parentViewController as? StepViewController   {
-                pvc.updateLabel(distance, lastLocation: location)
-            }
+            return HelperFunctions.formatDistance(distance)
+            //            self.distanceLabel.text = ("\(HelperFunctions.formatDistance(distance))")
+//            if let pvc = self.parentViewController as? StepViewController   {
+//                pvc.updateLabel(distance, lastLocation: location)
+//            }
         }
     }
     
     //MARK: Comapass calculation
     func compassUpdate() {
+//        compassImage.alpha = 1
         func degreesToRadians(x: Double) -> Double {
             return (M_PI * x / 180.0)
         }
@@ -126,11 +177,10 @@ class MapCompassViewController: UIViewController, CLLocationManagerDelegate {
         
         let floaty = CGFloat(degree)
         
-        if let pvc = self.parentViewController as? StepViewController {
-            pvc.updateCompass(floaty)
-        }
+//        self.compassImage.image? = compassRotateImage!.imageRotatedByDegrees(floaty, flip: false)
         
     }
+    
     @IBAction func centerOnUser(sender: AnyObject) {
         let camera = GMSCameraPosition.cameraWithTarget(lastLocation.coordinate, zoom: 14)
         mapView.animateToCameraPosition(camera)

@@ -86,7 +86,7 @@ class CreateAppventureViewController: UIViewController, UITableViewDelegate, UIT
     @IBOutlet weak var descriptionLabel: UILabel!
     @IBOutlet weak var durationLabel: UILabel!
     @IBOutlet weak var startingPositionLabel: UILabel!
-    @IBOutlet weak var tagsLabel: UILabel!
+//    @IBOutlet weak var tagsLabel: UILabel!
   
     @IBOutlet weak var shareButton: UIButton!
 
@@ -98,12 +98,15 @@ class CreateAppventureViewController: UIViewController, UITableViewDelegate, UIT
         shareButton.layer.borderWidth = 1.5
         shareButton.layer.borderColor = UIColor.whiteColor().CGColor
         
+        HelperFunctions.hideTabBar(self)
+        
         if newAppventure == nil {
             //popup for name
             newAppventure = Appventure()
             User.user?.ownedAppventures.append(newAppventure)
             newAppventure!.save()
             setupForNewAppventure()
+            performSegueWithIdentifier(Constants.editAppventureDetailsSegue, sender: nil)
 
         } else {
             AppventureStep.loadSteps(newAppventure!, vc: self)
