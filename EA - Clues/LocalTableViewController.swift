@@ -81,7 +81,13 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
             mtvc.stdFrame  = self.tabBarController?.tabBar.frame
 
         }
+        
+        Appventure.loadAppventuresFromCoreData(handlingDownloadedAppventures)
 
+    }
+    
+    func handlingDownloadedAppventures(appventures: [Appventure]) -> () {
+        appventures.count
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -125,8 +131,14 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
     }
     
     func loadUserAdventures() {
+        
+        Appventure.loadAppventuresFromCoreData { (downloadedAppventures) in
+            self.localAppventures = downloadedAppventures
+            self.tableView.reloadData()
+        }
+        
         if let user = User.user {
-            Appventure.loadUserAppventure(user.pfObject, handler: self, handlerCase: LocalAppventures)
+//            Appventure.loadUserAppventure(user.pfObject, handler: self, handlerCase: LocalAppventures)
             FriendsAdventures.fetchFriendAdventures({ (friendsAdventures) in
                 self.friendsAppventures = friendsAdventures
                 self.tableView.reloadData()

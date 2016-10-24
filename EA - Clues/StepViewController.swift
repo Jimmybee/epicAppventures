@@ -93,7 +93,6 @@ class StepViewController: UIViewController {
         view.addGestureRecognizer(tap)
     }
     
-    
     func dismissKeyboard() {
         view.endEditing(true)
     }
@@ -225,7 +224,6 @@ class StepViewController: UIViewController {
         
         panEndDown()
 
-
     }
     
     
@@ -328,8 +326,8 @@ class StepViewController: UIViewController {
     
     func flagContent() {
         let stepIs = self.step
-        let stepID = stepIs.PFObjectID
-        let flaggedContent = FlaggedContent(appventureFKID: self.appventure.PFObjectID!, stepFKID: stepID!)
+        let stepID = stepIs.pFObjectID
+        let flaggedContent = FlaggedContent(appventureFKID: self.appventure.pFObjectID!, stepFKID: stepID!)
         flaggedContent.save()
     }
     
@@ -344,7 +342,7 @@ class StepViewController: UIViewController {
     
 
     
-    func updateHintText(hint: String, hintsRecieved: Int) {
+    func updateHintText(hint: String, hintsRecieved: Int16) {
         //Text
         if clueSelectWidth.constant != scrollViewWidth.constant {
             clueSelectWidth.constant = scrollViewWidth.constant

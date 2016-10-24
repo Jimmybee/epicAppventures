@@ -12,13 +12,12 @@ import GooglePlacePicker
 
 class CheckInHintViewController: UIViewController {
     
-    lazy var stepLocationName = ""
+    lazy var stepLocationName: String? = ""
     lazy var stepCoordinate = kCLLocationCoordinate2DInvalid
     lazy var lastLocation = CLLocation()
-    lazy var stepDistance = 0
-    lazy var stepHint = ""
+    lazy var stepDistance: Int16 = 0
     var answerHint = [String]()
-    var hintsRecieved = 0
+    var hintsRecieved: Int16 = 0
     
     
     @IBOutlet weak var hintButton: UIButton!
@@ -96,7 +95,7 @@ class CheckInHintViewController: UIViewController {
     }
     
     @IBAction func revealHint(sender: UIButton) {
-        if self.answerHint.count == self.hintsRecieved {
+        if self.answerHint.count == Int(self.hintsRecieved) {
             let alert = UIAlertController(title: "No Hints", message: "There are no hints remaining.", preferredStyle: UIAlertControllerStyle.Alert)
             alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Cancel, handler: nil))
             
@@ -104,11 +103,11 @@ class CheckInHintViewController: UIViewController {
             
         } else {
             
-            let alert = UIAlertController(title: "Get Hint", message: "Getting a hint may incur a time penalty. There are \( self.answerHint.count - self.hintsRecieved) hints remaining.", preferredStyle: UIAlertControllerStyle.Alert)
+            let alert = UIAlertController(title: "Get Hint", message: "Getting a hint may incur a time penalty. There are \( Int16(self.answerHint.count) - self.hintsRecieved) hints remaining.", preferredStyle: UIAlertControllerStyle.Alert)
             alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: nil))
             alert.addAction(UIAlertAction(title: "Confirm", style: UIAlertActionStyle.Default, handler: { action in
                 if let pvc = self.parentViewController as? StepViewController{
-                    pvc.updateHintText(self.answerHint[self.hintsRecieved], hintsRecieved: self.hintsRecieved)
+                    pvc.updateHintText(self.answerHint[Int(self.hintsRecieved)], hintsRecieved: self.hintsRecieved)
                     self.hintsRecieved += 1
 
                 }

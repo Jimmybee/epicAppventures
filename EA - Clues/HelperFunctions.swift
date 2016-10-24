@@ -107,28 +107,6 @@ class HelperFunctions {
         let imageFile = PFFile(name:"image.png", data:imageData)
         return imageFile!
     }
-
-    class func loadAllData (appventure: Appventure) {
-        for step in appventure.appventureSteps {
-            if let soundFile = step.soundPFFile as PFFile! {
-                soundFile.getDataInBackgroundWithBlock({ (data, error) -> Void in
-                    if error == nil {
-                        step.sound = data
-                    }
-                })
-            }
-            if let imageFile = step.imagePFFile as PFFile! {
-                imageFile.getDataInBackgroundWithBlock({ (data, error) -> Void in
-                    if error == nil {
-                        if let dataFound = data {
-                            step.image = UIImage(data: dataFound)
-                        }
-                    }
-                })
-            }
-            
-        }
-    }
     
     class func loadAppventureSetup(object: PFObject) -> Appventure {
         let appventureName = object.objectForKey(Appventure.pfAppventure.pfTitle) as! String
@@ -137,7 +115,7 @@ class HelperFunctions {
         let appventure = Appventure(PFObjectID: appventurePFID, name: appventureName, geoPoint: appventureLocate)
         appventure.subtitle = object.objectForKey(Appventure.pfAppventure.pfSubtitle) as? String
         appventure.pfFile = object[Appventure.pfAppventure.pfAppventureImage] as? PFFile
-        appventure.totalDistance = object[Appventure.pfAppventure.pfTotalDistance] as? Double
+        appventure.totalDistance = object[Appventure.pfAppventure.pfTotalDistance] as! Double
         return appventure
     }
     

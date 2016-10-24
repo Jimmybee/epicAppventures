@@ -74,7 +74,7 @@ class AnswerHintViewController: UIViewController {
             alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: nil))
             alert.addAction(UIAlertAction(title: "Confirm", style: UIAlertActionStyle.Default, handler: { action in
                 if let pvc = self.parentViewController as? StepViewController{
-                    pvc.updateHintText(self.answerHint[self.hintsRecieved], hintsRecieved: self.hintsRecieved)
+                    pvc.updateHintText(self.answerHint[self.hintsRecieved], hintsRecieved: Int16(self.hintsRecieved))
                     self.hintsRecieved += 1
                 }
             }))

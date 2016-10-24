@@ -67,6 +67,7 @@ class User: NSObject {
     var pictureURL: String?
     var profilePicture: UIImage?
     var blurPicture: UIImage?
+    var coreAppventures = [Appventure]()
     var ownedAppventures = [Appventure]()
     var friendsAppventures = [Appventure]()
     var facebookConnected = false

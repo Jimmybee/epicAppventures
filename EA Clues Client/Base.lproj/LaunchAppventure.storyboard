@@ -1233,7 +1233,7 @@ Adventure Completed!</string>
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="BxS-r5-5t0" kind="presentation" identifier="StepSegue" id="c0g-5I-CJU"/>
+                                    <action selector="downloadAdventure:" destination="3oh-Ib-z7Y" eventType="touchUpInside" id="HTE-WP-kwF"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -1262,11 +1262,11 @@ Adventure Completed!</string>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
+                                <exclude reference="1Gq-UH-fDB"/>
+                                <exclude reference="7zz-uY-ZAh"/>
                                 <exclude reference="B1t-Mg-i0X"/>
                                 <exclude reference="FTa-Zu-aIJ"/>
                                 <exclude reference="Qvn-HX-6Cz"/>
-                                <exclude reference="1Gq-UH-fDB"/>
-                                <exclude reference="7zz-uY-ZAh"/>
                             </mask>
                         </variation>
                     </view>
@@ -1276,6 +1276,11 @@ Adventure Completed!</string>
                             <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>
                                 <action selector="popController:" destination="3oh-Ib-z7Y" id="odK-sB-u2f"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" image="BackButton" id="EGn-Sc-jBi">
+                            <connections>
+                                <action selector="menuPopUp:" destination="3oh-Ib-z7Y" id="imA-oM-Vbu"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -1292,6 +1297,7 @@ Adventure Completed!</string>
                         <outlet property="startButton" destination="MGD-W9-ECg" id="4IS-H6-rUh"/>
                         <outlet property="startingLocation" destination="8pD-8i-g0O" id="Kcq-jI-ydL"/>
                         <outlet property="tableView" destination="OEt-iJ-IPm" id="5K5-4m-Qj5"/>
+                        <segue destination="BxS-r5-5t0" kind="presentation" identifier="StartAdventure" id="J5i-5T-jEY"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oN6-GN-ohe" userLabel="First Responder" sceneMemberID="firstResponder"/>

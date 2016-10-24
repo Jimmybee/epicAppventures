@@ -13,12 +13,12 @@ import AVFoundation
 
 protocol AddStepTableViewControllerDelegate: NSObjectProtocol  {
     
-    func appendStep(step: AppventureStep, stepNumber: Int?)
+    func appendStep(step: AppventureStep, stepNumber: Int16?)
     func updateAppventureLocation(location: CLLocationCoordinate2D)
 }
 
 struct PlaceCache {
-    let name: String
+    let name: String?
     let coordinate : CLLocationCoordinate2D
     let address: String
     
@@ -181,7 +181,7 @@ class AddStepTableViewController: UITableViewController, UITextFieldDelegate, UI
     }
     
     func initialUISetup () {
-        let stepNumber = String(appventureStep.stepNumber!)
+        let stepNumber = String(appventureStep.stepNumber)
         self.navigationItem.title = ("Step: \(stepNumber)")
         
         
@@ -286,7 +286,7 @@ class AddStepTableViewController: UITableViewController, UITextFieldDelegate, UI
         self.dismissViewControllerAnimated(true, completion: nil)
         if editOfCurrentStep == true {
             currentStep = AppventureStep(step: appventureStep)
-            delegate?.appendStep(currentStep, stepNumber: currentStep.stepNumber!)
+            delegate?.appendStep(currentStep, stepNumber: currentStep.stepNumber)
             currentStep.save()
         } else {
             delegate?.appendStep(appventureStep, stepNumber: nil)
@@ -302,8 +302,8 @@ class AddStepTableViewController: UITableViewController, UITextFieldDelegate, UI
     
     func updateStep() {
         //add in all step sections here 
-        if let penalty = Int(self.hintPenalty.text!) { self.appventureStep.hintPenalty = penalty }
-        if let freeHints = Int(self.freeHintsTextField.text!) { self.appventureStep.freeHints = freeHints }
+        if let penalty = Int16(self.hintPenalty.text!) { self.appventureStep.hintPenalty = penalty }
+        if let freeHints = Int16(self.freeHintsTextField.text!) { self.appventureStep.freeHints = freeHints }
         if checkInControl.selectedSegmentIndex == 0 {
             appventureStep.setup[AppventureStep.setup.checkIn] = true
         } else {
@@ -313,12 +313,12 @@ class AddStepTableViewController: UITableViewController, UITextFieldDelegate, UI
         appventureStep.setup[AppventureStep.setup.pictureClue]  = pictureSwitch.on
         appventureStep.setup[AppventureStep.setup.textClue] = intialTextSwitch.on
         if let distanceText = checkInTextField.text {
-            if let distance = Int(distanceText) {
+            if let distance = Int16(distanceText) {
                 appventureStep.checkInProximity = distance
             }
         }
         if let hintNumberText = freeHintsTextField.text {
-            if let freeHintsInt = Int(hintNumberText) {
+            if let freeHintsInt = Int16(hintNumberText) {
                 appventureStep.freeHints = freeHintsInt
             }
         }

@@ -177,7 +177,7 @@ class UserSummaryViewController: UIViewController, UITableViewDelegate, UITableV
     
     func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         if (editingStyle == UITableViewCellEditingStyle.Delete) {
-            let objectID = ownedAppventures[indexPath.row].PFObjectID
+            let objectID = ownedAppventures[indexPath.row].pFObjectID
             let query = PFQuery(className: Appventure.pfAppventure.pfClass)
             query.getObjectInBackgroundWithId(objectID!) {
                 (object: PFObject?, error: NSError?) -> Void in

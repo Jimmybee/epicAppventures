@@ -11,7 +11,7 @@ import UIKit
 class TextClueViewController: UIViewController {
 
     
-    lazy var clueText : String = ""
+    lazy var clueText : String? = ""
     @IBOutlet weak var clueTextView: UITextView!
    
     override func viewDidLoad() {

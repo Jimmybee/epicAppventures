@@ -104,12 +104,12 @@ class CreateAppventureViewController: UIViewController, UITableViewDelegate, UIT
             //popup for name
             newAppventure = Appventure()
             User.user?.ownedAppventures.append(newAppventure)
-            newAppventure!.save()
+            newAppventure!.saveToParse()
             setupForNewAppventure()
             performSegueWithIdentifier(Constants.editAppventureDetailsSegue, sender: nil)
 
         } else {
-            AppventureStep.loadSteps(newAppventure!, vc: self)
+//            AppventureStep.loadSteps(newAppventure!, handler: stepsLoaded)
             updateUI()
         }
 
@@ -122,6 +122,10 @@ class CreateAppventureViewController: UIViewController, UITableViewDelegate, UIT
 //        editButton.action = "editDetailsSegue:"
 //        editButton.action = #selector(CreateAppventureViewController.editDetailsSegue(_:))
     
+    }
+    
+    func stepsLoaded(){
+        tableView.reloadData()
     }
     
     func setupForNewAppventure() {
@@ -173,7 +177,7 @@ class CreateAppventureViewController: UIViewController, UITableViewDelegate, UIT
         self.mapMarkers.removeAll()
         for step in isAppventure.appventureSteps {
             let marker = GMSMarker(position: step.coordinate)
-            marker.title = ("\(step.stepNumber!): \(step.nameOrLocation)")
+            marker.title = ("\(step.stepNumber): \(step.nameOrLocation)")
             marker.snippet = step.locationSubtitle
             marker.map = self.mapView
             mapMarkers.append(marker)
@@ -307,13 +311,13 @@ class CreateAppventureViewController: UIViewController, UITableViewDelegate, UIT
             break
         }
         
-        self.newAppventure.save()
+        self.newAppventure.saveToParse()
     }
     
     
     func goodForLive() -> String {
         var message = [String]()
-        if self.newAppventure.startingLocationName.characters.count == 0 { message.append("Starting Location") }
+        if self.newAppventure.startingLocationName!.characters.count == 0 { message.append("Starting Location") }
         if self.newAppventure.subtitle!.characters.count == 0 { message.append("Description") }
         if self.newAppventure.title!.characters.count == 0 { message.append("Name") }
         if self.newAppventure.appventureSteps.count == 0 { message.append("Steps") }
@@ -434,7 +438,7 @@ class CreateAppventureViewController: UIViewController, UITableViewDelegate, UIT
                             asvc.editOfCurrentStep = true
                         } else {
                             asvc.appventureStep.stepNumber = newAppventure.appventureSteps.count + 1
-                            asvc.appventureStep.AppventurePFObjectID = newAppventure.PFObjectID
+                            asvc.appventureStep.appventurePFObjectID = newAppventure.pFObjectID
                         }
                         asvc.lastLocation = self.lastLocation
                         asvc.delegate = self
@@ -484,7 +488,7 @@ class CreateAppventureViewController: UIViewController, UITableViewDelegate, UIT
         
         if row < newAppventure.appventureSteps.count  {
             if let step = newAppventure.appventureSteps[row] as AppventureStep! {
-                cell.StepID.text = "Step: \(step.stepNumber!) \(step.nameOrLocation)"
+                cell.StepID.text = "Step: \(step.stepNumber) \(step.nameOrLocation)"
                 var includedClues = [String]()
                 if step.setup[AppventureStep.setup.pictureClue] == true {includedClues.append("Picture")}
                 if step.setup[AppventureStep.setup.textClue] == true {includedClues.append("Text")}
@@ -534,7 +538,7 @@ class CreateAppventureViewController: UIViewController, UITableViewDelegate, UIT
     }
     
     func deleteStepFromDB(indexPath: NSIndexPath) {
-        let objectID = newAppventure.appventureSteps[indexPath.row].PFObjectID
+        let objectID = newAppventure.appventureSteps[indexPath.row].pFObjectID
         let query = PFQuery(className: AppventureStep.pfStep.pfClass)
         query.getObjectInBackgroundWithId(objectID!) {
             (object: PFObject?, error: NSError?) -> Void in
@@ -571,8 +575,8 @@ class CreateAppventureViewController: UIViewController, UITableViewDelegate, UIT
 
 extension CreateAppventureViewController : AddStepTableViewControllerDelegate {
     
-    func appendStep(step: AppventureStep, stepNumber: Int?) {
-        if let number = stepNumber as Int! {
+    func appendStep(step: AppventureStep, stepNumber: Int16?) {
+        if let number = stepNumber as Int16! {
             newAppventure.appventureSteps[number - 1] = step
         } else {
             newAppventure.appventureSteps.append(step)
@@ -590,7 +594,11 @@ extension CreateAppventureViewController : AddStepTableViewControllerDelegate {
 extension CreateAppventureViewController : ParseQueryHandler {
     
     func handleQueryResults(_: [PFObject]?, handlerCase: String?) {
-        HelperFunctions.loadAllData(newAppventure)
+        self.newAppventure.downloadAndSaveToCoreData(downloadComplete)
+    }
+    
+    func downloadComplete() {
+        
     }
 }
 

@@ -9,41 +9,27 @@
 import Foundation
 import MapKit
 import Parse
+import CoreData
 
- class Appventure: NSObject {
+ class Appventure: NSManagedObject {
     
     static private var currentAppventure: Appventure?
     
-     struct pfAppventure {
-        static let pfClass = "Appventure"
-        static let pfTitle = "appventureName"
-        static let pfSubtitle = "shortDescription"
-        static let pfCoordinate = "startingPoint"
-        static let pfRating = "rating"
-        static let pfNumOfRatings = "numOfRatings"
-        static let pfUserID = "OwnerId"
-        static let pfAppventureImage = "appventureImage"
-        static let pfTotalDistance = "totalDistance"
-        static let pfDuration = "duration"
-        static let pfStartingLocationName = "startingLocationName"
-        static let pfKeyFeatures = "keyFeatures"
-        static let pfRestrictions = "restrictions"
-        static let pfStatus = "status"
-    }
-    
-    var PFObjectID: String?
-    var userID: String?
-    var title: String? = ""
-    var subtitle: String? = ""
+//    var PFObjectID: String?
+//    var userID: String?
+//    var title: String? = ""
+//    var subtitle: String? = ""
     var coordinate: CLLocationCoordinate2D? = kCLLocationCoordinate2DInvalid
-    var startingLocationName = ""
-    var totalDistance:Double! = 0.0
-    var duration = ""
-    var image:UIImage? 
+//    var startingLocationName = ""
+//    var totalDistance:Double! = 0.0
+//    var duration = ""
+    var image:UIImage?
     var pfFile: PFFile?
     var keyFeatures = [String]()
     var restrictions = [String]()
+    var downloaded = false
     var liveStatus:LiveStatus = .inDevelopment
+    
     
     
     //updates separately
@@ -58,40 +44,125 @@ import Parse
     var tags: [String]?
     var rating = 2
     
-    override  init() {
+    convenience init () {
+        let context = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
+        let entity = NSEntityDescription.entityForName(CoreKeys.entityName, inManagedObjectContext: context)
+        self.init(entity: entity!, insertIntoManagedObjectContext: nil)
+    }
+    
+    static func currentAppventureID() -> String? {
+        return Appventure.currentAppventure?.pFObjectID
+    }
+    
+    static func setCurrentAppventure(appventure: Appventure) {
+        Appventure.currentAppventure = appventure
+    }
+    
+    //MARK: CoreData
+    
+    
+    struct CoreKeys {
+        static let entityName = "Appventure"
+    }
+    
+    
+    //Load methods
+    
+    class func loadAppventuresFromCoreData(handler: ([Appventure]) -> ()){
+        let fetchRequest = NSFetchRequest()
+        let managedContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
+        let entityDescription = NSEntityDescription.entityForName(CoreKeys.entityName, inManagedObjectContext: managedContext)
         
-    }
-    
-     init(PFObjectID: String, name: String, geoPoint: PFGeoPoint) {
-        self.title = name
-        self.coordinate = CLLocationCoordinate2DMake(geoPoint.latitude, geoPoint.longitude)
-        self.PFObjectID = PFObjectID
-    }
-    
-    init(object: PFObject) {
-        self.PFObjectID = object.objectId
-        self.title = object.objectForKey(pfAppventure.pfTitle) as? String
-        self.subtitle = object.objectForKey(pfAppventure.pfSubtitle) as? String
-        self.pfFile = object.objectForKey(Appventure.pfAppventure.pfAppventureImage) as? PFFile
-        if let point = object.objectForKey(Appventure.pfAppventure.pfCoordinate) as? PFGeoPoint {
-            self.coordinate = CLLocationCoordinate2DMake(point.latitude, point.longitude)
+        // Configure Fetch Request
+        fetchRequest.entity = entityDescription
+        
+        var appventures = [Appventure]()
+        
+        do {
+            let result = try managedContext.executeFetchRequest(fetchRequest)
+            if let objects = result as? [NSManagedObject] {
+                for object in objects{
+                    let appventure = object as! Appventure
+                    if let set = appventure.steps {
+                        for stepObject in set {
+                            let step = stepObject as! AppventureStep
+                            step.setValuesForObject()
+                            appventure.appventureSteps.append(step)
+                        }
+                    }
+                    appventure.downloaded = true
+                    if let data = appventure.imageData {
+                        appventure.image = UIImage(data: data)
+                    }
+                    appventures.append(appventure)
+                }
+                handler(appventures)
+            }
+        } catch {
+            let fetchError = error as NSError
+            print(fetchError)
         }
-        self.userID = object[pfAppventure.pfUserID] as? String
-        self.totalDistance = object[Appventure.pfAppventure.pfTotalDistance] as? Double
-        self.duration = object[pfAppventure.pfDuration] as! String
-        self.startingLocationName = object[pfAppventure.pfStartingLocationName] as! String
-        let tempString  = object[pfAppventure.pfKeyFeatures] as! String
-        self.keyFeatures = tempString.splitStringToArray()
-        let tempString2 = object[pfAppventure.pfRestrictions] as! String
-        self.restrictions  = tempString2.splitStringToArray()
-        if let status = object[pfAppventure.pfStatus] as? Int {
-            self.liveStatus = LiveStatus(rawValue: status)!
-        }
-        if let rating = object[pfAppventure.pfRating] as? Int {self.rating = rating}
+    }
+
+    
+    //Save methods
+    
+    func downloadAndSaveToCoreData (handler: () -> ()) {
+        AppventureStep.loadSteps(self, handler: handler)
     }
     
-    init(appventure: Appventure) {
-        self.PFObjectID = appventure.PFObjectID
+    func saveToCoreData(handler: () -> ()) {
+        //Add appventure to managed context
+        let context = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
+        context.insertObject(self)
+        
+        //Add steps to managed context
+        let stepSet = NSMutableOrderedSet()
+        for step in self.appventureSteps {
+            step.addToContext()
+            let object = step as NSManagedObject
+            stepSet.addObject(object)
+        }
+        
+        self.steps = stepSet
+        self.imageData = UIImagePNGRepresentation(self.image!)
+        
+        do {
+            try self.managedObjectContext?.save()
+            handler()
+        } catch let error as NSError  {
+            print("Could not save to CD.. \(error), \(error.userInfo)")
+        }
+    }
+    
+    class func saveAllToCoreData(appventures: [Appventure]) {
+        for appventure in appventures {
+            appventure.downloadAndSaveToCoreData(blank)
+        }
+    }
+    
+    class func blank() -> () {
+    }
+    
+    //delete from context
+    func deleteFromContext(handler: () -> ()) {
+        let context = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
+        context.deleteObject(self)
+        do {
+            try self.managedObjectContext?.save()
+            handler()
+        } catch let error as NSError  {
+            print("Could not save to CD.. \(error), \(error.userInfo)")
+        }
+    }
+    
+    //MARK: Make Copy
+    
+    convenience init(appventure: Appventure, previousContext: NSManagedObjectContext?) {
+        let context = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
+        let entity = NSEntityDescription.entityForName(CoreKeys.entityName, inManagedObjectContext: context)
+        self.init(entity: entity!, insertIntoManagedObjectContext: previousContext)
+        self.pFObjectID = appventure.pFObjectID
         self.title = appventure.title
         self.subtitle = appventure.subtitle
         self.pfFile = appventure.pfFile
@@ -104,81 +175,11 @@ import Parse
         self.restrictions = appventure.restrictions
         self.liveStatus = appventure.liveStatus
         self.rating = appventure.rating
-
+        
     }
     
-    class func loadLiveAdventures(location2D: CLLocationCoordinate2D, handler: ParseQueryHandler, handlerCase: String) {
-        ParseFunc.queryAppventures(location2D, liveStatus: LiveStatus.live.rawValue, vcHandler: handler, handlerCase: handlerCase)
-    }
     
-    class func loadUserAppventure(userPFID: String, handler: ParseQueryHandler, handlerCase: String) {
-        ParseFunc.queryAppventures(user: userPFID, vcHandler: handler, handlerCase: handlerCase)
-//        ParseFunc.parseQuery(pfAppventure.pfClass, location2D: nil, whereClause: userPFID, WhereKey: pfAppventure.pfUserID, vcHandler: handler)
-    }
     
-    func save() {
-        if self.PFObjectID == nil {
-            let saveObj = PFObject(className: pfAppventure.pfClass)
-            saveObject(saveObj)
-        } else {
-            ParseFunc.getParseObject(self.PFObjectID!, pfClass:  pfAppventure.pfClass, objFunc: saveObject)
-
-        }
-    }
-    
-    private func saveObject(save: PFObject) {
-        if self.appventureSteps.count > 0 {
-            if CLLocationCoordinate2DIsValid(appventureSteps[0].coordinate) {
-                self.coordinate = appventureSteps[0].coordinate
-                let point = PFGeoPoint(latitude: self.coordinate!.latitude, longitude: self.coordinate!.longitude)
-                save[pfAppventure.pfCoordinate] = point
-            }
-        }
-        let currentUser = PFUser.currentUser()
-        save[pfAppventure.pfTitle] = self.title
-        save[pfAppventure.pfSubtitle] = self.subtitle
-        save[pfAppventure.pfUserID] = currentUser?.objectId!
-        if let image = self.image {
-            save[pfAppventure.pfAppventureImage] = HelperFunctions.convertImage(image)
-        }
-        save[pfAppventure.pfTotalDistance] = self.totalDistance
-        save[pfAppventure.pfStartingLocationName] = self.startingLocationName
-        save[pfAppventure.pfDuration] = self.duration
-        save[pfAppventure.pfKeyFeatures] = self.keyFeatures.joinWithSeparator(",")
-        save[pfAppventure.pfRestrictions] = self.restrictions.joinWithSeparator(",")
-        save[pfAppventure.pfStatus] = self.liveStatus.rawValue
-        save[pfAppventure.pfRating] = self.rating
-        save.saveInBackgroundWithBlock { (success: Bool, error: NSError?) -> Void in
-            if let error = error {
-                let errorString = error.userInfo["error"] as? NSString
-                print("saveAppventure: \(errorString)")
-            } else {
-                self.PFObjectID = save.objectId!
-                self.saved = true
-            }
-        }
-    }
-    
-    func deleteAppventure() {
-        let query = PFQuery(className: Appventure.pfAppventure.pfClass)
-        query.getObjectInBackgroundWithId(self.PFObjectID!) {
-            (object: PFObject?, error: NSError?) -> Void in
-            if error != nil {
-                print("delete error \(error)")
-            } else {
-                object?.deleteInBackground()
-            }
-        }
-
-    }
-    
-    static func currentAppventureID() -> String? {
-        return Appventure.currentAppventure?.PFObjectID
-    }
-    
-    static func setCurrentAppventure(appventure: Appventure) {
-        Appventure.currentAppventure = appventure
-    }
     
 }
 

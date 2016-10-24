@@ -15,7 +15,7 @@ import UIKit
 class AppventureStartViewController: UIViewController {
     
     struct Constants {
-        static let segueToStep = "StepSegue"
+        static let StartAdventureSegue = "StartAdventure"
         static let CellID = "Cell"
     }
     
@@ -42,22 +42,19 @@ class AppventureStartViewController: UIViewController {
     //MARK: Controller Lifecyele
     override func viewDidLoad() {
         updateUI()
-//        startButton.enabled = false
-//        startButton.alpha = 0.5
        detailsSegmentControl.setTitleTextAttributes([NSFontAttributeName: UIFont(name: "Palatino", size: 15)!], forState: UIControlState.Normal) //, NSForegroundColorAttributeName:UIColor.whiteColor()
         detailsSegmentControl.selectedSegmentIndex = 0
-        AppventureStep.loadSteps(appventure, vc: self)
-        CompletedAppventure.loadAppventuresCompleted(appventure.PFObjectID!, handler: self)
-        AppventureReviews.loadAppventuresReviews(appventure.PFObjectID!, handler: self)
+        CompletedAppventure.loadAppventuresCompleted(appventure.pFObjectID!, handler: self)
+        AppventureReviews.loadAppventuresReviews(appventure.pFObjectID!, handler: self)
         HelperFunctions.hideTabBar(self)
+
+        
     }
     
    
     
     func updateUI () {
-        
         self.navigationItem.title = appventure.title
-//        self.navigationController?.navigationBarHidden = true
         self.appventureTitle.text = appventure.title
         descriptionLabel.text = appventure.subtitle!
         self.startingLocation.text = self.appventure.startingLocationName
@@ -67,20 +64,33 @@ class AppventureStartViewController: UIViewController {
         
         imageView.image = halfImage(appventure.image!)
         duration.text = appventure.duration
-//        startButton.layer.borderWidth = 1.5
-//        startButton.layer.borderColor = UIColor.whiteColor().CGColor
+        if self.appventure.downloaded == true {
+            startButton.setTitle("Play", forState: .Normal)
+        }
     }
-    
     
     //MARK: Navigation
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == Constants.segueToStep {
+        if segue.identifier == Constants.StartAdventureSegue {
             if let svc = segue.destinationViewController as? StepViewController {
                 svc.appventure = self.appventure
                 svc.completedAppventures = self.completedAppventures
             }
         }
+    }
+    
+    @IBAction func menuPopUp(sender: AnyObject) {
+        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
+        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: nil))
+
+        alert.addAction(UIAlertAction(title: "Report Content", style: .Default, handler: { action in
+            self.appventure.deleteFromContext({
+                
+            })
+        }))
+
+        self.presentViewController(alert, animated: true, completion: nil)
     }
     
     @IBAction func popController(sender: UIBarButtonItem) {
@@ -102,6 +112,19 @@ class AppventureStartViewController: UIViewController {
             tableView.reloadData()
         default: break
         }
+    }
+    
+    @IBAction func downloadAdventure(sender: AnyObject) {
+        if appventure.downloaded == true {
+            performSegueWithIdentifier(Constants.StartAdventureSegue, sender: nil)
+        } else {
+            appventure.downloadAndSaveToCoreData(downloadComplete)
+        }
+    }
+    
+    func downloadComplete() {
+        self.appventure.downloaded = true
+        self.startButton.setTitle("Play", forState: .Normal)
     }
     
     //MARK: Image Function
@@ -133,14 +156,6 @@ extension AppventureStartViewController : ParseQueryHandler {
             }
             completedAppventures.sortInPlace({ $0.time < $1.time })
             tableView.reloadData()
-        case AppventureStep.appventureStepsHc:
-            HelperFunctions.loadAllData(appventure)
-            if appventure.appventureSteps.count == 0 {
-                startButton.enabled = false
-            } else {
-                startButton.enabled = true
-                startButton.alpha = 1
-            }
         default:
             break
         }
@@ -148,6 +163,7 @@ extension AppventureStartViewController : ParseQueryHandler {
     }
     
 
+    
     @IBAction func tapForDirections(sender: UITapGestureRecognizer) {
         openMapLocation(sender)
     }
