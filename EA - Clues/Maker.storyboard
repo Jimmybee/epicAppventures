@@ -140,7 +140,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rUz-gc-VtF" customClass="GMSMapView">
+                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rUz-gc-VtF" customClass="GMSMapView">
                                 <rect key="frame" x="0.0" y="64" width="414" height="57"/>
                                 <color key="backgroundColor" red="0.43529411759999997" green="0.4431372549" blue="0.47450980390000003" alpha="1" colorSpace="calibratedRGB"/>
                                 <gestureRecognizers/>
@@ -418,8 +418,8 @@
                             <constraint firstItem="7pv-Tb-Cia" firstAttribute="centerX" secondItem="57w-bH-8X8" secondAttribute="centerX" id="62q-I6-Yoi"/>
                             <constraint firstItem="eJY-0o-Kal" firstAttribute="centerX" secondItem="7pv-Tb-Cia" secondAttribute="centerX" id="6gs-FC-jeT"/>
                             <constraint firstItem="rUz-gc-VtF" firstAttribute="height" secondItem="8PJ-H1-Woo" secondAttribute="height" id="D8u-ws-omd"/>
+                            <constraint firstItem="p33-Ma-SWU" firstAttribute="top" secondItem="rUz-gc-VtF" secondAttribute="bottom" constant="566" id="DGA-Fa-pcQ"/>
                             <constraint firstItem="p33-Ma-SWU" firstAttribute="top" secondItem="8PJ-H1-Woo" secondAttribute="bottom" id="UKB-E6-fq9"/>
-                            <constraint firstItem="rUz-gc-VtF" firstAttribute="bottom" secondItem="7pv-Tb-Cia" secondAttribute="bottom" constant="8" id="bvq-Jk-o3T"/>
                             <constraint firstItem="eJY-0o-Kal" firstAttribute="top" secondItem="7pv-Tb-Cia" secondAttribute="bottom" constant="8" symbolic="YES" id="cHW-qa-wsT"/>
                             <constraint firstItem="8PJ-H1-Woo" firstAttribute="centerX" secondItem="57w-bH-8X8" secondAttribute="centerX" id="dw4-LO-41T"/>
                             <constraint firstItem="eJY-0o-Kal" firstAttribute="height" secondItem="57w-bH-8X8" secondAttribute="height" id="hAn-vY-j2K"/>
@@ -440,7 +440,7 @@
                                 <exclude reference="hAn-vY-j2K"/>
                                 <exclude reference="p2c-w1-cxk"/>
                                 <exclude reference="mWy-Je-SOP"/>
-                                <exclude reference="xwS-Kb-8Pt"/>
+                                <exclude reference="DGA-Fa-pcQ"/>
                             </mask>
                         </variation>
                     </view>
@@ -472,8 +472,6 @@
                         <outlet property="durationLabel" destination="rFd-Xv-hZu" id="TTh-3s-7PG"/>
                         <outlet property="editButton" destination="1nG-z1-BnW" id="wWJ-C6-te5"/>
                         <outlet property="imageView" destination="XFP-oq-Sda" id="Bfi-E0-Ja9"/>
-                        <outlet property="mapBottomLayoutBottom" destination="xwS-Kb-8Pt" id="9q1-nr-fJF"/>
-                        <outlet property="mapBottomSegmentBottom" destination="bvq-Jk-o3T" id="fw7-om-ros"/>
                         <outlet property="mapView" destination="rUz-gc-VtF" id="Ulp-4r-DhO"/>
                         <outlet property="nameLabel" destination="HNc-T5-gOt" id="cYh-SE-KAl"/>
                         <outlet property="segmentControl" destination="7pv-Tb-Cia" id="G1a-LL-BgW"/>

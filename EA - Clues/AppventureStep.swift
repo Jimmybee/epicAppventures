@@ -32,9 +32,6 @@ import CoreData
         static let entityName = "AppventureStep"
     }
     
-    func getStepData() {
-        
-    }
     
     convenience init () {
         let context = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
@@ -42,13 +39,17 @@ import CoreData
         self.init(entity: entity!, insertIntoManagedObjectContext: nil)
     }
     
-    func addToContext() {
+    func updateCoreDataBridges() {
         if let image = self.image {self.imageData = UIImagePNGRepresentation(image)}
         self.setupObj = self.setup as NSObject
         self.answerHintObj = self.answerHint as NSObject
         self.answerTextObj = self.answerText as NSObject
         self.coordinateLon = self.coordinate.longitude
         self.coordinateLat = self.coordinate.latitude
+    }
+    
+    func addToContext() {
+        self.updateCoreDataBridges()
         let context = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
         context.insertObject(self)
     }
@@ -100,7 +101,7 @@ import CoreData
         AppventureStep.setup.distanceShown : Bool(),
     ]
     
-    static var dataLoads = 0
+    static var dataLoads = [String : Int]()
 
     
      class func convertStringToDictionary(text: String) -> [String:Bool]? {

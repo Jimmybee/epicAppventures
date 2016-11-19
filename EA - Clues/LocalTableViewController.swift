@@ -133,7 +133,13 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
     func loadUserAdventures() {
         
         Appventure.loadAppventuresFromCoreData { (downloadedAppventures) in
-            self.localAppventures = downloadedAppventures
+            for appventure in downloadedAppventures {
+                print(appventure.liveStatus)
+                if appventure.liveStatus != LiveStatus.inDevelopment{
+                    self.localAppventures.append(appventure)
+                }
+
+            }
             self.tableView.reloadData()
         }
         

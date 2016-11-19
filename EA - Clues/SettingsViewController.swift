@@ -17,6 +17,8 @@ import FBSDKCoreKit
 class SettingsTableViewController: UITableViewController {
     
     let rtfDisplay = "rtfDisplay"
+    let UserAppventuresHC = "UserAppventuresHC"
+    
     
     var myTable = UITableView()
     
@@ -26,6 +28,8 @@ class SettingsTableViewController: UITableViewController {
     @IBOutlet weak var makingAdventureCell: UITableViewCell!
     @IBOutlet weak var licencesCell: UITableViewCell!
     @IBOutlet weak var privacyCell: UITableViewCell!
+    @IBOutlet weak var restoreDataCell: UITableViewCell!
+
     
     @IBOutlet weak var createdAdventuresCount: UILabel!
     @IBOutlet weak var completedAdventuresCount: UILabel!
@@ -34,6 +38,7 @@ class SettingsTableViewController: UITableViewController {
     @IBOutlet weak var profileHeaderContainer: UIView!
     @IBOutlet weak var nonFacebookHeader: UIView!
     
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -90,6 +95,8 @@ class SettingsTableViewController: UITableViewController {
             switch cell {
             case logOutCell:
                 logoutPopup()
+            case restoreDataCell:
+                restoreLocalData()
             case howToPlayCell:
                 self.performSegueWithIdentifier(rtfDisplay, sender: RTFs.howToPlay)
             case choosingAdventureCell:
@@ -122,6 +129,12 @@ class SettingsTableViewController: UITableViewController {
         }))
         
         self.presentViewController(alert, animated: true, completion: nil)
+    }
+    
+    func restoreLocalData() {
+        CoreDataHelpers.deleteAllData(Appventure.CoreKeys.entityName)
+        CoreDataHelpers.deleteAllData(AppventureStep.CoreKeys.entityName)
+        Appventure.loadUserAppventure(User.user!.pfObject, handler: self, handlerCase: UserAppventuresHC)
     }
 
     @IBAction func dismissVC(sender: AnyObject) {
@@ -189,9 +202,26 @@ extension SettingsTableViewController : UserDataHandler {
 
 extension  SettingsTableViewController : ParseQueryHandler {
     func handleQueryResults(objects: [PFObject]?, handlerCase: String?) {
-        if let counted = objects?.count {
-                User.user?.createdAventures = counted
-                self.createdAdventuresCount.text = String(counted)
+        
+        if let handlerCase = handlerCase {
+            switch handlerCase {
+            case UserAppventuresHC:
+                var count = 0
+                for object in objects! {
+                    let appventure = Appventure(object: object)
+                    appventure.downloadAndSaveToCoreData({
+                        count += 1
+                    })
+                    print("Appventure: \(appventure.title) \(appventure.userID!) UserID: \(User.user?.pfObject)")
+
+                }
+            case "":
+                if let counted = objects?.count {
+                    User.user?.createdAventures = counted
+                    self.createdAdventuresCount.text = String(counted)
+                }
+            default: break
+            }
         }
     }
 }

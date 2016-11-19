@@ -114,7 +114,7 @@ extension Appventure {
         }
     }
     
-    func deleteAppventure() {
+    func deleteAppventureFromBackend() {
         let query = PFQuery(className: Appventure.pfAppventure.pfClass)
         query.getObjectInBackgroundWithId(self.pFObjectID!) {
             (object: PFObject?, error: NSError?) -> Void in
@@ -124,6 +124,8 @@ extension Appventure {
                 object?.deleteInBackground()
             }
         }
+        
+        
         
     }
 }

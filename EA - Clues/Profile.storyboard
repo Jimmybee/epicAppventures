@@ -478,8 +478,28 @@ If you have any questions regarding privacy while using the Application, or have
                             </tableViewSection>
                             <tableViewSection headerTitle=" " id="Fdq-lI-P9n">
                                 <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="z3Z-VP-vEa">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="3Z4-Tu-XMi">
                                         <rect key="frame" x="0.0" y="550" width="414" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="3Z4-Tu-XMi" id="dnm-b6-g89">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Restore Data" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nNc-ii-daX">
+                                                    <rect key="frame" x="11" y="11" width="99" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="nNc-ii-daX" firstAttribute="centerY" secondItem="dnm-b6-g89" secondAttribute="centerY" id="Zpf-aF-Fl3"/>
+                                                <constraint firstItem="nNc-ii-daX" firstAttribute="leading" secondItem="dnm-b6-g89" secondAttribute="leadingMargin" id="yvA-cy-kWo"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="z3Z-VP-vEa">
+                                        <rect key="frame" x="0.0" y="594" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="z3Z-VP-vEa" id="CoJ-7o-kZl">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="43"/>
@@ -503,7 +523,7 @@ If you have any questions regarding privacy while using the Application, or have
                             <tableViewSection headerTitle=" " id="j6v-iG-C9h">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="CIE-UL-AG1">
-                                        <rect key="frame" x="0.0" y="622" width="414" height="44"/>
+                                        <rect key="frame" x="0.0" y="666" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="CIE-UL-AG1" id="NdC-o8-lvx">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="43"/>
@@ -544,6 +564,7 @@ If you have any questions regarding privacy while using the Application, or have
                         <outlet property="nonFacebookHeader" destination="wGN-xc-7yy" id="cFA-8I-f9k"/>
                         <outlet property="privacyCell" destination="kud-Rk-rix" id="xuZ-L9-iQ6"/>
                         <outlet property="profileHeaderContainer" destination="Og6-Qi-1py" id="mWC-wY-9xF"/>
+                        <outlet property="restoreDataCell" destination="3Z4-Tu-XMi" id="xyz-2A-sHW"/>
                         <segue destination="j2h-3g-7Iz" kind="show" identifier="rtfDisplay" id="UUs-hp-ClH"/>
                     </connections>
                 </tableViewController>

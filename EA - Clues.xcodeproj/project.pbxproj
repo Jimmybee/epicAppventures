@@ -40,6 +40,7 @@
 		666678C01C64820600C4309C /* UIImage+ImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = 666678BF1C64820600C4309C /* UIImage+ImageEffects.m */; };
 		66706AA11C71F74B00038A74 /* ProfileHeaderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66706A9D1C71F74200038A74 /* ProfileHeaderViewController.swift */; };
 		66706AA51C71FA8000038A74 /* ProfileTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66706AA41C71FA8000038A74 /* ProfileTableViewController.swift */; };
+		668803591DCF85DD0010868F /* CoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668803581DCF85DD0010868F /* CoreData.swift */; };
 		6691FE371DA1801000BC54D0 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6691FE351DA1801000BC54D0 /* Model.xcdatamodeld */; };
 		66C916B81C61EAB300E39576 /* EditAppventureDetailsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C916B71C61EAB300E39576 /* EditAppventureDetailsTableViewController.swift */; };
 		66D7CD5F1C5B3F4E00ACB8E3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D7CD5E1C5B3F4E00ACB8E3 /* AppDelegate.swift */; };
@@ -155,6 +156,7 @@
 		667411F41CAFB9D700F42F81 /* EditTextClueViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditTextClueViewController.swift; sourceTree = "<group>"; };
 		667411F61CAFB9E700F42F81 /* RateViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RateViewController.swift; sourceTree = "<group>"; };
 		667968B31CD75DDA00FD512B /* MainNavViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MainNavViewController.swift; path = "../EA Clues Client/MainNavViewController.swift"; sourceTree = "<group>"; };
+		668803581DCF85DD0010868F /* CoreData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreData.swift; sourceTree = "<group>"; };
 		668A0B7C1C6A11A700E7EEF7 /* PictureClueViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PictureClueViewController.swift; sourceTree = "<group>"; };
 		668A0B7D1C6A11A700E7EEF7 /* PictureClueViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PictureClueViewController.xib; sourceTree = "<group>"; };
 		668A0B841C6B272600E7EEF7 /* MapCompassViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapCompassViewController.swift; sourceTree = "<group>"; };
@@ -428,6 +430,7 @@
 				66D7CD9F1C5B40BD00ACB8E3 /* HelperFunctions.swift */,
 				6663EAC81D64C4D4000F7BF9 /* largeTextContent.swift */,
 				6650D5151DA10D22008EAD27 /* RoundedButton.swift */,
+				668803581DCF85DD0010868F /* CoreData.swift */,
 				666678C21C64821100C4309C /* ObjC */,
 			);
 			name = "Shared Func";
@@ -772,6 +775,7 @@
 				6644AF3E1D6F5BAF007B7AEF /* NonFacebookHeaderViewController.swift in Sources */,
 				66D7CD931C5B405400ACB8E3 /* UserSummaryViewController.swift in Sources */,
 				66D7CDA11C5B40BD00ACB8E3 /* HelperFunctions.swift in Sources */,
+				668803591DCF85DD0010868F /* CoreData.swift in Sources */,
 				663166EF1D49ED910043064B /* SettingsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

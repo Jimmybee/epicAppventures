@@ -46,7 +46,9 @@ class LocalAppventureTableViewCell: UITableViewCell {
                 if error == nil {
                     if let imageData = imageData {
                         self.appventure!.image = UIImage(data:imageData)
-                        self.appventureImage.image = UIImage(data:imageData)
+                        dispatch_async(dispatch_get_main_queue()) { () -> Void in
+                            self.appventureImage.image = UIImage(data:imageData)
+                        }
                     } else {
                         let errorString = error!.userInfo["error"] as? NSString
                         print(errorString)
@@ -57,12 +59,12 @@ class LocalAppventureTableViewCell: UITableViewCell {
         
     }
     
-    func loadImage(image :UIImage) -> () {
-        dispatch_async(dispatch_get_main_queue()) { () -> Void in
-            self.appventureImage.image = image
-            self.appventure?.image = image
-        }
-    }
+//    func loadImage(image :UIImage) -> () {
+//        dispatch_async(dispatch_get_main_queue()) { () -> Void in
+//            self.appventureImage.image = image
+//            self.appventure?.image = image
+//        }
+//    }
 
     
     func updateUI() {
@@ -70,11 +72,15 @@ class LocalAppventureTableViewCell: UITableViewCell {
         duration.text = appventure?.duration
         appventureTitle.text = appventure?.title
         ratingDisplay.rating = (appventure?.rating)!
-        dispatch_async(dispatch_get_global_queue(QOS_CLASS_BACKGROUND, 0)) { () -> Void in
-            if self.appventure?.pfFile != nil {
-                self.loadImage()
-                self.ratingDisplay.layoutSubviews()
+        if appventure?.image == nil {
+            dispatch_async(dispatch_get_global_queue(QOS_CLASS_BACKGROUND, 0)) { () -> Void in
+                if self.appventure?.pfFile != nil {
+                    self.loadImage()
+                    self.ratingDisplay.layoutSubviews()
+                }
             }
+        } else {
+            appventureImage.image = appventure?.image
         }
     }
 

@@ -54,8 +54,8 @@ class CreateAppventureViewController: UIViewController, UITableViewDelegate, UIT
     @IBOutlet weak var stepsTopSegmentBottomCon: NSLayoutConstraint!
     @IBOutlet weak var stepsHeight: NSLayoutConstraint!
     
-    @IBOutlet weak var mapBottomSegmentBottom: NSLayoutConstraint!
-    @IBOutlet weak var mapBottomLayoutBottom: NSLayoutConstraint!
+//    @IBOutlet weak var mapBottomSegmentBottom: NSLayoutConstraint!
+//    @IBOutlet weak var mapBottomLayoutBottom: NSLayoutConstraint!
     
     @IBOutlet weak var detailsEqualSuperHeight: NSLayoutConstraint! // startsInactive
     @IBOutlet weak var detailsEqualSegmentControlBottom: NSLayoutConstraint! //detailsTop - starts active
@@ -104,7 +104,7 @@ class CreateAppventureViewController: UIViewController, UITableViewDelegate, UIT
             //popup for name
             newAppventure = Appventure()
             User.user?.ownedAppventures.append(newAppventure)
-            newAppventure!.saveToParse()
+            newAppventure!.saveAndSync()
             setupForNewAppventure()
             performSegueWithIdentifier(Constants.editAppventureDetailsSegue, sender: nil)
 
@@ -311,7 +311,7 @@ class CreateAppventureViewController: UIViewController, UITableViewDelegate, UIT
             break
         }
         
-        self.newAppventure.saveToParse()
+        self.newAppventure.saveAndSync()
     }
     
     
@@ -341,8 +341,8 @@ class CreateAppventureViewController: UIViewController, UITableViewDelegate, UIT
             UIView.animateWithDuration(0.3, animations: {
                 self.stepsTopSegmentBottomCon.active = false
                 self.stepsHeight.active = true
-                self.mapBottomLayoutBottom.active = false
-                self.mapBottomSegmentBottom.active = true
+//                self.mapBottomLayoutBottom.active = false
+//                self.mapBottomSegmentBottom.active = true
                 self.detailsUp()
                 self.view.layoutIfNeeded()
                 })
@@ -360,8 +360,8 @@ class CreateAppventureViewController: UIViewController, UITableViewDelegate, UIT
                 self.stepsHeight.active = false
                 self.detailsDown()
 
-                self.mapBottomLayoutBottom.active = false
-                self.mapBottomSegmentBottom.active = true
+//                self.mapBottomLayoutBottom.active = false
+//                self.mapBottomSegmentBottom.active = true
                 self.view.layoutIfNeeded()
                 })
             
@@ -378,8 +378,8 @@ class CreateAppventureViewController: UIViewController, UITableViewDelegate, UIT
                 self.stepsTopSegmentBottomCon.active = false
                 self.stepsHeight.active = true
                 self.detailsDown()
-                self.mapBottomLayoutBottom.active = true
-                self.mapBottomSegmentBottom.active = false
+//                self.mapBottomLayoutBottom.active = true
+//                self.mapBottomSegmentBottom.active = false
                 self.view.layoutIfNeeded()
                 })
         default: break

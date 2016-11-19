@@ -29,7 +29,7 @@ class ProfileTableViewController: UITableViewController {
         super.viewDidLoad()
         if User.checkLogin(false, vc: self) {
             if User.user!.ownedAppventures.count == 0 {
-                Appventure.loadUserAppventure(User.user!.pfObject, handler: self, handlerCase: UserAppventures)
+                loadUserAppventures()
             }
         }
         
@@ -56,13 +56,23 @@ class ProfileTableViewController: UITableViewController {
     
     
     func loadUserAppventures(){
-        Appventure.loadUserAppventure(User.user!.pfObject, handler: self, handlerCase: UserAppventures)
+        User.user?.ownedAppventures.removeAll()
+        self.tableView.reloadData()
+        Appventure.loadAppventuresFromCoreData { (downloadedAppventures) in
+            for appventure in downloadedAppventures {
+                print(appventure.liveStatus)
+                if appventure.userID == User.user?.pfObject {
+                    User.user?.ownedAppventures.append(appventure)
+                }
+            }
+            dispatch_async(dispatch_get_main_queue(), {
+                self.tableView.reloadData()
+                })
+        }
     }
     
     @IBAction func refeshTable(sender: UIRefreshControl) {
-        User.user?.ownedAppventures.removeAll()
-        self.tableView.reloadData()
-        Appventure.loadUserAppventure(User.user!.pfObject, handler: self, handlerCase: UserAppventures)
+        loadUserAppventures()
         sender.endRefreshing()
     }
 

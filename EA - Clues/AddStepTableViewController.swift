@@ -287,10 +287,10 @@ class AddStepTableViewController: UITableViewController, UITextFieldDelegate, UI
         if editOfCurrentStep == true {
             currentStep = AppventureStep(step: appventureStep)
             delegate?.appendStep(currentStep, stepNumber: currentStep.stepNumber)
-            currentStep.save()
+            currentStep.saveAndSync()
         } else {
             delegate?.appendStep(appventureStep, stepNumber: nil)
-            appventureStep.save()
+            appventureStep.saveAndSync()
         }
         
         if appventureStep.stepNumber == 1 {

@@ -83,11 +83,26 @@ class AppventureStartViewController: UIViewController {
     @IBAction func menuPopUp(sender: AnyObject) {
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
         alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: nil))
-
-        alert.addAction(UIAlertAction(title: "Report Content", style: .Default, handler: { action in
-            self.appventure.deleteFromContext({
-                
-            })
+        alert.addAction(UIAlertAction(title: "Remove Downloaded Content", style: .Default, handler: { action in
+            if self.appventure.userID != User.user?.pfObject {
+                self.appventure.deleteFromContext({
+                    dispatch_async(dispatch_get_main_queue()) { () -> Void in
+                        let completedRemoval = UIAlertController(title: "Removed", message: "Delete this appventure from your maker profile.", preferredStyle: UIAlertControllerStyle.Alert)
+                        completedRemoval.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
+                        self.presentViewController(completedRemoval, animated: true, completion: nil)
+                    }
+                })
+            } else {
+                self.appventure.liveStatus = LiveStatus.inDevelopment
+                self.appventure.saveAndSync()
+                self.appventure.completeSaveToContext({
+                    dispatch_async(dispatch_get_main_queue()) { () -> Void in
+                        let ownedAlert = UIAlertController(title: "Locally Created", message: "Appventure set to in development. Delete this appventure from your maker profile.", preferredStyle: UIAlertControllerStyle.Alert)
+                        ownedAlert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default , handler: nil))
+                        self.presentViewController(ownedAlert, animated: true, completion: nil)
+                    }
+                })
+            }
         }))
 
         self.presentViewController(alert, animated: true, completion: nil)

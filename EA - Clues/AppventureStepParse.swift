@@ -72,7 +72,17 @@ extension AppventureStep {
         }
     }
     
-    func save(){
+    func saveAndSync() {
+        self.saveBackend()
+        self.updateCoreDataBridges()
+        do {
+            try self.managedObjectContext?.save()
+        } catch let error as NSError  {
+            print("Could not save to CD.. \(error), \(error.userInfo)")
+        }
+    }
+    
+    private func saveBackend(){
         if self.pFObjectID == "" {
             let saveObj = PFObject(className: pfStep.pfClass)
             saveObject(saveObj)
@@ -138,12 +148,13 @@ extension AppventureStep {
     }
     
     private class func getStepData(appventure: Appventure, handler: () -> ()) {
-        dataLoads += 100
+//        print("Appventure \(appventure.title!)")
+        dataLoads[appventure.pFObjectID!] = 100
         for step in appventure.appventureSteps {
             if let soundFile = step.soundPFFile as PFFile! {
-                dataLoads += 1
+                dataLoads[appventure.pFObjectID!]! += 1
                 soundFile.getDataInBackgroundWithBlock({ (data, error) -> Void in
-                    self.dataLoads -= 1
+                    self.dataLoads[appventure.pFObjectID!]! -= 1
                     if error == nil {
                         step.sound = data
                     }
@@ -151,9 +162,10 @@ extension AppventureStep {
                 })
             }
             if let imageFile = step.imagePFFile as PFFile! {
-                dataLoads += 1
+                dataLoads[appventure.pFObjectID!]! += 1
                 imageFile.getDataInBackgroundWithBlock({ (data, error) -> Void in
-                    self.dataLoads -= 1
+                    self.dataLoads[appventure.pFObjectID!]! -= 1
+
                     if error == nil {
                         if let dataFound = data {
                             step.image = UIImage(data: dataFound)
@@ -164,11 +176,15 @@ extension AppventureStep {
             }
             
         }
-        dataLoads -= 100
+        self.dataLoads[appventure.pFObjectID!]! -= 100
+        self.checkAndSave(appventure, handler: handler)
+
     }
     
     private class func checkAndSave(appventure: Appventure, handler: () -> ()) {
-        if dataLoads == 0 {
+        
+//        print("Appventure: \(appventure.title)  & loads:\(dataLoads[appventure.pFObjectID!])")
+        if dataLoads[appventure.pFObjectID!] == 0 {
             appventure.saveToCoreData(handler)
         }
     }

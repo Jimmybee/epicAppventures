@@ -81,16 +81,24 @@ import CoreData
         do {
             let result = try managedContext.executeFetchRequest(fetchRequest)
             if let objects = result as? [NSManagedObject] {
+                print("fetchedCoreAppventures \(objects.count)")
                 for object in objects{
                     let appventure = object as! Appventure
+                    print(appventure.steps?.count)
+                    appventure.appventureSteps.removeAll()
+
                     if let set = appventure.steps {
                         for stepObject in set {
                             let step = stepObject as! AppventureStep
                             step.setValuesForObject()
                             appventure.appventureSteps.append(step)
-                        }
                     }
+                        print(" \(appventure.startingLocationName) \(appventure.appventureSteps.count)")                        }
+
                     appventure.downloaded = true
+                    if let liveStatus = LiveStatus(rawValue: Int(appventure.liveStatusNum)) {
+                        appventure.liveStatus = liveStatus
+                    }
                     if let data = appventure.imageData {
                         appventure.image = UIImage(data: data)
                     }
@@ -112,6 +120,7 @@ import CoreData
     }
     
     func saveToCoreData(handler: () -> ()) {
+//        print("Appventure: \(self.title)")
         //Add appventure to managed context
         let context = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
         context.insertObject(self)
@@ -125,8 +134,31 @@ import CoreData
         }
         
         self.steps = stepSet
-        self.imageData = UIImagePNGRepresentation(self.image!)
+//        print("setSteps :\(self.steps?.count)")
+
         
+        if let imageFile = self.pfFile as PFFile! {
+            imageFile.getDataInBackgroundWithBlock({ (data, error) -> Void in
+                if error == nil {
+                    if let dataFound = data {
+                        self.image = UIImage(data: dataFound)
+                        self.completeSaveToContext(handler)
+                    }
+                }
+            })
+        }
+        
+    }
+    
+    
+    func saveAndSync() {
+        self.completeSaveToContext({})
+        self.saveToParse()
+    }
+    
+    func completeSaveToContext(handler: () -> ()) {
+        self.imageData = UIImagePNGRepresentation(self.image!)
+        self.liveStatusNum = Int16(self.liveStatus.rawValue)
         do {
             try self.managedObjectContext?.save()
             handler()
@@ -137,14 +169,18 @@ import CoreData
     
     class func saveAllToCoreData(appventures: [Appventure]) {
         for appventure in appventures {
-            appventure.downloadAndSaveToCoreData(blank)
+            appventure.downloadAndSaveToCoreData({
+            
+            })
         }
     }
     
-    class func blank() -> () {
-    }
-    
     //delete from context
+    
+    func deleteAppventure() {
+        self.deleteAppventureFromBackend()
+        self.deleteFromContext({})
+    }
     func deleteFromContext(handler: () -> ()) {
         let context = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
         context.deleteObject(self)
