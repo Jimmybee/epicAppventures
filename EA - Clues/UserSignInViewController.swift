@@ -9,7 +9,7 @@
 import UIKit
 import FBSDKCoreKit
 import FBSDKLoginKit
-import ParseFacebookUtilsV4
+//import ParseFacebookUtilsV4
 
 class UserSignInViewController: UIViewController {
 
@@ -40,29 +40,29 @@ class UserSignInViewController: UIViewController {
     @IBAction func facebookLogin(sender: UIButton) {
         pause()
         
-        PFFacebookUtils.logInInBackgroundWithReadPermissions(fbLoginParameters, block: { (object:PFUser?, error:NSError?) -> Void in
-            if(error != nil)
-            {//Display an alert message
-                let myAlert = UIAlertController(title:"Alert", message:error?.localizedDescription, preferredStyle: UIAlertControllerStyle.Alert);
-                let okAction =  UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: nil)
-                myAlert.addAction(okAction);
-                self.presentViewController(myAlert, animated:true, completion:nil);
-                return
-            } else {
-                self.dismissViewControllerAnimated(true, completion: nil)
-                if PFUser.currentUser()?.objectId == nil {
-                    self.restore()
-                    self.failedSingup()
-                } else {
-                    User.user = User(pfUser: PFUser.currentUser()!)
-                    NSNotificationCenter.defaultCenter().postNotificationName(User.userInitCompleteNotification, object: self)
-                    if let pwvc = self.parentViewController as? ProfileWrapperViewController  {
-                        self.restore()
-                        pwvc.showForUser()
-                    }
-                }
-            }
-        })
+//        PFFacebookUtils.logInInBackgroundWithReadPermissions(fbLoginParameters, block: { (object:PFUser?, error:NSError?) -> Void in
+//            if(error != nil)
+//            {//Display an alert message
+//                let myAlert = UIAlertController(title:"Alert", message:error?.localizedDescription, preferredStyle: UIAlertControllerStyle.Alert);
+//                let okAction =  UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: nil)
+//                myAlert.addAction(okAction);
+//                self.presentViewController(myAlert, animated:true, completion:nil);
+//                return
+//            } else {
+//                self.dismissViewControllerAnimated(true, completion: nil)
+//                if PFUser.currentUser()?.objectId == nil {
+//                    self.restore()
+//                    self.failedSingup()
+//                } else {
+//                    User.user = User(pfUser: PFUser.currentUser()!)
+//                    NSNotificationCenter.defaultCenter().postNotificationName(User.userInitCompleteNotification, object: self)
+//                    if let pwvc = self.parentViewController as? ProfileWrapperViewController  {
+//                        self.restore()
+//                        pwvc.showForUser()
+//                    }
+//                }
+//            }
+//        })
         
     }
     

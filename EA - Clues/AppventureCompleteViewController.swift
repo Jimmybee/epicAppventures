@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import Parse
+//import Parse
 import FBSDKShareKit
 import FBSDKCoreKit
 
@@ -87,7 +87,7 @@ class AppventureCompleteViewController: UIViewController {
             content.contentTitle = "Appventure Completed"
             content.contentDescription = "I have just completed \(appventure.title!) in \(formatTime!)"
             if let imageURL = appventure.pfFile?.url {
-                content.imageURL = NSURL(string: imageURL)
+                content.imageURL = NSURL(string: String(imageURL))
             }
             shareButton.shareContent = content
         }

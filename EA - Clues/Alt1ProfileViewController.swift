@@ -7,10 +7,10 @@
 //
 
 import UIKit
-import Parse
+//import Parse
 import FBSDKCoreKit
 import FBSDKLoginKit
-import ParseFacebookUtilsV4
+//import ParseFacebookUtilsV4
 
 class Alt1ProfileViewController: UserSummaryViewController {
 
@@ -51,18 +51,18 @@ class Alt1ProfileViewController: UserSummaryViewController {
     override func updateUI() {
         userName.text = "\(user.firstName) \(user.lastName)"
     }
-    
-    override func handleQueryResults(objects: [PFObject]?, handlerCase: String?) {
-        if let isPFArray = objects as [PFObject]! {
-            for object in isPFArray {
-                let appventure = Appventure(object: object)
-                ParseFunc.loadImage(appventure)
-                self.ownedAppventures.append(appventure)
-            }
-        }
-        //        tableView.reloadData()
-        //        tableLoadSpinner.stopAnimating()
-    }
+//    
+//    override func handleQueryResults(objects: [PFObject]?, handlerCase: String?) {
+//        if let isPFArray = objects as [PFObject]! {
+//            for object in isPFArray {
+//                let appventure = Appventure(object: object)
+//                ParseFunc.loadImage(appventure)
+//                self.ownedAppventures.append(appventure)
+//            }
+//        }
+//        //        tableView.reloadData()
+//        //        tableLoadSpinner.stopAnimating()
+//    }
     
 
 }

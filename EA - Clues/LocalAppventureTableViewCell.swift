@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import Parse
+//import Parse
 
 class LocalAppventureTableViewCell: UITableViewCell {
 
@@ -40,22 +40,22 @@ class LocalAppventureTableViewCell: UITableViewCell {
     //MARK: Load Image
     
     func loadImage() {
-        if let pfImageFile = appventure!.pfFile as PFFile! {
-            pfImageFile.getDataInBackgroundWithBlock {
-                (imageData: NSData?, error: NSError?) -> Void in
-                if error == nil {
-                    if let imageData = imageData {
-                        self.appventure!.image = UIImage(data:imageData)
-                        dispatch_async(dispatch_get_main_queue()) { () -> Void in
-                            self.appventureImage.image = UIImage(data:imageData)
-                        }
-                    } else {
-                        let errorString = error!.userInfo["error"] as? NSString
-                        print(errorString)
-                    }
-                }
-            }
-        }
+//        if let pfImageFile = appventure!.pfFile as PFFile! {
+//            pfImageFile.getDataInBackgroundWithBlock {
+//                (imageData: NSData?, error: NSError?) -> Void in
+//                if error == nil {
+//                    if let imageData = imageData {
+//                        self.appventure!.image = UIImage(data:imageData)
+//                        dispatch_async(dispatch_get_main_queue()) { () -> Void in
+//                            self.appventureImage.image = UIImage(data:imageData)
+//                        }
+//                    } else {
+//                        let errorString = error!.userInfo["error"] as? NSString
+//                        print(errorString)
+//                    }
+//                }
+//            }
+//        }
         
     }
     

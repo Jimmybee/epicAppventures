@@ -8,7 +8,7 @@
 
 import Foundation
 import MapKit
-import Parse
+//import Parse
 import CoreData
 
  class Appventure: NSManagedObject {
@@ -24,7 +24,7 @@ import CoreData
 //    var totalDistance:Double! = 0.0
 //    var duration = ""
     var image:UIImage?
-    var pfFile: PFFile?
+    var pfFile: AnyObject?
     var keyFeatures = [String]()
     var restrictions = [String]()
     var downloaded = false
@@ -137,15 +137,15 @@ import CoreData
 //        print("setSteps :\(self.steps?.count)")
 
         
-        if let imageFile = self.pfFile as PFFile! {
-            imageFile.getDataInBackgroundWithBlock({ (data, error) -> Void in
-                if error == nil {
-                    if let dataFound = data {
-                        self.image = UIImage(data: dataFound)
-                        self.completeSaveToContext(handler)
-                    }
-                }
-            })
+        if let imageFile = self.pfFile as AnyObject! {
+//            imageFile.getDataInBackgroundWithBlock({ (data, error) -> Void in
+//                if error == nil {
+//                    if let dataFound = data {
+//                        self.image = UIImage(data: dataFound)
+//                        self.completeSaveToContext(handler)
+//                    }
+//                }
+//            })
         }
         
     }

@@ -10,10 +10,10 @@
 
 import UIKit
 import Bolts
-import Parse
+//import Parse
 import FBSDKCoreKit
 import FBSDKLoginKit
-import ParseFacebookUtilsV4
+//import ParseFacebookUtilsV4
 import GooglePlaces
 import GoogleMaps
 import CoreData
@@ -52,38 +52,38 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         */
         
         //Appventure
-        Parse.setApplicationId("sO6wHlsJnZKM6s5L19C6uZfe6xxhDBSexxHW6yk8", clientKey: "nrfmHUjnJDt71YGNJA4PBbgxkEpenD1wzD8Xdy1n")
+//        Parse.setApplicationId("sO6wHlsJnZKM6s5L19C6uZfe6xxhDBSexxHW6yk8", clientKey: "nrfmHUjnJDt71YGNJA4PBbgxkEpenD1wzD8Xdy1n")
         
         //GMS
         
         GMSServices.provideAPIKey("AIzaSyDhyHZPC_SW2khLb02QqQ57fF5Wj68tjGs")
         GMSPlacesClient.provideAPIKey("AIzaSyDhyHZPC_SW2khLb02QqQ57fF5Wj68tjGs")
         
-        PFFacebookUtils.initializeFacebookWithApplicationLaunchOptions(launchOptions)
-        PFUser.enableAutomaticUser()
+//        PFFacebookUtils.initializeFacebookWithApplicationLaunchOptions(launchOptions)
+//        PFUser.enableAutomaticUser()
         
-        let defaultACL = PFACL();
+//        let defaultACL = PFACL();
         
         // If you would like all objects to be private by default, remove this line.
-        defaultACL.publicReadAccess = true
+//        defaultACL.publicReadAccess = true
         
-        PFACL.setDefaultACL(defaultACL, withAccessForCurrentUser:true)
-        
-        if application.applicationState != UIApplicationState.Background {
-            
-            
-            let preBackgroundPush = !application.respondsToSelector("backgroundRefreshStatus:")
-            let oldPushHandlerOnly = !self.respondsToSelector("didReceiveRemoteNotification:fetchCompletionHandler:")
-
-//            let oldPushHandlerOnly = !self.respondsToSelector(#selector(UIApplicationDelegate.application(_:didReceiveRemoteNotification:fetchCompletionHandler:)))
-            var noPushPayload = false;
-            if let options = launchOptions {
-                noPushPayload = options[UIApplicationLaunchOptionsRemoteNotificationKey] != nil;
-            }
-            if (preBackgroundPush || oldPushHandlerOnly || noPushPayload) {
-                PFAnalytics.trackAppOpenedWithLaunchOptions(launchOptions)
-            }
-        }
+//        PFACL.setDefaultACL(defaultACL, withAccessForCurrentUser:true)
+//        
+//        if application.applicationState != UIApplicationState.Background {
+//            
+//            
+//            let preBackgroundPush = !application.respondsToSelector("backgroundRefreshStatus:")
+//            let oldPushHandlerOnly = !self.respondsToSelector("didReceiveRemoteNotification:fetchCompletionHandler:")
+//
+////            let oldPushHandlerOnly = !self.respondsToSelector(#selector(UIApplicationDelegate.application(_:didReceiveRemoteNotification:fetchCompletionHandler:)))
+//            var noPushPayload = false;
+//            if let options = launchOptions {
+//                noPushPayload = options[UIApplicationLaunchOptionsRemoteNotificationKey] != nil;
+//            }
+//            if (preBackgroundPush || oldPushHandlerOnly || noPushPayload) {
+//                PFAnalytics.trackAppOpenedWithLaunchOptions(launchOptions)
+//            }
+//        }
         
         
         //
@@ -125,19 +125,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // MARK: Push Notifications
     //--------------------------------------
     
-    func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
-        let installation = PFInstallation.currentInstallation()
-        installation!.setDeviceTokenFromData(deviceToken)
-        installation!.saveInBackground()
-        
-        PFPush.subscribeToChannelInBackground("") { (succeeded: Bool, error: NSError?) in
-            if succeeded {
-                print("ParseStarterProject successfully subscribed to push notifications on the broadcast channel.\n");
-            } else {
-                print("ParseStarterProject failed to subscribe to push notifications on the broadcast channel with error = %@.\n", error)
-            }
-        }
-    }
+//    func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
+//        let installation = PFInstallation.currentInstallation()
+//        installation!.setDeviceTokenFromData(deviceToken)
+//        installation!.saveInBackground()
+//        
+//        PFPush.subscribeToChannelInBackground("") { (succeeded: Bool, error: NSError?) in
+//            if succeeded {
+//                print("ParseStarterProject successfully subscribed to push notifications on the broadcast channel.\n");
+//            } else {
+//                print("ParseStarterProject failed to subscribe to push notifications on the broadcast channel with error = %@.\n", error)
+//            }
+//        }
+//    }
     
     func application(application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: NSError) {
         if error.code == 3010 {
@@ -148,10 +148,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
-        PFPush.handlePush(userInfo)
-        if application.applicationState == UIApplicationState.Inactive {
-            PFAnalytics.trackAppOpenedWithRemoteNotificationPayload(userInfo)
-        }
+//        PFPush.handlePush(userInfo)
+//        if application.applicationState == UIApplicationState.Inactive {
+//            PFAnalytics.trackAppOpenedWithRemoteNotificationPayload(userInfo)
+//        }
     }
     
     ///////////////////////////////////////////////////////////

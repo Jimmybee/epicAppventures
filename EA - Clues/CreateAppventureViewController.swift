@@ -8,7 +8,7 @@
 
 import UIKit
 import MapKit
-import Parse
+//import Parse
 import GoogleMaps
 
 protocol CreateAppventureViewControllerDelegate: NSObjectProtocol {
@@ -538,16 +538,16 @@ class CreateAppventureViewController: UIViewController, UITableViewDelegate, UIT
     }
     
     func deleteStepFromDB(indexPath: NSIndexPath) {
-        let objectID = newAppventure.appventureSteps[indexPath.row].pFObjectID
-        let query = PFQuery(className: AppventureStep.pfStep.pfClass)
-        query.getObjectInBackgroundWithId(objectID!) {
-            (object: PFObject?, error: NSError?) -> Void in
-            if error != nil {
-                print(error)
-            } else {
-                object?.deleteInBackground()
-            }
-        }
+//        let objectID = newAppventure.appventureSteps[indexPath.row].pFObjectID
+//        let query = PFQuery(className: AppventureStep.pfStep.pfClass)
+//        query.getObjectInBackgroundWithId(objectID!) {
+//            (object: PFObject?, error: NSError?) -> Void in
+//            if error != nil {
+//                print(error)
+//            } else {
+//                object?.deleteInBackground()
+//            }
+//        }
 
     }
 
@@ -593,7 +593,7 @@ extension CreateAppventureViewController : AddStepTableViewControllerDelegate {
 
 extension CreateAppventureViewController : ParseQueryHandler {
     
-    func handleQueryResults(_: [PFObject]?, handlerCase: String?) {
+    func handleQueryResults(_: [AnyObject]?, handlerCase: String?) {
         self.newAppventure.downloadAndSaveToCoreData(downloadComplete)
     }
     

@@ -8,7 +8,7 @@
 
 
 import Foundation
-import Parse
+//import Parse
 
 class FlaggedContent: NSObject {
     
@@ -40,42 +40,42 @@ class FlaggedContent: NSObject {
         self.stepFKID = stepFKID    
     }
     
-    init(object: PFObject) {
-        self.pfObjectID = object.objectId!
-        self.appventureFKID = object.objectForKey(parseCol.appventureFKID) as! String
-        self.stepFKID = object.objectForKey(parseCol.stepFKID) as! String
-        self.date = object.objectForKey(parseCol.date) as! NSDate
-        if let statusIs = object.objectForKey(parseCol.date) as? Int {
-            self.status = Status(rawValue: statusIs)!
-        }
+    init(object: AnyObject) {
+//        self.pfObjectID = object.objectId!
+//        self.appventureFKID = object.objectForKey(parseCol.appventureFKID) as! String
+//        self.stepFKID = object.objectForKey(parseCol.stepFKID) as! String
+//        self.date = object.objectForKey(parseCol.date) as! NSDate
+//        if let statusIs = object.objectForKey(parseCol.date) as? Int {
+//            self.status = Status(rawValue: statusIs)!
+//        }
     }
     
     func save(){
-        if self.pfObjectID == "" {
-            let saveObj = PFObject(className: parseCol.pfClass)
-            saveObject(saveObj)
-        } else {
-            ParseFunc.getParseObject(self.pfObjectID, pfClass:  parseCol.pfClass, objFunc: saveObject)
-        }
+//        if self.pfObjectID == "" {
+//            let saveObj = PFObject(className: parseCol.pfClass)
+//            saveObject(saveObj)
+//        } else {
+//            ParseFunc.getParseObject(self.pfObjectID, pfClass:  parseCol.pfClass, objFunc: saveObject)
+//        }
     }
     
-    private func saveObject(save: PFObject) {
-        save[parseCol.appventureFKID] = self.appventureFKID
-        save[parseCol.stepFKID] = self.stepFKID
-        save[parseCol.date] = self.date
-        save.saveInBackgroundWithBlock { (success: Bool, error: NSError?) -> Void in
-            if let error = error {
-                let errorString = error.userInfo["error"] as? NSString
-                print(errorString)
-            } else {
-                self.pfObjectID = save.objectId!
-                print("contentFlagged")
-            }
-        }
+    private func saveObject(save: AnyObject) {
+//        save[parseCol.appventureFKID] = self.appventureFKID
+//        save[parseCol.stepFKID] = self.stepFKID
+//        save[parseCol.date] = self.date
+//        save.saveInBackgroundWithBlock { (success: Bool, error: NSError?) -> Void in
+//            if let error = error {
+//                let errorString = error.userInfo["error"] as? NSString
+//                print(errorString)
+//            } else {
+//                self.pfObjectID = save.objectId!
+//                print("contentFlagged")
+//            }
+//        }
     }
     
     class func loadFlaggedContent(appventureID: String, handler: ParseQueryHandler) {
-        ParseFunc.parseQuery(parseCol.pfClass, location2D: nil, whereClause: appventureID, WhereKey: parseCol.appventureFKID, vcHandler: handler, handlerCase: appventureReviewsHC)
+//        ParseFunc.parseQuery(parseCol.pfClass, location2D: nil, whereClause: appventureID, WhereKey: parseCol.appventureFKID, vcHandler: handler, handlerCase: appventureReviewsHC)
     }
     
     

@@ -8,7 +8,7 @@
 
 import Foundation
 import MapKit
-import Parse
+//import Parse
 import CoreData
 
 
@@ -71,9 +71,9 @@ import CoreData
      var locationSubtitle = "set location"
 //     var initialText = ""
      var image: UIImage?
-     var imagePFFile: PFFile?
+     var imagePFFile: AnyObject?
 //     var sound: NSData?
-     var soundPFFile: PFFile?
+     var soundPFFile: AnyObject?
     
      var coordinate = kCLLocationCoordinate2DInvalid
      //var placemark: MKPlacemark?

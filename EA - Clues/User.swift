@@ -7,10 +7,10 @@
 //
 
 import Foundation
-import Parse
+//import Parse
 import FBSDKCoreKit
 import FBSDKLoginKit
-import ParseFacebookUtilsV4
+//import ParseFacebookUtilsV4
 
 
 
@@ -79,26 +79,26 @@ class User: NSObject {
         
     }
     
-    init(pfUser: PFUser) {
+    init(pfUser: AnyObject) {
         super.init()
-        self.pfObject = pfUser.objectId!
-
-        if let firstName = pfUser.objectForKey(parseCol.firstName) as? String {
-            self.firstName = firstName
-        }
-        if let lastName = pfUser.objectForKey(parseCol.lastName)  as? String {
-            self.lastName = lastName
-        }
-        if let facebookId = pfUser.objectForKey(parseCol.facebookId)  as? String {
-            self.facebookId = facebookId
-        }
-//        self.email = pfUser.objectForKey(parseCol.email) as! String
-        
-        if PFFacebookUtils.isLinkedWithUser(pfUser){
-            self.facebookConnected = true
-            if !loadLocalData() { self.loadFBData() }
-            self.getFriends()
-        }
+//        self.pfObject = pfUser.objectId!
+//
+//        if let firstName = pfUser.objectForKey(parseCol.firstName) as? String {
+//            self.firstName = firstName
+//        }
+//        if let lastName = pfUser.objectForKey(parseCol.lastName)  as? String {
+//            self.lastName = lastName
+//        }
+//        if let facebookId = pfUser.objectForKey(parseCol.facebookId)  as? String {
+//            self.facebookId = facebookId
+//        }
+////        self.email = pfUser.objectForKey(parseCol.email) as! String
+//        
+//        if PFFacebookUtils.isLinkedWithUser(pfUser){
+//            self.facebookConnected = true
+//            if !loadLocalData() { self.loadFBData() }
+//            self.getFriends()
+//        }
     }
     
     func loadLocalData() -> Bool {
@@ -124,34 +124,34 @@ class User: NSObject {
     
     func logout() {
         //Spinner
-        PFUser.logOutInBackgroundWithBlock { (error) in
-            if error == nil {
-                User.user = nil
-                NSNotificationCenter.defaultCenter().postNotificationName(User.userLoggedOutNotification, object: self)
-            } else {
-                //Handle Error
-            }
-
-        }
+//        PFUser.logOutInBackgroundWithBlock { (error) in
+//            if error == nil {
+//                User.user = nil
+//                NSNotificationCenter.defaultCenter().postNotificationName(User.userLoggedOutNotification, object: self)
+//            } else {
+//                //Handle Error
+//            }
+//
+//        }
         
     }
     
     func updateUser() { //Save function
-        if let currentUser = PFUser.currentUser() as PFUser! {
-            currentUser[parseCol.firstName] = self.firstName
-            currentUser[parseCol.lastName] = self.lastName
-            currentUser[parseCol.email] = self.email
-            currentUser[parseCol.facebookId] = self.facebookId
-
-            currentUser.saveInBackgroundWithBlock { (success: Bool, error: NSError?) -> Void in
-                if let error = error {
-                    let errorString = error.userInfo["error"] as? NSString
-                    print(errorString)
-                } else {
-                    print("savedUser")
-                }
-            }
-        }
+//        if let currentUser = PFUser.currentUser() as PFUser! {
+//            currentUser[parseCol.firstName] = self.firstName
+//            currentUser[parseCol.lastName] = self.lastName
+//            currentUser[parseCol.email] = self.email
+//            currentUser[parseCol.facebookId] = self.facebookId
+//
+//            currentUser.saveInBackgroundWithBlock { (success: Bool, error: NSError?) -> Void in
+//                if let error = error {
+//                    let errorString = error.userInfo["error"] as? NSString
+//                    print(errorString)
+//                } else {
+//                    print("savedUser")
+//                }
+//            }
+//        }
     }
     
     //MARK: Load FB Data
@@ -171,7 +171,7 @@ class User: NSObject {
                 self.email = result.valueForKey("email") as! String
                 self.pictureURL = result.objectForKey("picture")?.objectForKey("data")?.objectForKey("url") as? String
                 self.facebookId = result.valueForKey("id") as! String
-                self.pfObject = (PFUser.currentUser()?.objectId)!
+//                self.pfObject = (PFUser.currentUser()?.objectId)!
                 self.updateUser()
             }
         })
@@ -244,53 +244,53 @@ class User: NSObject {
     //MARK: Class functions
     
     static func singUpLogIn(email: String, password: String, restore: ()) {
-        
-        let defaultCenter = NSNotificationCenter.defaultCenter()
-        let pfUser = PFUser.currentUser()
-        pfUser?.username = email
-        pfUser?.email = email
-        pfUser?.password = password
-        pfUser?.signUpInBackgroundWithBlock({ (success, error) in
-            if error != nil {
-                print(error)
-                if error?.code == 202 {
-                    PFUser.logInWithUsernameInBackground(email, password: password, block: { (user, error) in
-                        if error != nil {
-                            defaultCenter.postNotificationName(failedParseSignup, object: nil)
-                        }
-                        if user != nil {
-                            User.user = User(pfUser: PFUser.currentUser()!)
-                            defaultCenter.postNotificationName(userInitCompleteNotification, object: nil)
-                            restore
-                        }
-                    })
-                } else {
-                    defaultCenter.postNotificationName(failedParseSignup, object: nil)
-                    restore
-                }
-            }
-            if success {
-                if let user = PFUser.currentUser() {
-                    User.user = User(pfUser: user)
-                    defaultCenter.postNotificationName(userInitCompleteNotification, object: nil)
-                    restore
-                }
-            }
-            
-        })
+//        
+//        let defaultCenter = NSNotificationCenter.defaultCenter()
+//        let pfUser = PFUser.currentUser()
+//        pfUser?.username = email
+//        pfUser?.email = email
+//        pfUser?.password = password
+//        pfUser?.signUpInBackgroundWithBlock({ (success, error) in
+//            if error != nil {
+//                print(error)
+//                if error?.code == 202 {
+//                    PFUser.logInWithUsernameInBackground(email, password: password, block: { (user, error) in
+//                        if error != nil {
+//                            defaultCenter.postNotificationName(failedParseSignup, object: nil)
+//                        }
+//                        if user != nil {
+//                            User.user = User(pfUser: PFUser.currentUser()!)
+//                            defaultCenter.postNotificationName(userInitCompleteNotification, object: nil)
+//                            restore
+//                        }
+//                    })
+//                } else {
+//                    defaultCenter.postNotificationName(failedParseSignup, object: nil)
+//                    restore
+//                }
+//            }
+//            if success {
+//                if let user = PFUser.currentUser() {
+//                    User.user = User(pfUser: user)
+//                    defaultCenter.postNotificationName(userInitCompleteNotification, object: nil)
+//                    restore
+//                }
+//            }
+//            
+//        })
     }
     
     static func checkLogin(required: Bool, vc: UIViewController?) -> Bool {
-        if User.user == nil  {
-            if PFUser.currentUser()?.objectId == nil {
-                return false
-            } else {
-                User.user = User(pfUser: PFUser.currentUser()!)
-                return true
-            }
-        } else {
+//        if User.user == nil  {
+//            if PFUser.currentUser()?.objectId == nil {
+//                return false
+//            } else {
+//                User.user = User(pfUser: PFUser.currentUser()!)
+//                return true
+//            }
+//        } else {
             return true
-        }
+//        }
     }
     
     

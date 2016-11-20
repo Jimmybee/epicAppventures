@@ -10,7 +10,7 @@ import Foundation
 
 
 import UIKit
-import Parse
+//import Parse
 import FBSDKShareKit
 import FBSDKCoreKit
 
@@ -201,28 +201,28 @@ extension SettingsTableViewController : UserDataHandler {
 }
 
 extension  SettingsTableViewController : ParseQueryHandler {
-    func handleQueryResults(objects: [PFObject]?, handlerCase: String?) {
+    func handleQueryResults(objects: [AnyObject]?, handlerCase: String?) {
         
-        if let handlerCase = handlerCase {
-            switch handlerCase {
-            case UserAppventuresHC:
-                var count = 0
-                for object in objects! {
-                    let appventure = Appventure(object: object)
-                    appventure.downloadAndSaveToCoreData({
-                        count += 1
-                    })
-                    print("Appventure: \(appventure.title) \(appventure.userID!) UserID: \(User.user?.pfObject)")
-
-                }
-            case "":
-                if let counted = objects?.count {
-                    User.user?.createdAventures = counted
-                    self.createdAdventuresCount.text = String(counted)
-                }
-            default: break
-            }
-        }
+//        if let handlerCase = handlerCase {
+//            switch handlerCase {
+//            case UserAppventuresHC:
+//                var count = 0
+//                for object in objects! {
+//                    let appventure = Appventure(object: object)
+//                    appventure.downloadAndSaveToCoreData({
+//                        count += 1
+//                    })
+//                    print("Appventure: \(appventure.title) \(appventure.userID!) UserID: \(User.user?.pfObject)")
+//
+//                }
+//            case "":
+//                if let counted = objects?.count {
+//                    User.user?.createdAventures = counted
+//                    self.createdAdventuresCount.text = String(counted)
+//                }
+//            default: break
+//            }
+//        }
     }
 }
 

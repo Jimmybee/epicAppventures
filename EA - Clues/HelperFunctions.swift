@@ -16,7 +16,7 @@ extension NSLayoutConstraint {
 
 
 import Foundation
-import Parse
+//import Parse
 
 
 struct  Colours {
@@ -102,21 +102,23 @@ class HelperFunctions {
         
     }
     
-    class func convertImage (image: UIImage) -> PFFile {
+    class func convertImage (image: UIImage) -> AnyObject? {
         let imageData = UIImagePNGRepresentation(image) as NSData!
-        let imageFile = PFFile(name:"image.png", data:imageData)
-        return imageFile!
+//        let imageFile = PFFile(name:"image.png", data:imageData)
+//        return imageFile!
+        return nil
     }
     
-    class func loadAppventureSetup(object: PFObject) -> Appventure {
-        let appventureName = object.objectForKey(Appventure.pfAppventure.pfTitle) as! String
-        let appventureLocate = object.objectForKey(Appventure.pfAppventure.pfCoordinate) as! PFGeoPoint
-        let appventurePFID = object.objectId!
-        let appventure = Appventure(PFObjectID: appventurePFID, name: appventureName, geoPoint: appventureLocate)
-        appventure.subtitle = object.objectForKey(Appventure.pfAppventure.pfSubtitle) as? String
-        appventure.pfFile = object[Appventure.pfAppventure.pfAppventureImage] as? PFFile
-        appventure.totalDistance = object[Appventure.pfAppventure.pfTotalDistance] as! Double
-        return appventure
+    class func loadAppventureSetup(object: AnyObject) -> Appventure {
+//        let appventureName = object.objectForKey(Appventure.pfAppventure.pfTitle) as! String
+//        let appventureLocate = object.objectForKey(Appventure.pfAppventure.pfCoordinate) as! PFGeoPoint
+//        let appventurePFID = object.objectId!
+//        let appventure = Appventure(PFObjectID: appventurePFID, name: appventureName, geoPoint: appventureLocate)
+//        appventure.subtitle = object.objectForKey(Appventure.pfAppventure.pfSubtitle) as? String
+//        appventure.pfFile = object[Appventure.pfAppventure.pfAppventureImage] as? PFFile
+//        appventure.totalDistance = object[Appventure.pfAppventure.pfTotalDistance] as! Double
+//        return appventure
+        return Appventure()
     }
     
 //    MARK: ImageFunctions

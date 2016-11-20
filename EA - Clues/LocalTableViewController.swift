@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import Parse
+//import Parse
 import CoreLocation
 import FBSDKCoreKit
 
@@ -305,40 +305,40 @@ extension LocalTableViewController : ParseQueryHandler {
         
     }
     
-    func handleQueryResults(objects: [PFObject]?, handlerCase: String?) {
-        if let isPFArray = objects as [PFObject]! {
-            for object in isPFArray {
-                let appventure = Appventure(object: object)
-                let appventureLocation = CLLocation(latitude: appventure.coordinate!.latitude, longitude: appventure.coordinate!.longitude)
-//                if let gotLocation = lastLocation as CLLocation! {
-//                    appventure.distanceToSearch = gotLocation.distanceFromLocation(appventureLocation)
+    func handleQueryResults(objects: [AnyObject]?, handlerCase: String?) {
+//        if let isPFArray = objects as [AnyObject]! {
+//            for object in isPFArray {
+//                let appventure = Appventure(object: object)
+//                let appventureLocation = CLLocation(latitude: appventure.coordinate!.latitude, longitude: appventure.coordinate!.longitude)
+////                if let gotLocation = lastLocation as CLLocation! {
+////                    appventure.distanceToSearch = gotLocation.distanceFromLocation(appventureLocation)
+////                }
+//                
+//                if let handle = handlerCase {
+//                    switch handle {
+//                    case liveAppventures:
+//                        if appventure.liveStatus == .live {
+//                            self.publicAppventures.append(appventure)
+//                        }
+//                    case LocalAppventures:
+//                        if appventure.liveStatus == .local {
+//                            if appventure.userID == User.user?.pfObject {
+//                                self.localAppventures.append(appventure)
+//                            }
+//                        }
+//                        if appventure.liveStatus == .waitingForApproval {
+//                            if appventure.userID == User.user?.pfObject {
+//                                self.localAppventures.append(appventure)
+//                            }
+//                        }
+//                    default:
+//                        break
+//                    }
 //                }
-                
-                if let handle = handlerCase {
-                    switch handle {
-                    case liveAppventures:
-                        if appventure.liveStatus == .live {
-                            self.publicAppventures.append(appventure)
-                        }
-                    case LocalAppventures:
-                        if appventure.liveStatus == .local {
-                            if appventure.userID == User.user?.pfObject {
-                                self.localAppventures.append(appventure)
-                            }
-                        }
-                        if appventure.liveStatus == .waitingForApproval {
-                            if appventure.userID == User.user?.pfObject {
-                                self.localAppventures.append(appventure)
-                            }
-                        }
-                    default:
-                        break
-                    }
-                }
-                
-            }
+//                
+//            }
         
-        }
+//        }
         
         self.tableView.reloadData()
         self.tableView.userInteractionEnabled = true

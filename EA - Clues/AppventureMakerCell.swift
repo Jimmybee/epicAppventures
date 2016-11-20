@@ -8,7 +8,7 @@
 
 
 import UIKit
-import Parse
+//import Parse
 
 class AppventureMakerCell: UITableViewCell {
     
@@ -65,13 +65,13 @@ class AppventureMakerCell: UITableViewCell {
         
         
         dispatch_async(dispatch_get_global_queue(QOS_CLASS_BACKGROUND, 0)) { () -> Void in
-            if self.appventure?.image == nil {
-                if let isFile = self.appventure?.pfFile as PFFile! {
-                    ParseFunc.loadParseImage(isFile, getParseImage: self.loadImage)
-                }
-            } else {
-                self.appventureImage.image = self.appventure?.image
-            }
+//            if self.appventure?.image == nil {
+//                if let isFile = self.appventure?.pfFile as PFFile! {
+////                    ParseFunc.loadParseImage(isFile, getParseImage: self.loadImage)
+//                }
+//            } else {
+//                self.appventureImage.image = self.appventure?.image
+//            }
         }
     }
 
@@ -80,20 +80,20 @@ class AppventureMakerCell: UITableViewCell {
     
     func loadImage() {
         
-        if let pfImageFile = appventure!.pfFile as PFFile! {
-            pfImageFile.getDataInBackgroundWithBlock {
-                (imageData: NSData?, error: NSError?) -> Void in
-                if error == nil {
-                    if let imageData = imageData {
-                        self.appventure!.image = UIImage(data:imageData)
-                        self.appventureImage.image = UIImage(data:imageData)
-                    } else {
-                        let errorString = error!.userInfo["error"] as? NSString
-                        print(errorString)
-                    }
-                }
-            }
-        }
+//        if let pfImageFile = appventure!.pfFile as PFFile! {
+//            pfImageFile.getDataInBackgroundWithBlock {
+//                (imageData: NSData?, error: NSError?) -> Void in
+//                if error == nil {
+//                    if let imageData = imageData {
+//                        self.appventure!.image = UIImage(data:imageData)
+//                        self.appventureImage.image = UIImage(data:imageData)
+//                    } else {
+//                        let errorString = error!.userInfo["error"] as? NSString
+//                        print(errorString)
+//                    }
+//                }
+//            }
+//        }
         
     }
     

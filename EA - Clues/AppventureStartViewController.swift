@@ -6,7 +6,7 @@
 //  Copyright © 2016 James Birtwell. All rights reserved.
 //
 
-import Parse
+//import Parse
 import UIKit
 
 
@@ -154,7 +154,7 @@ class AppventureStartViewController: UIViewController {
 
 extension AppventureStartViewController : ParseQueryHandler {
     
-     func handleQueryResults(objects: [PFObject]?, handlerCase: String?) {
+     func handleQueryResults(objects: [AnyObject]?, handlerCase: String?) {
         switch handlerCase! {
         case AppventureReviews.appventureReviewsHC:
             reviews.removeAll()

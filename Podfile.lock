@@ -1,4 +1,5 @@
 PODS:
+  - Backendless (3.0.44)
   - Bolts (1.8.4):
     - Bolts/AppLinks (= 1.8.4)
     - Bolts/Tasks (= 1.8.4)
@@ -21,27 +22,19 @@ PODS:
     - GooglePlaces (= 2.0.1)
   - GooglePlaces (2.0.1):
     - GoogleMaps/Base (= 2.0.1)
-  - Parse (1.14.2):
-    - Bolts/Tasks (~> 1.8)
-  - ParseFacebookUtilsV4 (1.11.1):
-    - Bolts/Tasks (>= 1.6)
-    - FBSDKCoreKit (~> 4.10)
-    - FBSDKLoginKit (~> 4.10)
-    - FBSDKTVOSKit (~> 4.10)
-    - Parse (~> 1.12)
 
 DEPENDENCIES:
-  - Bolts
-  - FBSDKCoreKit
-  - FBSDKLoginKit
-  - FBSDKShareKit
-  - GoogleMaps
-  - GooglePlacePicker
-  - GooglePlaces
-  - Parse
-  - ParseFacebookUtilsV4
+  - Backendless (~> 3.0.43)
+  - Bolts (~> 1.8.4)
+  - FBSDKCoreKit (~> 4.14.0)
+  - FBSDKLoginKit (~> 4.14.0)
+  - FBSDKShareKit (~> 4.14.0)
+  - GoogleMaps (~> 2.0.1)
+  - GooglePlacePicker (~> 2.0.1)
+  - GooglePlaces (~> 2.0.1)
 
 SPEC CHECKSUMS:
+  Backendless: bd77ad90cbd16fbd85fda03b3659b46a2c8f3179
   Bolts: 8a7995239dbe724f9cba2248b766d48b7ebdd322
   FBSDKCoreKit: 6e020b5db0b5bd1e01f5fb0902131befd129a502
   FBSDKLoginKit: da563567a108050ef83739c8c8c001ee9e25fa13
@@ -49,7 +42,7 @@ SPEC CHECKSUMS:
   GoogleMaps: f09da64fc987c1aa29394567c3cab5a3df83c402
   GooglePlacePicker: e7b11b732e40dbe76e8ab4c5fc2f4a7c32b96578
   GooglePlaces: 72fab1d1651c6df0322f2aad245ffb15b80d3c56
-  Parse: 4335d65f40cb3d43190d723144bbe1afb9c38230
-  ParseFacebookUtilsV4: 2f30c2b7021c8005d3042781da7ef87d06589421
 
-COCOAPODS: 0.39.0
+PODFILE CHECKSUM: 2da0b17c8f20914cf2d5a25fbaa193d7e7adfe51
+
+COCOAPODS: 1.1.1

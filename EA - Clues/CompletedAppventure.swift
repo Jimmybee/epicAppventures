@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import Parse
+//import Parse
 
  class CompletedAppventure: NSObject {
     
@@ -38,65 +38,65 @@ import Parse
         self.time = time
     }
     
-    init(object: PFObject) {
-        self.pfObjectID = object.objectId!
-        self.userFKID = object.objectForKey(parseCol.userFKID) as! String
-        self.appventureFKID = object.objectForKey(parseCol.appventureFKID) as! String
-        self.teamName = object.objectForKey(parseCol.teamName) as! String
-        self.date = object.objectForKey(parseCol.date) as! NSDate
-        self.time = object.objectForKey(parseCol.time) as! Double
+    init(object: AnyObject) {
+//        self.pfObjectID = object.objectId!
+//        self.userFKID = object.objectForKey(parseCol.userFKID) as! String
+//        self.appventureFKID = object.objectForKey(parseCol.appventureFKID) as! String
+//        self.teamName = object.objectForKey(parseCol.teamName) as! String
+//        self.date = object.objectForKey(parseCol.date) as! NSDate
+//        self.time = object.objectForKey(parseCol.time) as! Double
     }
     
     func save(){
-        if self.pfObjectID == "" {
-            let saveObj = PFObject(className: parseCol.pfClass)
-            saveObject(saveObj)
-        } else {
-            ParseFunc.getParseObject(self.pfObjectID, pfClass:  parseCol.pfClass, objFunc: saveObject)
-        }
+//        if self.pfObjectID == "" {
+//            let saveObj = PFObject(className: parseCol.pfClass)
+//            saveObject(saveObj)
+//        } else {
+//            ParseFunc.getParseObject(self.pfObjectID, pfClass:  parseCol.pfClass, objFunc: saveObject)
+//        }
     }
     
-    private func saveObject(save: PFObject) {
-        save[parseCol.userFKID] = self.userFKID
-        save[parseCol.appventureFKID] = self.appventureFKID
-        save[parseCol.teamName] = self.teamName
-        save[parseCol.date] = self.date
-        save[parseCol.time] = self.time
-        save.saveInBackgroundWithBlock { (success: Bool, error: NSError?) -> Void in
-            if let error = error {
-                let errorString = error.userInfo["error"] as? NSString
-                print(errorString)
-            } else {
-                self.pfObjectID = save.objectId!
-                print("savedCompleted")
-            }
-        }
+    private func saveObject(save: AnyObject) {
+//        save[parseCol.userFKID] = self.userFKID
+//        save[parseCol.appventureFKID] = self.appventureFKID
+//        save[parseCol.teamName] = self.teamName
+//        save[parseCol.date] = self.date
+//        save[parseCol.time] = self.time
+//        save.saveInBackgroundWithBlock { (success: Bool, error: NSError?) -> Void in
+//            if let error = error {
+//                let errorString = error.userInfo["error"] as? NSString
+//                print(errorString)
+//            } else {
+//                self.pfObjectID = save.objectId!
+//                print("savedCompleted")
+//            }
+//        }
     }
     
     class func loadAppventuresCompleted(appventureID: String, handler: ParseQueryHandler) {
-        ParseFunc.parseQuery(parseCol.pfClass, location2D: nil, whereClause: appventureID, WhereKey: parseCol.appventureFKID, vcHandler: handler, handlerCase: allCompletedHC)
+//        ParseFunc.parseQuery(parseCol.pfClass, location2D: nil, whereClause: appventureID, WhereKey: parseCol.appventureFKID, vcHandler: handler, handlerCase: allCompletedHC)
     }
     
     class func loadUserCompleted(userID: String, handler: ParseQueryHandler) {
-        ParseFunc.parseQuery(parseCol.pfClass, location2D: nil, whereClause: userID, WhereKey: parseCol.userFKID, vcHandler: handler)
+//        ParseFunc.parseQuery(parseCol.pfClass, location2D: nil, whereClause: userID, WhereKey: parseCol.userFKID, vcHandler: handler)
     }
     
     class func countCompleted(handler: AppventureCompletedDelegate) {
-        let query = PFQuery(className:parseCol.pfClass)
-        query.whereKey(parseCol.userFKID, equalTo: User.user!.pfObject)
-        query.limit = 100
-        query.findObjectsInBackgroundWithBlock {
-            (objects: [PFObject]?, error: NSError?) -> Void in
-            if error == nil {
-                if let counted = objects?.count {
-                    User.user?.completedAdventures = counted
-                    handler.countCompleted()
-                }
-            } else {
-                // Log details of the failure
-                print("Error: \(error!) \(error!.userInfo)")
-            }
-        }
+//        let query = PFQuery(className:parseCol.pfClass)
+//        query.whereKey(parseCol.userFKID, equalTo: User.user!.pfObject)
+//        query.limit = 100
+//        query.findObjectsInBackgroundWithBlock {
+//            (objects: [PFObject]?, error: NSError?) -> Void in
+//            if error == nil {
+//                if let counted = objects?.count {
+//                    User.user?.completedAdventures = counted
+//                    handler.countCompleted()
+//                }
+//            } else {
+//                // Log details of the failure
+//                print("Error: \(error!) \(error!.userInfo)")
+//            }
+//        }
     }
 
 

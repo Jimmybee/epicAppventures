@@ -7,10 +7,10 @@
 //
 
 import UIKit
-import Parse
+//import Parse
 import FBSDKCoreKit
 import FBSDKLoginKit
-import ParseFacebookUtilsV4
+//import ParseFacebookUtilsV4
 
 
 class UserSummaryViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
@@ -83,19 +83,19 @@ class UserSummaryViewController: UIViewController, UITableViewDelegate, UITableV
     //MARK: Parse
     
     
-    func updateTableWithQuery(objects: [PFObject]) {
+    func updateTableWithQuery(objects: [AnyObject]) {
         self.ownedAppventures.removeAll()
-        for object in objects {
-            if let appventureName = object.objectForKey(Appventure.pfAppventure.pfTitle) as? String {
-                if let appventureLocate = object.objectForKey(Appventure.pfAppventure.pfCoordinate) as? PFGeoPoint {
-                    let appventurePFID = object.objectId!
-                    let appventure = Appventure(PFObjectID: appventurePFID, name: appventureName, geoPoint: appventureLocate)
-                    appventure.subtitle = object.objectForKey(Appventure.pfAppventure.pfSubtitle) as? String
-                    appventure.pfFile = object[Appventure.pfAppventure.pfAppventureImage] as? PFFile
-                    self.ownedAppventures.append(appventure)
-                }
-            }
-        }
+//        for object in objects {
+//            if let appventureName = object.objectForKey(Appventure.pfAppventure.pfTitle) as? String {
+//                if let appventureLocate = object.objectForKey(Appventure.pfAppventure.pfCoordinate) as? PFGeoPoint {
+//                    let appventurePFID = object.objectId!
+//                    let appventure = Appventure(PFObjectID: appventurePFID, name: appventureName, geoPoint: appventureLocate)
+//                    appventure.subtitle = object.objectForKey(Appventure.pfAppventure.pfSubtitle) as? String
+//                    appventure.pfFile = object[Appventure.pfAppventure.pfAppventureImage] as? PFFile
+//                    self.ownedAppventures.append(appventure)
+//                }
+//            }
+//        }
         
         self.tableLoadSpinner.stopAnimating()
         self.tableView.reloadData()
@@ -176,21 +176,21 @@ class UserSummaryViewController: UIViewController, UITableViewDelegate, UITableV
     }
     
     func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if (editingStyle == UITableViewCellEditingStyle.Delete) {
-            let objectID = ownedAppventures[indexPath.row].pFObjectID
-            let query = PFQuery(className: Appventure.pfAppventure.pfClass)
-            query.getObjectInBackgroundWithId(objectID!) {
-                (object: PFObject?, error: NSError?) -> Void in
-                if error != nil {
-                    print(error)
-                } else {
-                    object?.deleteInBackground()
-                }
-            }
-
-            ownedAppventures.removeAtIndex(indexPath.row)
-            tableView.reloadData()
-        }
+//        if (editingStyle == UITableViewCellEditingStyle.Delete) {
+//            let objectID = ownedAppventures[indexPath.row].pFObjectID
+//            let query = PFQuery(className: Appventure.pfAppventure.pfClass)
+//            query.getObjectInBackgroundWithId(objectID!) {
+//                (object: PFObject?, error: NSError?) -> Void in
+//                if error != nil {
+//                    print(error)
+//                } else {
+//                    object?.deleteInBackground()
+//                }
+//            }
+//
+//            ownedAppventures.removeAtIndex(indexPath.row)
+//            tableView.reloadData()
+//        }
     }
     
 }
@@ -217,16 +217,16 @@ extension UserSummaryViewController : CreateAppventureViewControllerDelegate {
 extension UserSummaryViewController : ParseQueryHandler {
     
     
-    func handleQueryResults(objects: [PFObject]?, handlerCase: String?) {
-        if let isPFArray = objects as [PFObject]! {
-            for object in isPFArray {
-                let appventure = Appventure(object: object)
-                ParseFunc.loadImage(appventure)
-                self.ownedAppventures.append(appventure)
-            }
-        }
-        tableView.reloadData()
-        tableLoadSpinner.stopAnimating()
+    func handleQueryResults(objects: [AnyObject]?, handlerCase: String?) {
+//        if let isPFArray = objects as [PFObject]! {
+//            for object in isPFArray {
+//                let appventure = Appventure(object: object)
+//                ParseFunc.loadImage(appventure)
+//                self.ownedAppventures.append(appventure)
+//            }
+//        }
+//        tableView.reloadData()
+//        tableLoadSpinner.stopAnimating()
     }
 }
 

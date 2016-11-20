@@ -7,9 +7,9 @@
 //
 
 import UIKit
-import Parse
-import FBSDKShareKit
-import FBSDKCoreKit
+//import Parse
+//import FBSDKShareKit
+//import FBSDKCoreKit
 
 class ProfileTableViewController: UITableViewController {
     
@@ -175,14 +175,14 @@ extension ProfileTableViewController : CreateAppventureViewControllerDelegate {
 }
 
 extension ProfileTableViewController : ParseQueryHandler {
-    func handleQueryResults(objects: [PFObject]?, handlerCase: String?) {
-        if let isPFArray = objects as [PFObject]! {
-            for object in isPFArray {
-                let appventure = Appventure(object: object)
-                ParseFunc.loadImage(appventure)
-                User.user!.ownedAppventures.append(appventure)
-            }
-        }
+    func handleQueryResults(objects: [AnyObject]?, handlerCase: String?) {
+//        if let isPFArray = objects as [PFObject]! {
+//            for object in isPFArray {
+//                let appventure = Appventure(object: object)
+//                ParseFunc.loadImage(appventure)
+//                User.user!.ownedAppventures.append(appventure)
+//            }
+//        }
         tableMessage = "You have not created any adventures"
         tableView.reloadData()
         tableLoadSpinner.stopAnimating()

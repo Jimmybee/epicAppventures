@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import Parse
+//import Parse
 
 class AppventureReviews: NSObject {
     
@@ -36,41 +36,41 @@ class AppventureReviews: NSObject {
         self.date = date
     }
     
-    init(object: PFObject) {
-        self.pfObjectID = object.objectId!
-        self.userFKID = object.objectForKey(parseCol.userFKID) as! String
-        self.appventureFKID = object.objectForKey(parseCol.appventureFKID) as! String
-        self.review = object.objectForKey(parseCol.review) as! String
-        self.date = object.objectForKey(parseCol.date) as! NSDate
+    init(object: AnyObject) {
+//        self.pfObjectID = object.objectId!
+//        self.userFKID = object.objectForKey(parseCol.userFKID) as! String
+//        self.appventureFKID = object.objectForKey(parseCol.appventureFKID) as! String
+//        self.review = object.objectForKey(parseCol.review) as! String
+//        self.date = object.objectForKey(parseCol.date) as! NSDate
     }
     
     func save(){
-        if self.pfObjectID == "" {
-            let saveObj = PFObject(className: parseCol.pfClass)
-            saveObject(saveObj)
-        } else {
-            ParseFunc.getParseObject(self.pfObjectID, pfClass:  parseCol.pfClass, objFunc: saveObject)
-        }
+//        if self.pfObjectID == "" {
+//            let saveObj = PFObject(className: parseCol.pfClass)
+//            saveObject(saveObj)
+//        } else {
+//            ParseFunc.getParseObject(self.pfObjectID, pfClass:  parseCol.pfClass, objFunc: saveObject)
+//        }
     }
     
-    private func saveObject(save: PFObject) {
-        save[parseCol.userFKID] = self.userFKID
-        save[parseCol.appventureFKID] = self.appventureFKID
-        save[parseCol.review] = self.review
-        save[parseCol.date] = self.date
-        save.saveInBackgroundWithBlock { (success: Bool, error: NSError?) -> Void in
-            if let error = error {
-                let errorString = error.userInfo["error"] as? NSString
-                print(errorString)
-            } else {
-                self.pfObjectID = save.objectId!
-                print("savedRR")
-            }
-        }
-    }
+//    private func saveObject(save: PFObject) {
+//        save[parseCol.userFKID] = self.userFKID
+//        save[parseCol.appventureFKID] = self.appventureFKID
+//        save[parseCol.review] = self.review
+//        save[parseCol.date] = self.date
+//        save.saveInBackgroundWithBlock { (success: Bool, error: NSError?) -> Void in
+//            if let error = error {
+//                let errorString = error.userInfo["error"] as? NSString
+//                print(errorString)
+//            } else {
+//                self.pfObjectID = save.objectId!
+//                print("savedRR")
+//            }
+//        }
+//    }
     
     class func loadAppventuresReviews(appventureID: String, handler: ParseQueryHandler) {
-        ParseFunc.parseQuery(parseCol.pfClass, location2D: nil, whereClause: appventureID, WhereKey: parseCol.appventureFKID, vcHandler: handler, handlerCase: appventureReviewsHC)
+//        ParseFunc.parseQuery(parseCol.pfClass, location2D: nil, whereClause: appventureID, WhereKey: parseCol.appventureFKID, vcHandler: handler, handlerCase: appventureReviewsHC)
     }
     
     
