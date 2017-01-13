@@ -283,6 +283,7 @@ class User: NSObject {
     }
     
     static func checkLogin(_ required: Bool, vc: UIViewController?) -> Bool {
+        return false
 //        if User.user == nil  {
 //            if PFUser.currentUser()?.objectId == nil {
 //                return false
@@ -291,7 +292,7 @@ class User: NSObject {
 //                return true
 //            }
 //        } else {
-            return true
+//            return true
 //        }
     }
     

@@ -22,6 +22,9 @@ class LoginViewController: UIViewController {
     var delegate: LoginViewControllerDelegate?
     var player: AVPlayer?
     
+    let backendless = Backendless.sharedInstance()
+    var user = BackendlessUser()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -41,7 +44,13 @@ class LoginViewController: UIViewController {
     }
     
     @IBAction func facebookLogin(_ sender: UIButton) {
-        
+
+            backendless!.userService.easyLogin(withFacebookFieldsMapping: ["email":"email"], permissions: ["email"], response: { (result) in
+                print("Result: \(result)")
+            }, error: { (fault) in
+                print("Server reported an error: \(fault)")
+
+            })
         
 //        PFFacebookUtils.logInInBackgroundWithReadPermissions(fbLoginParameters, block: { (object:PFUser?, error:NSError?) -> Void in
 //                        if(error != nil)

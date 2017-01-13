@@ -22,6 +22,8 @@ class MainTabBarController: UITabBarController {
         //MARK: CheckUser
         self.selectedIndex = 2
         
+        
+        // This will never happen
         if User.checkLogin(true, vc: nil) {
             if let pvc = self.viewControllers![1] as? ProfileWrapperViewController {
                 pvc.showForUser()

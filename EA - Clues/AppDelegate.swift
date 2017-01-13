@@ -42,7 +42,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // MARK: - UIApplicationDelegate
     //--------------------------------------
     
+    //MARK: Backendless
+    
+    let APP_ID = "975C9B70-4090-2D14-FFB1-BA95CB96F300"
+    let SECRET_KEY = "EEE8A10A-F7FC-955E-FF84-EE35BF400800"
+    let VERSION_NUM = "v1"
+    
+    var backendless = Backendless.sharedInstance()
+
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+        
+        backendless?.initApp(APP_ID, secret:SECRET_KEY, version:VERSION_NUM)
+
+        
         // Enable storing and querying data from Local Datastore.
         // Parse.enableLocalDatastore()
         // ParseCrashReporting.enable()
@@ -105,14 +118,32 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(_ application: UIApplication,
-        open url: URL,
-        sourceApplication: String?,
-        annotation: Any) -> Bool {
-            return FBSDKApplicationDelegate.sharedInstance().application(application,
-                open: url,
-                sourceApplication: sourceApplication,
-                annotation: annotation)
+                     open url: URL,
+                     sourceApplication: String?,
+                     annotation: Any) -> Bool {
+        
+        print("AppDelegate -> application:openURL: \(url.scheme)")
+        
+        let backendless = Backendless.sharedInstance()
+        let user = backendless?.userService.handleOpen(url)
+        if user != nil {
+            print("AppDelegate -> application:openURL: user = \(user)")
+            
+            // do something, call some ViewController method, for example
+        }
+        
+        return true
     }
+    
+//    func application(_ application: UIApplication,
+//        open url: URL,
+//        sourceApplication: String?,
+//        annotation: Any) -> Bool {
+//            return FBSDKApplicationDelegate.sharedInstance().application(application,
+//                open: url,
+//                sourceApplication: sourceApplication,
+//                annotation: annotation)
+//    }
     
     
     //Make sure it isn't already declared in the app delegate (possible redefinition of func error)
@@ -227,6 +258,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     
+
+
+
 }
+
+
 
 

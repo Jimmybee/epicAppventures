@@ -86,9 +86,9 @@ class AppventureCompleteViewController: UIViewController {
             content.contentURL = URL(string: "http://epicappventure.com/")
             content.contentTitle = "Appventure Completed"
             content.contentDescription = "I have just completed \(appventure.title!) in \(formatTime!)"
-            if let imageURL = appventure.pfFile?.url {
-                content.imageURL = URL(string: String(describing: imageURL))
-            }
+//            if let imageURL = appventure.pfFile?.url {
+//                content.imageURL = URL(string: String(describing: imageURL))
+//            }
             shareButton.shareContent = content
         }
     }

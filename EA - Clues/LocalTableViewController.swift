@@ -87,7 +87,7 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
     }
     
     func handlingDownloadedAppventures(_ appventures: [Appventure]) -> () {
-        appventures.count
+//     appventures.count
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -103,7 +103,7 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         lastLocation = locations.first?.coordinate
-        print(lastLocation)
+        print(lastLocation ?? "no location")
         if refreshing == false {
             loadAppventures()
             refreshing = true
