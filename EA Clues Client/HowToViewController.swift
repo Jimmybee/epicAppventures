@@ -35,15 +35,15 @@ class HowToViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    @IBAction func close(sender: UIButton) {
-        self.dismissViewControllerAnimated(true, completion: nil)
+    @IBAction func close(_ sender: UIButton) {
+        self.dismiss(animated: true, completion: nil)
     }
 
 }
 
 extension HowToViewController: UIScrollViewDelegate {
     
-    func scrollViewDidScroll(scrollView: UIScrollView) {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
         scrollPageDots.currentPage = Int(scrollView.contentOffset.x / scrollView.frame.width)
     }
 }

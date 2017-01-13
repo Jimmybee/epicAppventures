@@ -82,7 +82,7 @@ extension AppventureStep {
         }
     }
     
-    private func saveBackend(){
+    fileprivate func saveBackend(){
         if self.pFObjectID == "" {
 //            let saveObj = PFObject(className: pfStep.pfClass)
 //            saveObject(saveObj)
@@ -91,7 +91,7 @@ extension AppventureStep {
         }
     }
     
-    private func saveObject(save: AnyObject) {
+    fileprivate func saveObject(_ save: AnyObject) {
 //        if let jsonString = convertDictToJson(self.setup) {
 //            save[pfStep.pfSetup] = jsonString
 //            print(jsonString)
@@ -127,7 +127,7 @@ extension AppventureStep {
     }
     
 
-    class func loadSteps(appventure: Appventure, handler: () -> ()) {
+    class func loadSteps(_ appventure: Appventure, handler: () -> ()) {
 //        let query = PFQuery(className: pfStep.pfClass)
 //        query.whereKey(pfStep.pfAppventureIDKey, equalTo: appventure.pFObjectID!)
 //        query.limit = 20
@@ -147,7 +147,7 @@ extension AppventureStep {
 //        }
     }
     
-    private class func getStepData(appventure: Appventure, handler: () -> ()) {
+    fileprivate class func getStepData(_ appventure: Appventure, handler: () -> ()) {
 //        print("Appventure \(appventure.title!)")
 //        dataLoads[appventure.pFObjectID!] = 100
 //        for step in appventure.appventureSteps {
@@ -181,7 +181,7 @@ extension AppventureStep {
 
     }
     
-    private class func checkAndSave(appventure: Appventure, handler: () -> ()) {
+    fileprivate class func checkAndSave(_ appventure: Appventure, handler: () -> ()) {
         
 //        print("Appventure: \(appventure.title)  & loads:\(dataLoads[appventure.pFObjectID!])")
         if dataLoads[appventure.pFObjectID!] == 0 {

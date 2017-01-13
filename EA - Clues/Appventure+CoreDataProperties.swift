@@ -17,7 +17,7 @@ extension Appventure {
     @NSManaged var coordinateLat: Double
     @NSManaged var coordinateLon: Double
     @NSManaged var duration: String?
-    @NSManaged var imageData: NSData?
+    @NSManaged var imageData: Data?
     @NSManaged var keyFeaturesObj: NSObject?
     @NSManaged var liveStatusNum: Int16
     @NSManaged var pFObjectID: String?

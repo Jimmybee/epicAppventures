@@ -52,20 +52,20 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
         
 
         //Notifications
-        let notificationCenter = NSNotificationCenter.defaultCenter()
-        notificationCenter.addObserver(self, selector: Selector("beginRefresh"), name: User.userInitCompleteNotification, object: nil)
+        let notificationCenter = NotificationCenter.default
+        notificationCenter.addObserver(self, selector: #selector(LocalTableViewController.beginRefresh), name: NSNotification.Name(rawValue: User.userInitCompleteNotification), object: nil)
 
 //        notificationCenter.addObserver(self, selector: #selector(loadAppventures), name: User.userInitCompleteNotification, object: nil)
 //        notificationCenter.addObserver(self, selector: #selector(beginRefresh), name: User.userLoggedOutNotification, object: nil)
-        notificationCenter.addObserver(self, selector: Selector("beginRefresh"), name: User.userLoggedOutNotification, object: nil)
+        notificationCenter.addObserver(self, selector: #selector(LocalTableViewController.beginRefresh), name: NSNotification.Name(rawValue: User.userLoggedOutNotification), object: nil)
 
-        notificationCenter.addObserver(self, selector: Selector("beginRefresh"), name: skipLoginNotification, object: nil)
+        notificationCenter.addObserver(self, selector: #selector(LocalTableViewController.beginRefresh), name: NSNotification.Name(rawValue: skipLoginNotification), object: nil)
 
 //        notificationCenter.addObserver(self, selector: #selector(beginRefresh), name: skipLoginNotification, object: nil)
 
         
         if !User.checkLogin(true, vc: self) {
-            self.performSegueWithIdentifier(StoryboardNames.startupLogin, sender: nil)
+            self.performSegue(withIdentifier: StoryboardNames.startupLogin, sender: nil)
         }
         
         //MARK: TableViewLoad
@@ -86,22 +86,22 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
 
     }
     
-    func handlingDownloadedAppventures(appventures: [Appventure]) -> () {
+    func handlingDownloadedAppventures(_ appventures: [Appventure]) -> () {
         appventures.count
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
          HelperFunctions.unhideTabBar(self)
     }
     
 
     
-    func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         locationManager.requestLocation()
     }
     
-    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         lastLocation = locations.first?.coordinate
         print(lastLocation)
         if refreshing == false {
@@ -110,7 +110,7 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
         }
     }
     
-    func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         publicAppventuresMessage = "Update location settings to get adventures in your area."
         let london = CLLocationCoordinate2D(latitude: 51.5072, longitude: 0.1275)
         if lastLocation == nil {lastLocation = london}
@@ -119,7 +119,7 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
     
     func beginRefresh() {
         self.refreshSpinner.beginRefreshing()
-        self.tableView.userInteractionEnabled = false
+        self.tableView.isUserInteractionEnabled = false
         self.refeshTable(refreshSpinner)
     }
     
@@ -165,7 +165,7 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
     
     //MARK: Actions
     
-    @IBAction func refeshTable(sender: UIRefreshControl) {
+    @IBAction func refeshTable(_ sender: UIRefreshControl) {
         self.localAppventures.removeAll()
         self.publicAppventures.removeAll()
         self.friendsAppventures.removeAll()
@@ -173,16 +173,16 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
         locationManager.requestLocation()
     }
     
-    @IBAction func localPublicChange(sender: UISegmentedControl) {
+    @IBAction func localPublicChange(_ sender: UISegmentedControl) {
         tableView.reloadData()
     }
     
     //MARK: Navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         //segue to appventure details
         if segue.identifier == "Alt1" {
-            if let indexPath = sender as? NSIndexPath {
-                if let aastvc = segue.destinationViewController as? AppventureStartViewController {
+            if let indexPath = sender as? IndexPath {
+                if let aastvc = segue.destination as? AppventureStartViewController {
                     switch localPublicControl.selectedSegmentIndex {
                     case 0:
                         aastvc.appventure = localAppventures[indexPath.row]
@@ -197,7 +197,7 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
             }
         }
         if segue.identifier == StoryboardNames.startupLogin {
-            if let lvc = segue.destinationViewController as? LoginViewController {
+            if let lvc = segue.destination as? LoginViewController {
                 lvc.delegate = self
             }
         }
@@ -205,26 +205,26 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
     
     func checkFirstLaunch() {
         print("checking")
-        let defaults = NSUserDefaults.standardUserDefaults()
-        print(defaults.boolForKey(firstLaunchKey))
-        if defaults.boolForKey(firstLaunchKey) == false {
+        let defaults = UserDefaults.standard
+        print(defaults.bool(forKey: firstLaunchKey))
+        if defaults.bool(forKey: firstLaunchKey) == false {
             let storyBoard = UIStoryboard(name: "LaunchAppventure", bundle:nil)
-            if let htvc = storyBoard.instantiateViewControllerWithIdentifier(howToVC) as? HowToViewController {
-                self.presentViewController(htvc, animated: true, completion: nil)
+            if let htvc = storyBoard.instantiateViewController(withIdentifier: howToVC) as? HowToViewController {
+                self.present(htvc, animated: true, completion: nil)
             }
         }
-        defaults.setBool(false, forKey: firstLaunchKey)
+        defaults.set(false, forKey: firstLaunchKey)
     }
 
     //MARK: Table functions
     var publicAppventuresMessage = "There are no adventures available on our servers at the moment."
     var friendsAppventuresMessage = "There are no adventures that your friends have shared with you."
 
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    override func numberOfSections(in tableView: UITableView) -> Int {
         switch localPublicControl.selectedSegmentIndex {
         case 0:
             if self.localAppventures.count > 0 {
-                self.tableView.separatorStyle = UITableViewCellSeparatorStyle.SingleLine
+                self.tableView.separatorStyle = UITableViewCellSeparatorStyle.singleLine
                 self.tableView.backgroundView = UIView()
                 return 1
             } else {
@@ -240,7 +240,7 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
             return 0
         case 1:
             if self.publicAppventures.count > 0 {
-                self.tableView.separatorStyle = UITableViewCellSeparatorStyle.SingleLine
+                self.tableView.separatorStyle = UITableViewCellSeparatorStyle.singleLine
                 self.tableView.backgroundView = UIView()
                 return 1
             } else {
@@ -249,7 +249,7 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
             return 0
         case 2:
             if self.friendsAppventures.count > 0 {
-                self.tableView.separatorStyle = UITableViewCellSeparatorStyle.SingleLine
+                self.tableView.separatorStyle = UITableViewCellSeparatorStyle.singleLine
                 self.tableView.backgroundView = UIView()
                 return 1
             } else {
@@ -262,7 +262,7 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
         return 0
     }
     
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         var rows = 0
         switch localPublicControl.selectedSegmentIndex {
         case 0:
@@ -277,8 +277,8 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
         return rows
     }
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier(StoryboardNames.TextCellID, forIndexPath: indexPath) as! LocalAppventureTableViewCell
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: StoryboardNames.TextCellID, for: indexPath) as! LocalAppventureTableViewCell
         let row = indexPath.row
         switch localPublicControl.selectedSegmentIndex {
         case 0:
@@ -293,8 +293,8 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
         return cell
     }
     
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        performSegueWithIdentifier("Alt1", sender: indexPath)
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        performSegue(withIdentifier: "Alt1", sender: indexPath)
     }
     
 }
@@ -305,7 +305,7 @@ extension LocalTableViewController : ParseQueryHandler {
         
     }
     
-    func handleQueryResults(objects: [AnyObject]?, handlerCase: String?) {
+    func handleQueryResults(_ objects: [AnyObject]?, handlerCase: String?) {
 //        if let isPFArray = objects as [AnyObject]! {
 //            for object in isPFArray {
 //                let appventure = Appventure(object: object)
@@ -341,7 +341,7 @@ extension LocalTableViewController : ParseQueryHandler {
 //        }
         
         self.tableView.reloadData()
-        self.tableView.userInteractionEnabled = true
+        self.tableView.isUserInteractionEnabled = true
         self.refreshSpinner.endRefreshing()
         self.refreshing = false
         

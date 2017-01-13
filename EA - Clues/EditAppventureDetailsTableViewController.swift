@@ -9,7 +9,7 @@
 import UIKit
 
 protocol EditAppventureDetailsTableViewControllerDelegate : NSObjectProtocol {
-    func completedEdit(appventure: Appventure)
+    func completedEdit(_ appventure: Appventure)
 }
 
 class EditAppventureDetailsTableViewController: UITableViewController {
@@ -58,26 +58,26 @@ class EditAppventureDetailsTableViewController: UITableViewController {
         appventureDescription.text = appventure!.subtitle
         appventureDuration.text = appventure!.duration
         startingLocation.text = appventure!.startingLocationName
-        restrictionsField.text = appventure!.restrictions.joinWithSeparator(",")
-        keyFeatures.text = appventure!.keyFeatures.joinWithSeparator(",")
-        self.saveBtt.enabled = false
+        restrictionsField.text = appventure!.restrictions.joined(separator: ",")
+        keyFeatures.text = appventure!.keyFeatures.joined(separator: ",")
+        self.saveBtt.isEnabled = false
     }
     
     func checkSave() {
         
-        self.saveBtt.enabled = true
+        self.saveBtt.isEnabled = true
 
     }
 
     
     //MARK: IBActions 
-    @IBAction func cancel(sender: UIBarButtonItem) {
-        self.dismissViewControllerAnimated(true, completion: nil)
+    @IBAction func cancel(_ sender: UIBarButtonItem) {
+        self.dismiss(animated: true, completion: nil)
     }
     
-    @IBAction func save(sender: AnyObject) {
+    @IBAction func save(_ sender: AnyObject) {
         updateAppventure()
-        self.dismissViewControllerAnimated(true, completion: nil)
+        self.dismiss(animated: true, completion: nil)
     }
     
     func updateAppventure() {
@@ -93,19 +93,19 @@ class EditAppventureDetailsTableViewController: UITableViewController {
     
     //MARK: Tableview Delegate 
     
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        let alert = UIAlertController(title: nil, message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
-        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: nil))
-        alert.addAction(UIAlertAction(title: "Take Image", style: UIAlertActionStyle.Default, handler: { action in
+        let alert = UIAlertController(title: nil, message: nil, preferredStyle: UIAlertControllerStyle.actionSheet)
+        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: "Take Image", style: UIAlertActionStyle.default, handler: { action in
             HelperFunctions.getImage(true, delegate: self, presenter: self)
             
         }))
-        alert.addAction(UIAlertAction(title: "Pick From Library", style: UIAlertActionStyle.Default, handler: { action in
+        alert.addAction(UIAlertAction(title: "Pick From Library", style: UIAlertActionStyle.default, handler: { action in
             HelperFunctions.getImage(false, delegate: self, presenter: self)
             
         }))
-        self.presentViewController(alert, animated: true, completion: nil)
+        self.present(alert, animated: true, completion: nil)
 
     }
 }
@@ -114,20 +114,20 @@ class EditAppventureDetailsTableViewController: UITableViewController {
 extension EditAppventureDetailsTableViewController : ImagePicker {
   
     
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         
         if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
-            imageView.contentMode = .ScaleAspectFit
+            imageView.contentMode = .scaleAspectFit
             let savedImage = HelperFunctions.resizeImage(pickedImage, newWidth: 300)
             imageView.image = savedImage
         }
         
         checkSave()
-        dismissViewControllerAnimated(true, completion: nil)
+        dismiss(animated: true, completion: nil)
     }
     
-    func imagePickerControllerDidCancel(picker: UIImagePickerController) {
-        dismissViewControllerAnimated(true, completion: nil)
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        dismiss(animated: true, completion: nil)
     }
     
 }
@@ -135,13 +135,13 @@ extension EditAppventureDetailsTableViewController : ImagePicker {
 //MARK: UITextViewDelegate
 extension EditAppventureDetailsTableViewController : UITextViewDelegate {
     
-        func textViewDidEndEditing(textView: UITextView) {
+        func textViewDidEndEditing(_ textView: UITextView) {
             if textView == appventureDescription {
                 checkSave()
             }
         }
     
-        func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
+        func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
             if(text == "\n") {
                 textView.resignFirstResponder()
                 return false
@@ -154,11 +154,11 @@ extension EditAppventureDetailsTableViewController : UITextViewDelegate {
 //MARK: UITextFieldDelegate
 extension EditAppventureDetailsTableViewController : UITextFieldDelegate {
     
-    func textFieldDidEndEditing(textField: UITextField) {
+    func textFieldDidEndEditing(_ textField: UITextField) {
         checkSave()
     }
     
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
     }

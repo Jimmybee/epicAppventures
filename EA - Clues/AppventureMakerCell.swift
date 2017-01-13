@@ -31,15 +31,15 @@ class AppventureMakerCell: UITableViewCell {
     @IBOutlet weak var startingLocation: UILabel!
     @IBOutlet weak var duration: UILabel!
     
-    override func setSelected(selected: Bool, animated: Bool) {
+    override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
         
         // Configure the view for the selected state
     }
     
     
-    func loadImage(image :UIImage) {
-        dispatch_async(dispatch_get_main_queue()) { () -> Void in
+    func loadImage(_ image :UIImage) {
+        DispatchQueue.main.async { () -> Void in
             self.appventureImage.image = image
             self.appventure?.image = image
         }
@@ -64,7 +64,7 @@ class AppventureMakerCell: UITableViewCell {
 
         
         
-        dispatch_async(dispatch_get_global_queue(QOS_CLASS_BACKGROUND, 0)) { () -> Void in
+        DispatchQueue.global(qos: DispatchQoS.QoSClass.background).async { () -> Void in
 //            if self.appventure?.image == nil {
 //                if let isFile = self.appventure?.pfFile as PFFile! {
 ////                    ParseFunc.loadParseImage(isFile, getParseImage: self.loadImage)

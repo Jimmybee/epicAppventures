@@ -14,20 +14,20 @@ class Filter: NSObject {
     
     
     enum sortTyping: Int {
-        case Rating = 0
-        case A2Z = 1
-        case Distance = 2
+        case rating = 0
+        case a2Z = 1
+        case distance = 2
     }
     
     enum interactivityTypes: Int {
-        case All = 0
-        case Static = 1
-        case Interactive = 2
+        case all = 0
+        case `static` = 1
+        case interactive = 2
     }
     
     
-    var sortType = sortTyping.Rating
-    var interactivity = interactivityTypes.All
+    var sortType = sortTyping.rating
+    var interactivity = interactivityTypes.all
     var tags = [String]()
     
 }

@@ -43,8 +43,8 @@ class SettingsTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let nsCenter = NSNotificationCenter.defaultCenter()
-        nsCenter.addObserver(self, selector:  Selector("setupHeaderView"), name: fbImageLoadNotification, object: nil)
+        let nsCenter = NotificationCenter.default
+        nsCenter.addObserver(self, selector:  #selector(SettingsTableViewController.setupHeaderView), name: NSNotification.Name(rawValue: fbImageLoadNotification), object: nil)
         
         updateUI()
 
@@ -54,16 +54,16 @@ class SettingsTableViewController: UITableViewController {
     var embeddedProfileHeader: ProfileHeaderViewController!
     var embeddedNonFacebookHeader: NonFacebookHeaderViewController!
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if let vc = segue.destinationViewController as? ProfileHeaderViewController {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let vc = segue.destination as? ProfileHeaderViewController {
             self.embeddedProfileHeader = vc
         }
-        if let vc = segue.destinationViewController as? NonFacebookHeaderViewController {
+        if let vc = segue.destination as? NonFacebookHeaderViewController {
             self.embeddedNonFacebookHeader = vc
         }
         
         if segue.identifier == rtfDisplay {
-            if let rdvc = segue.destinationViewController as? RTFDisplayViewController {
+            if let rdvc = segue.destination as? RTFDisplayViewController {
                 if let rtfName = sender as? String  {
                     rdvc.rtfName = rtfName
                 }
@@ -81,7 +81,7 @@ class SettingsTableViewController: UITableViewController {
 
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
     }
     
@@ -89,8 +89,8 @@ class SettingsTableViewController: UITableViewController {
     //MARK: table methods
     
     
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        if let cell = tableView.cellForRowAtIndexPath(indexPath) {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if let cell = tableView.cellForRow(at: indexPath) {
             
             switch cell {
             case logOutCell:
@@ -98,37 +98,37 @@ class SettingsTableViewController: UITableViewController {
             case restoreDataCell:
                 restoreLocalData()
             case howToPlayCell:
-                self.performSegueWithIdentifier(rtfDisplay, sender: RTFs.howToPlay)
+                self.performSegue(withIdentifier: rtfDisplay, sender: RTFs.howToPlay)
             case choosingAdventureCell:
-                self.performSegueWithIdentifier(rtfDisplay, sender: RTFs.choosingAdventure)
+                self.performSegue(withIdentifier: rtfDisplay, sender: RTFs.choosingAdventure)
             case makingAdventureCell:
-                self.performSegueWithIdentifier(rtfDisplay, sender: RTFs.makingAnAdventure)
+                self.performSegue(withIdentifier: rtfDisplay, sender: RTFs.makingAnAdventure)
             case privacyCell:
-                self.performSegueWithIdentifier(rtfDisplay, sender: RTFs.privacyPolicy)
+                self.performSegue(withIdentifier: rtfDisplay, sender: RTFs.privacyPolicy)
             case licencesCell:
-                self.performSegueWithIdentifier(rtfDisplay, sender: nil)
+                self.performSegue(withIdentifier: rtfDisplay, sender: nil)
             default:
                 break
             }
             
         }
         
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        tableView.deselectRow(at: indexPath, animated: true)
 
     }
     
     
     func logoutPopup() {
-        let alert = UIAlertController(title: "Log out user", message: "Log out user", preferredStyle: UIAlertControllerStyle.Alert)
-        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: nil))
-        alert.addAction(UIAlertAction(title: "Confirm", style: UIAlertActionStyle.Destructive, handler: { action in
+        let alert = UIAlertController(title: "Log out user", message: "Log out user", preferredStyle: UIAlertControllerStyle.alert)
+        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: "Confirm", style: UIAlertActionStyle.destructive, handler: { action in
             User.user!.logout()
-            if let pwvc = self.parentViewController as? ProfileWrapperViewController  {
+            if let pwvc = self.parent as? ProfileWrapperViewController  {
                 pwvc.showForSignIn()
             }
         }))
         
-        self.presentViewController(alert, animated: true, completion: nil)
+        self.present(alert, animated: true, completion: nil)
     }
     
     func restoreLocalData() {
@@ -137,8 +137,8 @@ class SettingsTableViewController: UITableViewController {
         Appventure.loadUserAppventure(User.user!.pfObject, handler: self, handlerCase: UserAppventuresHC)
     }
 
-    @IBAction func dismissVC(sender: AnyObject) {
-        self.dismissViewControllerAnimated(true, completion: nil)
+    @IBAction func dismissVC(_ sender: AnyObject) {
+        self.dismiss(animated: true, completion: nil)
     }
     
     
@@ -181,7 +181,7 @@ class SettingsTableViewController: UITableViewController {
 
 
 extension SettingsTableViewController : UserDataHandler {
-    func userFuncComplete(funcKey: String) {
+    func userFuncComplete(_ funcKey: String) {
         switch funcKey{
         case User.funcKeys.fbGraphLoaded:
             print("fbGraphloaded")
@@ -201,7 +201,7 @@ extension SettingsTableViewController : UserDataHandler {
 }
 
 extension  SettingsTableViewController : ParseQueryHandler {
-    func handleQueryResults(objects: [AnyObject]?, handlerCase: String?) {
+    func handleQueryResults(_ objects: [AnyObject]?, handlerCase: String?) {
         
 //        if let handlerCase = handlerCase {
 //            switch handlerCase {

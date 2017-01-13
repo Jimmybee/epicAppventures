@@ -33,62 +33,62 @@ class ImageChooserViewController: UIViewController,UIImagePickerControllerDelega
     
     //MARK: IB Actions
     
-    @IBAction func changeImageTap(sender: AnyObject) {
+    @IBAction func changeImageTap(_ sender: AnyObject) {
         print("tapped")
         self.changeImage()
         
     }
     @IBAction func changeImage() {
         
-        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
+        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         
-        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: nil))
-        alert.addAction(UIAlertAction(title: "Take Picture", style: UIAlertActionStyle.Default, handler: { action in
+        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: "Take Picture", style: UIAlertActionStyle.default, handler: { action in
             self.getImage(true)
         }))
-        alert.addAction(UIAlertAction(title: "Choose From Library", style: UIAlertActionStyle.Default, handler: { action in
+        alert.addAction(UIAlertAction(title: "Choose From Library", style: UIAlertActionStyle.default, handler: { action in
             self.getImage(false)
 
         }))
         
-        self.presentViewController(alert, animated: true, completion: nil)
+        self.present(alert, animated: true, completion: nil)
         
     }
     
-    @IBAction func dismiss(sender: AnyObject) {
-        self.dismissViewControllerAnimated(true, completion: nil)
+    @IBAction func dismiss(_ sender: AnyObject) {
+        self.dismiss(animated: true, completion: nil)
     }
     //MARK: ImagePicker
     
-    func getImage(useCamera: Bool) {
+    func getImage(_ useCamera: Bool) {
         
         let imagePicker = UIImagePickerController()
         imagePicker.delegate = self
         
         if useCamera {
-            imagePicker.sourceType = .Camera
+            imagePicker.sourceType = .camera
         } else {
-            imagePicker.sourceType = .PhotoLibrary
+            imagePicker.sourceType = .photoLibrary
         }
-        presentViewController(imagePicker, animated: true, completion: nil)
+        present(imagePicker, animated: true, completion: nil)
         
     }
     
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         
         if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
-            imageView.contentMode = .ScaleAspectFit
+            imageView.contentMode = .scaleAspectFit
             let savedImage = HelperFunctions.resizeImage(pickedImage, newWidth: 300)
             imageView.image = savedImage
             step.image = savedImage
             
         }
         
-        dismissViewControllerAnimated(true, completion: nil)
+        self.dismiss(animated: true, completion: nil)
     }
     
-    func imagePickerControllerDidCancel(picker: UIImagePickerController) {
-        dismissViewControllerAnimated(true, completion: nil)
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        self.dismiss(animated: true, completion: nil)
     }
     
 

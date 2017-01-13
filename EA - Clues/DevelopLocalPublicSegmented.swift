@@ -13,7 +13,7 @@ import Foundation
 class DevelopLocalPublicSegmented: UISegmentedControl {
 
     
-    override init(items: [AnyObject]?) {
+    override init(items: [Any]?) {
         super.init(items: items)
         
     }
@@ -30,6 +30,6 @@ class DevelopLocalPublicSegmented: UISegmentedControl {
         self.subviews[0].tintColor = Colours.myRed
         self.subviews[2].tintColor = Colours.myBlue
         self.subviews[1].tintColor = Colours.myGreen
-        self.setTitle("Live", forSegmentAtIndex: 2)
+        self.setTitle("Live", forSegmentAt: 2)
     }
 }

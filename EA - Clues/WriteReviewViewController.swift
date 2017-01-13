@@ -20,13 +20,13 @@ class WriteReviewViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        reviewTextView.textColor = UIColor.grayColor()
+        reviewTextView.textColor = UIColor.gray
         reviewTextView.text = Constants.reviewTextViewDefaults
         
         reviewTextView.layer.borderWidth = 1.5
         reviewTextView.layer.cornerRadius = 12
         reviewTextView.clipsToBounds = true
-        reviewTextView.layer.borderColor = UIColor.blackColor().CGColor
+        reviewTextView.layer.borderColor = UIColor.black.cgColor
         
         // Do any additional setup after loading the view.
     }
@@ -37,16 +37,16 @@ class WriteReviewViewController: UIViewController {
     }
     
     
-    @IBAction func submit(sender: UIBarButtonItem) {
+    @IBAction func submit(_ sender: UIBarButtonItem) {
         if let currentUser = User.user {
-            let reviewObject = AppventureReviews(userFKID: currentUser.pfObject, review: reviewTextView.text, appventureFKID: Appventure.currentAppventureID()!, date: NSDate())
+            let reviewObject = AppventureReviews(userFKID: currentUser.pfObject, review: reviewTextView.text, appventureFKID: Appventure.currentAppventureID()!, date: Date())
             reviewObject.save()
         }
-        self.dismissViewControllerAnimated(true, completion: nil)
+        self.dismiss(animated: true, completion: nil)
     }
     
-    @IBAction func cancel(sender: AnyObject) {
-        self.dismissViewControllerAnimated(true, completion: nil)
+    @IBAction func cancel(_ sender: AnyObject) {
+        self.dismiss(animated: true, completion: nil)
     }
     
     
@@ -55,9 +55,9 @@ class WriteReviewViewController: UIViewController {
 
 extension WriteReviewViewController : UITextViewDelegate {
     
-    func textViewShouldBeginEditing(textView: UITextView) -> Bool {
+    func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
         if textView.text == Constants.reviewTextViewDefaults {
-            textView.textColor = UIColor.blackColor()
+            textView.textColor = UIColor.black
             textView.text = ""
         }
         return true

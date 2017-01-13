@@ -22,9 +22,9 @@ class UserSignInViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let nsCenter = NSNotificationCenter.defaultCenter()
-        nsCenter.addObserver(self, selector:  Selector("failedSingup"), name: User.failedParseSignup, object: nil)
-        nsCenter.addObserver(self, selector:  Selector("completedSignup"), name: User.userInitCompleteNotification, object: nil)
+        let nsCenter = NotificationCenter.default
+        nsCenter.addObserver(self, selector:  #selector(UserSignInViewController.failedSingup), name: NSNotification.Name(rawValue: User.failedParseSignup), object: nil)
+        nsCenter.addObserver(self, selector:  #selector(UserSignInViewController.completedSignup), name: NSNotification.Name(rawValue: User.userInitCompleteNotification), object: nil)
 
         emailTextField.delegate = self
         passwordTextField.delegate = self
@@ -37,7 +37,7 @@ class UserSignInViewController: UIViewController {
     }
     
 
-    @IBAction func facebookLogin(sender: UIButton) {
+    @IBAction func facebookLogin(_ sender: UIButton) {
         pause()
         
 //        PFFacebookUtils.logInInBackgroundWithReadPermissions(fbLoginParameters, block: { (object:PFUser?, error:NSError?) -> Void in
@@ -72,19 +72,19 @@ class UserSignInViewController: UIViewController {
     }
     
     func completedSignup () {
-        if let pwvc = self.parentViewController as? ProfileWrapperViewController  {
+        if let pwvc = self.parent as? ProfileWrapperViewController  {
             pwvc.showForUser()
             
         }
     }
     
     func failedSingup() {
-        let alert = UIAlertController(title: "Failed", message: "Unable to log in.", preferredStyle: UIAlertControllerStyle.Alert)
-        alert.addAction(UIAlertAction(title: "Confirm", style: UIAlertActionStyle.Default, handler: nil))
-        self.presentViewController(alert, animated: true, completion: nil)
+        let alert = UIAlertController(title: "Failed", message: "Unable to log in.", preferredStyle: UIAlertControllerStyle.alert)
+        alert.addAction(UIAlertAction(title: "Confirm", style: UIAlertActionStyle.default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
     }
 
-    @IBAction func signUpLogIn(sender: AnyObject) {
+    @IBAction func signUpLogIn(_ sender: AnyObject) {
         pause()
         view.endEditing(true)
         if let email = emailTextField.text {
@@ -100,18 +100,18 @@ class UserSignInViewController: UIViewController {
     
     
     func pause(){
-        activityIndicator = UIActivityIndicatorView(frame: CGRectMake(0, 0, 50, 50))
+        activityIndicator = UIActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
         activityIndicator.center = self.view.center
         activityIndicator.hidesWhenStopped = true
-        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.Gray
+        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.gray
         view.addSubview(activityIndicator)
         activityIndicator.startAnimating()
-        UIApplication.sharedApplication().beginIgnoringInteractionEvents()
+        UIApplication.shared.beginIgnoringInteractionEvents()
     }
     
     func restore(){
         activityIndicator.stopAnimating()
-        UIApplication.sharedApplication().endIgnoringInteractionEvents()
+        UIApplication.shared.endIgnoringInteractionEvents()
     }
 
 }
@@ -119,7 +119,7 @@ class UserSignInViewController: UIViewController {
 extension UserSignInViewController : UITextFieldDelegate {
 
     
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
     }

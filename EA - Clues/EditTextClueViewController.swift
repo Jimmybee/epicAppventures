@@ -24,10 +24,10 @@ class EditTextClueViewController: UIViewController {
         reviewTextView.layer.borderWidth = 1.5
         reviewTextView.layer.cornerRadius = 12
         reviewTextView.clipsToBounds = true
-        reviewTextView.layer.borderColor = UIColor.blackColor().CGColor
+        reviewTextView.layer.borderColor = UIColor.black.cgColor
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillShow:"), name:UIKeyboardWillShowNotification, object: nil);
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillHide:"), name:UIKeyboardWillHideNotification, object: nil);
+        NotificationCenter.default.addObserver(self, selector: #selector(EditTextClueViewController.keyboardWillShow(_:)), name:NSNotification.Name.UIKeyboardWillShow, object: nil);
+        NotificationCenter.default.addObserver(self, selector: #selector(EditTextClueViewController.keyboardWillHide(_:)), name:NSNotification.Name.UIKeyboardWillHide, object: nil);
 
 
     }
@@ -38,26 +38,26 @@ class EditTextClueViewController: UIViewController {
     }
     
 
-    @IBAction func submit(sender: UIBarButtonItem) {
+    @IBAction func submit(_ sender: UIBarButtonItem) {
         step.initialText = reviewTextView.text
-        self.navigationController?.popViewControllerAnimated(true)
+        self.navigationController?.popViewController(animated: true)
     }
     
-    @IBAction func cancel(sender: AnyObject) {
-        self.navigationController?.popViewControllerAnimated(true)
+    @IBAction func cancel(_ sender: AnyObject) {
+        self.navigationController?.popViewController(animated: true)
     }
     
-    func keyboardWillShow(notification: NSNotification) {
+    func keyboardWillShow(_ notification: Notification) {
         let info = notification.userInfo!
-        let keyboardFrame: CGRect = (info[UIKeyboardFrameEndUserInfoKey] as! NSValue).CGRectValue()
+        let keyboardFrame: CGRect = (info[UIKeyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
         
-        UIView.animateWithDuration(0.1, animations: { () -> Void in
+        UIView.animate(withDuration: 0.1, animations: { () -> Void in
             self.bottomConstraint.constant = keyboardFrame.size.height + 20
         })
     }
     
-    func keyboardWillHide(notification: NSNotification) {
-        UIView.animateWithDuration(0.1, animations: { () -> Void in
+    func keyboardWillHide(_ notification: Notification) {
+        UIView.animate(withDuration: 0.1, animations: { () -> Void in
             self.bottomConstraint.constant = 20
 
         })
@@ -77,7 +77,7 @@ extension EditTextClueViewController : UITextViewDelegate {
 //        return true
 //    }
     
-    func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         if(text == "\n") {
             textView.resignFirstResponder()
             return false

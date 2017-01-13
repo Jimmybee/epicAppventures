@@ -35,7 +35,7 @@ class RateViewController: UIViewController {
         }
     }
 
-    @IBAction func submitRating(sender: AnyObject) {
+    @IBAction func submitRating(_ sender: AnyObject) {
         
         if let currentUser = User.user {
             if  let appventureID = Appventure.currentAppventureID() {
@@ -43,11 +43,11 @@ class RateViewController: UIViewController {
                 newRating.save()
             }
         }
-        self.dismissViewControllerAnimated(true, completion: nil)
+        self.dismiss(animated: true, completion: nil)
     }
     
-    @IBAction func cancel(sender: AnyObject) {
-        self.dismissViewControllerAnimated(true, completion: nil)
+    @IBAction func cancel(_ sender: AnyObject) {
+        self.dismiss(animated: true, completion: nil)
     }
     /*
     // MARK: - Navigation

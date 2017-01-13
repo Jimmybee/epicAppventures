@@ -10,7 +10,7 @@ import Foundation
 //import Parse
 
 protocol FriendsAdventuresDelegate: NSObjectProtocol {
-    func shareComplete(succes: Bool)
+    func shareComplete(_ succes: Bool)
 }
 
 class FriendsAdventures: NSObject {
@@ -24,7 +24,7 @@ class FriendsAdventures: NSObject {
     
     
     
-    static func saveObject(appventureID: String, fbUserID: String, delegate: FriendsAdventuresDelegate) {
+    static func saveObject(_ appventureID: String, fbUserID: String, delegate: FriendsAdventuresDelegate) {
 //        let save = PFObject(className: parseCol.pfClass)
 //
 //        save[parseCol.fbUserID] = fbUserID
@@ -41,7 +41,7 @@ class FriendsAdventures: NSObject {
     }
 
     
-    static func fetchFriendAdventures(handler: ([Appventure]) -> Void) {
+    static func fetchFriendAdventures(_ handler: ([Appventure]) -> Void) {
 //        var friendsAdventures = [Appventure]()
 //        if let user = User.user {
 //            let query = PFQuery(className:parseCol.pfClass)

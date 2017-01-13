@@ -10,7 +10,7 @@ import UIKit
 
 protocol StepCompleteViewControllerDelegate : NSObjectProtocol {
     
-    func setTime(currentTime : Double )
+    func setTime(_ currentTime : Double )
     
 }
 class StepCompleteViewController: UIViewController {
@@ -35,9 +35,9 @@ class StepCompleteViewController: UIViewController {
     }
     
 
-    @IBAction func nextStep(sender: UIButton) {
+    @IBAction func nextStep(_ sender: UIButton) {
         delegate.setTime(currentTimeD)
-        dismissViewControllerAnimated(true,completion: nil)
+        dismiss(animated: true,completion: nil)
     }
     
 

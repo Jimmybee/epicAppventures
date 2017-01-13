@@ -31,7 +31,7 @@ class LocalAppventureTableViewCell: UITableViewCell {
     @IBOutlet weak var startingLocation: UILabel!
     @IBOutlet weak var duration: UILabel!
     
-    override func setSelected(selected: Bool, animated: Bool) {
+    override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
@@ -73,7 +73,7 @@ class LocalAppventureTableViewCell: UITableViewCell {
         appventureTitle.text = appventure?.title
         ratingDisplay.rating = (appventure?.rating)!
         if appventure?.image == nil {
-            dispatch_async(dispatch_get_global_queue(QOS_CLASS_BACKGROUND, 0)) { () -> Void in
+            DispatchQueue.global(qos: DispatchQoS.QoSClass.background).async { () -> Void in
                 if self.appventure?.pfFile != nil {
                     self.loadImage()
                     self.ratingDisplay.layoutSubviews()

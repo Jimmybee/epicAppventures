@@ -34,9 +34,9 @@ import CoreData
     
     
     convenience init () {
-        let context = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
-        let entity = NSEntityDescription.entityForName(CoreKeys.entityName, inManagedObjectContext: context)
-        self.init(entity: entity!, insertIntoManagedObjectContext: nil)
+        let context = (UIApplication.shared.delegate as! AppDelegate).managedObjectContext
+        let entity = NSEntityDescription.entity(forEntityName: CoreKeys.entityName, in: context)
+        self.init(entity: entity!, insertInto: nil)
     }
     
     func updateCoreDataBridges() {
@@ -50,8 +50,8 @@ import CoreData
     
     func addToContext() {
         self.updateCoreDataBridges()
-        let context = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
-        context.insertObject(self)
+        let context = (UIApplication.shared.delegate as! AppDelegate).managedObjectContext
+        context.insert(self)
     }
     
     func setValuesForObject() {
@@ -59,7 +59,7 @@ import CoreData
         self.answerHint = self.answerHintObj! as! [String]
         self.answerText = self.answerTextObj! as! [String]
         self.coordinate = CLLocationCoordinate2DMake(self.coordinateLat, self.coordinateLon)
-        if let data = self.imageData {self.image = UIImage(data: data)}
+        if let data = self.imageData {self.image = UIImage(data: data as Data)}
     }
 
 //     var PFObjectID: String? = ""//Given at point of save/load
@@ -104,10 +104,10 @@ import CoreData
     static var dataLoads = [String : Int]()
 
     
-     class func convertStringToDictionary(text: String) -> [String:Bool]? {
-        if let data = text.dataUsingEncoding(NSUTF8StringEncoding) {
+     class func convertStringToDictionary(_ text: String) -> [String:Bool]? {
+        if let data = text.data(using: String.Encoding.utf8) {
             do {
-                let json = try NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions()) as? [String:AnyObject]
+                let json = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions()) as? [String:AnyObject]
                 if let dict = json as! [String: Bool]! {
                     return dict
                 }
@@ -121,10 +121,10 @@ import CoreData
         
     }
     
-     func convertDictToJson(dict: [String: Bool]) -> String? {
+     func convertDictToJson(_ dict: [String: Bool]) -> String? {
         do {
-            let theJSONData = try NSJSONSerialization.dataWithJSONObject(dict , options: NSJSONWritingOptions(rawValue: 0))
-            let theJSONText = NSString(data: theJSONData, encoding: NSASCIIStringEncoding) as! String
+            let theJSONData = try JSONSerialization.data(withJSONObject: dict , options: JSONSerialization.WritingOptions(rawValue: 0))
+            let theJSONText = NSString(data: theJSONData, encoding: String.Encoding.ascii.rawValue) as! String
             return String(theJSONText)
             
         } catch {
@@ -140,9 +140,9 @@ import CoreData
 extension AppventureStep {
     
     convenience init(step: AppventureStep) {
-        let context = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
-        let entity = NSEntityDescription.entityForName(CoreKeys.entityName, inManagedObjectContext: context)
-        self.init(entity: entity!, insertIntoManagedObjectContext: nil)
+        let context = (UIApplication.shared.delegate as! AppDelegate).managedObjectContext
+        let entity = NSEntityDescription.entity(forEntityName: CoreKeys.entityName, in: context)
+        self.init(entity: entity!, insertInto: nil)
         
         self.pFObjectID = step.pFObjectID
         self.appventurePFObjectID = step.appventurePFObjectID

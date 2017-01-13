@@ -12,12 +12,12 @@ class UserFriend: NSObject {
     
     let firstName: String
     let lastName: String
-    let pictureURL: NSURL
+    let pictureURL: URL
     let id: String
     let profilePicture: UIImage? = nil
     
     
-    init(id: String, firstName: String, lastName: String,  url: NSURL) {
+    init(id: String, firstName: String, lastName: String,  url: URL) {
         self.id = id
         self.firstName = firstName
         self.lastName = lastName

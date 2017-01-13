@@ -12,9 +12,9 @@ import AVFoundation
 class SoundClueViewController: UIViewController {
     
     var audioPlayer: AVAudioPlayer!
-    lazy var sound = NSData()
+    lazy var sound = Data()
     
-    var timer : NSTimer?
+    var timer : Timer?
     
     @IBOutlet weak var slider: UISlider!
     
@@ -41,7 +41,7 @@ class SoundClueViewController: UIViewController {
     //MARK: Timer
     
     func startTimer() {
-        timer = NSTimer.scheduledTimerWithTimeInterval(0.1, target: self, selector: Selector(StepViewController.Constants.AppventureTimerFunc), userInfo: nil, repeats: true)
+        timer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: Selector(StepViewController.Constants.AppventureTimerFunc), userInfo: nil, repeats: true)
     }
     
     override func didReceiveMemoryWarning() {
@@ -52,22 +52,22 @@ class SoundClueViewController: UIViewController {
     
     //MARK: Sound Methods
     
-    @IBAction func slider(sender: UISlider) {
+    @IBAction func slider(_ sender: UISlider) {
         audioPlayer.currentTime = Double(slider.value)
         updateAppventureTimer()
         
     }
-    @IBAction func playSound(sender: UIButton) {
+    @IBAction func playSound(_ sender: UIButton) {
         audioPlayer.play()
         startTimer()
         lineGraph.alpha = 1
 
 }
-    @IBAction func pauseSound(sender: UIButton) {
+    @IBAction func pauseSound(_ sender: UIButton) {
         audioPlayer.pause()
         timer?.invalidate()
     }
-    @IBAction func stopSound(sender: UIButton) {
+    @IBAction func stopSound(_ sender: UIButton) {
         audioPlayer.pause()
         audioPlayer.currentTime = 0
         timer?.invalidate()

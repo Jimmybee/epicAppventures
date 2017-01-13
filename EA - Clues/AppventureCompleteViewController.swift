@@ -48,21 +48,21 @@ class AppventureCompleteViewController: UIViewController {
         
     }
     
-    override func preferredStatusBarStyle() -> UIStatusBarStyle {
-        return UIStatusBarStyle.LightContent
+    override var preferredStatusBarStyle : UIStatusBarStyle {
+        return UIStatusBarStyle.lightContent
     }
     
     //MARK: IB actions
     
-    @IBAction func appventureDone(sender: UIButton) {
+    @IBAction func appventureDone(_ sender: UIButton) {
         saveCompletedAppventure()
-        self.dismissViewControllerAnimated(true, completion: nil)
+        self.dismiss(animated: true, completion: nil)
     }
 
     
     func saveCompletedAppventure() {
         let teamName = teamNameField.text
-        let completedAppventure = CompletedAppventure(userFKID: userFKID, teamName: teamName!, appventureFKID: appventure.pFObjectID!, date: NSDate(), time: completeTime)
+        let completedAppventure = CompletedAppventure(userFKID: userFKID, teamName: teamName!, appventureFKID: appventure.pFObjectID!, date: Date(), time: completeTime)
         completedAppventure.save()
     }
     
@@ -83,11 +83,11 @@ class AppventureCompleteViewController: UIViewController {
         } else {
             let formatTime = HelperFunctions.formatTime(completeTime, nano: false)
             let content : FBSDKShareLinkContent = FBSDKShareLinkContent()
-            content.contentURL = NSURL(string: "http://epicappventure.com/")
+            content.contentURL = URL(string: "http://epicappventure.com/")
             content.contentTitle = "Appventure Completed"
             content.contentDescription = "I have just completed \(appventure.title!) in \(formatTime!)"
             if let imageURL = appventure.pfFile?.url {
-                content.imageURL = NSURL(string: String(imageURL))
+                content.imageURL = URL(string: String(describing: imageURL))
             }
             shareButton.shareContent = content
         }
@@ -99,7 +99,7 @@ class AppventureCompleteViewController: UIViewController {
 
 extension AppventureCompleteViewController : UITextFieldDelegate {
     
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
     }
@@ -107,16 +107,25 @@ extension AppventureCompleteViewController : UITextFieldDelegate {
 }
 
 extension AppventureStartViewController : FBSDKSharingDelegate {
-    
-    func sharer(sharer: FBSDKSharing!, didCompleteWithResults results: [NSObject : AnyObject]!) {
-        print("Share Complete")
-    }
-    
-    func sharer(sharer: FBSDKSharing!, didFailWithError error: NSError!) {
+    /*!
+     @abstract Sent to the delegate when the sharer encounters an error.
+     @param sharer The FBSDKSharing that completed.
+     @param error The error.
+     */
+    public func sharer(_ sharer: FBSDKSharing!, didFailWithError error: Error!) {
+        
         print(error)
+
+
+    }
+
+    
+    func sharer(_ sharer: FBSDKSharing!, didCompleteWithResults results: [AnyHashable: Any]!) {
+        print("Share Complete")
+
     }
     
-    func sharerDidCancel(sharer: FBSDKSharing!) {}
+    func sharerDidCancel(_ sharer: FBSDKSharing!) {}
     
 }
 

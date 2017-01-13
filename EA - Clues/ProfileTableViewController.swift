@@ -33,20 +33,20 @@ class ProfileTableViewController: UITableViewController {
             }
         }
         
-        let notificationCenter = NSNotificationCenter.defaultCenter()
-        notificationCenter.addObserver(self, selector: Selector("loadUserAppventures"), name: User.userInitCompleteNotification, object: nil)
+        let notificationCenter = NotificationCenter.default
+        notificationCenter.addObserver(self, selector: #selector(ProfileTableViewController.loadUserAppventures), name: NSNotification.Name(rawValue: User.userInitCompleteNotification), object: nil)
 
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
         
         if User.checkLogin(false, vc: self) {
             tableView.reloadData()
             print("owned adevntures: \(User.user?.ownedAppventures.count)")
         } else {
-            let alert = UIAlertController(title: "Log In Required", message: "Log In to allow access to adventure maker.", preferredStyle: UIAlertControllerStyle.Alert)
-        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: { action in
+            let alert = UIAlertController(title: "Log In Required", message: "Log In to allow access to adventure maker.", preferredStyle: UIAlertControllerStyle.alert)
+        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { action in
             self.tabBarController?.selectedIndex = 1
         }))
         }
@@ -65,13 +65,13 @@ class ProfileTableViewController: UITableViewController {
                     User.user?.ownedAppventures.append(appventure)
                 }
             }
-            dispatch_async(dispatch_get_main_queue(), {
+            DispatchQueue.main.async(execute: {
                 self.tableView.reloadData()
                 })
         }
     }
     
-    @IBAction func refeshTable(sender: UIRefreshControl) {
+    @IBAction func refeshTable(_ sender: UIRefreshControl) {
         loadUserAppventures()
         sender.endRefreshing()
     }
@@ -79,11 +79,11 @@ class ProfileTableViewController: UITableViewController {
     //MARK: Navigation
 
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if let cavc = segue.destinationViewController as? CreateAppventureViewController {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let cavc = segue.destination as? CreateAppventureViewController {
             if segue.identifier == Constants.segueEditAppventure {
                 if let tbCell = sender as? UITableViewCell {
-                    if let row = tableView.indexPathForCell(tbCell)!.row as Int! {
+                    if let row = tableView.indexPath(for: tbCell)!.row as Int! {
                         cavc.newAppventure = User.user!.ownedAppventures[row]
                         cavc.appventureIndexRow = row
                     }
@@ -97,10 +97,10 @@ class ProfileTableViewController: UITableViewController {
     
     var tableMessage = ""
     
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    override func numberOfSections(in tableView: UITableView) -> Int {
         if User.user != nil {
             if User.user!.ownedAppventures.count > 0 {
-                self.tableView.separatorStyle = UITableViewCellSeparatorStyle.SingleLine
+                self.tableView.separatorStyle = UITableViewCellSeparatorStyle.singleLine
                 self.tableView.backgroundView = UIView()
                 return 1
             } else {
@@ -111,14 +111,14 @@ class ProfileTableViewController: UITableViewController {
         return 0
     }
     
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return User.user!.ownedAppventures.count
 
     }
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
-         let cell = tableView.dequeueReusableCellWithIdentifier(Constants.CellName) as! AppventureMakerCell
+         let cell = tableView.dequeueReusableCell(withIdentifier: Constants.CellName) as! AppventureMakerCell
         
         let row = indexPath.row
         cell.appventure = User.user!.ownedAppventures[row]
@@ -126,31 +126,31 @@ class ProfileTableViewController: UITableViewController {
         return cell
     }
     
-    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return true
     }
     
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if (editingStyle == UITableViewCellEditingStyle.Delete) {
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if (editingStyle == UITableViewCellEditingStyle.delete) {
           confirmDeletePopup(indexPath)
         }
     }
     
-    func confirmDeletePopup (indexPath: NSIndexPath) {
-        let alert = UIAlertController(title: "Delete Appventure?", message: "Appventure data will be lost!", preferredStyle: UIAlertControllerStyle.Alert)
-        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: nil))
-        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Destructive, handler: { action in
+    func confirmDeletePopup (_ indexPath: IndexPath) {
+        let alert = UIAlertController(title: "Delete Appventure?", message: "Appventure data will be lost!", preferredStyle: UIAlertControllerStyle.alert)
+        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.destructive, handler: { action in
             self.deleteAppventureFromDB(indexPath)
             self.tableView.reloadData()
         }))
         
-        self.presentViewController(alert, animated: true, completion: nil)
+        self.present(alert, animated: true, completion: nil)
     }
     
-    func deleteAppventureFromDB (indexPath: NSIndexPath) {
+    func deleteAppventureFromDB (_ indexPath: IndexPath) {
         let appventure = User.user!.ownedAppventures[indexPath.row]
         appventure.deleteAppventure()
-        User.user!.ownedAppventures.removeAtIndex(indexPath.row)
+        User.user!.ownedAppventures.remove(at: indexPath.row)
 
     }
     
@@ -158,7 +158,7 @@ class ProfileTableViewController: UITableViewController {
 
 
 extension ProfileTableViewController : CreateAppventureViewControllerDelegate {
-    func appendNewAppventure(appventure: Appventure, indexRow: Int?) {
+    func appendNewAppventure(_ appventure: Appventure, indexRow: Int?) {
 //        if let row = indexRow as Int! {
 //            User.user!.ownedAppventures[row] = appventure
 //        } else {
@@ -175,7 +175,7 @@ extension ProfileTableViewController : CreateAppventureViewControllerDelegate {
 }
 
 extension ProfileTableViewController : ParseQueryHandler {
-    func handleQueryResults(objects: [AnyObject]?, handlerCase: String?) {
+    func handleQueryResults(_ objects: [AnyObject]?, handlerCase: String?) {
 //        if let isPFArray = objects as [PFObject]! {
 //            for object in isPFArray {
 //                let appventure = Appventure(object: object)

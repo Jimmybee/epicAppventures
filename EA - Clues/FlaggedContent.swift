@@ -31,7 +31,7 @@ class FlaggedContent: NSObject {
     
     var pfObjectID = ""
     var appventureFKID = ""
-    var date = NSDate()
+    var date = Date()
     var stepFKID = ""
     var status:Status = Status.new
     
@@ -59,7 +59,7 @@ class FlaggedContent: NSObject {
 //        }
     }
     
-    private func saveObject(save: AnyObject) {
+    fileprivate func saveObject(_ save: AnyObject) {
 //        save[parseCol.appventureFKID] = self.appventureFKID
 //        save[parseCol.stepFKID] = self.stepFKID
 //        save[parseCol.date] = self.date
@@ -74,7 +74,7 @@ class FlaggedContent: NSObject {
 //        }
     }
     
-    class func loadFlaggedContent(appventureID: String, handler: ParseQueryHandler) {
+    class func loadFlaggedContent(_ appventureID: String, handler: ParseQueryHandler) {
 //        ParseFunc.parseQuery(parseCol.pfClass, location2D: nil, whereClause: appventureID, WhereKey: parseCol.appventureFKID, vcHandler: handler, handlerCase: appventureReviewsHC)
     }
     

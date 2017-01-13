@@ -26,10 +26,10 @@ class AppventureReviews: NSObject {
     var pfObjectID = ""
     var userFKID = ""
     var appventureFKID = ""
-    var date = NSDate()
+    var date = Date()
     var review = ""
     
-    init(userFKID: String, review: String, appventureFKID: String, date: NSDate) {
+    init(userFKID: String, review: String, appventureFKID: String, date: Date) {
         self.userFKID = userFKID
         self.review = review
         self.appventureFKID = appventureFKID
@@ -69,7 +69,7 @@ class AppventureReviews: NSObject {
 //        }
 //    }
     
-    class func loadAppventuresReviews(appventureID: String, handler: ParseQueryHandler) {
+    class func loadAppventuresReviews(_ appventureID: String, handler: ParseQueryHandler) {
 //        ParseFunc.parseQuery(parseCol.pfClass, location2D: nil, whereClause: appventureID, WhereKey: parseCol.appventureFKID, vcHandler: handler, handlerCase: appventureReviewsHC)
     }
     

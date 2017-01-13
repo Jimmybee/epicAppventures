@@ -8,7 +8,7 @@
 
 extension NSLayoutConstraint {
     
-    override public var description: String {
+    override open var description: String {
         let id = identifier ?? ""
         return "id: \(id), constant: \(constant)" //you may print whatever you want here
     }
@@ -52,45 +52,46 @@ protocol ImagePicker: UINavigationControllerDelegate, UIImagePickerControllerDel
 
 class HelperFunctions {
     
-    class func openMaps( var query: String, vc: UIViewController, mapType: String = "Google") {
+    class func openMaps( _ query: String, vc: UIViewController, mapType: String = "Google") {
+        var query = query
         
 //        let address = "American Tourister, Abids Road, Bogulkunta, Hyderabad, Andhra Pradesh, India"
 //        let escapedAddress = address.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())
 //        let urlpath = NSString(format: "http://maps.googleapis.com/maps/api/geocode/json?address=\(escapedAddress)")
 //        print(urlpath)
-        query = query.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())!
+        query = query.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)!
         
-        if let targetURLGoogle = NSURL(string:"comgooglemaps://?q=\(query)") {
-            if UIApplication.sharedApplication().canOpenURL(targetURLGoogle) {
-                UIApplication.sharedApplication().openURL(targetURLGoogle)
-            } else if let targetURLApple = NSURL(string: "http://maps.apple.com/?q=\(query)")  {
-            if UIApplication.sharedApplication().canOpenURL(targetURLApple) {
-                UIApplication.sharedApplication().openURL(targetURLApple)
+        if let targetURLGoogle = URL(string:"comgooglemaps://?q=\(query)") {
+            if UIApplication.shared.canOpenURL(targetURLGoogle) {
+                UIApplication.shared.openURL(targetURLGoogle)
+            } else if let targetURLApple = URL(string: "http://maps.apple.com/?q=\(query)")  {
+            if UIApplication.shared.canOpenURL(targetURLApple) {
+                UIApplication.shared.openURL(targetURLApple)
             }
         }
         else {
-            let alert = UIAlertController(title: "Open Maps", message: "No directions available", preferredStyle: UIAlertControllerStyle.Alert)
-            alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Cancel, handler: nil))
+            let alert = UIAlertController(title: "Open Maps", message: "No directions available", preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.cancel, handler: nil))
             
-            vc.presentViewController(alert, animated: true, completion: nil)
+            vc.present(alert, animated: true, completion: nil)
             }
         }
 
     }
     
-    class func formatTime(ms: Double, nano: Bool) -> String? {
-        let formatter = NSDateComponentsFormatter()
-        formatter.allowedUnits.insert(NSCalendarUnit.Hour)
-        formatter.allowedUnits.insert(NSCalendarUnit.Minute)
-        formatter.allowedUnits.insert(NSCalendarUnit.Second)
+    class func formatTime(_ ms: Double, nano: Bool) -> String? {
+        let formatter = DateComponentsFormatter()
+        formatter.allowedUnits.insert(NSCalendar.Unit.hour)
+        formatter.allowedUnits.insert(NSCalendar.Unit.minute)
+        formatter.allowedUnits.insert(NSCalendar.Unit.second)
         if nano == true {
-        formatter.allowedUnits.insert(NSCalendarUnit.Nanosecond)
+        formatter.allowedUnits.insert(NSCalendar.Unit.nanosecond)
         }
-        formatter.zeroFormattingBehavior.insert(NSDateComponentsFormatterZeroFormattingBehavior.Pad)
-        return formatter.stringFromTimeInterval(ms)
+        formatter.zeroFormattingBehavior.insert(DateComponentsFormatter.ZeroFormattingBehavior.pad)
+        return formatter.string(from: ms)
     }
 
-    class func formatDistance(distance: Double) -> String {
+    class func formatDistance(_ distance: Double) -> String {
         if distance > 9500 {
             let formattedDistance = "\(Int(distance)/1000) Km"
             return formattedDistance
@@ -102,14 +103,14 @@ class HelperFunctions {
         
     }
     
-    class func convertImage (image: UIImage) -> AnyObject? {
-        let imageData = UIImagePNGRepresentation(image) as NSData!
+    class func convertImage (_ image: UIImage) -> AnyObject? {
+        let imageData = UIImagePNGRepresentation(image) as Data!
 //        let imageFile = PFFile(name:"image.png", data:imageData)
 //        return imageFile!
         return nil
     }
     
-    class func loadAppventureSetup(object: AnyObject) -> Appventure {
+    class func loadAppventureSetup(_ object: AnyObject) -> Appventure {
 //        let appventureName = object.objectForKey(Appventure.pfAppventure.pfTitle) as! String
 //        let appventureLocate = object.objectForKey(Appventure.pfAppventure.pfCoordinate) as! PFGeoPoint
 //        let appventurePFID = object.objectId!
@@ -122,49 +123,49 @@ class HelperFunctions {
     }
     
 //    MARK: ImageFunctions
-    class func resizeImage(image: UIImage, newWidth: CGFloat) -> UIImage {
+    class func resizeImage(_ image: UIImage, newWidth: CGFloat) -> UIImage {
         
         let oldData = UIImageJPEGRepresentation(image, 1)
-        print(oldData?.length)
+        print(oldData?.count)
         
         let scale = newWidth / image.size.width
         let newHeight = image.size.height * scale
-        UIGraphicsBeginImageContext(CGSizeMake(newWidth, newHeight))
-        image.drawInRect(CGRectMake(0, 0, newWidth, newHeight))
+        UIGraphicsBeginImageContext(CGSize(width: newWidth, height: newHeight))
+        image.draw(in: CGRect(x: 0, y: 0, width: newWidth, height: newHeight))
         let newImage = UIGraphicsGetImageFromCurrentImageContext()
-        let imageData = UIImageJPEGRepresentation(newImage, 0.8)
-        print(imageData?.length)
+        let imageData = UIImageJPEGRepresentation(newImage!, 0.8)
+        print(imageData?.count)
         let finalImage = UIImage(data: imageData!)
         UIGraphicsEndImageContext()
         
         return finalImage!
     }
     
-    class func getImage(useCamera: Bool, delegate: ImagePicker, presenter: UIViewController) {
+    class func getImage(_ useCamera: Bool, delegate: ImagePicker, presenter: UIViewController) {
         
         let imagePicker = UIImagePickerController()
         imagePicker.delegate = delegate
         
         if useCamera {
-            imagePicker.sourceType = .Camera
+            imagePicker.sourceType = .camera
         } else {
-            imagePicker.sourceType = .PhotoLibrary
+            imagePicker.sourceType = .photoLibrary
         }
-        presenter.presentViewController(imagePicker, animated: true, completion: nil)
+        presenter.present(imagePicker, animated: true, completion: nil)
         
     }
     
-    class func circle(image: UIImageView) {
+    class func circle(_ image: UIImageView) {
         image.layer.cornerRadius = image.frame.size.width / 2
         image.clipsToBounds = true
         image.layer.borderWidth = 3.0
-        image.layer.borderColor = UIColor.blackColor().CGColor
+        image.layer.borderColor = UIColor.black.cgColor
     }
     
-    class func blurImage(image:UIImage, radius: Double, forRect rect: CGRect) -> UIImage?
+    class func blurImage(_ image:UIImage, radius: Double, forRect rect: CGRect) -> UIImage?
     {
         let context = CIContext(options: nil)
-        let inputImage = CIImage(CGImage: image.CGImage!)
+        let inputImage = CIImage(cgImage: image.cgImage!)
         
         
         let filter = CIFilter(name: "CIGaussianBlur")
@@ -172,16 +173,16 @@ class HelperFunctions {
         filter?.setValue((radius), forKey: kCIInputRadiusKey)
         let outputImage = filter?.outputImage
         
-        var cgImage:CGImageRef?
+        var cgImage:CGImage?
         
         if let asd = outputImage
         {
-            cgImage = context.createCGImage(asd, fromRect: rect)
+            cgImage = context.createCGImage(asd, from: rect)
         }
         
         if let cgImageA = cgImage
         {
-            return UIImage(CGImage: cgImageA)
+            return UIImage(cgImage: cgImageA)
         }
         
         return nil
@@ -190,28 +191,28 @@ class HelperFunctions {
     
     //MARK: tableFunctions
     
-    class func noTableDataMessage (tableView: UITableView, message: String) {
+    class func noTableDataMessage (_ tableView: UITableView, message: String) {
         let messageLabel = UILabel(frame: CGRect(x: 0, y: 0, width: tableView.bounds.size.width, height: tableView.bounds.size.height ))
         messageLabel.text = message
-        messageLabel.textColor = UIColor.blackColor()
+        messageLabel.textColor = UIColor.black
         messageLabel.numberOfLines = 0
-        messageLabel.textAlignment = NSTextAlignment.Center
+        messageLabel.textAlignment = NSTextAlignment.center
         messageLabel.font = UIFont(name: "Palatino", size: 20)
         messageLabel.sizeToFit()
         tableView.backgroundView = messageLabel
-        tableView.separatorStyle = UITableViewCellSeparatorStyle.None
+        tableView.separatorStyle = UITableViewCellSeparatorStyle.none
     }
     
     //MARK: Tab functions
     
-    class func unhideTabBar(vc: UIViewController){
+    class func unhideTabBar(_ vc: UIViewController){
         if let mtvc = vc.tabBarController as? MainTabBarController {
             if mtvc.stdFrame != nil {
                 if mtvc.tabBar.frame != mtvc.stdFrame {
-                    mtvc.tabBar.hidden = false
+                    mtvc.tabBar.isHidden = false
 
-                    UIView.animateWithDuration(0.3, animations: {
-                        mtvc.tabBar.frame = CGRectOffset(mtvc.stdFrame!, 0, 0)
+                    UIView.animate(withDuration: 0.3, animations: {
+                        mtvc.tabBar.frame = mtvc.stdFrame!.offsetBy(dx: 0, dy: 0)
 
                         }, completion: { (complete) in
                     })
@@ -221,14 +222,14 @@ class HelperFunctions {
         }
     }
     
-    class func hideTabBar(vc: UIViewController){
+    class func hideTabBar(_ vc: UIViewController){
         if let mtvc = vc.tabBarController as? MainTabBarController {
             if mtvc.stdFrame != nil {
                 if mtvc.tabBar.frame == mtvc.stdFrame {
                     let height = mtvc.stdFrame?.size.height
-                    UIView.animateWithDuration(0.3, animations: {
-                        mtvc.tabBar.frame = CGRectOffset(mtvc.stdFrame!, 0, height!)
-                        mtvc.tabBar.hidden = true
+                    UIView.animate(withDuration: 0.3, animations: {
+                        mtvc.tabBar.frame = mtvc.stdFrame!.offsetBy(dx: 0, dy: height!)
+                        mtvc.tabBar.isHidden = true
 
                         }, completion: { (complete) in
                             
@@ -254,15 +255,15 @@ extension String {
 import UIKit
 
 extension UIImage {
-    public func imageRotatedByDegrees(degrees: CGFloat, flip: Bool) -> UIImage {
+    public func imageRotatedByDegrees(_ degrees: CGFloat, flip: Bool) -> UIImage {
 
         let degreesToRadians: (CGFloat) -> CGFloat = {
             return $0 / 180.0 * CGFloat(M_PI)
         }
         
         // calculate the size of the rotated view's containing box for our drawing space
-        let rotatedViewBox = UIView(frame: CGRect(origin: CGPointZero, size: size))
-        let t = CGAffineTransformMakeRotation(degreesToRadians(degrees));
+        let rotatedViewBox = UIView(frame: CGRect(origin: CGPoint.zero, size: size))
+        let t = CGAffineTransform(rotationAngle: degreesToRadians(degrees));
         rotatedViewBox.transform = t
         let rotatedSize = rotatedViewBox.frame.size
         
@@ -271,10 +272,10 @@ extension UIImage {
         let bitmap = UIGraphicsGetCurrentContext()
         
         // Move the origin to the middle of the image so we will rotate and scale around the center.
-        CGContextTranslateCTM(bitmap, rotatedSize.width / 2.0, rotatedSize.height / 2.0);
+        bitmap?.translateBy(x: rotatedSize.width / 2.0, y: rotatedSize.height / 2.0);
         
         //   // Rotate the image context
-        CGContextRotateCTM(bitmap, degreesToRadians(degrees));
+        bitmap?.rotate(by: degreesToRadians(degrees));
         
         // Now, draw the rotated/scaled image into the context
         var yFlip: CGFloat
@@ -285,13 +286,13 @@ extension UIImage {
             yFlip = CGFloat(1.0)
         }
         
-        CGContextScaleCTM(bitmap, yFlip, -1.0)
-        CGContextDrawImage(bitmap, CGRectMake(-size.width / 2, -size.height / 2, size.width, size.height), CGImage)
+        bitmap?.scaleBy(x: yFlip, y: -1.0)
+        bitmap?.draw(cgImage!, in: CGRect(x: -size.width / 2, y: -size.height / 2, width: size.width, height: size.height))
         
         let newImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         
-        return newImage
+        return newImage!
     }
 
 }
@@ -301,10 +302,10 @@ extension UIImage {
 extension UIImage {
     convenience init(view: UIView) {
         UIGraphicsBeginImageContext(view.frame.size)
-        view.layer.renderInContext(UIGraphicsGetCurrentContext()!)
+        view.layer.render(in: UIGraphicsGetCurrentContext()!)
         let image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
-        self.init(CGImage: image.CGImage!)
+        self.init(cgImage: (image?.cgImage!)!)
     }
 }
 
@@ -315,8 +316,8 @@ class clickParentScroll : UIView {
     
     var myScroll = UIScrollView()
     
-    override func hitTest(point: CGPoint, withEvent event: UIEvent?) -> UIView? {
-        return self.pointInside(point, withEvent: event) ? myScroll : nil
+    override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
+        return self.point(inside: point, with: event) ? myScroll : nil
     }
     
     

@@ -13,7 +13,7 @@ import GoogleMaps
 
 protocol CreateAppventureViewControllerDelegate: NSObjectProtocol {
     
-    func appendNewAppventure(appventure: Appventure, indexRow: Int?)
+    func appendNewAppventure(_ appventure: Appventure, indexRow: Int?)
     func reloadTable()
 }
 
@@ -64,17 +64,17 @@ class CreateAppventureViewController: UIViewController, UITableViewDelegate, UIT
     @IBOutlet weak var developLocalPublicControl: UISegmentedControl! 
     
     func detailsUp () {
-        detailsBottomLayoutBottom.active = true
-        detailsEqualSegmentControlBottom.active = true
-        detailsTopEqualLayoutBottom.active = false
-        detailsEqualSuperHeight.active = false
+        detailsBottomLayoutBottom.isActive = true
+        detailsEqualSegmentControlBottom.isActive = true
+        detailsTopEqualLayoutBottom.isActive = false
+        detailsEqualSuperHeight.isActive = false
     }
     
     func detailsDown() {
-        detailsBottomLayoutBottom.active = false
-        detailsEqualSegmentControlBottom.active = false
-        detailsTopEqualLayoutBottom.active = true
-        detailsEqualSuperHeight.active = true
+        detailsBottomLayoutBottom.isActive = false
+        detailsEqualSegmentControlBottom.isActive = false
+        detailsTopEqualLayoutBottom.isActive = true
+        detailsEqualSuperHeight.isActive = true
     }
     
     //UI Control
@@ -96,7 +96,7 @@ class CreateAppventureViewController: UIViewController, UITableViewDelegate, UIT
         super.viewDidLoad()
         
         shareButton.layer.borderWidth = 1.5
-        shareButton.layer.borderColor = UIColor.whiteColor().CGColor
+        shareButton.layer.borderColor = UIColor.white.cgColor
         
         HelperFunctions.hideTabBar(self)
         
@@ -106,7 +106,7 @@ class CreateAppventureViewController: UIViewController, UITableViewDelegate, UIT
             User.user?.ownedAppventures.append(newAppventure)
             newAppventure!.saveAndSync()
             setupForNewAppventure()
-            performSegueWithIdentifier(Constants.editAppventureDetailsSegue, sender: nil)
+            performSegue(withIdentifier: Constants.editAppventureDetailsSegue, sender: nil)
 
         } else {
 //            AppventureStep.loadSteps(newAppventure!, handler: stepsLoaded)
@@ -132,18 +132,18 @@ class CreateAppventureViewController: UIViewController, UITableViewDelegate, UIT
 
     }
 
-    @IBAction func shareWithFriends(sender: AnyObject) {
+    @IBAction func shareWithFriends(_ sender: AnyObject) {
         if User.user?.facebookConnected == true {
-            performSegueWithIdentifier(Constants.shareWithFriend, sender: nil)
+            performSegue(withIdentifier: Constants.shareWithFriend, sender: nil)
         } else {
-            let alert = UIAlertController(title: "Share", message: "Log in with facebook to share.", preferredStyle: UIAlertControllerStyle.Alert)
-        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: nil))
+            let alert = UIAlertController(title: "Share", message: "Log in with facebook to share.", preferredStyle: UIAlertControllerStyle.alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: nil))
         
-        self.presentViewController(alert, animated: true, completion: nil)
+        self.present(alert, animated: true, completion: nil)
         }
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         updateUI()
         if newAppventure!.appventureSteps.count > 0 {
             if CLLocationCoordinate2DIsValid(newAppventure!.appventureSteps[0].coordinate) {
@@ -173,7 +173,7 @@ class CreateAppventureViewController: UIViewController, UITableViewDelegate, UIT
         var totalDistance = 0.0
         var previousLocation = CLLocation(latitude: lat, longitude: long)
         
-        var bounds = GMSCoordinateBounds?()
+        var bounds = GMSCoordinateBounds()
         self.mapMarkers.removeAll()
         for step in isAppventure.appventureSteps {
             let marker = GMSMarker(position: step.coordinate)
@@ -193,7 +193,7 @@ class CreateAppventureViewController: UIViewController, UITableViewDelegate, UIT
             
             //distance calculation
             let currentLocation = CLLocation(latitude: step.coordinate.latitude, longitude: step.coordinate.longitude)
-            totalDistance = totalDistance + currentLocation.distanceFromLocation(previousLocation)
+            totalDistance = totalDistance + currentLocation.distance(from: previousLocation)
             previousLocation = currentLocation
         }
         
@@ -214,11 +214,11 @@ class CreateAppventureViewController: UIViewController, UITableViewDelegate, UIT
     }
     
     
-    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         lastLocation = locations.last
     }
     
-    func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         
     }
 
@@ -245,7 +245,7 @@ class CreateAppventureViewController: UIViewController, UITableViewDelegate, UIT
             self.developLocalPublicControl.selectedSegmentIndex = newAppventure.liveStatus.segmentValue()
         }
         self.segmentControl.layer.cornerRadius = 15.0;
-        self.segmentControl.layer.borderColor = UIColor.whiteColor().CGColor
+        self.segmentControl.layer.borderColor = UIColor.white.cgColor
         self.segmentControl.layer.borderWidth = 1.0
         self.segmentControl.layer.masksToBounds = true
         stylizeFonts()
@@ -258,45 +258,45 @@ class CreateAppventureViewController: UIViewController, UITableViewDelegate, UIT
         let normalFont = UIFont(name: "Helvetica", size: 16.0)
         let boldFont = UIFont(name: "Helvetica-Bold", size: 16.0)
         
-        let normalTextAttributes: [NSObject : AnyObject] = [
-            NSForegroundColorAttributeName: UIColor.darkGrayColor(),
+        let normalTextAttributes: [AnyHashable: Any] = [
+            NSForegroundColorAttributeName: UIColor.darkGray,
             NSFontAttributeName: normalFont!
         ]
         
-        let boldTextAttributes: [NSObject : AnyObject] = [
-            NSForegroundColorAttributeName : UIColor.darkGrayColor(),
+        let boldTextAttributes: [AnyHashable: Any] = [
+            NSForegroundColorAttributeName : UIColor.darkGray,
             NSFontAttributeName : boldFont!,
             ]
         
-        self.segmentControl.setTitleTextAttributes(normalTextAttributes, forState: .Normal)
-        self.segmentControl.setTitleTextAttributes(normalTextAttributes, forState: .Highlighted)
-        self.segmentControl.setTitleTextAttributes(boldTextAttributes, forState: .Selected)
+        self.segmentControl.setTitleTextAttributes(normalTextAttributes, for: UIControlState())
+        self.segmentControl.setTitleTextAttributes(normalTextAttributes, for: .highlighted)
+        self.segmentControl.setTitleTextAttributes(boldTextAttributes, for: .selected)
     }
     
     
     //MARK: IB Actions
     
     
-    @IBAction func statusSegmentChange(sender: UISegmentedControl) {
+    @IBAction func statusSegmentChange(_ sender: UISegmentedControl) {
         let message = goodForLive()
 
         func revertToDevelop() {
             self.newAppventure.liveStatus = .inDevelopment
             sender.selectedSegmentIndex = 0
             let fullMessage = "Complete the " + message
-            let alert = UIAlertController(title: nil, message: fullMessage, preferredStyle: UIAlertControllerStyle.Alert)
-            alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: nil))
-            self.presentViewController(alert, animated: true, completion: nil)
+            let alert = UIAlertController(title: nil, message: fullMessage, preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
             
         }
         
         func tryForPublic() {
             self.newAppventure.liveStatus = .waitingForApproval
-            let alert = UIAlertController(title: "Public Adventure", message: "This adventure will be looked at by one of our team, and if suitable made available to everyone.", preferredStyle: UIAlertControllerStyle.Alert)
-        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: nil))
+            let alert = UIAlertController(title: "Public Adventure", message: "This adventure will be looked at by one of our team, and if suitable made available to everyone.", preferredStyle: UIAlertControllerStyle.alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: nil))
 
         
-        self.presentViewController(alert, animated: true, completion: nil)
+        self.present(alert, animated: true, completion: nil)
         }
         
         
@@ -321,26 +321,26 @@ class CreateAppventureViewController: UIViewController, UITableViewDelegate, UIT
         if self.newAppventure.subtitle!.characters.count == 0 { message.append("Description") }
         if self.newAppventure.title!.characters.count == 0 { message.append("Name") }
         if self.newAppventure.appventureSteps.count == 0 { message.append("Steps") }
-        let fullMessage = message.joinWithSeparator(", ")
+        let fullMessage = message.joined(separator: ", ")
         return fullMessage
     }
     
-    @IBAction func updateSegment(sender: UISegmentedControl) {
+    @IBAction func updateSegment(_ sender: UISegmentedControl) {
         let controlValue = sender.selectedSegmentIndex
         switch controlValue {
         case 0:
-            detailsView.hidden = false
+            detailsView.isHidden = false
             editButton.title = "Edit"
-            editButton.enabled = true
+            editButton.isEnabled = true
 //                        editButton.action = "editDetailsSegue"
 //            editButton.action = #selector(CreateAppventureViewController.editDetailsSegue(_:))
             
-            self.containerView.bringSubviewToFront(detailsView)
+            self.containerView.bringSubview(toFront: detailsView)
             tableView.setEditing(false , animated: true)
 
-            UIView.animateWithDuration(0.3, animations: {
-                self.stepsTopSegmentBottomCon.active = false
-                self.stepsHeight.active = true
+            UIView.animate(withDuration: 0.3, animations: {
+                self.stepsTopSegmentBottomCon.isActive = false
+                self.stepsHeight.isActive = true
 //                self.mapBottomLayoutBottom.active = false
 //                self.mapBottomSegmentBottom.active = true
                 self.detailsUp()
@@ -348,16 +348,16 @@ class CreateAppventureViewController: UIViewController, UITableViewDelegate, UIT
                 })
 
         case 1:
-            stepsContainer.hidden = false
-            editButton.enabled = true
+            stepsContainer.isHidden = false
+            editButton.isEnabled = true
             editButton.title = "Edit"
 //            editButton.action = "editStepTable:"
 //            editButton.action = #selector(CreateAppventureViewController.editStepTable(_:))
-            self.containerView.bringSubviewToFront(stepsContainer)
+            self.containerView.bringSubview(toFront: stepsContainer)
             
-            UIView.animateWithDuration(0.3, animations: {
-                self.stepsTopSegmentBottomCon.active = true
-                self.stepsHeight.active = false
+            UIView.animate(withDuration: 0.3, animations: {
+                self.stepsTopSegmentBottomCon.isActive = true
+                self.stepsHeight.isActive = false
                 self.detailsDown()
 
 //                self.mapBottomLayoutBottom.active = false
@@ -371,12 +371,12 @@ class CreateAppventureViewController: UIViewController, UITableViewDelegate, UIT
             
             tableView.setEditing(false , animated: true)
 
-            editButton.enabled = false
+            editButton.isEnabled = false
             editButton.title = nil
-            mapView.hidden = false
-            UIView.animateWithDuration(0.3, animations: {
-                self.stepsTopSegmentBottomCon.active = false
-                self.stepsHeight.active = true
+            mapView.isHidden = false
+            UIView.animate(withDuration: 0.3, animations: {
+                self.stepsTopSegmentBottomCon.isActive = false
+                self.stepsHeight.isActive = true
                 self.detailsDown()
 //                self.mapBottomLayoutBottom.active = true
 //                self.mapBottomSegmentBottom.active = false
@@ -389,48 +389,48 @@ class CreateAppventureViewController: UIViewController, UITableViewDelegate, UIT
     
     //Edit Actions 
     
-    func editStepTable(sender: AnyObject) {
+    func editStepTable(_ sender: AnyObject) {
         editButton.title = "Done"
 //        editButton.action = "doneEditStepTable:"
 //        editButton.action = #selector(self.doneEditStepTable(_:))
         tableView.setEditing(true, animated: true)
-        segmentControl.enabled = false
+        segmentControl.isEnabled = false
     }
     
-    func doneEditStepTable(sender: AnyObject) {
+    func doneEditStepTable(_ sender: AnyObject) {
         editButton.title = "Edit"
 //        editButton.action = "editStepTable:"
 
 //        editButton.action = #selector(self.editStepTable(_:))
         tableView.setEditing(false , animated: true)
-        segmentControl.enabled = true
+        segmentControl.isEnabled = true
         tableView.reloadData()
 
     }
     
     func editDetailsSegue() {
-        performSegueWithIdentifier(Constants.editAppventureDetailsSegue, sender: self)
+        performSegue(withIdentifier: Constants.editAppventureDetailsSegue, sender: self)
     }
     
     
 //MARK: Navigation
     
-    @IBAction func cancel(sender: UIBarButtonItem) {
+    @IBAction func cancel(_ sender: UIBarButtonItem) {
         if self.newAppventure.title == Constants.newTitle {
             self.newAppventure.deleteAppventure()
-            self.navigationController?.popViewControllerAnimated(true)
+            self.navigationController?.popViewController(animated: true)
         }
         
-        self.navigationController?.popViewControllerAnimated(true)
+        self.navigationController?.popViewController(animated: true)
 
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         if segue.identifier == Constants.segueNewStep {
             if let tbCell = sender as? AppventureStepTableViewCell {
-                if let indexPath = tableView.indexPathForCell(tbCell)?.row as Int! {
-                    if let nvc = segue.destinationViewController as? UINavigationController {
+                if let indexPath = tableView.indexPath(for: tbCell)?.row as Int! {
+                    if let nvc = segue.destination as? UINavigationController {
                     if let asvc = nvc.childViewControllers[0] as? AddStepTableViewController {
                         if newAppventure.appventureSteps.count > indexPath {
                             let appventureStep = newAppventure.appventureSteps[indexPath]
@@ -449,7 +449,7 @@ class CreateAppventureViewController: UIViewController, UITableViewDelegate, UIT
         }
         
         if segue.identifier == Constants.editAppventureDetailsSegue {
-            if let nvc = segue.destinationViewController as? UINavigationController {
+            if let nvc = segue.destination as? UINavigationController {
                 if let eadvc = nvc.childViewControllers[0] as? EditAppventureDetailsTableViewController {
                     eadvc.appventure = self.newAppventure
                 }
@@ -457,7 +457,7 @@ class CreateAppventureViewController: UIViewController, UITableViewDelegate, UIT
         }
         
         if segue.identifier == Constants.shareWithFriend{
-            if let nvc = segue.destinationViewController as? UINavigationController {
+            if let nvc = segue.destination as? UINavigationController {
                 if let ftvc = nvc.childViewControllers[0] as? FriendsTableViewController {
                     ftvc.appventure = self.newAppventure
                 }
@@ -469,11 +469,11 @@ class CreateAppventureViewController: UIViewController, UITableViewDelegate, UIT
     //MARK: Table functions
     
 
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if CLLocationCoordinate2DIsValid(newAppventure.coordinate!) {
             return newAppventure.appventureSteps.count + 1
         } else {
@@ -481,8 +481,8 @@ class CreateAppventureViewController: UIViewController, UITableViewDelegate, UIT
         }
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier(Constants.cellName) as! AppventureStepTableViewCell
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: Constants.cellName) as! AppventureStepTableViewCell
         
         let row = indexPath.row
         
@@ -493,7 +493,7 @@ class CreateAppventureViewController: UIViewController, UITableViewDelegate, UIT
                 if step.setup[AppventureStep.setup.pictureClue] == true {includedClues.append("Picture")}
                 if step.setup[AppventureStep.setup.textClue] == true {includedClues.append("Text")}
                 if step.setup[AppventureStep.setup.soundClue] == true {includedClues.append("Sound Clip")}
-                cell.shortDescription.text = "Clues: \(includedClues.joinWithSeparator(","))"
+                cell.shortDescription.text = "Clues: \(includedClues.joined(separator: ","))"
                 
                 if step.setup[AppventureStep.setup.checkIn] == true {
                     cell.answer.text = "Check In"}
@@ -515,29 +515,29 @@ class CreateAppventureViewController: UIViewController, UITableViewDelegate, UIT
         return cell
     }
     
-    func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return true
     }
     
-    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if (editingStyle == UITableViewCellEditingStyle.Delete) {
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if (editingStyle == UITableViewCellEditingStyle.delete) {
             confirmDeletePopup(indexPath)
         }
     }
     
-    func confirmDeletePopup (indexPath: NSIndexPath) {
-        let alert = UIAlertController(title: "Delete Step?", message: "Step data will be lost!", preferredStyle: UIAlertControllerStyle.Alert)
-        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: nil))
-        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Destructive, handler: { action in
+    func confirmDeletePopup (_ indexPath: IndexPath) {
+        let alert = UIAlertController(title: "Delete Step?", message: "Step data will be lost!", preferredStyle: UIAlertControllerStyle.alert)
+        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.destructive, handler: { action in
             self.deleteStepFromDB(indexPath)
-            self.newAppventure.appventureSteps.removeAtIndex(indexPath.row)
+            self.newAppventure.appventureSteps.remove(at: indexPath.row)
             self.tableView.reloadData()
         }))
         
-        self.presentViewController(alert, animated: true, completion: nil)
+        self.present(alert, animated: true, completion: nil)
     }
     
-    func deleteStepFromDB(indexPath: NSIndexPath) {
+    func deleteStepFromDB(_ indexPath: IndexPath) {
 //        let objectID = newAppventure.appventureSteps[indexPath.row].pFObjectID
 //        let query = PFQuery(className: AppventureStep.pfStep.pfClass)
 //        query.getObjectInBackgroundWithId(objectID!) {
@@ -552,21 +552,21 @@ class CreateAppventureViewController: UIViewController, UITableViewDelegate, UIT
     }
 
     // Determine whether a given row is eligible for reordering or not.
-    func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool
+    func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool
     {
         return true;
     }
     
     // Process the row move. This means updating the data model to correct the item indices.
-    func tableView(tableView: UITableView, moveRowAtIndexPath sourceIndexPath: NSIndexPath, toIndexPath destinationIndexPath: NSIndexPath)
+    func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath)
     {
         let step = newAppventure.appventureSteps[sourceIndexPath.row];
-        newAppventure.appventureSteps.removeAtIndex(sourceIndexPath.row);
-        newAppventure.appventureSteps.insert(step, atIndex: destinationIndexPath.row)
+        newAppventure.appventureSteps.remove(at: sourceIndexPath.row);
+        newAppventure.appventureSteps.insert(step, at: destinationIndexPath.row)
     
     
         for step in newAppventure.appventureSteps {
-            step.stepNumber = newAppventure.appventureSteps.indexOf(step)! + 1
+            step.stepNumber = newAppventure.appventureSteps.index(of: step)! + 1
         }
     }
     
@@ -575,7 +575,7 @@ class CreateAppventureViewController: UIViewController, UITableViewDelegate, UIT
 
 extension CreateAppventureViewController : AddStepTableViewControllerDelegate {
     
-    func appendStep(step: AppventureStep, stepNumber: Int16?) {
+    func appendStep(_ step: AppventureStep, stepNumber: Int16?) {
         if let number = stepNumber as Int16! {
             newAppventure.appventureSteps[number - 1] = step
         } else {
@@ -586,7 +586,7 @@ extension CreateAppventureViewController : AddStepTableViewControllerDelegate {
         print("reload step table")
     }
     
-    func updateAppventureLocation(location: CLLocationCoordinate2D) {
+    func updateAppventureLocation(_ location: CLLocationCoordinate2D) {
         self.newAppventure.coordinate = location
     }
 }
@@ -604,7 +604,7 @@ extension CreateAppventureViewController : ParseQueryHandler {
 
 extension CreateAppventureViewController : EditAppventureDetailsTableViewControllerDelegate {
     
-    func completedEdit(appventure: Appventure) {
+    func completedEdit(_ appventure: Appventure) {
         
     }
 //    func completedEdit (edittedAppventure: Appventure) {

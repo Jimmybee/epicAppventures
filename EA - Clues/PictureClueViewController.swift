@@ -18,9 +18,9 @@ class PictureClueViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        scrollView.backgroundColor = UIColor.blackColor()
+        scrollView.backgroundColor = UIColor.black
         scrollView.contentSize = self.view.bounds.size
-        scrollView.autoresizingMask = [UIViewAutoresizing.FlexibleWidth, UIViewAutoresizing.FlexibleHeight]
+        scrollView.autoresizingMask = [UIViewAutoresizing.flexibleWidth, UIViewAutoresizing.flexibleHeight]
     }
     
     func setup () {
@@ -28,14 +28,14 @@ class PictureClueViewController: UIViewController {
     }
     
     func zoomOut() {
-        scrollView.scrollEnabled = false
+        scrollView.isScrollEnabled = false
         scrollView.zoomScale = 1
     }
     
-    @IBAction func zoomTap(sender: UITapGestureRecognizer) {
+    @IBAction func zoomTap(_ sender: UITapGestureRecognizer) {
         if scrollView.zoomScale == 1 {
             
-            scrollView.scrollEnabled = true
+            scrollView.isScrollEnabled = true
             scrollView.zoomScale = 2
             delegate.closePan()
         } else {
@@ -47,7 +47,7 @@ class PictureClueViewController: UIViewController {
 }
 
 extension PictureClueViewController : UIScrollViewDelegate {
-    func viewForZoomingInScrollView(scrollView: UIScrollView) -> UIView? {
+    func viewForZooming(in scrollView: UIScrollView) -> UIView? {
         return self.imageView
     }
 }

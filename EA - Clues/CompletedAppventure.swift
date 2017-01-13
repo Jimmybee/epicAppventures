@@ -27,10 +27,10 @@ import Foundation
      var userFKID = ""
      var teamName = ""
      var appventureFKID = ""
-     var date = NSDate()
+     var date = Date()
      var time = 0.0
     
-    init(userFKID: String, teamName: String, appventureFKID: String, date: NSDate, time: Double) {
+    init(userFKID: String, teamName: String, appventureFKID: String, date: Date, time: Double) {
         self.userFKID = userFKID
         self.teamName = teamName
         self.appventureFKID = appventureFKID
@@ -56,7 +56,7 @@ import Foundation
 //        }
     }
     
-    private func saveObject(save: AnyObject) {
+    fileprivate func saveObject(_ save: AnyObject) {
 //        save[parseCol.userFKID] = self.userFKID
 //        save[parseCol.appventureFKID] = self.appventureFKID
 //        save[parseCol.teamName] = self.teamName
@@ -73,15 +73,15 @@ import Foundation
 //        }
     }
     
-    class func loadAppventuresCompleted(appventureID: String, handler: ParseQueryHandler) {
+    class func loadAppventuresCompleted(_ appventureID: String, handler: ParseQueryHandler) {
 //        ParseFunc.parseQuery(parseCol.pfClass, location2D: nil, whereClause: appventureID, WhereKey: parseCol.appventureFKID, vcHandler: handler, handlerCase: allCompletedHC)
     }
     
-    class func loadUserCompleted(userID: String, handler: ParseQueryHandler) {
+    class func loadUserCompleted(_ userID: String, handler: ParseQueryHandler) {
 //        ParseFunc.parseQuery(parseCol.pfClass, location2D: nil, whereClause: userID, WhereKey: parseCol.userFKID, vcHandler: handler)
     }
     
-    class func countCompleted(handler: AppventureCompletedDelegate) {
+    class func countCompleted(_ handler: AppventureCompletedDelegate) {
 //        let query = PFQuery(className:parseCol.pfClass)
 //        query.whereKey(parseCol.userFKID, equalTo: User.user!.pfObject)
 //        query.limit = 100

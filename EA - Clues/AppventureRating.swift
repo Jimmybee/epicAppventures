@@ -74,7 +74,7 @@ class AppventureRating: NSObject {
 //    }
     
     
-    class func loadRating(appventure: Appventure, handler: AppventureRatingDelegate?) {
+    class func loadRating(_ appventure: Appventure, handler: AppventureRatingDelegate?) {
 //        let query = PFQuery(className:parseCol.pfClass)
 //        query.whereKey(parseCol.appventureFKID, equalTo: appventure.pFObjectID!)
 //        query.limit = 100

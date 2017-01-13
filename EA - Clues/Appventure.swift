@@ -13,7 +13,7 @@ import CoreData
 
  class Appventure: NSManagedObject {
     
-    static private var currentAppventure: Appventure?
+    static fileprivate var currentAppventure: Appventure?
     
 //    var PFObjectID: String?
 //    var userID: String?
@@ -45,16 +45,16 @@ import CoreData
     var rating = 2
     
     convenience init () {
-        let context = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
-        let entity = NSEntityDescription.entityForName(CoreKeys.entityName, inManagedObjectContext: context)
-        self.init(entity: entity!, insertIntoManagedObjectContext: nil)
+        let context = (UIApplication.shared.delegate as! AppDelegate).managedObjectContext
+        let entity = NSEntityDescription.entity(forEntityName: CoreKeys.entityName, in: context)
+        self.init(entity: entity!, insertInto: nil)
     }
     
     static func currentAppventureID() -> String? {
         return Appventure.currentAppventure?.pFObjectID
     }
     
-    static func setCurrentAppventure(appventure: Appventure) {
+    static func setCurrentAppventure(_ appventure: Appventure) {
         Appventure.currentAppventure = appventure
     }
     
@@ -68,10 +68,10 @@ import CoreData
     
     //Load methods
     
-    class func loadAppventuresFromCoreData(handler: ([Appventure]) -> ()){
-        let fetchRequest = NSFetchRequest()
-        let managedContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
-        let entityDescription = NSEntityDescription.entityForName(CoreKeys.entityName, inManagedObjectContext: managedContext)
+    class func loadAppventuresFromCoreData(_ handler: ([Appventure]) -> ()){
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>()
+        let managedContext = (UIApplication.shared.delegate as! AppDelegate).managedObjectContext
+        let entityDescription = NSEntityDescription.entity(forEntityName: CoreKeys.entityName, in: managedContext)
         
         // Configure Fetch Request
         fetchRequest.entity = entityDescription
@@ -79,7 +79,7 @@ import CoreData
         var appventures = [Appventure]()
         
         do {
-            let result = try managedContext.executeFetchRequest(fetchRequest)
+            let result = try managedContext.fetch(fetchRequest)
             if let objects = result as? [NSManagedObject] {
                 print("fetchedCoreAppventures \(objects.count)")
                 for object in objects{
@@ -100,7 +100,7 @@ import CoreData
                         appventure.liveStatus = liveStatus
                     }
                     if let data = appventure.imageData {
-                        appventure.image = UIImage(data: data)
+                        appventure.image = UIImage(data: data as Data)
                     }
                     appventures.append(appventure)
                 }
@@ -115,22 +115,22 @@ import CoreData
     
     //Save methods
     
-    func downloadAndSaveToCoreData (handler: () -> ()) {
+    func downloadAndSaveToCoreData (_ handler: () -> ()) {
         AppventureStep.loadSteps(self, handler: handler)
     }
     
-    func saveToCoreData(handler: () -> ()) {
+    func saveToCoreData(_ handler: () -> ()) {
 //        print("Appventure: \(self.title)")
         //Add appventure to managed context
-        let context = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
-        context.insertObject(self)
+        let context = (UIApplication.shared.delegate as! AppDelegate).managedObjectContext
+        context.insert(self)
         
         //Add steps to managed context
         let stepSet = NSMutableOrderedSet()
         for step in self.appventureSteps {
             step.addToContext()
             let object = step as NSManagedObject
-            stepSet.addObject(object)
+            stepSet.add(object)
         }
         
         self.steps = stepSet
@@ -156,7 +156,7 @@ import CoreData
         self.saveToParse()
     }
     
-    func completeSaveToContext(handler: () -> ()) {
+    func completeSaveToContext(_ handler: () -> ()) {
         self.imageData = UIImagePNGRepresentation(self.image!)
         self.liveStatusNum = Int16(self.liveStatus.rawValue)
         do {
@@ -167,7 +167,7 @@ import CoreData
         }
     }
     
-    class func saveAllToCoreData(appventures: [Appventure]) {
+    class func saveAllToCoreData(_ appventures: [Appventure]) {
         for appventure in appventures {
             appventure.downloadAndSaveToCoreData({
             
@@ -181,9 +181,9 @@ import CoreData
         self.deleteAppventureFromBackend()
         self.deleteFromContext({})
     }
-    func deleteFromContext(handler: () -> ()) {
-        let context = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
-        context.deleteObject(self)
+    func deleteFromContext(_ handler: () -> ()) {
+        let context = (UIApplication.shared.delegate as! AppDelegate).managedObjectContext
+        context.delete(self)
         do {
             try self.managedObjectContext?.save()
             handler()
@@ -195,9 +195,9 @@ import CoreData
     //MARK: Make Copy
     
     convenience init(appventure: Appventure, previousContext: NSManagedObjectContext?) {
-        let context = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
-        let entity = NSEntityDescription.entityForName(CoreKeys.entityName, inManagedObjectContext: context)
-        self.init(entity: entity!, insertIntoManagedObjectContext: previousContext)
+        let context = (UIApplication.shared.delegate as! AppDelegate).managedObjectContext
+        let entity = NSEntityDescription.entity(forEntityName: CoreKeys.entityName, in: context)
+        self.init(entity: entity!, insertInto: previousContext)
         self.pFObjectID = appventure.pFObjectID
         self.title = appventure.title
         self.subtitle = appventure.subtitle

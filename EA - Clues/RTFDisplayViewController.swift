@@ -41,7 +41,7 @@ class RTFDisplayViewController: UIViewController {
                 let attributedString = try  NSAttributedString(data: asset.data, options: options, documentAttributes: nil)
                 
                 rtfTextView.attributedText = attributedString
-                rtfTextView.editable = false
+                rtfTextView.isEditable = false
             } catch let error as NSError {
                 print(error.localizedDescription)
             }

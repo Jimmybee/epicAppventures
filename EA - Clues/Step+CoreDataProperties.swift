@@ -23,13 +23,13 @@ extension AppventureStep {
     @NSManaged var coordinateLon: Double
     @NSManaged var freeHints: Int16
     @NSManaged var hintPenalty: Int16
-    @NSManaged var imageData: NSData?
+    @NSManaged var imageData: Data?
     @NSManaged var initialText: String?
     @NSManaged var locationHidden: Bool
     @NSManaged var nameOrLocation: String?
     @NSManaged var pFObjectID: String?
     @NSManaged var setupObj: NSObject?
-    @NSManaged var sound: NSData?
+    @NSManaged var sound: Data?
     @NSManaged var stepNumber: Int16
     @NSManaged var appventure: Appventure?
 

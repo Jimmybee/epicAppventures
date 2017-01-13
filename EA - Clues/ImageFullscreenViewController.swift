@@ -37,11 +37,11 @@ class ImageFullscreenViewController: UIViewController, UIScrollViewDelegate {
         // Dispose of any resources that can be recreated.
     }
     
-    @IBAction func done(sender: AnyObject) {
-        dismissViewControllerAnimated(true, completion: nil)
+    @IBAction func done(_ sender: AnyObject) {
+        dismiss(animated: true, completion: nil)
     }
     
-    func viewForZoomingInScrollView(scrollView: UIScrollView) -> UIView? {
+    func viewForZooming(in scrollView: UIScrollView) -> UIView? {
         return imageView
     }
 

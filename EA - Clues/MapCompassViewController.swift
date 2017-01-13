@@ -26,7 +26,7 @@ class MapCompassViewController: UIViewController, CLLocationManagerDelegate {
     @IBOutlet weak var showLocationButton: UIButton!
     @IBOutlet weak var mapView: GMSMapView! {
         didSet {
-            mapView.myLocationEnabled = true
+            mapView.isMyLocationEnabled = true
         }
     }
 
@@ -79,13 +79,13 @@ class MapCompassViewController: UIViewController, CLLocationManagerDelegate {
 
     }
     
-    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         lastLocation = locations.last!
         if firstLocationUpdate {
             centerOnUser(self)
         }
         firstLocationUpdate = false
-        if let pvc = self.parentViewController as? StepViewController   {
+        if let pvc = self.parent as? StepViewController   {
             pvc.updateLastLocation(lastLocation)
         }
         if showDistance {calculateDistanceCallParent()}
@@ -140,22 +140,24 @@ class MapCompassViewController: UIViewController, CLLocationManagerDelegate {
             let lat = target.latitude
             let long = target.longitude
             let location = CLLocation(latitude: lat, longitude: long)
-            let distance = location.distanceFromLocation(lastLocation)
+            let distance = location.distance(from: lastLocation)
             return HelperFunctions.formatDistance(distance)
             //            self.distanceLabel.text = ("\(HelperFunctions.formatDistance(distance))")
 //            if let pvc = self.parentViewController as? StepViewController   {
 //                pvc.updateLabel(distance, lastLocation: location)
 //            }
         }
+        
+        return ""
     }
     
     //MARK: Comapass calculation
     func compassUpdate() {
 //        compassImage.alpha = 1
-        func degreesToRadians(x: Double) -> Double {
+        func degreesToRadians(_ x: Double) -> Double {
             return (M_PI * x / 180.0)
         }
-        func radiansToDegrees(x: Double) -> Double {
+        func radiansToDegrees(_ x: Double) -> Double {
             return (x * 180.0 / M_PI)
         }
         
@@ -181,13 +183,13 @@ class MapCompassViewController: UIViewController, CLLocationManagerDelegate {
         
     }
     
-    @IBAction func centerOnUser(sender: AnyObject) {
-        let camera = GMSCameraPosition.cameraWithTarget(lastLocation.coordinate, zoom: 14)
-        mapView.animateToCameraPosition(camera)
+    @IBAction func centerOnUser(_ sender: AnyObject) {
+        let camera = GMSCameraPosition.camera(withTarget: lastLocation.coordinate, zoom: 14)
+        mapView.animate(to: camera)
     }
 
-    @IBAction func showLocation(sender: AnyObject) {
-        let camera = GMSCameraPosition.cameraWithTarget(stepCoordinate, zoom: 14)
-        mapView.animateToCameraPosition(camera)
+    @IBAction func showLocation(_ sender: AnyObject) {
+        let camera = GMSCameraPosition.camera(withTarget: stepCoordinate, zoom: 14)
+        mapView.animate(to: camera)
     }
 }

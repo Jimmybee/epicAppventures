@@ -16,7 +16,7 @@ class TableSectionHeader: UITableViewHeaderFooterView {
     @IBOutlet weak var sectionButton: UIButton!
     
     @IBOutlet weak var sectionHeaderLabel: UILabel!
-    @IBAction func sectionButton(sender: UIButton) {
+    @IBAction func sectionButton(_ sender: UIButton) {
     }
     
 

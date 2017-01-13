@@ -55,7 +55,7 @@ class UserSummaryViewController: UIViewController, UITableViewDelegate, UITableV
     }
  
 
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         updateUI()
     }
 
@@ -64,7 +64,7 @@ class UserSummaryViewController: UIViewController, UITableViewDelegate, UITableV
         tableView.reloadData()
     }
     
-    @IBAction func segmentedControl(sender: UISegmentedControl) {
+    @IBAction func segmentedControl(_ sender: UISegmentedControl) {
         tableView.reloadData()
     }
     
@@ -83,7 +83,7 @@ class UserSummaryViewController: UIViewController, UITableViewDelegate, UITableV
     //MARK: Parse
     
     
-    func updateTableWithQuery(objects: [AnyObject]) {
+    func updateTableWithQuery(_ objects: [AnyObject]) {
         self.ownedAppventures.removeAll()
 //        for object in objects {
 //            if let appventureName = object.objectForKey(Appventure.pfAppventure.pfTitle) as? String {
@@ -106,11 +106,11 @@ class UserSummaryViewController: UIViewController, UITableViewDelegate, UITableV
     
     //MARK: Navigation 
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if let cavc = segue.destinationViewController as? CreateAppventureViewController {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let cavc = segue.destination as? CreateAppventureViewController {
             if segue.identifier == Constants.segueEditAppventure {
                 if let tbCell = sender as? UITableViewCell {
-                    if let row = tableView.indexPathForCell(tbCell)!.row as Int! {
+                    if let row = tableView.indexPath(for: tbCell)!.row as Int! {
                         cavc.newAppventure = ownedAppventures[row]
                         cavc.appventureIndexRow = row
                     }
@@ -125,11 +125,11 @@ class UserSummaryViewController: UIViewController, UITableViewDelegate, UITableV
     //MARK: Table functions
     
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 1 // This was put in mainly for my own unit testing
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if segmentControl.selectedSegmentIndex == 0 {
             if let count = ownedAppventures.count as Int! {
                 return count
@@ -145,37 +145,37 @@ class UserSummaryViewController: UIViewController, UITableViewDelegate, UITableV
         }
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         // Note:  Be sure to replace the argument to dequeueReusableCellWithIdentifier with the actual identifier string!
-        let cell = tableView.dequeueReusableCellWithIdentifier(Constants.CellName) as UITableViewCell!
+        let cell = tableView.dequeueReusableCell(withIdentifier: Constants.CellName) as UITableViewCell!
         
         let row = indexPath.row
         if segmentControl.selectedSegmentIndex == 0 {
             if let _ = ownedAppventures.count as Int! {
-                cell.textLabel?.text = ownedAppventures[row].title
+                cell?.textLabel?.text = ownedAppventures[row].title
             } else {
-                cell.textLabel?.text = "no appventures"
+                cell?.textLabel?.text = "no appventures"
 
             }
         
         } else  {
             if let _ = compeletedAppventures.count as Int! {
-                cell.textLabel?.text = compeletedAppventures[row].title
+                cell?.textLabel?.text = compeletedAppventures[row].title
             } else {
-                cell.textLabel?.text = "no appventures"
+                cell?.textLabel?.text = "no appventures"
                 
             }
             
         }
         
-        return cell
+        return cell!
     }
     
-    func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return true
     }
     
-    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
 //        if (editingStyle == UITableViewCellEditingStyle.Delete) {
 //            let objectID = ownedAppventures[indexPath.row].pFObjectID
 //            let query = PFQuery(className: Appventure.pfAppventure.pfClass)
@@ -196,7 +196,7 @@ class UserSummaryViewController: UIViewController, UITableViewDelegate, UITableV
 }
 
 extension UserSummaryViewController : CreateAppventureViewControllerDelegate {
-    func appendNewAppventure(appventure: Appventure, indexRow: Int?) {
+    func appendNewAppventure(_ appventure: Appventure, indexRow: Int?) {
         if let row = indexRow as Int! {
             ownedAppventures[row] = appventure
         } else {
@@ -217,7 +217,7 @@ extension UserSummaryViewController : CreateAppventureViewControllerDelegate {
 extension UserSummaryViewController : ParseQueryHandler {
     
     
-    func handleQueryResults(objects: [AnyObject]?, handlerCase: String?) {
+    func handleQueryResults(_ objects: [AnyObject]?, handlerCase: String?) {
 //        if let isPFArray = objects as [PFObject]! {
 //            for object in isPFArray {
 //                let appventure = Appventure(object: object)
@@ -231,7 +231,7 @@ extension UserSummaryViewController : ParseQueryHandler {
 }
 
 extension UserSummaryViewController : UserDataHandler {
-    func userFuncComplete(funcKey: String) {
+    func userFuncComplete(_ funcKey: String) {
         switch funcKey{
         case User.funcKeys.fbGraphLoaded:
             self.updateUI()

@@ -25,20 +25,20 @@ class LocationSettingsTableViewController: UITableViewController {
         super.viewDidLoad()
         
         if step.setup[AppventureStep.setup.locationShown]! == true {
-            showLocation.on = true
+            showLocation.isOn = true
         }
         if step.setup[AppventureStep.setup.compassShown]! == true {
-            showCompass.on = true
+            showCompass.isOn = true
         }
         if step.setup[AppventureStep.setup.distanceShown]! == false {
-            showDistance.on = false
+            showDistance.isOn = false
         }
         
         
    }
 
-    @IBAction func backButton(sender: AnyObject) {
-        self.navigationController?.popViewControllerAnimated(true)
+    @IBAction func backButton(_ sender: AnyObject) {
+        self.navigationController?.popViewController(animated: true)
     }
     
     override func didReceiveMemoryWarning() {
@@ -46,14 +46,14 @@ class LocationSettingsTableViewController: UITableViewController {
         // Dispose of any resources that can be recreated.
     }
 
-    @IBAction func updateShowLocation(sender: UISwitch) {
-        step.setup[AppventureStep.setup.locationShown] = showLocation.on
+    @IBAction func updateShowLocation(_ sender: UISwitch) {
+        step.setup[AppventureStep.setup.locationShown] = showLocation.isOn
     }
-    @IBAction func updateShowCompass(sender: AnyObject) {
-        step.setup[AppventureStep.setup.compassShown] = showLocation.on
+    @IBAction func updateShowCompass(_ sender: AnyObject) {
+        step.setup[AppventureStep.setup.compassShown] = showLocation.isOn
     }
-    @IBAction func updateShowDistance(sender: UISwitch) {
-        step.setup[AppventureStep.setup.distanceShown] = showLocation.on
+    @IBAction func updateShowDistance(_ sender: UISwitch) {
+        step.setup[AppventureStep.setup.distanceShown] = showLocation.isOn
     }
     
    

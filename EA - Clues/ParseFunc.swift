@@ -14,7 +14,7 @@ class ParseFunc {
     
     static let objectIdColumn = "objectId"
     
-    class func getParseObject(objectID:String, pfClass: String, objFunc: (object: AnyObject) -> ()) {
+    class func getParseObject(_ objectID:String, pfClass: String, objFunc: (_ object: AnyObject) -> ()) {
 //        print("\(objectID) & \(pfClass)")
 //        let query = PFQuery(className: pfClass)
 //        query.getObjectInBackgroundWithId(objectID) {
@@ -28,14 +28,14 @@ class ParseFunc {
 //        }
     }
 
-    class func convertImage (image: UIImage) -> AnyObject? {
-        let imageData = UIImagePNGRepresentation(image) as NSData!
+    class func convertImage (_ image: UIImage) -> AnyObject? {
+        let imageData = UIImagePNGRepresentation(image) as Data!
 //        let imageFile = PFFile(name:"image.png", data:imageData)
 //        return imageFile!
         return nil
     }
     
-    class func loadParseImage (pfFile: AnyObject, getParseImage: (UIImage) -> ()) -> (){
+    class func loadParseImage (_ pfFile: AnyObject, getParseImage: (UIImage) -> ()) -> (){
 //        pfFile.getDataInBackgroundWithBlock {
 //            (imageData: NSData?, error: NSError?) -> Void in
 //            if error == nil {
@@ -53,7 +53,7 @@ class ParseFunc {
         
     }
     
-   class func loadImage(appventure: Appventure) {
+   class func loadImage(_ appventure: Appventure) {
         //Blocks main queue
 //        if let pfImageFile = appventure.pfFile as PFFile! {
 //            pfImageFile.getDataInBackgroundWithBlock {
@@ -70,7 +70,7 @@ class ParseFunc {
 //        }
     }
     
-    class func parseQuery(className: String, location2D: CLLocationCoordinate2D?, whereClause: String?, WhereKey: String, vcHandler: ParseQueryHandler, handlerCase: String? = nil) {
+    class func parseQuery(_ className: String, location2D: CLLocationCoordinate2D?, whereClause: String?, WhereKey: String, vcHandler: ParseQueryHandler, handlerCase: String? = nil) {
         
 //         print("\(className) & \(location2D) & \(whereClause) & \(WhereKey) & \(vcHandler) & \(handlerCase)")
 //
@@ -101,7 +101,7 @@ class ParseFunc {
 //        }
     }
     
-    class func queryAppventures(location2D: CLLocationCoordinate2D? = nil, liveStatus: Int? = nil, user: String? = nil, vcHandler: ParseQueryHandler, handlerCase: String) {
+    class func queryAppventures(_ location2D: CLLocationCoordinate2D? = nil, liveStatus: Int? = nil, user: String? = nil, vcHandler: ParseQueryHandler, handlerCase: String) {
 //        let query = PFQuery(className: Appventure.pfAppventure.pfClass)
 //        
 //        if let point = location2D {
@@ -131,8 +131,8 @@ class ParseFunc {
 
 @objc protocol ParseQueryHandler: NSObjectProtocol {
     
-    func handleQueryResults(objects: [AnyObject]?, handlerCase: String?)
-    optional func handleSecondQueryResults(objects: [AnyObject])
+    func handleQueryResults(_ objects: [AnyObject]?, handlerCase: String?)
+    @objc optional func handleSecondQueryResults(_ objects: [AnyObject])
     
     
 }

@@ -42,7 +42,7 @@ class AppventureStartViewController: UIViewController {
     //MARK: Controller Lifecyele
     override func viewDidLoad() {
         updateUI()
-       detailsSegmentControl.setTitleTextAttributes([NSFontAttributeName: UIFont(name: "Palatino", size: 15)!], forState: UIControlState.Normal) //, NSForegroundColorAttributeName:UIColor.whiteColor()
+       detailsSegmentControl.setTitleTextAttributes([NSFontAttributeName: UIFont(name: "Palatino", size: 15)!], for: UIControlState()) //, NSForegroundColorAttributeName:UIColor.whiteColor()
         detailsSegmentControl.selectedSegmentIndex = 0
         CompletedAppventure.loadAppventuresCompleted(appventure.pFObjectID!, handler: self)
         AppventureReviews.loadAppventuresReviews(appventure.pFObjectID!, handler: self)
@@ -59,79 +59,79 @@ class AppventureStartViewController: UIViewController {
         descriptionLabel.text = appventure.subtitle!
         self.startingLocation.text = self.appventure.startingLocationName
         
-        appventure.keyFeatures.count == 0 ? (self.keyFeaturesLabel.text = "None") : (self.keyFeaturesLabel.text = self.appventure.keyFeatures.joinWithSeparator(", "))
-        appventure.restrictions.count == 0 ? (self.restrictionsLabel.text = "None") : (self.restrictionsLabel.text = self.appventure.restrictions.joinWithSeparator(", "))
+        appventure.keyFeatures.count == 0 ? (self.keyFeaturesLabel.text = "None") : (self.keyFeaturesLabel.text = self.appventure.keyFeatures.joined(separator: ", "))
+        appventure.restrictions.count == 0 ? (self.restrictionsLabel.text = "None") : (self.restrictionsLabel.text = self.appventure.restrictions.joined(separator: ", "))
         
         imageView.image = halfImage(appventure.image!)
         duration.text = appventure.duration
         if self.appventure.downloaded == true {
-            startButton.setTitle("Play", forState: .Normal)
+            startButton.setTitle("Play", for: UIControlState())
         }
     }
     
     //MARK: Navigation
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == Constants.StartAdventureSegue {
-            if let svc = segue.destinationViewController as? StepViewController {
+            if let svc = segue.destination as? StepViewController {
                 svc.appventure = self.appventure
                 svc.completedAppventures = self.completedAppventures
             }
         }
     }
     
-    @IBAction func menuPopUp(sender: AnyObject) {
-        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
-        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: nil))
-        alert.addAction(UIAlertAction(title: "Remove Downloaded Content", style: .Default, handler: { action in
+    @IBAction func menuPopUp(_ sender: AnyObject) {
+        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: "Remove Downloaded Content", style: .default, handler: { action in
             if self.appventure.userID != User.user?.pfObject {
                 self.appventure.deleteFromContext({
-                    dispatch_async(dispatch_get_main_queue()) { () -> Void in
-                        let completedRemoval = UIAlertController(title: "Removed", message: "Delete this appventure from your maker profile.", preferredStyle: UIAlertControllerStyle.Alert)
-                        completedRemoval.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
-                        self.presentViewController(completedRemoval, animated: true, completion: nil)
+                    DispatchQueue.main.async { () -> Void in
+                        let completedRemoval = UIAlertController(title: "Removed", message: "Delete this appventure from your maker profile.", preferredStyle: UIAlertControllerStyle.alert)
+                        completedRemoval.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+                        self.present(completedRemoval, animated: true, completion: nil)
                     }
                 })
             } else {
                 self.appventure.liveStatus = LiveStatus.inDevelopment
                 self.appventure.saveAndSync()
                 self.appventure.completeSaveToContext({
-                    dispatch_async(dispatch_get_main_queue()) { () -> Void in
-                        let ownedAlert = UIAlertController(title: "Locally Created", message: "Appventure set to in development. Delete this appventure from your maker profile.", preferredStyle: UIAlertControllerStyle.Alert)
-                        ownedAlert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default , handler: nil))
-                        self.presentViewController(ownedAlert, animated: true, completion: nil)
+                    DispatchQueue.main.async { () -> Void in
+                        let ownedAlert = UIAlertController(title: "Locally Created", message: "Appventure set to in development. Delete this appventure from your maker profile.", preferredStyle: UIAlertControllerStyle.alert)
+                        ownedAlert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default , handler: nil))
+                        self.present(ownedAlert, animated: true, completion: nil)
                     }
                 })
             }
         }))
 
-        self.presentViewController(alert, animated: true, completion: nil)
+        self.present(alert, animated: true, completion: nil)
     }
     
-    @IBAction func popController(sender: UIBarButtonItem) {
-        self.navigationController?.popViewControllerAnimated(true)
+    @IBAction func popController(_ sender: UIBarButtonItem) {
+        self.navigationController?.popViewController(animated: true)
     }
     
     //MARK: IBActions
    
     
-    @IBAction func detialsSegmentUpdate(sender: UISegmentedControl) {
+    @IBAction func detialsSegmentUpdate(_ sender: UISegmentedControl) {
         switch detailsSegmentControl.selectedSegmentIndex {
         case 0:
-            view.bringSubviewToFront(detailsView)
+            view.bringSubview(toFront: detailsView)
         case 1:
-            view.bringSubviewToFront(tableView)
+            view.bringSubview(toFront: tableView)
             tableView.reloadData()
         case 2:
-            view.bringSubviewToFront(tableView)
+            view.bringSubview(toFront: tableView)
             tableView.reloadData()
         default: break
         }
     }
     
-    @IBAction func downloadAdventure(sender: AnyObject) {
+    @IBAction func downloadAdventure(_ sender: AnyObject) {
         if appventure.downloaded == true {
-            performSegueWithIdentifier(Constants.StartAdventureSegue, sender: nil)
+            performSegue(withIdentifier: Constants.StartAdventureSegue, sender: nil)
         } else {
             appventure.downloadAndSaveToCoreData(downloadComplete)
         }
@@ -139,13 +139,13 @@ class AppventureStartViewController: UIViewController {
     
     func downloadComplete() {
         self.appventure.downloaded = true
-        self.startButton.setTitle("Play", forState: .Normal)
+        self.startButton.setTitle("Play", for: UIControlState())
     }
     
     //MARK: Image Function
-    func halfImage(image: UIImage) -> UIImage? {
-        if let halfImage = CGImageCreateWithImageInRect(image.CGImage, CGRectMake(0, 0, image.size.width, image.size.height / 2.0)) as CGImageRef! {
-            return UIImage(CGImage: halfImage)
+    func halfImage(_ image: UIImage) -> UIImage? {
+        if let halfImage = image.cgImage?.cropping(to: CGRect(x: 0, y: 0, width: image.size.width, height: image.size.height / 2.0)) as CGImage! {
+            return UIImage(cgImage: halfImage)
         }
         return nil
     }
@@ -154,12 +154,12 @@ class AppventureStartViewController: UIViewController {
 
 extension AppventureStartViewController : ParseQueryHandler {
     
-     func handleQueryResults(objects: [AnyObject]?, handlerCase: String?) {
+     func handleQueryResults(_ objects: [AnyObject]?, handlerCase: String?) {
         switch handlerCase! {
         case AppventureReviews.appventureReviewsHC:
             reviews.removeAll()
             for object in objects! {
-                let review = object.objectForKey(AppventureReviews.parseCol.review) as! String
+                let review = object.object(forKey: AppventureReviews.parseCol.review) as! String
                 reviews.append(review)
             }
             tableView.reloadData()
@@ -169,7 +169,7 @@ extension AppventureStartViewController : ParseQueryHandler {
                 let completdAppventure = CompletedAppventure(object: object)
                 completedAppventures.append(completdAppventure)
             }
-            completedAppventures.sortInPlace({ $0.time < $1.time })
+            completedAppventures.sort(by: { $0.time < $1.time })
             tableView.reloadData()
         default:
             break
@@ -179,11 +179,11 @@ extension AppventureStartViewController : ParseQueryHandler {
     
 
     
-    @IBAction func tapForDirections(sender: UITapGestureRecognizer) {
+    @IBAction func tapForDirections(_ sender: UITapGestureRecognizer) {
         openMapLocation(sender)
     }
     
-    func openMapLocation(sender: AnyObject) {
+    func openMapLocation(_ sender: AnyObject) {
         HelperFunctions.openMaps("Shoreditch, London", vc: self)
     }
     
@@ -192,11 +192,11 @@ extension AppventureStartViewController : ParseQueryHandler {
 extension AppventureStartViewController : UITableViewDataSource, UITableViewDelegate {
     
 
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         switch detailsSegmentControl.selectedSegmentIndex {
         case 1:
             if self.completedAppventures.count > 0 {
-                self.tableView.separatorStyle = UITableViewCellSeparatorStyle.SingleLine
+                self.tableView.separatorStyle = UITableViewCellSeparatorStyle.singleLine
                 self.tableView.backgroundView = UIView()
                 return 1
             } else {
@@ -206,7 +206,7 @@ extension AppventureStartViewController : UITableViewDataSource, UITableViewDele
             return 0
         case 2:
             if self.reviews.count > 0 {
-                self.tableView.separatorStyle = UITableViewCellSeparatorStyle.SingleLine
+                self.tableView.separatorStyle = UITableViewCellSeparatorStyle.singleLine
                 self.tableView.backgroundView = UIView()
                 return 1
             } else {
@@ -220,7 +220,7 @@ extension AppventureStartViewController : UITableViewDataSource, UITableViewDele
         return 0
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if detailsSegmentControl.selectedSegmentIndex == 1 {
             return self.completedAppventures.count
         } else  {
@@ -228,23 +228,23 @@ extension AppventureStartViewController : UITableViewDataSource, UITableViewDele
         }
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
  
-        let cell = tableView.dequeueReusableCellWithIdentifier(Constants.CellID) as UITableViewCell!
+        let cell = tableView.dequeueReusableCell(withIdentifier: Constants.CellID) as UITableViewCell!
         
         switch detailsSegmentControl.selectedSegmentIndex {
         case 1 :
-            cell.textLabel?.text = completedAppventures[indexPath.row].teamName
+            cell?.textLabel?.text = completedAppventures[indexPath.row].teamName
             let tString = HelperFunctions.formatTime(completedAppventures[indexPath.row].time, nano: false)
-            cell.detailTextLabel?.text = tString!
+            cell?.detailTextLabel?.text = tString!
         case 2 :
-            cell.textLabel?.text = reviews[indexPath.row]
-            cell.detailTextLabel?.text = ""
+            cell?.textLabel?.text = reviews[indexPath.row]
+            cell?.detailTextLabel?.text = ""
 
         default : break
         }
         
-        return cell
+        return cell!
     }
 }
 

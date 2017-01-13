@@ -37,7 +37,7 @@ class ProfileWrapperViewController: UIViewController {
         embeddedSignIn.cleanFields()
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
         User.checkLogin(false, vc: self) ? showForUser() : showForSignIn()
     }
@@ -50,11 +50,11 @@ class ProfileWrapperViewController: UIViewController {
     //MARK: Get container view controllers 
 
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if let vc = segue.destinationViewController as? SettingsTableViewController {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let vc = segue.destination as? SettingsTableViewController {
             self.embeddedSettings = vc
         }
-        if let vc = segue.destinationViewController as? UserSignInViewController {
+        if let vc = segue.destination as? UserSignInViewController {
             self.embeddedSignIn = vc
         }
     }

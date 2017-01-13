@@ -29,7 +29,7 @@ class AnswerHintViewController: UIViewController {
 //        submitButton.layer.borderColor = UIColor.whiteColor().CGColor
 //        hintButton.layer.borderWidth = 2.0
 //        hintButton.layer.borderColor = UIColor.whiteColor().CGColor
-        answerTextField.addTarget(self, action: Selector("textDidChange"), forControlEvents: UIControlEvents.EditingChanged)
+        answerTextField.addTarget(self, action: #selector(AnswerHintViewController.textDidChange), for: UIControlEvents.editingChanged)
 
 //        answerTextField.addTarget(self, action: #selector(AnswerHintViewController.textDidChange), forControlEvents: UIControlEvents.EditingChanged)
     }
@@ -37,7 +37,8 @@ class AnswerHintViewController: UIViewController {
     func setup() {
         warningLabel.text = ""
         remainingLetterLabel.alpha = 0
-        answerTest = answers.map {$0.stringByReplacingOccurrencesOfString(" ", withString: "").lowercaseString}
+//        answerTest = answers.map {$0.stringByReplacingOccurrencesOfString(" ", withString: "").lowercased()}
+        answerTest = answers.map {$0.replacingOccurrences(of: " ", with: "").lowercased()}
 
 //        remainingLetterLabel.text = String(answers[0].characters.count)
         hintsRecieved = 0
@@ -46,40 +47,40 @@ class AnswerHintViewController: UIViewController {
     @IBAction func submit(_: AnyObject?) {
 //        print("submitted")
         var submission = answerTextField.text!
-        submission = submission.stringByReplacingOccurrencesOfString(" ", withString: "").lowercaseString
+        submission = submission.replacingOccurrences(of: " ", with: "").lowercased()
         
         if answerTest.contains(submission) {
-            if let pvc = self.parentViewController as? StepViewController{
+            if let pvc = self.parent as? StepViewController{
                 pvc.stepComplete()
                 self.answerTextField.text = ""
             }
         } else {
             answerTextField.resignFirstResponder()
-            answerTextField.textColor = UIColor.redColor()
+            answerTextField.textColor = UIColor.red
             warningLabel.text = "Incorrect. Please try again"
             
         }
     }
     
-    @IBAction func giveHint(sender: AnyObject) {
+    @IBAction func giveHint(_ sender: AnyObject) {
         if self.answerHint.count == self.hintsRecieved {
-            let alert = UIAlertController(title: "No Hints", message: "There are no hints remaining.", preferredStyle: UIAlertControllerStyle.Alert)
-            alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Cancel, handler: nil))
+            let alert = UIAlertController(title: "No Hints", message: "There are no hints remaining.", preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.cancel, handler: nil))
             
-            self.presentViewController(alert, animated: true, completion: nil)
+            self.present(alert, animated: true, completion: nil)
             
         } else {
             
-            let alert = UIAlertController(title: "Get Hint", message: "Getting a hint may incur a time penalty. There are \( self.answerHint.count - self.hintsRecieved) hints remaining.", preferredStyle: UIAlertControllerStyle.Alert)
-            alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: nil))
-            alert.addAction(UIAlertAction(title: "Confirm", style: UIAlertActionStyle.Default, handler: { action in
-                if let pvc = self.parentViewController as? StepViewController{
+            let alert = UIAlertController(title: "Get Hint", message: "Getting a hint may incur a time penalty. There are \( self.answerHint.count - self.hintsRecieved) hints remaining.", preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: nil))
+            alert.addAction(UIAlertAction(title: "Confirm", style: UIAlertActionStyle.default, handler: { action in
+                if let pvc = self.parent as? StepViewController{
                     pvc.updateHintText(self.answerHint[self.hintsRecieved], hintsRecieved: Int16(self.hintsRecieved))
                     self.hintsRecieved += 1
                 }
             }))
             
-            self.presentViewController(alert, animated: true, completion: nil)
+            self.present(alert, animated: true, completion: nil)
         }
     }
 
@@ -100,10 +101,10 @@ class AnswerHintViewController: UIViewController {
 
 
 extension AnswerHintViewController : UITextFieldDelegate {
-    func textFieldShouldBeginEditing(textField: UITextField) -> Bool {
+    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
         if textField == answerTextField {
             textField.text = ""
-            textField.textColor = UIColor.blackColor()
+            textField.textColor = UIColor.black
         }
         return true
     }
@@ -114,7 +115,7 @@ extension AnswerHintViewController : UITextFieldDelegate {
 //        }
 //    }
     
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
     }

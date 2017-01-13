@@ -46,7 +46,7 @@ class CheckInHintViewController: UIViewController {
     }
 
     //MARK: Check In Method
-    @IBAction func checkIn(sender: UIButton) {
+    @IBAction func checkIn(_ sender: UIButton) {
         var center: CLLocationCoordinate2D?
         
         if let currentCoordinate = lastLocation.coordinate as CLLocationCoordinate2D! {
@@ -63,7 +63,7 @@ class CheckInHintViewController: UIViewController {
         let config = GMSPlacePickerConfig(viewport: viewport)
         placePicker = GMSPlacePicker(config: config)
         
-        placePicker?.pickPlaceWithCallback({ (place: GMSPlace?, error: NSError?) -> Void in
+        placePicker?.pickPlace(callback: { (place: GMSPlace?, error: NSError?) -> Void in
             if let error = error {
                 print("Pick Place error: \(error.localizedDescription)")
                 return
@@ -71,12 +71,12 @@ class CheckInHintViewController: UIViewController {
             if let place = place {
                 if place.name == self.stepLocationName {
                     let placeCenter = CLLocation(latitude: place.coordinate.latitude, longitude: place.coordinate.longitude)
-                    let distanceToPlace = placeCenter.distanceFromLocation(self.lastLocation)
+                    let distanceToPlace = placeCenter.distance(from: self.lastLocation)
                     print(self.lastLocation.coordinate)
                     print(placeCenter.coordinate)
                     print(distanceToPlace)
                     if self.stepDistance == 0 ||  distanceToPlace < Double(self.stepDistance) {
-                        if let pvc = self.parentViewController as? StepViewController {
+                        if let pvc = self.parent as? StepViewController {
                             pvc.stepComplete()
                         }
                     } else {
@@ -90,30 +90,30 @@ class CheckInHintViewController: UIViewController {
             } else {
                 print("No place selected")
             }
-        })
+        } as! GMSPlaceResultCallback)
         
     }
     
-    @IBAction func revealHint(sender: UIButton) {
+    @IBAction func revealHint(_ sender: UIButton) {
         if self.answerHint.count == Int(self.hintsRecieved) {
-            let alert = UIAlertController(title: "No Hints", message: "There are no hints remaining.", preferredStyle: UIAlertControllerStyle.Alert)
-            alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Cancel, handler: nil))
+            let alert = UIAlertController(title: "No Hints", message: "There are no hints remaining.", preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.cancel, handler: nil))
             
-            self.presentViewController(alert, animated: true, completion: nil)
+            self.present(alert, animated: true, completion: nil)
             
         } else {
             
-            let alert = UIAlertController(title: "Get Hint", message: "Getting a hint may incur a time penalty. There are \( Int16(self.answerHint.count) - self.hintsRecieved) hints remaining.", preferredStyle: UIAlertControllerStyle.Alert)
-            alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: nil))
-            alert.addAction(UIAlertAction(title: "Confirm", style: UIAlertActionStyle.Default, handler: { action in
-                if let pvc = self.parentViewController as? StepViewController{
+            let alert = UIAlertController(title: "Get Hint", message: "Getting a hint may incur a time penalty. There are \( Int16(self.answerHint.count) - self.hintsRecieved) hints remaining.", preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: nil))
+            alert.addAction(UIAlertAction(title: "Confirm", style: UIAlertActionStyle.default, handler: { action in
+                if let pvc = self.parent as? StepViewController{
                     pvc.updateHintText(self.answerHint[Int(self.hintsRecieved)], hintsRecieved: self.hintsRecieved)
                     self.hintsRecieved += 1
 
                 }
             }))
             
-            self.presentViewController(alert, animated: true, completion: nil)
+            self.present(alert, animated: true, completion: nil)
         }
     }
 //

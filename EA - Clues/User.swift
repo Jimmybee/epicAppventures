@@ -18,7 +18,7 @@ import FBSDKLoginKit
 
 protocol UserDataHandler : NSObjectProtocol {
     
-    func userFuncComplete(funcKey: String)
+    func userFuncComplete(_ funcKey: String)
 }
 
 class User: NSObject {
@@ -102,8 +102,8 @@ class User: NSObject {
     }
     
     func loadLocalData() -> Bool {
-        let defaults = NSUserDefaults.standardUserDefaults()
-        if defaults.boolForKey("localSave") {
+        let defaults = UserDefaults.standard
+        if defaults.bool(forKey: "localSave") {
             let normalPath = setFullPath("/profilePicture.png")
             if let image = UIImage(contentsOfFile: normalPath) {
                 self.profilePicture = image
@@ -158,19 +158,20 @@ class User: NSObject {
     
     func loadFBData() {
         let fbGraph = FBSDKGraphRequest.init(graphPath: "me", parameters: ["fields": "email, first_name, last_name, gender, picture.type(large)"]) //
-        fbGraph.startWithCompletionHandler({ (connection, result, error) -> Void in
+        fbGraph?.start(completionHandler: { (connection, resultAny, error) -> Void in
             
             if error != nil {
                 print("Error: \(error)")
             }
             else {
+                let result = resultAny as! NSObject
                 //                self.facebookID = result.valueForKey("id") as! String
-                self.firstName = result.valueForKey("first_name") as! String
-                self.lastName = result.valueForKey("last_name") as! String
+                self.firstName = result.value(forKey: "first_name") as! String
+                self.lastName = result.value(forKey: "last_name") as! String
                 print(self.lastName)
-                self.email = result.valueForKey("email") as! String
-                self.pictureURL = result.objectForKey("picture")?.objectForKey("data")?.objectForKey("url") as? String
-                self.facebookId = result.valueForKey("id") as! String
+                self.email = result.value(forKey: "email") as! String
+                self.pictureURL = ((result.value(forKey: "picture") as AnyObject).object(forKey: "data") as AnyObject).object(forKey: "url") as? String
+                self.facebookId = result.value(forKey: "id") as! String
 //                self.pfObject = (PFUser.currentUser()?.objectId)!
                 self.updateUser()
             }
@@ -180,18 +181,19 @@ class User: NSObject {
     func getFriends() {
         self.facebookFriends.removeAll()
          let fbGraph = FBSDKGraphRequest.init(graphPath: "me/friends", parameters: ["fields": "first_name, last_name, picture.type(small)"])
-        fbGraph.startWithCompletionHandler({ (connection, result, error) -> Void in
+        fbGraph?.start(completionHandler: { (connection, resultAny, error) -> Void in
             if error != nil {
                 print("Error: \(error)")
             }
             else {
-                if let friendArray = result.objectForKey("data") as? NSArray {
+                let result = resultAny as! AnyObject
+                if let friendArray = result.object(forKey: "data") as? NSArray {
                     for friend in friendArray {
-                        if let pictureURL = friend.valueForKeyPath("picture.data.url") as? String {
-                            let friendFirstName = friend.valueForKey("first_name") as! String
-                            let friendLastName = friend.valueForKey("last_name") as! String
-                            let id = friend.valueForKey("id") as! String
-                            let url = NSURL(string: pictureURL)
+                        if let pictureURL = (friend as AnyObject).value(forKeyPath: "picture.data.url") as? String {
+                            let friendFirstName = (friend as AnyObject).value(forKey: "first_name") as! String
+                            let friendLastName = (friend as AnyObject).value(forKey: "last_name") as! String
+                            let id = (friend as AnyObject).value(forKey: "id") as! String
+                            let url = URL(string: pictureURL)
                             let userFriend = UserFriend(id: id, firstName: friendFirstName, lastName: friendLastName, url: url!)
                             self.facebookFriends.append(userFriend)
                         }
@@ -204,19 +206,19 @@ class User: NSObject {
     
     func getFBImage() {
         if let url = self.pictureURL as String! {
-            if let getURL = NSURL(string: url) {
-                if let data = NSData(contentsOfURL: getURL){
+            if let getURL = URL(string: url) {
+                if let data = try? Data(contentsOf: getURL){
                     self.profilePicture = UIImage(data: data)
-                    NSNotificationCenter.defaultCenter().postNotificationName(fbImageLoadNotification, object: self)
+                    NotificationCenter.default.post(name: Notification.Name(rawValue: fbImageLoadNotification), object: self)
                 }
             }
         }
     }
     
-    func setFullPath(filename: String) -> String {
-        let paths = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.UserDomainMask, true)
+    func setFullPath(_ filename: String) -> String {
+        let paths = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory, FileManager.SearchPathDomainMask.userDomainMask, true)
         let docs: String = paths[0] as String!
-        return docs.stringByAppendingString(filename)
+        return docs + filename
     }
     
     
@@ -224,26 +226,26 @@ class User: NSObject {
         if let isImage = self.profilePicture as UIImage! {
             if let data = UIImagePNGRepresentation(isImage) {
                 let fullPath = setFullPath("/profilePicture.png")
-                 data.writeToFile(fullPath, atomically: true)
+                 try? data.write(to: URL(fileURLWithPath: fullPath), options: [.atomic])
             }
         }
         
         if let blurImage = self.blurPicture {
             if let data = UIImagePNGRepresentation(blurImage) {
                 let fullPath = setFullPath("/blurImage.png")
-                data.writeToFile(fullPath, atomically: true)
+                try? data.write(to: URL(fileURLWithPath: fullPath), options: [.atomic])
             }
         }
 
-        let defaults = NSUserDefaults.standardUserDefaults()
-        defaults.setBool(true, forKey: "localSave")
+        let defaults = UserDefaults.standard
+        defaults.set(true, forKey: "localSave")
     }
 
 
     
     //MARK: Class functions
     
-    static func singUpLogIn(email: String, password: String, restore: ()) {
+    static func singUpLogIn(_ email: String, password: String, restore: ()) {
 //        
 //        let defaultCenter = NSNotificationCenter.defaultCenter()
 //        let pfUser = PFUser.currentUser()
@@ -280,7 +282,7 @@ class User: NSObject {
 //        })
     }
     
-    static func checkLogin(required: Bool, vc: UIViewController?) -> Bool {
+    static func checkLogin(_ required: Bool, vc: UIViewController?) -> Bool {
 //        if User.user == nil  {
 //            if PFUser.currentUser()?.objectId == nil {
 //                return false

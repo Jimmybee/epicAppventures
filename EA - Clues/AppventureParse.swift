@@ -30,18 +30,18 @@ extension Appventure {
     }
     
     convenience init(PFObjectID: String, name: String, geoPoint: AnyObject) {
-        let context = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
-        let entity = NSEntityDescription.entityForName(CoreKeys.entityName, inManagedObjectContext: context)
-        self.init(entity: entity!, insertIntoManagedObjectContext: nil)
+        let context = (UIApplication.shared.delegate as! AppDelegate).managedObjectContext
+        let entity = NSEntityDescription.entity(forEntityName: CoreKeys.entityName, in: context)
+        self.init(entity: entity!, insertInto: nil)
 //        self.title = name
 //        self.coordinate = CLLocationCoordinate2DMake(geoPoint.latitude, geoPoint.longitude)
 //        self.pFObjectID = PFObjectID
     }
     
     convenience init(object: AnyObject) {
-        let context = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
-        let entity = NSEntityDescription.entityForName(CoreKeys.entityName, inManagedObjectContext: context)
-        self.init(entity: entity!, insertIntoManagedObjectContext: nil)
+        let context = (UIApplication.shared.delegate as! AppDelegate).managedObjectContext
+        let entity = NSEntityDescription.entity(forEntityName: CoreKeys.entityName, in: context)
+        self.init(entity: entity!, insertInto: nil)
 //        self.pFObjectID = object.objectId
 //        self.title = object.objectForKey(pfAppventure.pfTitle) as? String
 //        self.subtitle = object.objectForKey(pfAppventure.pfSubtitle) as? String
@@ -72,17 +72,17 @@ extension Appventure {
 //        }
     }
     
-    class func loadLiveAdventures(location2D: CLLocationCoordinate2D, handler: ParseQueryHandler, handlerCase: String) {
+    class func loadLiveAdventures(_ location2D: CLLocationCoordinate2D, handler: ParseQueryHandler, handlerCase: String) {
 //        ParseFunc.queryAppventures(location2D, liveStatus: LiveStatus.live.rawValue, vcHandler: handler, handlerCase: handlerCase)
     }
     
-    class func loadUserAppventure(userPFID: String, handler: ParseQueryHandler, handlerCase: String) {
+    class func loadUserAppventure(_ userPFID: String, handler: ParseQueryHandler, handlerCase: String) {
 //        ParseFunc.queryAppventures(user: userPFID, vcHandler: handler, handlerCase: handlerCase)
         //        ParseFunc.parseQuery(pfAppventure.pfClass, location2D: nil, whereClause: userPFID, WhereKey: pfAppventure.pfUserID, vcHandler: handler)
     }
     
 
-    private func saveObject(save: AnyObject) {
+    fileprivate func saveObject(_ save: AnyObject) {
 //        if self.appventureSteps.count > 0 {
 //            if CLLocationCoordinate2DIsValid(appventureSteps[0].coordinate) {
 //                self.coordinate = appventureSteps[0].coordinate

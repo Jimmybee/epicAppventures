@@ -52,7 +52,7 @@ class StepViewController: UIViewController {
         step = appventure.appventureSteps[stepNumber]
         //        setupForStep()
         }}
-    var timer : NSTimer?
+    var timer : Timer?
     var ms = 0.0
     
     //Timer
@@ -89,7 +89,7 @@ class StepViewController: UIViewController {
         setupScrollViews(0)
         Appventure.setCurrentAppventure(self.appventure)
 
-        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(StepViewController.dismissKeyboard))
         view.addGestureRecognizer(tap)
     }
     
@@ -102,7 +102,7 @@ class StepViewController: UIViewController {
 //        return UIStatusBarStyle.LightContent
 //    }
 
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         if timer == nil {
             self.startTimer()
@@ -111,28 +111,28 @@ class StepViewController: UIViewController {
 
     //MARK: Setup
     
-    func setupScrollViews(activeLabel: Int) {
+    func setupScrollViews(_ activeLabel: Int) {
         for label in activeScrollLabels {
-            label.font = label.font.fontWithSize(13)
-            label.textColor = UIColor.whiteColor()
+            label.font = label.font.withSize(13)
+            label.textColor = UIColor.white
         }
-        activeScrollLabels[activeLabel].font = activeScrollLabels[activeLabel].font.fontWithSize(19)
-        activeScrollLabels[activeLabel].textColor = UIColor.whiteColor()
+        activeScrollLabels[activeLabel].font = activeScrollLabels[activeLabel].font.withSize(19)
+        activeScrollLabels[activeLabel].textColor = UIColor.white
     }
     
     func loadControllers() {
-        func addController (vc: UIViewController) {
+        func addController (_ vc: UIViewController) {
             self.addChildViewController(vc)
-            self.containerView.insertSubview(vc.view, atIndex: 0)
+            self.containerView.insertSubview(vc.view, at: 0)
             vc.view.frame = containerView.bounds
-            vc.didMoveToParentViewController(self)
+            vc.didMove(toParentViewController: self)
         }
 
-        func addAnswerControllers (vc: UIViewController) {
+        func addAnswerControllers (_ vc: UIViewController) {
             self.addChildViewController(vc)
-            self.answerContainer.insertSubview(vc.view, atIndex: 0)
+            self.answerContainer.insertSubview(vc.view, at: 0)
             vc.view.frame = answerContainer.bounds
-            vc.didMoveToParentViewController(self)
+            vc.didMove(toParentViewController: self)
         }
         
         addController(soundClueView)
@@ -164,7 +164,7 @@ class StepViewController: UIViewController {
         
         //Sound
         if  step.setup[AppventureStep.setup.soundClue]! {
-            if let isSound = step.sound as NSData! {
+            if let isSound = step.sound as Data! {
                 soundClueView.sound = isSound
                 soundClueView.setupAP()
                 soundSelectWidth.constant = scrollViewWidth.constant
@@ -215,10 +215,10 @@ class StepViewController: UIViewController {
             extendedHeight = 165
         }
         
-        self.view.sendSubviewToBack(containerView)
+        self.view.sendSubview(toBack: containerView)
         
         //set scrollbar at bottom to clue
-        containerView.bringSubviewToFront(activeViews[0])
+        containerView.bringSubview(toFront: activeViews[0])
         setupScrollViews(0)
         scrollCluePicker.contentOffset.x = 0
         
@@ -239,13 +239,13 @@ class StepViewController: UIViewController {
     @IBOutlet weak var commentImage: UIImageView!
   
     
-    @IBAction func panning(sender: UIPanGestureRecognizer) {
+    @IBAction func panning(_ sender: UIPanGestureRecognizer) {
         
         switch (sender.state) {
-        case .Began:
+        case .began:
             break
-        case .Changed:
-            yMoved = sender.translationInView(self.view).y
+        case .changed:
+            yMoved = sender.translation(in: self.view).y
             
             if topExtended == false {
                 answerViewHeight.constant = max(min(originalHeight + yMoved, extendedHeight), originalHeight)
@@ -277,17 +277,17 @@ class StepViewController: UIViewController {
            
             }
             break
-        case .Ended:
-            if sender.translationInView(self.view).y > (self.extendedHeight - self.originalHeight) / 2 {
+        case .ended:
+            if sender.translation(in: self.view).y > (self.extendedHeight - self.originalHeight) / 2 {
                 panEndDown()
             } else {
                 panEndUp()
             }
             
             break
-        case .Possible: break
-        case .Cancelled:break
-        case .Failed:break
+        case .possible: break
+        case .cancelled:break
+        case .failed:break
         }
     }
      
@@ -308,20 +308,20 @@ class StepViewController: UIViewController {
     //MARK: Button Actions
     
     
-    @IBAction func moreActions(sender: AnyObject) {
-        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
-        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: nil))
-        alert.addAction(UIAlertAction(title: "Exit Appventure", style: UIAlertActionStyle.Destructive, handler: { action in
-            self.dismissViewControllerAnimated(false, completion: nil)
+    @IBAction func moreActions(_ sender: AnyObject) {
+        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: "Exit Appventure", style: UIAlertActionStyle.destructive, handler: { action in
+            self.dismiss(animated: false, completion: nil)
         }))
-        alert.addAction(UIAlertAction(title: "Report Content", style: .Default, handler: { action in
+        alert.addAction(UIAlertAction(title: "Report Content", style: .default, handler: { action in
             self.flagContent()
         }))
-        alert.addAction(UIAlertAction(title: "Instructions", style: .Default, handler: { action in
-                self.performSegueWithIdentifier(Constants.PresentInstructions, sender: nil   )
+        alert.addAction(UIAlertAction(title: "Instructions", style: .default, handler: { action in
+                self.performSegue(withIdentifier: Constants.PresentInstructions, sender: nil   )
         }))
         
-        self.presentViewController(alert, animated: true, completion: nil)
+        self.present(alert, animated: true, completion: nil)
     }
     
     func flagContent() {
@@ -332,24 +332,24 @@ class StepViewController: UIViewController {
     }
     
     //MARK: Actions for child VCs
-    func updateLabel(distance: Double, lastLocation: CLLocation) {
+    func updateLabel(_ distance: Double, lastLocation: CLLocation) {
         checkInHintView.lastLocation = lastLocation
     }
     
-    func updateLastLocation(lastLocation: CLLocation) {
+    func updateLastLocation(_ lastLocation: CLLocation) {
         checkInHintView.lastLocation = lastLocation
     }
     
 
     
-    func updateHintText(hint: String, hintsRecieved: Int16) {
+    func updateHintText(_ hint: String, hintsRecieved: Int16) {
         //Text
         if clueSelectWidth.constant != scrollViewWidth.constant {
             clueSelectWidth.constant = scrollViewWidth.constant
-            activeViews.insert(textClueView.view, atIndex: 0)
-            activeScrollLabels.insert(scrollClueLabel, atIndex: 0)
+            activeViews.insert(textClueView.view, at: 0)
+            activeScrollLabels.insert(scrollClueLabel, at: 0)
             setupScrollViews(activeScrollLabels.count - 1)
-            containerView.bringSubviewToFront(activeViews[0])
+            containerView.bringSubview(toFront: activeViews[0])
             textClueView.clueTextView.text = ""
         }
         
@@ -361,24 +361,24 @@ class StepViewController: UIViewController {
     func stepComplete (){
         let storyBoard = UIStoryboard(name: Storyboards.LaunchAppventure, bundle:nil)
         if appventure.appventureSteps.count == (stepNumber + 1) {
-            if let acvc = storyBoard.instantiateViewControllerWithIdentifier(Constants.AppventureComplete) as? AppventureCompleteViewController {
+            if let acvc = storyBoard.instantiateViewController(withIdentifier: Constants.AppventureComplete) as? AppventureCompleteViewController {
                 acvc.appventure = self.appventure
                 acvc.completeTime = self.ms
-                self.dismissViewControllerAnimated(true, completion: nil)
-                self.presentingViewController?.presentViewController(acvc, animated: true, completion: nil)
+                self.dismiss(animated: true, completion: nil)
+                self.presentingViewController?.present(acvc, animated: true, completion: nil)
             }
         } else {
-            if let scvc = storyBoard.instantiateViewControllerWithIdentifier(Constants.CompletionVC) as? StepCompleteViewController {
+            if let scvc = storyBoard.instantiateViewController(withIdentifier: Constants.CompletionVC) as? StepCompleteViewController {
                 scvc.step = appventure.appventureSteps[stepNumber]
                 scvc.currentTimeD = self.ms
                 scvc.delegate = self
-                self.presentViewController(scvc, animated: false, completion: nil)
+                self.present(scvc, animated: false, completion: nil)
                 stepNumber += 1
                 step = appventure.appventureSteps[stepNumber]
                 setupViews()
                 timer?.invalidate()
                 timer = nil
-                containerView.bringSubviewToFront(answerCheckInView)
+                containerView.bringSubview(toFront: answerCheckInView)
 
 
             }
@@ -389,58 +389,58 @@ class StepViewController: UIViewController {
     //MARK: Timer
     
     func startTimer() {
-        timer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: Selector(Constants.AppventureTimerFunc), userInfo: nil, repeats: true)
+        timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: Selector(Constants.AppventureTimerFunc), userInfo: nil, repeats: true)
     }
     
     func updateAppventureTimer() {
         self.ms += 1
         let formattedTime = HelperFunctions.formatTime(ms, nano:  false)
-        UIView.animateWithDuration(0.01) { () -> Void in
+        UIView.animate(withDuration: 0.01, animations: { () -> Void in
             self.timerLabel.text = formattedTime
-        }
+        }) 
     }
 
 }
 
 extension StepViewController : UIScrollViewDelegate {
     
-    @IBAction func scrollHolderTapped(sender: UITapGestureRecognizer) {
+    @IBAction func scrollHolderTapped(_ sender: UITapGestureRecognizer) {
         currentPage = Int(scrollCluePicker.contentOffset.x / scrollCluePicker.frame.size.width)
         startOffset = scrollCluePicker.contentOffset.x
 
-        if sender.locationInView(self.view).x > self.view.frame.midX + (scrollCluePicker.frame.size.width/2) {
+        if sender.location(in: self.view).x > self.view.frame.midX + (scrollCluePicker.frame.size.width/2) {
             if currentPage+1 != activeScrollLabels.count {
                 scrollCluePicker.contentOffset.x = scrollCluePicker.contentOffset.x + scrollCluePicker.frame.size.width
-                containerView.bringSubviewToFront(activeViews[currentPage+1])
+                containerView.bringSubview(toFront: activeViews[currentPage+1])
                 setupScrollViews(currentPage+1)
                 pictureClueView.zoomOut()
                 
             }
         }
         
-        if sender.locationInView(self.view).x < self.view.frame.midX - (scrollCluePicker.frame.size.width/2) {
+        if sender.location(in: self.view).x < self.view.frame.midX - (scrollCluePicker.frame.size.width/2) {
             if currentPage != 0 {
                 scrollCluePicker.contentOffset.x = scrollCluePicker.contentOffset.x - scrollCluePicker.frame.size.width
-                containerView.bringSubviewToFront(activeViews[currentPage-1])
+                containerView.bringSubview(toFront: activeViews[currentPage-1])
                 setupScrollViews(currentPage-1)
                 pictureClueView.zoomOut()
             }
         }
     }
     
-    func scrollViewWillBeginDragging(scrollView: UIScrollView) {
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         currentPage = Int(scrollView.contentOffset.x / scrollView.frame.size.width)
         startOffset = scrollView.contentOffset.x
     }
 
-    func scrollViewDidScroll(scrollView: UIScrollView) {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
         
         
-        func adjustLabels(current: UILabel, next: UILabel, movement: CGFloat) {
+        func adjustLabels(_ current: UILabel, next: UILabel, movement: CGFloat) {
             print("movement \(movement)")
-            next.font = next.font.fontWithSize(13 + 6*movement)
+            next.font = next.font.withSize(13 + 6*movement)
 //            next.textColor = UIColor(white: 0.7 + 0.3*movement, alpha: 1)
-            current.font = current.font.fontWithSize(19 - 6*movement)
+            current.font = current.font.withSize(19 - 6*movement)
 //            current.textColor = UIColor(white: 1 - 0.3*movement, alpha: 1)
         }
         
@@ -448,7 +448,7 @@ extension StepViewController : UIScrollViewDelegate {
         
         let currentScrollOffset = scrollView.contentOffset.x
         let wholeMoves = Int((currentScrollOffset-startOffset) / scrollWidth)
-        let completedMovement = abs((currentScrollOffset % scrollWidth) / scrollWidth)
+        let completedMovement = abs((currentScrollOffset.truncatingRemainder(dividingBy: scrollWidth)) / scrollWidth)
         
         let startingActiveScrollLabel = currentPage + wholeMoves
         
@@ -470,9 +470,9 @@ extension StepViewController : UIScrollViewDelegate {
     }
     
     
-    func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         let page = Int(scrollView.contentOffset.x / scrollView.frame.size.width)
-        containerView.bringSubviewToFront(activeViews[page])
+        containerView.bringSubview(toFront: activeViews[page])
         setupScrollViews(page)
         pictureClueView.zoomOut()
         
@@ -482,7 +482,7 @@ extension StepViewController : UIScrollViewDelegate {
 
 
 extension StepViewController : StepCompleteViewControllerDelegate {
-    func setTime(currentTime : Double) {
+    func setTime(_ currentTime : Double) {
         ms = currentTime
     }
 }

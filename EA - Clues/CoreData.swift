@@ -12,16 +12,16 @@ import CoreData
 
 class CoreDataHelpers {
     
-    static func fetchObjects(entityName: String, predicate: String = "") -> [NSManagedObject]? {
-        let managedContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
+    static func fetchObjects(_ entityName: String, predicate: String = "") -> [NSManagedObject]? {
+        let managedContext = (UIApplication.shared.delegate as! AppDelegate).managedObjectContext
         
-        let fetchRequest = NSFetchRequest(entityName: entityName)
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: entityName)
         if predicate != "" {
             fetchRequest.predicate = NSPredicate(format: "id = %@", predicate)
         }
         
         do {
-            if let fetchResults = try managedContext.executeFetchRequest(fetchRequest) as? [NSManagedObject] {
+            if let fetchResults = try managedContext.fetch(fetchRequest) as? [NSManagedObject] {
                 if fetchResults.count == 0 {
                     return nil
                 }
@@ -33,20 +33,20 @@ class CoreDataHelpers {
         return nil
     }
     
-    static func deleteAllData(entity: String)
+    static func deleteAllData(_ entity: String)
     {
-        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let managedContext = appDelegate.managedObjectContext
-        let fetchRequest = NSFetchRequest(entityName: entity)
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: entity)
         fetchRequest.returnsObjectsAsFaults = false
         
         do
         {
-            let results = try managedContext.executeFetchRequest(fetchRequest)
+            let results = try managedContext.fetch(fetchRequest)
             for managedObject in results
             {
                 let managedObjectData:NSManagedObject = managedObject as! NSManagedObject
-                managedContext.deleteObject(managedObjectData)
+                managedContext.delete(managedObjectData)
             }
         } catch let error as NSError {
             print("Detele all data in \(entity) error : \(error) \(error.userInfo)")

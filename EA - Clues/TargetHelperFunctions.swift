@@ -16,15 +16,15 @@ class TargetHelperFunctions {
     }
 
     
-    class func openLargeImage (image: UIImage, vc: UIViewController) {
+    class func openLargeImage (_ image: UIImage, vc: UIViewController) {
         let storyBoard = UIStoryboard(name: "Interactive", bundle:nil)
-        if let ifvc = storyBoard.instantiateViewControllerWithIdentifier(Constants.ImageFullscreenVC) as? ImageFullscreenViewController {
+        if let ifvc = storyBoard.instantiateViewController(withIdentifier: Constants.ImageFullscreenVC) as? ImageFullscreenViewController {
             ifvc.image = image
-            vc.presentViewController(ifvc, animated: true, completion: nil)
+            vc.present(ifvc, animated: true, completion: nil)
         }
     }
     
-    class func getImage(useCamera: Bool, delegate: UIViewController) {
+    class func getImage(_ useCamera: Bool, delegate: UIViewController) {
         
         let imagePicker = UIImagePickerController()
         
@@ -34,13 +34,13 @@ class TargetHelperFunctions {
         
         
         if useCamera {
-            imagePicker.sourceType = .Camera
+            imagePicker.sourceType = .camera
         } else {
-            imagePicker.sourceType = .PhotoLibrary
+            imagePicker.sourceType = .photoLibrary
         }
         imagePicker.allowsEditing = true
         
-        delegate.presentViewController(imagePicker, animated: true, completion: nil)
+        delegate.present(imagePicker, animated: true, completion: nil)
     }
     
     

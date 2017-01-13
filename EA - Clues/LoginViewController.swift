@@ -34,13 +34,13 @@ class LoginViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    @IBAction func skipSignIn(sender: UIButton) {
+    @IBAction func skipSignIn(_ sender: UIButton) {
         
-        self.dismissViewControllerAnimated(true, completion: nil)
-         NSNotificationCenter.defaultCenter().postNotificationName(skipLoginNotification, object: self)
+        self.dismiss(animated: true, completion: nil)
+         NotificationCenter.default.post(name: Notification.Name(rawValue: skipLoginNotification), object: self)
     }
     
-    @IBAction func facebookLogin(sender: UIButton) {
+    @IBAction func facebookLogin(_ sender: UIButton) {
         
         
 //        PFFacebookUtils.logInInBackgroundWithReadPermissions(fbLoginParameters, block: { (object:PFUser?, error:NSError?) -> Void in
@@ -69,11 +69,11 @@ class LoginViewController: UIViewController {
     func addVideoPlayer() {
         
         // Load the video from the app bundle.
-        let videoURL: NSURL = NSBundle.mainBundle().URLForResource("video", withExtension: "mov")!
+        let videoURL: URL = Bundle.main.url(forResource: "video", withExtension: "mov")!
         
-        player = AVPlayer(URL: videoURL)
-        player?.actionAtItemEnd = .None
-        player?.muted = true
+        player = AVPlayer(url: videoURL)
+        player?.actionAtItemEnd = .none
+        player?.isMuted = true
         
         let playerLayer = AVPlayerLayer(player: player)
         playerLayer.videoGravity = AVLayerVideoGravityResizeAspectFill
@@ -86,14 +86,14 @@ class LoginViewController: UIViewController {
         player?.play()
         
         //loop video
-        NSNotificationCenter.defaultCenter().addObserver(self,
-                                                         selector: "loopVideo",
-                                                         name: AVPlayerItemDidPlayToEndTimeNotification,
+        NotificationCenter.default.addObserver(self,
+                                                         selector: #selector(LoginViewController.loopVideo),
+                                                         name: NSNotification.Name.AVPlayerItemDidPlayToEndTime,
                                                          object: nil)
     }
     
     func loopVideo() {
-        player?.seekToTime(kCMTimeZero)
+        player?.seek(to: kCMTimeZero)
         player?.play()
     }
 }

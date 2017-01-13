@@ -13,8 +13,8 @@ import AVFoundation
 
 protocol AddStepTableViewControllerDelegate: NSObjectProtocol  {
     
-    func appendStep(step: AppventureStep, stepNumber: Int16?)
-    func updateAppventureLocation(location: CLLocationCoordinate2D)
+    func appendStep(_ step: AppventureStep, stepNumber: Int16?)
+    func updateAppventureLocation(_ location: CLLocationCoordinate2D)
 }
 
 struct PlaceCache {
@@ -54,7 +54,7 @@ class AddStepTableViewController: UITableViewController, UITextFieldDelegate, UI
     //MARK: Model
     var appventureStep = AppventureStep()
     var lastLocation: CLLocation?
-    var soundDataCache: NSData?
+    var soundDataCache: Data?
     var placeCache: PlaceCache?
     
     //set
@@ -63,7 +63,7 @@ class AddStepTableViewController: UITableViewController, UITextFieldDelegate, UI
     
     weak var delegate: AddStepTableViewControllerDelegate?
     //Sound
-    var soundFileURL = NSURL() //cache?
+    var soundFileURL = URL(fileURLWithPath: "") //cache?
     var totalLength = 0.0 { didSet { if let formattedTime = HelperFunctions.formatTime(ms, nano: false) {
         totalLengthLabel.text = formattedTime
         } } }
@@ -72,7 +72,7 @@ class AddStepTableViewController: UITableViewController, UITextFieldDelegate, UI
     var recorder: AVAudioRecorder!
     var audioPlayer: AVAudioPlayer!
     //Timer
-    var timer: NSTimer!
+    var timer: Timer!
     var ms = 0.0 { didSet { if let formattedTime = HelperFunctions.formatTime(ms, nano: false) {
         soundLabel.text = formattedTime
         } } }
@@ -122,7 +122,7 @@ class AddStepTableViewController: UITableViewController, UITextFieldDelegate, UI
         freeHintsTextField.delegate = self
         
         recorderSetUp()
-        saveButton.enabled = false
+        saveButton.isEnabled = false
 
         if editOfCurrentStep == true {
              appventureStep = AppventureStep(step: currentStep)
@@ -135,14 +135,14 @@ class AddStepTableViewController: UITableViewController, UITextFieldDelegate, UI
         
     }
     
-    override func viewDidAppear(animated: Bool)  {
+    override func viewDidAppear(_ animated: Bool)  {
         updatePartUI()
         checkSaveButton()
     }
     
     
     func setCaches() {
-        soundDataCache = appventureStep.sound
+        soundDataCache = appventureStep.sound as Data?
         placeCache = PlaceCache(step: appventureStep)
     }
     
@@ -160,7 +160,7 @@ class AddStepTableViewController: UITableViewController, UITextFieldDelegate, UI
         appventureStep.setup[AppventureStep.setup.locationShown]! ?  locationSetupString.append("Location on map") : locationSetupString.append("No location on map")
         appventureStep.setup[AppventureStep.setup.compassShown]! ?  locationSetupString.append("Show direction") : locationSetupString.append("No direction")
         appventureStep.setup[AppventureStep.setup.distanceShown]! ?  locationSetupString.append("Show distance") : locationSetupString.append("No distance")
-        locationSetupDetails.text = locationSetupString.joinWithSeparator(",")
+        locationSetupDetails.text = locationSetupString.joined(separator: ",")
         
         //section1 - Clues
               appventureStep.initialText == "" ? (initialTextLabel.text = "Set instructions...") : (initialTextLabel.text = appventureStep.initialText)
@@ -186,9 +186,9 @@ class AddStepTableViewController: UITableViewController, UITextFieldDelegate, UI
         
         
         //section1 - Clues
-        soundSwitch.on = appventureStep.setup[AppventureStep.setup.soundClue]!
-        pictureSwitch.on = appventureStep.setup[AppventureStep.setup.pictureClue]!
-        intialTextSwitch.on = appventureStep.setup[AppventureStep.setup.textClue]!
+        soundSwitch.isOn = appventureStep.setup[AppventureStep.setup.soundClue]!
+        pictureSwitch.isOn = appventureStep.setup[AppventureStep.setup.pictureClue]!
+        intialTextSwitch.isOn = appventureStep.setup[AppventureStep.setup.textClue]!
         //SoundView
         if let soundData = soundDataCache {
             do {
@@ -240,21 +240,21 @@ class AddStepTableViewController: UITableViewController, UITextFieldDelegate, UI
             enableSave = false
         }
 
-        if soundSwitch.on == false && pictureSwitch.on == false && intialTextSwitch.on == false {
+        if soundSwitch.isOn == false && pictureSwitch.isOn == false && intialTextSwitch.isOn == false {
             enableSave = false
         }
         
-        if soundSwitch.on  == true {
+        if soundSwitch.isOn  == true {
             if soundDataCache == nil {
                 enableSave = false
             }
         }
-        if pictureSwitch.on == true {
+        if pictureSwitch.isOn == true {
             if appventureStep.image == nil {
                 enableSave = false
             }
         }
-        if intialTextSwitch.on == true {
+        if intialTextSwitch.isOn == true {
             if appventureStep.initialText == "" {
                 enableSave = false
             }
@@ -267,23 +267,23 @@ class AddStepTableViewController: UITableViewController, UITextFieldDelegate, UI
         }
         
         if enableSave == true {
-            saveButton.enabled = true
+            saveButton.isEnabled = true
         } else {
-            saveButton.enabled = false
+            saveButton.isEnabled = false
         }
     }
     
     //MARK: IB Actions
     
-    @IBAction func cancel(sender: UIBarButtonItem) {
-        self.dismissViewControllerAnimated(true, completion: nil)
+    @IBAction func cancel(_ sender: UIBarButtonItem) {
+        self.dismiss(animated: true, completion: nil)
     }
     
-    @IBAction func save(sender: AnyObject) {
+    @IBAction func save(_ sender: AnyObject) {
         
         updateStep()
         
-        self.dismissViewControllerAnimated(true, completion: nil)
+        self.dismiss(animated: true, completion: nil)
         if editOfCurrentStep == true {
             currentStep = AppventureStep(step: appventureStep)
             delegate?.appendStep(currentStep, stepNumber: currentStep.stepNumber)
@@ -309,9 +309,9 @@ class AddStepTableViewController: UITableViewController, UITextFieldDelegate, UI
         } else {
             appventureStep.setup[AppventureStep.setup.checkIn] = false
         }
-        appventureStep.setup[AppventureStep.setup.soundClue] = soundSwitch.on
-        appventureStep.setup[AppventureStep.setup.pictureClue]  = pictureSwitch.on
-        appventureStep.setup[AppventureStep.setup.textClue] = intialTextSwitch.on
+        appventureStep.setup[AppventureStep.setup.soundClue] = soundSwitch.isOn
+        appventureStep.setup[AppventureStep.setup.pictureClue]  = pictureSwitch.isOn
+        appventureStep.setup[AppventureStep.setup.textClue] = intialTextSwitch.isOn
         if let distanceText = checkInTextField.text {
             if let distance = Int16(distanceText) {
                 appventureStep.checkInProximity = distance
@@ -333,29 +333,29 @@ class AddStepTableViewController: UITableViewController, UITextFieldDelegate, UI
     
     //MARK: Boolean Functions
     
-    @IBAction func locationSwitched(sender: UISwitch) {
+    @IBAction func locationSwitched(_ sender: UISwitch) {
         tableView.reloadData()
         checkSaveButton()
     }
     
-    @IBAction func soundSwitched(sender: UISwitch) {
+    @IBAction func soundSwitched(_ sender: UISwitch) {
         tableView.reloadData()
         checkSaveButton()
     }
     
-    @IBAction func pictureSwitched(sender: UISwitch) {
+    @IBAction func pictureSwitched(_ sender: UISwitch) {
         tableView.reloadData()
         checkSaveButton()
     }
     
-    @IBAction func textSwitched(sender: UISwitch) {
-        TextClueCell.hidden = !sender.on
+    @IBAction func textSwitched(_ sender: UISwitch) {
+        TextClueCell.isHidden = !sender.isOn
         tableView.reloadData()
 
         checkSaveButton()
     }
     
-    @IBAction func checkInControl(sender: UISegmentedControl) {
+    @IBAction func checkInControl(_ sender: UISegmentedControl) {
         tableView.reloadData()
         checkSaveButton()
     }
@@ -363,22 +363,22 @@ class AddStepTableViewController: UITableViewController, UITextFieldDelegate, UI
 
     //MARK: TextField Delegates
     
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
     }
     
-    func textFieldDidEndEditing(textField: UITextField) {
+    func textFieldDidEndEditing(_ textField: UITextField) {
         checkSaveButton()
     }
     
     //MARK: TextView Delegates
     
-    func textViewDidEndEditing(textView: UITextView) {
+    func textViewDidEndEditing(_ textView: UITextView) {
         checkSaveButton()
     }
     
-    func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         if(text == "\n") {
             textView.resignFirstResponder()
             return false
@@ -394,7 +394,7 @@ class AddStepTableViewController: UITableViewController, UITextFieldDelegate, UI
         let audioSession:AVAudioSession = AVAudioSession.sharedInstance()
         
         //ask for permission
-        if (audioSession.respondsToSelector("requestRecordPermission:")) {
+        if (audioSession.responds(to: #selector(AVAudioSession.requestRecordPermission(_:)))) {
             AVAudioSession.sharedInstance().requestRecordPermission({(granted: Bool)-> Void in
                 if granted {
                     print("granted")
@@ -404,28 +404,29 @@ class AddStepTableViewController: UITableViewController, UITextFieldDelegate, UI
                     try! audioSession.setActive(true)
         
         let currentFileName = ("temp.caf")
-        let dirPaths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
-        let docsDir: AnyObject = dirPaths[0]
-        let soundFilePath = docsDir.stringByAppendingPathComponent(currentFileName)
-        self.soundFileURL = NSURL(fileURLWithPath: soundFilePath)
+        let dirPaths = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)
+        let docsDir: AnyObject = dirPaths[0] as AnyObject
+//        let soundFilePath = docsDir.appendingPathComponent(currentFileName)
+        let soundFilePath = docsDir.appending(currentFileName)
+        self.soundFileURL = URL(fileURLWithPath: soundFilePath)
 //        appventureStep.sound?.writeToURL(soundFileURL, atomically: true)
-        let filemanager = NSFileManager.defaultManager()
-        if filemanager.fileExistsAtPath(soundFilePath) {
+        let filemanager = FileManager.default
+        if filemanager.fileExists(atPath: soundFilePath) {
             print("sound exists")
         }
         
         let recordSettings = [
-            AVFormatIDKey: NSNumber(unsignedInt:kAudioFormatAppleIMA4),
-            AVEncoderAudioQualityKey : AVAudioQuality.Medium.rawValue,
+            AVFormatIDKey: NSNumber(value: kAudioFormatAppleIMA4 as UInt32),
+            AVEncoderAudioQualityKey : AVAudioQuality.medium.rawValue,
             AVEncoderBitRateKey : 320,
             AVNumberOfChannelsKey: 1,
             AVSampleRateKey : 440.0
-        ]
+        ] as [String : Any]
         
         do {
-            self.recorder = try AVAudioRecorder(URL: self.soundFileURL, settings: recordSettings)
+            self.recorder = try AVAudioRecorder(url: self.soundFileURL, settings: recordSettings)
             self.recorder.delegate = self
-            self.recorder.meteringEnabled = true
+            self.recorder.isMeteringEnabled = true
             self.recorder.prepareToRecord() // creates/overwrites the file at soundFileURL
         } catch let error as NSError {
             self.recorder = nil
@@ -440,13 +441,13 @@ class AddStepTableViewController: UITableViewController, UITextFieldDelegate, UI
         }
     }
     
-    @IBAction func stopSound(sender: AnyObject) {
+    @IBAction func stopSound(_ sender: AnyObject) {
         
-        if recorder.recording == true {
+        if recorder.isRecording == true {
             recorder.stop()
             totalLength = ms
             
-            soundDataCache = NSData(contentsOfURL: soundFileURL)
+            soundDataCache = try? Data(contentsOf: soundFileURL)
             ms = 0
             self.timer.invalidate()
             self.timer = nil
@@ -454,7 +455,7 @@ class AddStepTableViewController: UITableViewController, UITextFieldDelegate, UI
         }
         
         if audioPlayer != nil {
-            if audioPlayer.playing == true  {
+            if audioPlayer.isPlaying == true  {
                 audioPlayer.stop()
                 ms = 0
                 self.timer.invalidate()
@@ -466,24 +467,24 @@ class AddStepTableViewController: UITableViewController, UITextFieldDelegate, UI
         checkSaveButton()
     }
     
-    func audioPlayerDidFinishPlaying(player: AVAudioPlayer, successfully flag: Bool) {
+    func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
         ms = 0
         self.timer.invalidate()
         self.timer = nil
     }
 
-    @IBAction func record(sender: UIButton) {
-        if !recorder.recording {
+    @IBAction func record(_ sender: UIButton) {
+        if !recorder.isRecording {
         recorder.record()
         startTimer()
         }
     
     }
     
-    @IBAction func playSound(sender: UIButton) {
+    @IBAction func playSound(_ sender: UIButton) {
         
         if audioPlayer == nil {
-            if let soundData = soundDataCache as NSData! {
+            if let soundData = soundDataCache as Data! {
                 do {
                         self.audioPlayer = try AVAudioPlayer(data: soundData)
                         self.audioPlayer.play()
@@ -496,7 +497,7 @@ class AddStepTableViewController: UITableViewController, UITextFieldDelegate, UI
                 }
             }
         } else {
-            if !audioPlayer.playing {
+            if !audioPlayer.isPlaying {
                 self.audioPlayer.play()
                 self.startTimer()
             }
@@ -509,8 +510,8 @@ class AddStepTableViewController: UITableViewController, UITextFieldDelegate, UI
     //MARK: Timer
     
     func startTimer() {
-        timer = NSTimer.init()
-        self.timer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: Selector("update"), userInfo: nil, repeats: true)
+        timer = Timer.init()
+        self.timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(AddStepTableViewController.update), userInfo: nil, repeats: true)
 
 //        self.timer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: #selector(AddStepTableViewController.update), userInfo: nil, repeats: true)
     }
@@ -539,7 +540,7 @@ class AddStepTableViewController: UITableViewController, UITextFieldDelegate, UI
         let config = GMSPlacePickerConfig(viewport: viewport)
         placePicker = GMSPlacePicker(config: config)
         
-        placePicker?.pickPlaceWithCallback({ (place: GMSPlace?, error: NSError?) -> Void in
+        placePicker?.pickPlace(callback: { (place: GMSPlace?, error: NSError?) -> Void in
             if let error = error {
                 print("Pick Place error: \(error.localizedDescription)")
                 return
@@ -549,38 +550,38 @@ class AddStepTableViewController: UITableViewController, UITextFieldDelegate, UI
             } else {
                 print("No place selected")
             }
-        })
+        } as! GMSPlaceResultCallback)
     }
 
     //MARK: Navigation
     
     func locationSettings() {
-        performSegueWithIdentifier(Constants.locationSettingsSegue, sender: self)
+        performSegue(withIdentifier: Constants.locationSettingsSegue, sender: self)
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == Constants.locationSettingsSegue {
-            if let lstvc = segue.destinationViewController as? LocationSettingsTableViewController  {
+            if let lstvc = segue.destination as? LocationSettingsTableViewController  {
                 lstvc.step = self.appventureStep
             }
         }
         if segue.identifier == Constants.ImageChooser {
-            if let icvc = segue.destinationViewController as? ImageChooserViewController {
+            if let icvc = segue.destination as? ImageChooserViewController {
                 icvc.step = self.appventureStep
             }
         }
         if segue.identifier == Constants.EditTextClue {
-            if let etvc = segue.destinationViewController as? EditTextClueViewController {
+            if let etvc = segue.destination as? EditTextClueViewController {
                 etvc.step = self.appventureStep
             }
         }
         if segue.identifier == Constants.AddAnswer {
-            if let aatvc = segue.destinationViewController as? AddAnswerTableViewController {
+            if let aatvc = segue.destination as? AddAnswerTableViewController {
                 aatvc.step = self.appventureStep
             }
         }
         if segue.identifier == Constants.AddHint {
-            if let ahtvc = segue.destinationViewController as? AddHintTableViewController {
+            if let ahtvc = segue.destination as? AddHintTableViewController {
                 ahtvc.step = self.appventureStep
             }
         }
@@ -590,28 +591,28 @@ class AddStepTableViewController: UITableViewController, UITextFieldDelegate, UI
 //    MARK: Table Methods
     
     
-    let locationButton = NSIndexPath(forRow: 0, inSection: 0)
-    let pickLocationPath = NSIndexPath(forRow: 1, inSection: 0)
-    let locationSettingsPath = NSIndexPath(forRow: 2, inSection: 0)
-    let intitalTextPath = NSIndexPath(forRow: 1, inSection: 1)
-    let imagePath = NSIndexPath(forRow: 3, inSection: 1)
-    let soundPath = NSIndexPath(forRow: 5, inSection: 1)
-    let textAnswerArray = NSIndexPath(forRow: 1, inSection: 2)
-    let checkInLocation = NSIndexPath(forRow: 2, inSection: 2)
-    let checkInDistance = NSIndexPath(forRow: 3, inSection: 2)
-    let hintArray = NSIndexPath(forRow: 0, inSection: 3)
-    let completion = NSIndexPath(forRow: 0, inSection: 4)
+    let locationButton = IndexPath(row: 0, section: 0)
+    let pickLocationPath = IndexPath(row: 1, section: 0)
+    let locationSettingsPath = IndexPath(row: 2, section: 0)
+    let intitalTextPath = IndexPath(row: 1, section: 1)
+    let imagePath = IndexPath(row: 3, section: 1)
+    let soundPath = IndexPath(row: 5, section: 1)
+    let textAnswerArray = IndexPath(row: 1, section: 2)
+    let checkInLocation = IndexPath(row: 2, section: 2)
+    let checkInDistance = IndexPath(row: 3, section: 2)
+    let hintArray = IndexPath(row: 0, section: 3)
+    let completion = IndexPath(row: 0, section: 4)
 
 
 
 
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let cell = tableView.cellForRowAtIndexPath(indexPath)
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let cell = tableView.cellForRow(at: indexPath)
         if cell == locationNameCell {
             self.pickLocation()
         }
     }
-        override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
             var float:CGFloat = 44.0
             
 
@@ -620,15 +621,15 @@ class AddStepTableViewController: UITableViewController, UITextFieldDelegate, UI
             case locationButton:
                 float = 0.0
             case pickLocationPath:
-                self.locationSwitch.on ?  (float = 44.0) : (float = 0.0 )
+                self.locationSwitch.isOn ?  (float = 44.0) : (float = 0.0 )
             case locationSettingsPath:
-                self.locationSwitch.on ?  (float = 44.0) : (float = 0.0 )
+                self.locationSwitch.isOn ?  (float = 44.0) : (float = 0.0 )
             case intitalTextPath:
-                self.intialTextSwitch.on ?( float = 44.0) : (float = 0.0 )
+                self.intialTextSwitch.isOn ?( float = 44.0) : (float = 0.0 )
             case imagePath:
-                self.pictureSwitch.on ? (float = 132.0) : (float = 0.0 )
+                self.pictureSwitch.isOn ? (float = 132.0) : (float = 0.0 )
             case soundPath:
-                self.soundSwitch.on ? (float = 88.0) : (float = 0.0 )
+                self.soundSwitch.isOn ? (float = 88.0) : (float = 0.0 )
             case textAnswerArray:
                 self.checkInControl.selectedSegmentIndex == 1 ? (float = 44) : (float = 0.0 )
             case checkInLocation:

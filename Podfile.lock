@@ -24,14 +24,14 @@ PODS:
     - GoogleMaps/Base (= 2.0.1)
 
 DEPENDENCIES:
-  - Backendless (~> 3.0.43)
-  - Bolts (~> 1.8.4)
-  - FBSDKCoreKit (~> 4.14.0)
-  - FBSDKLoginKit (~> 4.14.0)
-  - FBSDKShareKit (~> 4.14.0)
-  - GoogleMaps (~> 2.0.1)
-  - GooglePlacePicker (~> 2.0.1)
-  - GooglePlaces (~> 2.0.1)
+  - Backendless
+  - Bolts
+  - FBSDKCoreKit
+  - FBSDKLoginKit
+  - FBSDKShareKit
+  - GoogleMaps
+  - GooglePlacePicker
+  - GooglePlaces
 
 SPEC CHECKSUMS:
   Backendless: bd77ad90cbd16fbd85fda03b3659b46a2c8f3179
@@ -43,6 +43,6 @@ SPEC CHECKSUMS:
   GooglePlacePicker: e7b11b732e40dbe76e8ab4c5fc2f4a7c32b96578
   GooglePlaces: 72fab1d1651c6df0322f2aad245ffb15b80d3c56
 
-PODFILE CHECKSUM: 2da0b17c8f20914cf2d5a25fbaa193d7e7adfe51
+PODFILE CHECKSUM: 12f85229e1df9e3291669ac9288001c731869761
 
 COCOAPODS: 1.1.1
