@@ -39,7 +39,7 @@
     </entity>
     <entity name="CoreUser" representedClassName=".CoreUser" syncable="YES">
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="ownedAppventures" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Appventure" inverseName="owner" inverseEntity="Appventure" syncable="YES"/>
+        <relationship name="ownedAppventures" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Appventure" inverseName="owner" inverseEntity="Appventure" syncable="YES"/>
     </entity>
     <elements>
         <element name="Appventure" positionX="-63" positionY="-18" width="128" height="270"/>

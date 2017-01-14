@@ -94,14 +94,14 @@ class AppventureStartViewController: UIViewController {
                 })
             } else {
                 self.appventure.liveStatus = LiveStatus.inDevelopment
-                self.appventure.saveAndSync()
-                self.appventure.completeSaveToContext({
-                    DispatchQueue.main.async { () -> Void in
-                        let ownedAlert = UIAlertController(title: "Locally Created", message: "Appventure set to in development. Delete this appventure from your maker profile.", preferredStyle: UIAlertControllerStyle.alert)
-                        ownedAlert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default , handler: nil))
-                        self.present(ownedAlert, animated: true, completion: nil)
-                    }
-                })
+//                self.appventure.saveAndSync()
+//                self.appventure.completeSaveToContext({
+//                    DispatchQueue.main.async { () -> Void in
+//                        let ownedAlert = UIAlertController(title: "Locally Created", message: "Appventure set to in development. Delete this appventure from your maker profile.", preferredStyle: UIAlertControllerStyle.alert)
+//                        ownedAlert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default , handler: nil))
+//                        self.present(ownedAlert, animated: true, completion: nil)
+//                    }
+//                })
             }
         }))
 

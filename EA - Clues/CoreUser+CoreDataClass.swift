@@ -10,7 +10,7 @@
 import Foundation
 import CoreData
 
-@objc(CoreUser)
+//@objc(CoreUser)
 public class CoreUser: NSManagedObject {
     
     static var user: CoreUser?
@@ -21,8 +21,7 @@ public class CoreUser: NSManagedObject {
         let context = AppDelegate.coreDataStack.persistentContainer.viewContext
         
         guard CoreUser.user == nil else { return true }
-        let appventure = Appventure(context: context)
-        let newUser = CoreUser(context: context)
+
         do {
             let fetchRequest: NSFetchRequest<CoreUser> = CoreUser.fetchRequest()
             let users = try context.fetch(fetchRequest)

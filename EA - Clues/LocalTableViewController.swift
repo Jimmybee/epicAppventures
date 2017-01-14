@@ -64,7 +64,7 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
 //        notificationCenter.addObserver(self, selector: #selector(beginRefresh), name: skipLoginNotification, object: nil)
 
         
-        if !User.checkLogin(true, vc: self) {
+        if !CoreUser.checkLogin(true, vc: self) {
             self.performSegue(withIdentifier: StoryboardNames.startupLogin, sender: nil)
         }
         
@@ -82,7 +82,7 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
 
         }
         
-        Appventure.loadAppventuresFromCoreData(handlingDownloadedAppventures)
+//        Appventure.loadAppventuresFromCoreData(handlingDownloadedAppventures)
 
     }
     
@@ -132,16 +132,16 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
     
     func loadUserAdventures() {
         
-        Appventure.loadAppventuresFromCoreData { (downloadedAppventures) in
-            for appventure in downloadedAppventures {
-                print(appventure.liveStatus)
-                if appventure.liveStatus != LiveStatus.inDevelopment{
-                    self.localAppventures.append(appventure)
-                }
-
-            }
-            self.tableView.reloadData()
-        }
+//        Appventure.loadAppventuresFromCoreData { (downloadedAppventures) in
+//            for appventure in downloadedAppventures {
+//                print(appventure.liveStatus)
+//                if appventure.liveStatus != LiveStatus.inDevelopment{
+//                    self.localAppventures.append(appventure)
+//                }
+//
+//            }
+//            self.tableView.reloadData()
+//        }
         
         if let user = CoreUser.user {
 //            Appventure.loadUserAppventure(user.pfObject, handler: self, handlerCase: LocalAppventures)

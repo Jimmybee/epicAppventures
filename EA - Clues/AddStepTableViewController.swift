@@ -540,7 +540,19 @@ class AddStepTableViewController: UITableViewController, UITextFieldDelegate, UI
         let config = GMSPlacePickerConfig(viewport: viewport)
         placePicker = GMSPlacePicker(config: config)
         
-        placePicker?.pickPlace(callback: { (place: GMSPlace?, error: NSError?) -> Void in
+//        placePicker?.pickPlace(callback: { (place: GMSPlace?, error: NSError?) -> Void in
+//            if let error = error {
+//                print("Pick Place error: \(error.localizedDescription)")
+//                return
+//            }
+//            if let place = place {
+//                self.placeCache = PlaceCache(place: place)
+//            } else {
+//                print("No place selected")
+//            }
+//        }
+    
+        placePicker.pickPlace(callback: { (place, error) in
             if let error = error {
                 print("Pick Place error: \(error.localizedDescription)")
                 return
@@ -550,7 +562,7 @@ class AddStepTableViewController: UITableViewController, UITextFieldDelegate, UI
             } else {
                 print("No place selected")
             }
-        } as! GMSPlaceResultCallback)
+        })
     }
 
     //MARK: Navigation

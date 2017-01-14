@@ -88,7 +88,9 @@ class EditAppventureDetailsTableViewController: UITableViewController {
         appventure!.restrictions = restrictionsField.text!.splitStringToArray()
         appventure!.keyFeatures = keyFeatures.text!.splitStringToArray()
         appventure!.image = imageView.image
-        appventure?.saveAndSync()
+        appventure?.saveContext {
+            print("update core data handler")
+            }
     }
     
     //MARK: Tableview Delegate 

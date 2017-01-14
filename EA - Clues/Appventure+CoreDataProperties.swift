@@ -29,7 +29,7 @@ extension Appventure {
     @NSManaged public var title: String?
     @NSManaged public var totalDistance: Double
     @NSManaged public var userID: String?
-    @NSManaged public var steps: AppventureStep
+    @NSManaged public var steps: Set<AppventureStep>
     @NSManaged public var owner: CoreUser
 
 

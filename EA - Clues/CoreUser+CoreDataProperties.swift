@@ -4,7 +4,6 @@
 //
 //  Created by James Birtwell on 14/01/2017.
 //  Copyright © 2017 James Birtwell. All rights reserved.
-//  This file was automatically generated and should not be edited.
 //
 
 import Foundation
@@ -18,8 +17,7 @@ extension CoreUser {
     }
 
     @NSManaged public var name: String?
-    @NSManaged public var ownedAppventures: NSSet?
-    //
+    @NSManaged public var ownedAppventures: Set<Appventure>?
 
 }
 

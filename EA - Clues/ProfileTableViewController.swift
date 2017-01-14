@@ -25,23 +25,23 @@ class ProfileTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        if User.checkLogin(false, vc: self) {
-            if User.user!.ownedAppventures.count == 0 {
-                loadUserAppventures()
+        if CoreUser.checkLogin(false, vc: self) {
+            if CoreUser.user!.ownedAppventures?.count == 0 {
+//                loadUserAppventures()
             }
         }
         
-        let notificationCenter = NotificationCenter.default
-        notificationCenter.addObserver(self, selector: #selector(ProfileTableViewController.loadUserAppventures), name: NSNotification.Name(rawValue: User.userInitCompleteNotification), object: nil)
+//        let notificationCenter = NotificationCenter.default
+//        notificationCenter.addObserver(self, selector: #selector(ProfileTableViewController.loadUserAppventures), name: NSNotification.Name(rawValue: User.userInitCompleteNotification), object: nil)
 
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
         
-        if User.checkLogin(false, vc: self) {
+        if CoreUser.checkLogin(false, vc: self) {
             tableView.reloadData()
-            print("owned adevntures: \(User.user?.ownedAppventures.count)")
+            print("owned adevntures: \(CoreUser.user?.ownedAppventures?.count)")
         } else {
             let alert = UIAlertController(title: "Log In Required", message: "Log In to allow access to adventure maker.", preferredStyle: UIAlertControllerStyle.alert)
         alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { action in
@@ -53,24 +53,22 @@ class ProfileTableViewController: UITableViewController {
     }
     
     
-    func loadUserAppventures(){
-        User.user?.ownedAppventures.removeAll()
-        self.tableView.reloadData()
-        Appventure.loadAppventuresFromCoreData { (downloadedAppventures) in
-            for appventure in downloadedAppventures {
-                print(appventure.liveStatus)
-                if appventure.userID == User.user?.pfObject {
-                    User.user?.ownedAppventures.append(appventure)
-                }
-            }
-            DispatchQueue.main.async(execute: {
-                self.tableView.reloadData()
-                })
-        }
-    }
+//    func loadUserAppventures(){
+//        User.user?.ownedAppventures.removeAll()
+//        self.tableView.reloadData()
+//        Appventure.loadAppventuresFromCoreData { (downloadedAppventures) in
+//            for appventure in downloadedAppventures {
+//                print(appventure.liveStatus)
+//                if appventure.userID == User.user?.pfObject {
+//                    User.user?.ownedAppventures.append(appventure)
+//                }
+//            }
+//            DispatchQueue.main.async(execute: {
+//                })
+//        }
+//    }
     
     @IBAction func refeshTable(_ sender: UIRefreshControl) {
-        loadUserAppventures()
         sender.endRefreshing()
     }
 
@@ -82,7 +80,7 @@ class ProfileTableViewController: UITableViewController {
             if segue.identifier == Constants.segueEditAppventure {
                 if let tbCell = sender as? UITableViewCell {
                     if let row = tableView.indexPath(for: tbCell)!.row as Int! {
-                        cavc.newAppventure = User.user!.ownedAppventures[row]
+                        cavc.newAppventure = Array(CoreUser.user!.ownedAppventures!)[row]
                         cavc.appventureIndexRow = row
                     }
                 }
@@ -96,8 +94,8 @@ class ProfileTableViewController: UITableViewController {
     var tableMessage = ""
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-        if User.user != nil {
-            if User.user!.ownedAppventures.count > 0 {
+        if CoreUser.user != nil {
+            if CoreUser.user!.ownedAppventures!.count > 0 {
                 self.tableView.separatorStyle = UITableViewCellSeparatorStyle.singleLine
                 self.tableView.backgroundView = UIView()
                 return 1
@@ -110,7 +108,7 @@ class ProfileTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return User.user!.ownedAppventures.count
+        return CoreUser.user!.ownedAppventures!.count
 
     }
     
@@ -119,7 +117,8 @@ class ProfileTableViewController: UITableViewController {
          let cell = tableView.dequeueReusableCell(withIdentifier: Constants.CellName) as! AppventureMakerCell
         
         let row = indexPath.row
-        cell.appventure = User.user!.ownedAppventures[row]
+        let appventureArray = Array(CoreUser.user!.ownedAppventures!)
+        cell.appventure = appventureArray[row]
         
         return cell
     }

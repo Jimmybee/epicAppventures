@@ -39,7 +39,7 @@ class ProfileWrapperViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
-        User.checkLogin(false, vc: self) ? showForUser() : showForSignIn()
+        CoreUser.checkLogin(false, vc: self) ? showForUser() : showForSignIn()
     }
 
     override func didReceiveMemoryWarning() {

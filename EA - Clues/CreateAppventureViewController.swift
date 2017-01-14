@@ -311,7 +311,8 @@ class CreateAppventureViewController: UIViewController, UITableViewDelegate, UIT
             break
         }
         
-        self.newAppventure.saveAndSync()
+        // TODO: Save to backend enabled for appventure.
+//        self.newAppventure.
     }
     
     
