@@ -34,7 +34,7 @@ import CoreData
     
     
     convenience init () {
-        let context = (UIApplication.shared.delegate as! AppDelegate).managedObjectContext
+        let context = AppDelegate.coreDataStack.persistentContainer.viewContext
         let entity = NSEntityDescription.entity(forEntityName: CoreKeys.entityName, in: context)
         self.init(entity: entity!, insertInto: nil)
     }
@@ -50,7 +50,7 @@ import CoreData
     
     func addToContext() {
         self.updateCoreDataBridges()
-        let context = (UIApplication.shared.delegate as! AppDelegate).managedObjectContext
+        let context = AppDelegate.coreDataStack.persistentContainer.viewContext
         context.insert(self)
     }
     
@@ -140,7 +140,7 @@ import CoreData
 extension AppventureStep {
     
     convenience init(step: AppventureStep) {
-        let context = (UIApplication.shared.delegate as! AppDelegate).managedObjectContext
+        let context = AppDelegate.coreDataStack.persistentContainer.viewContext
         let entity = NSEntityDescription.entity(forEntityName: CoreKeys.entityName, in: context)
         self.init(entity: entity!, insertInto: nil)
         

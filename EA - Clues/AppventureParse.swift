@@ -30,7 +30,7 @@ extension Appventure {
     }
     
     convenience init(PFObjectID: String, name: String, geoPoint: AnyObject) {
-        let context = (UIApplication.shared.delegate as! AppDelegate).managedObjectContext
+        let context = AppDelegate.coreDataStack.persistentContainer.viewContext
         let entity = NSEntityDescription.entity(forEntityName: CoreKeys.entityName, in: context)
         self.init(entity: entity!, insertInto: nil)
 //        self.title = name
@@ -39,7 +39,7 @@ extension Appventure {
     }
     
     convenience init(object: AnyObject) {
-        let context = (UIApplication.shared.delegate as! AppDelegate).managedObjectContext
+        let context = AppDelegate.coreDataStack.persistentContainer.viewContext
         let entity = NSEntityDescription.entity(forEntityName: CoreKeys.entityName, in: context)
         self.init(entity: entity!, insertInto: nil)
 //        self.pFObjectID = object.objectId

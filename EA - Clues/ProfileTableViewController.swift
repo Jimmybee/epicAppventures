@@ -22,8 +22,6 @@ class ProfileTableViewController: UITableViewController {
         static let segueEditAppventure = "Edit Appventure"
         static let segueSettings = "Settings"
     }
-
-    @IBOutlet weak var tableLoadSpinner: UIActivityIndicatorView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -185,6 +183,5 @@ extension ProfileTableViewController : ParseQueryHandler {
 //        }
         tableMessage = "You have not created any adventures"
         tableView.reloadData()
-        tableLoadSpinner.stopAnimating()
     }
 }

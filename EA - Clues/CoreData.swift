@@ -13,7 +13,7 @@ import CoreData
 class CoreDataHelpers {
     
     static func fetchObjects(_ entityName: String, predicate: String = "") -> [NSManagedObject]? {
-        let managedContext = (UIApplication.shared.delegate as! AppDelegate).managedObjectContext
+        let context = AppDelegate.coreDataStack.persistentContainer.viewContext
         
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: entityName)
         if predicate != "" {
@@ -21,7 +21,7 @@ class CoreDataHelpers {
         }
         
         do {
-            if let fetchResults = try managedContext.fetch(fetchRequest) as? [NSManagedObject] {
+            if let fetchResults = try context.fetch(fetchRequest) as? [NSManagedObject] {
                 if fetchResults.count == 0 {
                     return nil
                 }
@@ -36,17 +36,17 @@ class CoreDataHelpers {
     static func deleteAllData(_ entity: String)
     {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        let managedContext = appDelegate.managedObjectContext
+        let context = AppDelegate.coreDataStack.persistentContainer.viewContext
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: entity)
         fetchRequest.returnsObjectsAsFaults = false
         
         do
         {
-            let results = try managedContext.fetch(fetchRequest)
+            let results = try context.fetch(fetchRequest)
             for managedObject in results
             {
                 let managedObjectData:NSManagedObject = managedObject as! NSManagedObject
-                managedContext.delete(managedObjectData)
+                context.delete(managedObjectData)
             }
         } catch let error as NSError {
             print("Detele all data in \(entity) error : \(error) \(error.userInfo)")

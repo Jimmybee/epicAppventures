@@ -104,7 +104,7 @@ class CreateAppventureViewController: UIViewController, UITableViewDelegate, UIT
             //popup for name
             newAppventure = Appventure()
             User.user?.ownedAppventures.append(newAppventure)
-            newAppventure!.saveAndSync()
+//            newAppventure!.saveAndSync()
             setupForNewAppventure()
             performSegue(withIdentifier: Constants.editAppventureDetailsSegue, sender: nil)
 

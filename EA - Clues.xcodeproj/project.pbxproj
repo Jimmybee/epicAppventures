@@ -40,6 +40,8 @@
 		66706AA11C71F74B00038A74 /* ProfileHeaderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66706A9D1C71F74200038A74 /* ProfileHeaderViewController.swift */; };
 		66706AA51C71FA8000038A74 /* ProfileTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66706AA41C71FA8000038A74 /* ProfileTableViewController.swift */; };
 		668803591DCF85DD0010868F /* CoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668803581DCF85DD0010868F /* CoreData.swift */; };
+		668953561E2A49A8002163EC /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668953551E2A49A8002163EC /* CoreDataStack.swift */; };
+		668953571E2A49A8002163EC /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668953551E2A49A8002163EC /* CoreDataStack.swift */; };
 		6691FE371DA1801000BC54D0 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6691FE351DA1801000BC54D0 /* Model.xcdatamodeld */; };
 		66C916B81C61EAB300E39576 /* EditAppventureDetailsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C916B71C61EAB300E39576 /* EditAppventureDetailsTableViewController.swift */; };
 		66D7CD5F1C5B3F4E00ACB8E3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D7CD5E1C5B3F4E00ACB8E3 /* AppDelegate.swift */; };
@@ -155,6 +157,7 @@
 		667411F61CAFB9E700F42F81 /* RateViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RateViewController.swift; sourceTree = "<group>"; };
 		667968B31CD75DDA00FD512B /* MainNavViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MainNavViewController.swift; path = "../EA Clues Client/MainNavViewController.swift"; sourceTree = "<group>"; };
 		668803581DCF85DD0010868F /* CoreData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreData.swift; sourceTree = "<group>"; };
+		668953551E2A49A8002163EC /* CoreDataStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
 		668A0B7C1C6A11A700E7EEF7 /* PictureClueViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PictureClueViewController.swift; sourceTree = "<group>"; };
 		668A0B7D1C6A11A700E7EEF7 /* PictureClueViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PictureClueViewController.xib; sourceTree = "<group>"; };
 		668A0B841C6B272600E7EEF7 /* MapCompassViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapCompassViewController.swift; sourceTree = "<group>"; };
@@ -450,6 +453,7 @@
 				66D7CDA31C5B40CC00ACB8E3 /* LoginViewController.swift */,
 				667968B31CD75DDA00FD512B /* MainNavViewController.swift */,
 				66D7CD5E1C5B3F4E00ACB8E3 /* AppDelegate.swift */,
+				668953551E2A49A8002163EC /* CoreDataStack.swift */,
 				66D7CD821C5B405400ACB8E3 /* MainTabBarController.swift */,
 				66D7CD6A1C5B3F4E00ACB8E3 /* Info.plist */,
 				66DA2F211C5B445600751528 /* TargetHelperFunctions.swift */,
@@ -741,6 +745,7 @@
 				66DA2F2A1C5B445600751528 /* TableHeaderSection.swift in Sources */,
 				66D7CD981C5B409400ACB8E3 /* Appventure.swift in Sources */,
 				6663EAC91D64C4D4000F7BF9 /* largeTextContent.swift in Sources */,
+				668953561E2A49A8002163EC /* CoreDataStack.swift in Sources */,
 				660055371C5F20050094F0A1 /* AppventureStepTableViewCell.swift in Sources */,
 				66D7CD8C1C5B405400ACB8E3 /* MainTabBarController.swift in Sources */,
 				66D7CD951C5B405400ACB8E3 /* AddStepTableViewController.swift in Sources */,
@@ -783,6 +788,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				66D7CD741C5B3F4E00ACB8E3 /* EA___CluesTests.swift in Sources */,
+				668953571E2A49A8002163EC /* CoreDataStack.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -855,7 +861,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -895,7 +901,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
@@ -911,6 +917,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = "EA - Clues/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = JB.Appventures;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -928,6 +935,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = "EA - Clues/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = JB.Appventures;
 				PRODUCT_NAME = "$(TARGET_NAME)";

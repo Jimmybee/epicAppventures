@@ -24,6 +24,7 @@ import CoreData
 //    var totalDistance:Double! = 0.0
 //    var duration = ""
     var image:UIImage?
+    var imageFileName: String?
     var pfFile: AnyObject?
     var keyFeatures = [String]()
     var restrictions = [String]()
@@ -45,7 +46,8 @@ import CoreData
     var rating = 2
     
     convenience init () {
-        let context = (UIApplication.shared.delegate as! AppDelegate).managedObjectContext
+        let context = AppDelegate.coreDataStack.persistentContainer.viewContext
+//        let context = (UIApplication.shared.delegate as! AppDelegate).managedObjectContext
         let entity = NSEntityDescription.entity(forEntityName: CoreKeys.entityName, in: context)
         self.init(entity: entity!, insertInto: nil)
     }
@@ -70,8 +72,9 @@ import CoreData
     
     class func loadAppventuresFromCoreData(_ handler: ([Appventure]) -> ()){
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>()
-        let managedContext = (UIApplication.shared.delegate as! AppDelegate).managedObjectContext
-        let entityDescription = NSEntityDescription.entity(forEntityName: CoreKeys.entityName, in: managedContext)
+        let context = AppDelegate.coreDataStack.persistentContainer.viewContext
+//        let managedContext = (UIApplication.shared.delegate as! AppDelegate).managedObjectContext
+        let entityDescription = NSEntityDescription.entity(forEntityName: CoreKeys.entityName, in: context)
         
         // Configure Fetch Request
         fetchRequest.entity = entityDescription
@@ -79,7 +82,7 @@ import CoreData
         var appventures = [Appventure]()
         
         do {
-            let result = try managedContext.fetch(fetchRequest)
+            let result = try context.fetch(fetchRequest)
             if let objects = result as? [NSManagedObject] {
                 print("fetchedCoreAppventures \(objects.count)")
                 for object in objects{
@@ -122,7 +125,8 @@ import CoreData
     func saveToCoreData(_ handler: () -> ()) {
 //        print("Appventure: \(self.title)")
         //Add appventure to managed context
-        let context = (UIApplication.shared.delegate as! AppDelegate).managedObjectContext
+        let context = AppDelegate.coreDataStack.persistentContainer.viewContext
+//        let context = (UIApplication.shared.delegate as! AppDelegate).managedObjectContext
         context.insert(self)
         
         //Add steps to managed context
@@ -153,11 +157,30 @@ import CoreData
     
     func saveAndSync() {
         self.completeSaveToContext({})
-        self.saveToParse()
+//        self.saveToParse()
+    }
+    
+    /// saves appventure image to documents and under the filename of the managed objectId.
+    private func saveImageToDocuments() {
+        guard let image = self.image,
+            let rep = UIImageJPEGRepresentation(image, 1.0),
+            let data = NSData(data: rep) as? NSData else { return }
+        
+        imageFileName = "picture1.jpg"
+        
+        let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
+        guard let path = dir?.appendingPathComponent(imageFileName!) else { return }
+        
+        let success = data.write(to: path, atomically: true)
+        
+        if !success {
+            // handle error
+        }
+
     }
     
     func completeSaveToContext(_ handler: () -> ()) {
-        self.imageData = UIImagePNGRepresentation(self.image!)
+        
         self.liveStatusNum = Int16(self.liveStatus.rawValue)
         do {
             try self.managedObjectContext?.save()
@@ -182,7 +205,9 @@ import CoreData
         self.deleteFromContext({})
     }
     func deleteFromContext(_ handler: () -> ()) {
-        let context = (UIApplication.shared.delegate as! AppDelegate).managedObjectContext
+        let context = AppDelegate.coreDataStack.persistentContainer.viewContext
+
+//        let context = (UIApplication.shared.delegate as! AppDelegate).managedObjectContext
         context.delete(self)
         do {
             try self.managedObjectContext?.save()
@@ -195,7 +220,9 @@ import CoreData
     //MARK: Make Copy
     
     convenience init(appventure: Appventure, previousContext: NSManagedObjectContext?) {
-        let context = (UIApplication.shared.delegate as! AppDelegate).managedObjectContext
+        let context = AppDelegate.coreDataStack.persistentContainer.viewContext
+
+//        let context = (UIApplication.shared.delegate as! AppDelegate).managedObjectContext
         let entity = NSEntityDescription.entity(forEntityName: CoreKeys.entityName, in: context)
         self.init(entity: entity!, insertInto: previousContext)
         self.pFObjectID = appventure.pFObjectID
