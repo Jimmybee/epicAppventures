@@ -12,7 +12,7 @@ import MapKit
 import CoreData
 
 
- class AppventureStep: NSManagedObject {
+ public class AppventureStep: NSManagedObject {
     
      static let appventureStepsHc = "appventureStepsHc"
     

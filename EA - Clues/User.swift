@@ -283,18 +283,9 @@ class User: NSObject {
     }
     
     static func checkLogin(_ required: Bool, vc: UIViewController?) -> Bool {
-        return false
-//        if User.user == nil  {
-//            if PFUser.currentUser()?.objectId == nil {
-//                return false
-//            } else {
-//                User.user = User(pfUser: PFUser.currentUser()!)
-//                return true
-//            }
-//        } else {
-//            return true
-//        }
+        fatalError("Unresolved error \(vc)")
     }
+
     
     
 }

@@ -1,28 +1,28 @@
 //
-//  Appventure.swift
-//  MapPlay
+//  Appventure+CoreDataClass.swift
+//  EA - Clues
 //
-//  Created by James Birtwell on 09/12/2015.
-//  Copyright © 2015 James Birtwell. All rights reserved.
+//  Created by James Birtwell on 14/01/2017.
+//  Copyright © 2017 James Birtwell. All rights reserved.
 //
 
 import Foundation
-import MapKit
-//import Parse
 import CoreData
 
+
 public class Appventure: NSManagedObject {
+
     
     static fileprivate var currentAppventure: Appventure?
     
-//    var PFObjectID: String?
-//    var userID: String?
-//    var title: String? = ""
-//    var subtitle: String? = ""
+    //    var PFObjectID: String?
+    //    var userID: String?
+    //    var title: String? = ""
+    //    var subtitle: String? = ""
     var coordinate: CLLocationCoordinate2D? = kCLLocationCoordinate2DInvalid
-//    var startingLocationName = ""
-//    var totalDistance:Double! = 0.0
-//    var duration = ""
+    //    var startingLocationName = ""
+    //    var totalDistance:Double! = 0.0
+    //    var duration = ""
     var image:UIImage?
     var imageFileName: String?
     var pfFile: AnyObject?
@@ -47,7 +47,7 @@ public class Appventure: NSManagedObject {
     
     convenience init () {
         let context = AppDelegate.coreDataStack.persistentContainer.viewContext
-//        let context = (UIApplication.shared.delegate as! AppDelegate).managedObjectContext
+        //        let context = (UIApplication.shared.delegate as! AppDelegate).managedObjectContext
         let entity = NSEntityDescription.entity(forEntityName: CoreKeys.entityName, in: context)
         self.init(entity: entity!, insertInto: nil)
     }
@@ -71,50 +71,54 @@ public class Appventure: NSManagedObject {
     //Load methods
     
     class func loadAppventuresFromCoreData(_ handler: ([Appventure]) -> ()){
-        let fetchRequest = NSFetchRequest<NSFetchRequestResult>()
-        let context = AppDelegate.coreDataStack.persistentContainer.viewContext
-//        let managedContext = (UIApplication.shared.delegate as! AppDelegate).managedObjectContext
-        let entityDescription = NSEntityDescription.entity(forEntityName: CoreKeys.entityName, in: context)
-        
-        // Configure Fetch Request
-        fetchRequest.entity = entityDescription
+//        //        let managedContext = (UIApplication.shared.delegate as! AppDelegate).managedObjectContext
+//        let entityDescription = NSEntityDescription.entity(forEntityName: CoreKeys.entityName, in: context)
+//        
+//        // Configure Fetch Request
+//        fetchRequest.entity = entityDescription
         
         var appventures = [Appventure]()
         
+        let context = AppDelegate.coreDataStack.persistentContainer.viewContext
+
         do {
-            let result = try context.fetch(fetchRequest)
-            if let objects = result as? [NSManagedObject] {
-                print("fetchedCoreAppventures \(objects.count)")
-                for object in objects{
-                    let appventure = object as! Appventure
-                    print(appventure.steps?.count)
-                    appventure.appventureSteps.removeAll()
+            let fetchedAppventures = try context.fetch(Appventure.fetchRequest()) as! [Appventure]
+            print("fetchedAppventures = \(fetchedAppventures.count)")
+//            let result = try context.fetch(fetchRequest)
+            handler(fetchedAppventures)
 
-                    if let set = appventure.steps {
-                        for stepObject in set {
-                            let step = stepObject as! AppventureStep
-                            step.setValuesForObject()
-                            appventure.appventureSteps.append(step)
-                    }
-                        print(" \(appventure.startingLocationName) \(appventure.appventureSteps.count)")                        }
-
-                    appventure.downloaded = true
-                    if let liveStatus = LiveStatus(rawValue: Int(appventure.liveStatusNum)) {
-                        appventure.liveStatus = liveStatus
-                    }
-                    if let data = appventure.imageData {
-                        appventure.image = UIImage(data: data as Data)
-                    }
-                    appventures.append(appventure)
-                }
-                handler(appventures)
-            }
+//            if let objects = result as? [NSManagedObject] {
+//                print("fetchedCoreAppventures \(objects.count)")
+//                for object in objects{
+//                    let appventure = object as! Appventure
+//                    print(appventure.steps?.count)
+//                    appventure.appventureSteps.removeAll()
+//                    
+//                    if let set = appventure.steps {
+//                        for stepObject in set {
+//                            let step = stepObject as! AppventureStep
+//                            step.setValuesForObject()
+//                            appventure.appventureSteps.append(step)
+//                        }
+//                        print(" \(appventure.startingLocationName) \(appventure.appventureSteps.count)")                        }
+//                    
+//                    appventure.downloaded = true
+//                    if let liveStatus = LiveStatus(rawValue: Int(appventure.liveStatusNum)) {
+//                        appventure.liveStatus = liveStatus
+//                    }
+//                    // TODO: Get image from documents directory
+////                    if let data = appventure.imageData {
+////                        appventure.image = UIImage(data: data as Data)
+////                    }
+//                    appventures.append(appventure)
+//                }
+//            }
         } catch {
             let fetchError = error as NSError
             print(fetchError)
         }
     }
-
+    
     
     //Save methods
     
@@ -123,10 +127,10 @@ public class Appventure: NSManagedObject {
     }
     
     func saveToCoreData(_ handler: () -> ()) {
-//        print("Appventure: \(self.title)")
+        //        print("Appventure: \(self.title)")
         //Add appventure to managed context
         let context = AppDelegate.coreDataStack.persistentContainer.viewContext
-//        let context = (UIApplication.shared.delegate as! AppDelegate).managedObjectContext
+        //        let context = (UIApplication.shared.delegate as! AppDelegate).managedObjectContext
         context.insert(self)
         
         //Add steps to managed context
@@ -137,27 +141,31 @@ public class Appventure: NSManagedObject {
             stepSet.add(object)
         }
         
-        self.steps = stepSet
-//        print("setSteps :\(self.steps?.count)")
-
+//        self.steps = stepSet
+        //        print("setSteps :\(self.steps?.count)")
         
-        if let imageFile = self.pfFile as AnyObject! {
-//            imageFile.getDataInBackgroundWithBlock({ (data, error) -> Void in
-//                if error == nil {
-//                    if let dataFound = data {
-//                        self.image = UIImage(data: dataFound)
-//                        self.completeSaveToContext(handler)
-//                    }
-//                }
-//            })
-        }
+        
+//        if let imageFile = self.pfFile as AnyObject! {
+            //            imageFile.getDataInBackgroundWithBlock({ (data, error) -> Void in
+            //                if error == nil {
+            //                    if let dataFound = data {
+            //                        self.image = UIImage(data: dataFound)
+            //                        self.completeSaveToContext(handler)
+            //                    }
+            //                }
+            //            })
+//        }
         
     }
     
     
     func saveAndSync() {
+        if self.managedObjectContext  == nil {
+            let context = AppDelegate.coreDataStack.persistentContainer.viewContext
+            context.insert(self)
+        }
         self.completeSaveToContext({})
-//        self.saveToParse()
+        //        self.saveToParse()
     }
     
     /// saves appventure image to documents and under the filename of the managed objectId.
@@ -176,7 +184,7 @@ public class Appventure: NSManagedObject {
         if !success {
             // handle error
         }
-
+        
     }
     
     func completeSaveToContext(_ handler: () -> ()) {
@@ -193,7 +201,7 @@ public class Appventure: NSManagedObject {
     class func saveAllToCoreData(_ appventures: [Appventure]) {
         for appventure in appventures {
             appventure.downloadAndSaveToCoreData({
-            
+                
             })
         }
     }
@@ -206,8 +214,8 @@ public class Appventure: NSManagedObject {
     }
     func deleteFromContext(_ handler: () -> ()) {
         let context = AppDelegate.coreDataStack.persistentContainer.viewContext
-
-//        let context = (UIApplication.shared.delegate as! AppDelegate).managedObjectContext
+        
+        //        let context = (UIApplication.shared.delegate as! AppDelegate).managedObjectContext
         context.delete(self)
         do {
             try self.managedObjectContext?.save()
@@ -221,8 +229,8 @@ public class Appventure: NSManagedObject {
     
     convenience init(appventure: Appventure, previousContext: NSManagedObjectContext?) {
         let context = AppDelegate.coreDataStack.persistentContainer.viewContext
-
-//        let context = (UIApplication.shared.delegate as! AppDelegate).managedObjectContext
+        
+        //        let context = (UIApplication.shared.delegate as! AppDelegate).managedObjectContext
         let entity = NSEntityDescription.entity(forEntityName: CoreKeys.entityName, in: context)
         self.init(entity: entity!, insertInto: previousContext)
         self.pFObjectID = appventure.pFObjectID
@@ -270,3 +278,4 @@ enum LiveStatus: Int {
         }
     }
 }
+

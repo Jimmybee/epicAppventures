@@ -143,12 +143,12 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
             self.tableView.reloadData()
         }
         
-        if let user = User.user {
+        if let user = CoreUser.user {
 //            Appventure.loadUserAppventure(user.pfObject, handler: self, handlerCase: LocalAppventures)
-            FriendsAdventures.fetchFriendAdventures({ (friendsAdventures) in
-                self.friendsAppventures = friendsAdventures
-                self.tableView.reloadData()
-            })
+//            FriendsAdventures.fetchFriendAdventures({ (friendsAdventures) in
+//                self.friendsAppventures = friendsAdventures
+//                self.tableView.reloadData()
+//            })
             
         }
     }
