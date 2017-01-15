@@ -70,6 +70,7 @@
 		66DA2F291C5B445600751528 /* TableSectionHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 66DA2F231C5B445600751528 /* TableSectionHeader.xib */; };
 		66DA2F2A1C5B445600751528 /* TableHeaderSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66DA2F241C5B445600751528 /* TableHeaderSection.swift */; };
 		66DA2F2C1C5B445600751528 /* RatingControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66DA2F261C5B445600751528 /* RatingControl.swift */; };
+		66E5A9E91E2C0DF8008A1A6C /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E5A9E81E2C0DF8008A1A6C /* UserManager.swift */; };
 		66ED85D21D5BA30F00A3F438 /* ImageChooserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66ED85D11D5BA30F00A3F438 /* ImageChooserViewController.swift */; };
 		66ED85D61D6236B400A3F438 /* AddAnswerTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66ED85D51D6236B400A3F438 /* AddAnswerTableViewController.swift */; };
 		66ED85D81D6236C600A3F438 /* AddHintTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66ED85D71D6236C600A3F438 /* AddHintTableViewController.swift */; };
@@ -211,6 +212,7 @@
 		66DA2F241C5B445600751528 /* TableHeaderSection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableHeaderSection.swift; sourceTree = "<group>"; };
 		66DA2F251C5B445600751528 /* LocalAppventureTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalAppventureTableViewCell.swift; sourceTree = "<group>"; };
 		66DA2F261C5B445600751528 /* RatingControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RatingControl.swift; sourceTree = "<group>"; };
+		66E5A9E81E2C0DF8008A1A6C /* UserManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserManager.swift; sourceTree = "<group>"; };
 		66ED85D11D5BA30F00A3F438 /* ImageChooserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageChooserViewController.swift; sourceTree = "<group>"; };
 		66ED85D51D6236B400A3F438 /* AddAnswerTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddAnswerTableViewController.swift; sourceTree = "<group>"; };
 		66ED85D71D6236C600A3F438 /* AddHintTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddHintTableViewController.swift; sourceTree = "<group>"; };
@@ -354,6 +356,7 @@
 				66B3DB5D1E2A61E000CEB1AA /* CoreUser+CoreDataClass.swift */,
 				66B3DB5E1E2A61E000CEB1AA /* CoreUser+CoreDataProperties.swift */,
 				66B3DB5B1E2A60B600CEB1AA /* User.swift */,
+				66E5A9E81E2C0DF8008A1A6C /* UserManager.swift */,
 			);
 			name = User;
 			sourceTree = "<group>";
@@ -490,8 +493,7 @@
 			children = (
 				66D7CDA31C5B40CC00ACB8E3 /* LoginViewController.swift */,
 				667968B31CD75DDA00FD512B /* MainNavViewController.swift */,
-				66D7CD5E1C5B3F4E00ACB8E3 /* AppDelegate.swift */,
-				668953551E2A49A8002163EC /* CoreDataStack.swift */,
+				66EFCF561E2BFFBF003075AE /* AppDelegate */,
 				66D7CD821C5B405400ACB8E3 /* MainTabBarController.swift */,
 				66D7CD6A1C5B3F4E00ACB8E3 /* Info.plist */,
 				66DA2F211C5B445600751528 /* TargetHelperFunctions.swift */,
@@ -554,6 +556,15 @@
 				66ED85D71D6236C600A3F438 /* AddHintTableViewController.swift */,
 			);
 			name = CustomiseStep;
+			sourceTree = "<group>";
+		};
+		66EFCF561E2BFFBF003075AE /* AppDelegate */ = {
+			isa = PBXGroup;
+			children = (
+				66D7CD5E1C5B3F4E00ACB8E3 /* AppDelegate.swift */,
+				668953551E2A49A8002163EC /* CoreDataStack.swift */,
+			);
+			name = AppDelegate;
 			sourceTree = "<group>";
 		};
 		66F32C901D57631800D99701 /* Profile */ = {
@@ -796,6 +807,7 @@
 				66F32C741D575A5600D99701 /* LocalTableViewController.swift in Sources */,
 				666678BA1C64772F00C4309C /* Alt1ProfileViewController.swift in Sources */,
 				662A74B01C7701510052C71C /* AppventureRating.swift in Sources */,
+				66E5A9E91E2C0DF8008A1A6C /* UserManager.swift in Sources */,
 				66D7CDA01C5B40BD00ACB8E3 /* ParseFunc.swift in Sources */,
 				661472661D5A522E0093C65B /* DevelopLocalPublicSegmented.swift in Sources */,
 				66F32C861D575A6700D99701 /* RateViewController.swift in Sources */,

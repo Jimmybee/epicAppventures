@@ -38,12 +38,17 @@
         <relationship name="appventure" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Appventure" inverseName="steps" inverseEntity="Appventure" syncable="YES"/>
     </entity>
     <entity name="CoreUser" representedClassName=".CoreUser" syncable="YES">
+        <attribute name="facebookId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="facebookPicture" optional="YES" attributeType="Transformable" customClassName="UIImage" syncable="YES"/>
+        <attribute name="loggedIn" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="pictureUrl" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="userTypeInt" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <relationship name="ownedAppventures" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Appventure" inverseName="owner" inverseEntity="Appventure" syncable="YES"/>
     </entity>
     <elements>
         <element name="Appventure" positionX="-63" positionY="-18" width="128" height="285"/>
         <element name="AppventureStep" positionX="-54" positionY="90" width="128" height="300"/>
-        <element name="CoreUser" positionX="-63" positionY="135" width="128" height="75"/>
+        <element name="CoreUser" positionX="-63" positionY="135" width="128" height="150"/>
     </elements>
 </model>

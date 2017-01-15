@@ -48,40 +48,14 @@ class LoginViewController: UIViewController {
 
 
     @IBAction func facebookLogin(_ sender: UIButton) {
-        
-            centralDispatchGroup.enter()
-        
-        let fieldsMapping = [
-            "id" : "facebookId",
-            "name" : "name",
-            "birthday": "birthday",
-            "first_name": "fb_first_name",
-            "last_name" : "fb_last_name",
-            "gender": "gender",
-            "email": "email",
-            "picture": "picture"
-
-        ]
-        
-            backendless!.userService.easyLogin(withFacebookFieldsMapping: fieldsMapping, permissions:  ["public_profile", "email", "user_friends"], response: { (result) in
-                print("Result: \(result)")
-
-            }, error: { (fault) in
-                print("Server reported an error: \(fault)")
-
-            })
-        
-        let deadlineTime = DispatchTime.now() + .seconds(20)
-        centralDispatchGroup.notify(queue: .main) { 
-            let user = self.backendless?.userService.currentUser
-            print(user?.email ?? "no email")
-            print(user?.getProperty("name") ?? "no name")
-            print(user?.getProperty("picture") ?? "no picture")
-
-//            user?.setProperty("pcitureURL", object: "https//graph.facebook.com\(user?.getProperty(<#T##key: String!##String!#>)))")
+        centralDispatchGroup.enter()
+        centralDispatchGroup.notify(queue: .main) {
+            UserManager.mapBackendlessToCoreUser()
             self.dismiss(animated: true, completion: nil)
         }
-      
+    }
+
+    
 //        PFFacebookUtils.logInInBackgroundWithReadPermissions(fbLoginParameters, block: { (object:PFUser?, error:NSError?) -> Void in
 //                        if(error != nil)
 //                {//Display an alert message
@@ -103,7 +77,6 @@ class LoginViewController: UIViewController {
 //            
 //        })
         
-    }
     
     func addVideoPlayer() {
         

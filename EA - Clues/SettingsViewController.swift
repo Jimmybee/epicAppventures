@@ -72,13 +72,12 @@ class SettingsTableViewController: UITableViewController {
     }
     
     func updateUI() {
-        if let user = User.user {
-            self.completedAdventuresCount.text = String(User.user!.completedAdventures)
-            CompletedAppventure.countCompleted(self)
-            Appventure.loadUserAppventure(User.user!.pfObject, handler: self, handlerCase: "")
-            user.facebookConnected ? (self.setupHeaderView()) : self.parseUserHeader()
+        if let user = CoreUser.user {
+//            self.completedAdventuresCount.text = String(User.user!.completedAdventures)
+//            CompletedAppventure.countCompleted(self)
+//            Appventure.loadUserAppventure(User.user!.pfObject, handler: self, handlerCase: "")
+            user.userType == .facebook ? (self.setupHeaderView()) : self.parseUserHeader()
         }
-
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -117,7 +116,6 @@ class SettingsTableViewController: UITableViewController {
 
     }
     
-    
     func logoutPopup() {
         let alert = UIAlertController(title: "Log out user", message: "Log out user", preferredStyle: UIAlertControllerStyle.alert)
         alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: nil))
@@ -149,23 +147,24 @@ class SettingsTableViewController: UITableViewController {
         
         profileHeaderContainer.alpha = 1
         nonFacebookHeader.alpha = 0
+        embeddedProfileHeader.circledImageView.image = CoreUser.user!.facebookPictureAccess
+        embeddedProfileHeader.updateCircleImage()
+        embeddedProfileHeader.nameLabel.text = CoreUser.user?.name
         
-        if let circ = User.user!.profilePicture {
-            embeddedProfileHeader.circledImageView.image = circ
-            embeddedProfileHeader.updateCircleImage()
-            if let blur = User.user!.blurPicture {
-                embeddedProfileHeader.blurredImageView.image = blur
-            } else {
-                let frame = embeddedProfileHeader.blurredImageView.frame
-                let blurImageSized = HelperFunctions.resizeImage(User.user!.profilePicture!, newWidth: 600)
-                if let blurImage = HelperFunctions.blurImage(blurImageSized, radius: 8, forRect: frame) {
-                    embeddedProfileHeader.blurredImageView.image = blurImage
-                    User.user?.blurPicture = blurImage
-                    User.user?.saveLocalData()
-                }
-            }
+        if let facebookPicture = CoreUser.user!.facebookPicture {
+//            if let blur = User.user!.blurPicture {
+//                embeddedProfileHeader.blurredImageView.image = blur
+//            } else {
+//                let frame = embeddedProfileHeader.blurredImageView.frame
+//                let blurImageSized = HelperFunctions.resizeImage(User.user!.profilePicture!, newWidth: 600)
+//                if let blurImage = HelperFunctions.blurImage(blurImageSized, radius: 8, forRect: frame) {
+//                    embeddedProfileHeader.blurredImageView.image = blurImage
+//                    User.user?.blurPicture = blurImage
+//                    User.user?.saveLocalData()
+//                }
+//            }
         } else {
-            User.user?.getFBImage()
+//            User.user?.getFBImage()
         }
         
         

@@ -57,6 +57,7 @@ public class Appventure: NSManagedObject {
         
         let coordinate: CLLocationCoordinate2D = kCLLocationCoordinate2DInvalid
         self.location = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
+        self.liveStatus = .inDevelopment
     }
     
     static func currentAppventureID() -> String? {

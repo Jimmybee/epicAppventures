@@ -6,7 +6,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
-        <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -276,7 +275,8 @@ If you have any questions regarding privacy while using the Application, or have
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="Unj-R3-52t">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="0.92549019610000005" green="0.56862745100000001" blue="0.31764705879999999" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="sectionIndexColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <view key="tableHeaderView" contentMode="scaleToFill" id="BWt-ha-bSh">
                             <rect key="frame" x="0.0" y="0.0" width="414" height="130"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -585,7 +585,7 @@ If you have any questions regarding privacy while using the Application, or have
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics">
                         <color key="tintColor" red="0.40894466638565063" green="0.95327186584472656" blue="0.07545144110918045" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </simulatedTabBarMetrics>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="4Kq-5P-vbq">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="4Kq-5P-vbq">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -619,20 +619,20 @@ If you have any questions regarding privacy while using the Application, or have
                                 <rect key="frame" x="20" y="8" width="374" height="720"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sign up to make your own appventures and see your stats." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zd8-SC-yNE">
-                                        <rect key="frame" x="0.0" y="0.0" width="374" height="46"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="374" height="45.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="19"/>
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EOm-c8-cU6">
-                                        <rect key="frame" x="0.0" y="120" width="374" height="46"/>
+                                        <rect key="frame" x="0.0" y="119.5" width="374" height="46"/>
                                         <state key="normal" image="facebook-login-blue"/>
                                         <connections>
                                             <action selector="facebookLogin:" destination="UOT-Z9-yFj" eventType="touchUpInside" id="MYS-yA-ywa"/>
                                         </connections>
                                     </button>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="3ip-ma-7Rt">
-                                        <rect key="frame" x="0.0" y="240" width="374" height="60"/>
+                                        <rect key="frame" x="0.0" y="239.5" width="374" height="60"/>
                                         <subviews>
                                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="WOh-in-I9h">
                                                 <rect key="frame" x="0.0" y="0.0" width="374" height="30"/>
@@ -713,52 +713,37 @@ If you have any questions regarding privacy while using the Application, or have
                         <rect key="frame" x="0.0" y="0.0" width="414" height="130"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="lcF-ui-mbW">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="100"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="100" id="SRC-Pl-Zfj"/>
-                                </constraints>
-                            </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="f1P-OD-yUN">
-                                <rect key="frame" x="152" y="15" width="110" height="110"/>
+                                <rect key="frame" x="167" y="0.0" width="80" height="80"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="110" id="iFk-5e-c9Q"/>
-                                    <constraint firstAttribute="height" constant="110" id="ymi-bN-d7u"/>
+                                    <constraint firstAttribute="width" constant="80" id="iFk-5e-c9Q"/>
+                                    <constraint firstAttribute="height" constant="80" id="ymi-bN-d7u"/>
                                 </constraints>
                             </imageView>
-                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="SPP-iX-ejL">
-                                <rect key="frame" x="197" y="60" width="20" height="20"/>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" misplaced="YES" hidesWhenStopped="YES" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="SPP-iX-ejL">
+                                <rect key="frame" x="197" y="38" width="20" height="20"/>
                             </activityIndicatorView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kMn-W0-teO">
-                                <rect key="frame" x="207" y="133" width="0.0" height="0.0"/>
-                                <fontDescription key="fontDescription" name="Palatino-Roman" family="Palatino" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rKI-IW-XtY">
+                                <rect key="frame" x="186" y="101" width="42" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
+                        <color key="backgroundColor" red="0.92549019610000005" green="0.56862745100000001" blue="0.31764705879999999" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
+                            <constraint firstItem="e6i-nz-cNz" firstAttribute="top" secondItem="rKI-IW-XtY" secondAttribute="bottom" constant="8" symbolic="YES" id="0KN-iK-EyQ"/>
                             <constraint firstItem="SPP-iX-ejL" firstAttribute="centerY" secondItem="f1P-OD-yUN" secondAttribute="centerY" id="6tA-JQ-wNg"/>
-                            <constraint firstItem="f1P-OD-yUN" firstAttribute="centerY" secondItem="lcF-ui-mbW" secondAttribute="bottom" constant="-30" id="9Ra-bN-ODW"/>
+                            <constraint firstItem="rKI-IW-XtY" firstAttribute="centerX" secondItem="7tk-CE-4QH" secondAttribute="centerX" id="BnY-IL-ggm"/>
                             <constraint firstItem="SPP-iX-ejL" firstAttribute="centerX" secondItem="f1P-OD-yUN" secondAttribute="centerX" id="CcA-Qm-kBA"/>
-                            <constraint firstItem="kMn-W0-teO" firstAttribute="centerX" secondItem="f1P-OD-yUN" secondAttribute="centerX" id="ENb-3D-8Qd"/>
-                            <constraint firstItem="kMn-W0-teO" firstAttribute="centerY" secondItem="f1P-OD-yUN" secondAttribute="centerY" id="Rts-Lf-KzH"/>
-                            <constraint firstItem="f1P-OD-yUN" firstAttribute="centerX" secondItem="lcF-ui-mbW" secondAttribute="centerX" id="XD8-hz-Mxt"/>
-                            <constraint firstItem="lcF-ui-mbW" firstAttribute="centerX" secondItem="7tk-CE-4QH" secondAttribute="centerX" id="k2h-hs-ZAW"/>
-                            <constraint firstItem="lcF-ui-mbW" firstAttribute="top" secondItem="7tk-CE-4QH" secondAttribute="top" id="liA-AY-uD1"/>
-                            <constraint firstItem="lcF-ui-mbW" firstAttribute="width" secondItem="7tk-CE-4QH" secondAttribute="width" id="qks-aU-oS3"/>
-                            <constraint firstItem="kMn-W0-teO" firstAttribute="top" secondItem="f1P-OD-yUN" secondAttribute="bottom" constant="8" symbolic="YES" id="rtc-Ul-Ehx"/>
+                            <constraint firstItem="f1P-OD-yUN" firstAttribute="centerX" secondItem="7tk-CE-4QH" secondAttribute="centerX" id="Q6A-2q-xOb"/>
+                            <constraint firstItem="e6i-nz-cNz" firstAttribute="top" secondItem="f1P-OD-yUN" secondAttribute="bottom" constant="50" id="uRB-My-Lyk"/>
                         </constraints>
-                        <variation key="default">
-                            <mask key="constraints">
-                                <exclude reference="Rts-Lf-KzH"/>
-                            </mask>
-                        </variation>
                     </view>
                     <connections>
-                        <outlet property="blurredImageView" destination="lcF-ui-mbW" id="9N0-NT-CnH"/>
                         <outlet property="circledImageView" destination="f1P-OD-yUN" id="zx8-aR-3qD"/>
                         <outlet property="loadSpinner" destination="SPP-iX-ejL" id="YK2-tJ-tZ3"/>
-                        <outlet property="nameLabel" destination="kMn-W0-teO" id="Ghd-O3-nuU"/>
+                        <outlet property="nameLabel" destination="rKI-IW-XtY" id="JqD-9u-7eM"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SNF-Sl-ynN" userLabel="First Responder" sceneMemberID="firstResponder"/>
