@@ -304,7 +304,7 @@
             startingLineNumber = "48"
             endingLineNumber = "48"
             landmarkName = "updateUI()"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -320,7 +320,7 @@
             startingLineNumber = "43"
             endingLineNumber = "43"
             landmarkName = "submitRating(_:)"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -336,7 +336,7 @@
             startingLineNumber = "41"
             endingLineNumber = "41"
             landmarkName = "submitRating(_:)"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -378,11 +378,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "EA - Clues/AddStepTableViewController.swift"
-            timestampString = "506117350.05062"
+            timestampString = "506171689.592351"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "633"
-            endingLineNumber = "633"
+            startingLineNumber = "632"
+            endingLineNumber = "632"
             landmarkName = "tableView(_:heightForRowAt:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -394,11 +394,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "EA - Clues/AddStepTableViewController.swift"
-            timestampString = "506117350.05062"
+            timestampString = "506171689.592351"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "643"
-            endingLineNumber = "643"
+            startingLineNumber = "642"
+            endingLineNumber = "642"
             landmarkName = "tableView(_:heightForRowAt:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -410,11 +410,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "EA - Clues/AddStepTableViewController.swift"
-            timestampString = "506117350.05062"
+            timestampString = "506171689.592351"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "645"
-            endingLineNumber = "645"
+            startingLineNumber = "644"
+            endingLineNumber = "644"
             landmarkName = "tableView(_:heightForRowAt:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -490,11 +490,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "EA - Clues/AddStepTableViewController.swift"
-            timestampString = "506117350.05062"
+            timestampString = "506171689.592351"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "590"
-            endingLineNumber = "590"
+            startingLineNumber = "589"
+            endingLineNumber = "589"
             landmarkName = "prepare(for:sender:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -714,11 +714,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "EA - Clues/AddStepTableViewController.swift"
-            timestampString = "506032166.630893"
+            timestampString = "506171689.592351"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "447"
-            endingLineNumber = "447"
+            startingLineNumber = "458"
+            endingLineNumber = "458"
             landmarkName = "stopSound(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -730,11 +730,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "EA - Clues/AddStepTableViewController.swift"
-            timestampString = "506032166.630893"
+            timestampString = "506171689.592351"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "446"
-            endingLineNumber = "446"
+            startingLineNumber = "457"
+            endingLineNumber = "457"
             landmarkName = "stopSound(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -746,11 +746,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "EA - Clues/AddStepTableViewController.swift"
-            timestampString = "506032166.630893"
+            timestampString = "506171689.592351"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "448"
-            endingLineNumber = "448"
+            startingLineNumber = "459"
+            endingLineNumber = "459"
             landmarkName = "stopSound(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -762,11 +762,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "EA - Clues/AddStepTableViewController.swift"
-            timestampString = "506032166.630893"
+            timestampString = "506171689.592351"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "479"
-            endingLineNumber = "479"
+            startingLineNumber = "490"
+            endingLineNumber = "490"
             landmarkName = "record(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1493,11 +1493,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "EA - Clues/Appventure+CoreDataClass.swift"
-            timestampString = "506098252.153602"
+            timestampString = "506171451.728665"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "96"
-            endingLineNumber = "96"
+            startingLineNumber = "105"
+            endingLineNumber = "105"
             landmarkName = "saveContext(handler:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1548,6 +1548,70 @@
             endingLineNumber = "22"
             landmarkName = "checkLogin(_:vc:)"
             landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "EA - Clues/Appventure+CoreDataClass.swift"
+            timestampString = "506171451.728665"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "124"
+            endingLineNumber = "124"
+            landmarkName = "saveImageToDocuments()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "EA - Clues/Appventure+CoreDataClass.swift"
+            timestampString = "506171451.728665"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "123"
+            endingLineNumber = "123"
+            landmarkName = "saveImageToDocuments()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "EA___Clues.Appventure.(saveImageToDocuments in _B547072E7EEDF8C0F6CDDFDB3DAC2F1B) () -&gt; ()"
+                  moduleName = "EA - Clues"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jamesbirtwell/Documents/Xcode%20Project/EA%20-%20Clues/EA%20-%20Clues/Appventure+CoreDataClass.swift"
+                  timestampString = "506118431.919621"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "114"
+                  endingLineNumber = "114"
+                  offsetFromSymbolStart = "22">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "EA___Clues.Appventure.(saveImageToDocuments in _B547072E7EEDF8C0F6CDDFDB3DAC2F1B) () -&gt; ()"
+                  moduleName = "EA - Clues"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jamesbirtwell/Documents/Xcode%20Project/EA%20-%20Clues/EA%20-%20Clues/Appventure+CoreDataClass.swift"
+                  timestampString = "506118431.922551"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "114"
+                  endingLineNumber = "114"
+                  offsetFromSymbolStart = "55">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

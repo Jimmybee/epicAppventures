@@ -296,7 +296,18 @@ class AddStepTableViewController: UITableViewController, UITextFieldDelegate, UI
         if appventureStep.stepNumber == 1 {
             delegate?.updateAppventureLocation(appventureStep.coordinate)
         }
-
+        
+       
+        let context = AppDelegate.coreDataStack.persistentContainer.viewContext
+        if appventureStep.managedObjectContext == nil {
+            context.insert(appventureStep)
+        }
+        
+        do {
+            try context.save()
+        } catch {
+            
+        }
         
     }
     
@@ -539,18 +550,6 @@ class AddStepTableViewController: UITableViewController, UITextFieldDelegate, UI
         let viewport = GMSCoordinateBounds(coordinate: northEast, coordinate: southWest)
         let config = GMSPlacePickerConfig(viewport: viewport)
         placePicker = GMSPlacePicker(config: config)
-        
-//        placePicker?.pickPlace(callback: { (place: GMSPlace?, error: NSError?) -> Void in
-//            if let error = error {
-//                print("Pick Place error: \(error.localizedDescription)")
-//                return
-//            }
-//            if let place = place {
-//                self.placeCache = PlaceCache(place: place)
-//            } else {
-//                print("No place selected")
-//            }
-//        }
     
         placePicker.pickPlace(callback: { (place, error) in
             if let error = error {

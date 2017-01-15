@@ -6,7 +6,7 @@
 //  Copyright © 2017 James Birtwell. All rights reserved.
 //
 
-import Foundation
+import UIKit
 import CoreData
 
 
@@ -16,10 +16,19 @@ public class Appventure: NSManagedObject {
     static fileprivate var currentAppventure: Appventure?
     
     var coordinate: CLLocationCoordinate2D? = kCLLocationCoordinate2DInvalid
-    var image:UIImage?
+    var imageAccess: UIImage? {
+        get {
+            if image != nil {
+                return image
+            } else {
+                self.image = self.loadImageFromDocuments()
+                return image
+            }
+        }
+    }
+    var image: UIImage?
     var pfFile: AnyObject?
-    var keyFeatures = [String]()
-    var restrictions = [String]()
+
     var downloaded = false
     var liveStatus:LiveStatus = .inDevelopment
     
@@ -99,6 +108,8 @@ public class Appventure: NSManagedObject {
             self.owner = CoreUser.user!
         }
         
+        saveImageToDocuments()
+        
         do {
             try self.managedObjectContext?.save()
             handler()
@@ -113,7 +124,7 @@ public class Appventure: NSManagedObject {
             let rep = UIImageJPEGRepresentation(image, 1.0),
             let data = NSData(data: rep) as? NSData else { return }
         
-        imageFilename = "picture1.jpg"
+        imageFilename = String(describing: self.managedObjectContext)
         
         let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
         guard let path = dir?.appendingPathComponent(imageFilename!) else { return }
@@ -121,9 +132,18 @@ public class Appventure: NSManagedObject {
         let success = data.write(to: path, atomically: true)
         
         if !success {
-            // handle error
+            print("failed local image save")
         }
         
+    }
+    
+    private func loadImageFromDocuments() -> UIImage? {
+        guard let filename = imageFilename else { return nil }
+        let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
+        guard let path = dir?.appendingPathComponent(filename),
+            let data = NSData(contentsOf: path),
+            let image = UIImage(data: data as Data) else { return nil }
+        return image
     }
     
     class func saveAllToCoreData(_ appventures: [Appventure]) {
@@ -140,6 +160,7 @@ public class Appventure: NSManagedObject {
         self.deleteAppventureFromBackend()
         self.deleteFromContext({})
     }
+    
     func deleteFromContext(_ handler: () -> ()) {
         let context = AppDelegate.coreDataStack.persistentContainer.viewContext
         

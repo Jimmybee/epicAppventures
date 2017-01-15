@@ -58,8 +58,8 @@ class EditAppventureDetailsTableViewController: UITableViewController {
         appventureDescription.text = appventure!.subtitle
         appventureDuration.text = appventure!.duration
         startingLocation.text = appventure!.startingLocationName
-        restrictionsField.text = appventure!.restrictions.joined(separator: ",")
-        keyFeatures.text = appventure!.keyFeatures.joined(separator: ",")
+        restrictionsField.text = appventure!.restrictions?.joined(separator: ",")
+        keyFeatures.text = appventure!.keyFeatures?.joined(separator: ",")
         self.saveBtt.isEnabled = false
     }
     

@@ -49,6 +49,7 @@ class AppventureMakerCell: UITableViewCell {
         self.locationLabel.text = appventure?.startingLocationName
         self.stausLabel.text = " \((appventure?.liveStatus.label)!) "
         self.appventureTitle.text = appventure?.title
+        self.appventureImage.image = appventure?.imageAccess
         if let status = appventure?.liveStatus {
             switch status {
             case LiveStatus.inDevelopment :

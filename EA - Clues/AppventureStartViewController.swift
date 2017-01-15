@@ -59,8 +59,8 @@ class AppventureStartViewController: UIViewController {
         descriptionLabel.text = appventure.subtitle!
         self.startingLocation.text = self.appventure.startingLocationName
         
-        appventure.keyFeatures.count == 0 ? (self.keyFeaturesLabel.text = "None") : (self.keyFeaturesLabel.text = self.appventure.keyFeatures.joined(separator: ", "))
-        appventure.restrictions.count == 0 ? (self.restrictionsLabel.text = "None") : (self.restrictionsLabel.text = self.appventure.restrictions.joined(separator: ", "))
+        appventure.keyFeatures?.count == 0 ? (self.keyFeaturesLabel.text = "None") : (self.keyFeaturesLabel.text = self.appventure.keyFeatures?.joined(separator: ", "))
+        appventure.restrictions?.count == 0 ? (self.restrictionsLabel.text = "None") : (self.restrictionsLabel.text = self.appventure.restrictions?.joined(separator: ", "))
         
         imageView.image = halfImage(appventure.image!)
         duration.text = appventure.duration

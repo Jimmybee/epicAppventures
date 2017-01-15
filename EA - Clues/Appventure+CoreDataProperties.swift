@@ -20,10 +20,10 @@ extension Appventure {
     @NSManaged public var coordinateLon: Double
     @NSManaged public var duration: String?
     @NSManaged public var imageFilename: String?
-    @NSManaged public var keyFeaturesObj: [String]?
+    @NSManaged public var keyFeatures: [String]?
     @NSManaged public var liveStatusNum: Int16
     @NSManaged public var pFObjectID: String?
-    @NSManaged public var restrictionsObj: [String]?
+    @NSManaged public var restrictions: [String]?
     @NSManaged public var startingLocationName: String?
     @NSManaged public var subtitle: String?
     @NSManaged public var title: String?

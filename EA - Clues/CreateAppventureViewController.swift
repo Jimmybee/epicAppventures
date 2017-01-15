@@ -489,7 +489,8 @@ class CreateAppventureViewController: UIViewController, UITableViewDelegate, UIT
         
         if row < newAppventure.appventureSteps.count  {
             if let step = newAppventure.appventureSteps[row] as AppventureStep! {
-                cell.StepID.text = "Step: \(step.stepNumber) \(step.nameOrLocation)"
+                
+                cell.StepID.text = "Step: \(step.stepNumber) \(step.nameOrLocation!)"
                 var includedClues = [String]()
                 if step.setup[AppventureStep.setup.pictureClue] == true {includedClues.append("Picture")}
                 if step.setup[AppventureStep.setup.textClue] == true {includedClues.append("Text")}
