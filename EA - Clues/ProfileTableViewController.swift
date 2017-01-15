@@ -145,10 +145,11 @@ class ProfileTableViewController: UITableViewController {
     }
     
     func deleteAppventureFromDB (_ indexPath: IndexPath) {
-        let appventure = User.user!.ownedAppventures[indexPath.row]
-        appventure.deleteAppventure()
-        User.user!.ownedAppventures.remove(at: indexPath.row)
-
+        let appventureArray = Array(CoreUser.user!.ownedAppventures!)
+        let appventure = appventureArray[indexPath.row]
+        AppDelegate.coreDataStack.delete(object: appventure)
+        tableView.reloadData()
+        // TODO: remove from backendless
     }
     
 }

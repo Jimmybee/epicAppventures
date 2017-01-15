@@ -44,10 +44,10 @@ class AppventureStartViewController: UIViewController {
         updateUI()
        detailsSegmentControl.setTitleTextAttributes([NSFontAttributeName: UIFont(name: "Palatino", size: 15)!], for: UIControlState()) //, NSForegroundColorAttributeName:UIColor.whiteColor()
         detailsSegmentControl.selectedSegmentIndex = 0
-        CompletedAppventure.loadAppventuresCompleted(appventure.pFObjectID!, handler: self)
-        AppventureReviews.loadAppventuresReviews(appventure.pFObjectID!, handler: self)
+        //TODO: If a public appventure, then look for ratings and reviews.
+//        CompletedAppventure.loadAppventuresCompleted(appventure.pFObjectID!, handler: self)
+//        AppventureReviews.loadAppventuresReviews(appventure.pFObjectID!, handler: self)
         HelperFunctions.hideTabBar(self)
-
         
     }
     

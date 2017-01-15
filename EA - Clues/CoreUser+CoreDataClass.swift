@@ -14,7 +14,12 @@ import CoreData
 public class CoreUser: NSManagedObject {
     
     static var user: CoreUser?
-    
+    var appventuresArray: [Appventure] {
+        get {
+            guard let appventures = ownedAppventures else { return [Appventure]() }
+            return Array(appventures)
+        }
+    }
     
     /// Check if cached user object exists. Otherwise load from context or create in context. 
     static func checkLogin(_ required: Bool, vc: UIViewController?) -> Bool {

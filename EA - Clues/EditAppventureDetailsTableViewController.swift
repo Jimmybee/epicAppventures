@@ -8,10 +8,6 @@
 
 import UIKit
 
-protocol EditAppventureDetailsTableViewControllerDelegate : NSObjectProtocol {
-    func completedEdit(_ appventure: Appventure)
-}
-
 class EditAppventureDetailsTableViewController: UITableViewController {
     
     var appventure: Appventure?
@@ -72,6 +68,7 @@ class EditAppventureDetailsTableViewController: UITableViewController {
     
     //MARK: IBActions 
     @IBAction func cancel(_ sender: UIBarButtonItem) {
+        AppDelegate.coreDataStack.rollbackContext()
         self.dismiss(animated: true, completion: nil)
     }
     

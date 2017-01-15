@@ -187,7 +187,7 @@ class StepViewController: UIViewController {
         }
         
         //Map
-        mapComapassView.stepCoordinate = step.coordinate
+        mapComapassView.stepCoordinate = step.coordinate2D!.coordinate
         mapComapassView.showLocation = step.setup[AppventureStep.setup.locationShown]!
         mapComapassView.showCompass = step.setup[AppventureStep.setup.compassShown]!
         mapComapassView.showDistance = step.setup[AppventureStep.setup.distanceShown]!
@@ -199,7 +199,7 @@ class StepViewController: UIViewController {
         //Complete
         if step.setup[AppventureStep.setup.checkIn]! {
             checkInHintView.stepLocationName = step.nameOrLocation
-            checkInHintView.stepCoordinate = step.coordinate
+            checkInHintView.stepCoordinate = step.coordinate2D!.coordinate
             checkInHintView.answerHint = self.step.answerHint
             checkInHintView.stepDistance = step.checkInProximity
             checkInHintView.setup()

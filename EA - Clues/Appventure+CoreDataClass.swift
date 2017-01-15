@@ -8,14 +8,13 @@
 
 import UIKit
 import CoreData
-
+import CoreLocation
 
 public class Appventure: NSManagedObject {
 
     
     static fileprivate var currentAppventure: Appventure?
     
-    var coordinate: CLLocationCoordinate2D? = kCLLocationCoordinate2DInvalid
     var imageAccess: UIImage? {
         get {
             if image != nil {
@@ -29,11 +28,20 @@ public class Appventure: NSManagedObject {
     var image: UIImage?
     var pfFile: AnyObject?
 
-    var downloaded = false
-    var liveStatus:LiveStatus = .inDevelopment
+    var downloaded = true
+    var liveStatus:LiveStatus {
+            get { return LiveStatus(rawValue: self.liveStatusNum) ?? .inDevelopment }
+            set { self.liveStatusNum = newValue.rawValue }
+    }
     
-    
-    var appventureSteps = [AppventureStep]()
+    var appventureSteps: [AppventureStep] {
+        get {
+            return Array(steps)
+        }
+        set {
+            print("setting steps")
+        }
+    }
     var appventureRating = AppventureRating()
     
     //non-parse
@@ -46,6 +54,9 @@ public class Appventure: NSManagedObject {
         let context = AppDelegate.coreDataStack.persistentContainer.viewContext
         let entity = NSEntityDescription.entity(forEntityName: CoreKeys.entityName, in: context)
         self.init(entity: entity!, insertInto: nil)
+        
+        let coordinate: CLLocationCoordinate2D = kCLLocationCoordinate2DInvalid
+        self.location = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
     }
     
     static func currentAppventureID() -> String? {
@@ -65,40 +76,9 @@ public class Appventure: NSManagedObject {
     //Save methods
     
     func downloadAndSaveToCoreData (_ handler: () -> ()) {
-        AppventureStep.loadSteps(self, handler: handler)
+     //   AppventureStep.loadSteps(self, handler: handler)
     }
     
-    func saveToCoreData(_ handler: () -> ()) {
-        //        print("Appventure: \(self.title)")
-        //Add appventure to managed context
-        let context = AppDelegate.coreDataStack.persistentContainer.viewContext
-        //        let context = (UIApplication.shared.delegate as! AppDelegate).managedObjectContext
-        context.insert(self)
-        
-        //Add steps to managed context
-        let stepSet = NSMutableOrderedSet()
-        for step in self.appventureSteps {
-            step.addToContext()
-            let object = step as NSManagedObject
-            stepSet.add(object)
-        }
-        
-//        self.steps = stepSet
-        //        print("setSteps :\(self.steps?.count)")
-        
-        
-//        if let imageFile = self.pfFile as AnyObject! {
-            //            imageFile.getDataInBackgroundWithBlock({ (data, error) -> Void in
-            //                if error == nil {
-            //                    if let dataFound = data {
-            //                        self.image = UIImage(data: dataFound)
-            //                        self.completeSaveToContext(handler)
-            //                    }
-            //                }
-            //            })
-//        }
-        
-    }
     
     
     func saveContext(handler: () -> ()) {
@@ -109,13 +89,8 @@ public class Appventure: NSManagedObject {
         }
         
         saveImageToDocuments()
-        
-        do {
-            try self.managedObjectContext?.save()
-            handler()
-        } catch let error as NSError  {
-            print("Could not save to CD.. \(error), \(error.userInfo)")
-        }
+        AppDelegate.coreDataStack.saveContext()
+        handler()
     }
     
     /// saves appventure image to documents and under the filename of the managed objectId.
@@ -185,7 +160,7 @@ public class Appventure: NSManagedObject {
         self.title = appventure.title
         self.subtitle = appventure.subtitle
         self.pfFile = appventure.pfFile
-        self.coordinate = appventure.coordinate
+        self.location = appventure.location
         self.totalDistance = appventure.totalDistance
         self.startingLocationName = appventure.startingLocationName
         self.duration = appventure.duration
@@ -196,13 +171,9 @@ public class Appventure: NSManagedObject {
         self.rating = appventure.rating
         
     }
-    
-    
-    
-    
 }
 
-enum LiveStatus: Int {
+enum LiveStatus: Int16 {
     case live = 0
     case waitingForApproval = 1
     case inDevelopment = 2

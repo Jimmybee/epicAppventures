@@ -16,9 +16,7 @@
 		661A15711D590080002877B8 /* AppventureHelpTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661A15701D590080002877B8 /* AppventureHelpTableViewController.swift */; };
 		662A74B01C7701510052C71C /* AppventureRating.swift in Sources */ = {isa = PBXBuildFile; fileRef = 662A74AF1C7701510052C71C /* AppventureRating.swift */; };
 		663166EF1D49ED910043064B /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663166EE1D49ED910043064B /* SettingsViewController.swift */; };
-		66345AC41DA922380095F6D8 /* StepOld.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66345AC21DA922380095F6D8 /* StepOld.swift */; };
 		66345AC91DA926B80095F6D8 /* AppventureParse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66345AC81DA926B80095F6D8 /* AppventureParse.swift */; };
-		66345ACB1DAA560C0095F6D8 /* AppventureStepParse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66345ACA1DAA560C0095F6D8 /* AppventureStepParse.swift */; };
 		6644AF381D6E2CD1007B7AEF /* UserFriend.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6644AF371D6E2CD1007B7AEF /* UserFriend.swift */; };
 		6644AF3A1D6E35A2007B7AEF /* FriendsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6644AF391D6E35A2007B7AEF /* FriendsTableViewController.swift */; };
 		6644AF3C1D6E3974007B7AEF /* FriendsAdventures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6644AF3B1D6E3974007B7AEF /* FriendsAdventures.swift */; };
@@ -38,7 +36,6 @@
 		666678C01C64820600C4309C /* UIImage+ImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = 666678BF1C64820600C4309C /* UIImage+ImageEffects.m */; };
 		66706AA11C71F74B00038A74 /* ProfileHeaderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66706A9D1C71F74200038A74 /* ProfileHeaderViewController.swift */; };
 		66706AA51C71FA8000038A74 /* ProfileTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66706AA41C71FA8000038A74 /* ProfileTableViewController.swift */; };
-		668803591DCF85DD0010868F /* CoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668803581DCF85DD0010868F /* CoreData.swift */; };
 		668953561E2A49A8002163EC /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668953551E2A49A8002163EC /* CoreDataStack.swift */; };
 		668953571E2A49A8002163EC /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668953551E2A49A8002163EC /* CoreDataStack.swift */; };
 		668953691E2A4FFC002163EC /* Appventure+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668953671E2A4FFC002163EC /* Appventure+CoreDataClass.swift */; };
@@ -49,6 +46,8 @@
 		66B3DB5C1E2A60B600CEB1AA /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B3DB5B1E2A60B600CEB1AA /* User.swift */; };
 		66B3DB5F1E2A61E000CEB1AA /* CoreUser+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B3DB5D1E2A61E000CEB1AA /* CoreUser+CoreDataClass.swift */; };
 		66B3DB601E2A61E000CEB1AA /* CoreUser+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B3DB5E1E2A61E000CEB1AA /* CoreUser+CoreDataProperties.swift */; };
+		66B3DB851E2BA24500CEB1AA /* AppventureStep+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B3DB831E2BA24500CEB1AA /* AppventureStep+CoreDataClass.swift */; };
+		66B3DB861E2BA24500CEB1AA /* AppventureStep+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B3DB841E2BA24500CEB1AA /* AppventureStep+CoreDataProperties.swift */; };
 		66C916B81C61EAB300E39576 /* EditAppventureDetailsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C916B71C61EAB300E39576 /* EditAppventureDetailsTableViewController.swift */; };
 		66D7CD5F1C5B3F4E00ACB8E3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D7CD5E1C5B3F4E00ACB8E3 /* AppDelegate.swift */; };
 		66D7CD661C5B3F4E00ACB8E3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 66D7CD651C5B3F4E00ACB8E3 /* Assets.xcassets */; };
@@ -74,6 +73,7 @@
 		66ED85D21D5BA30F00A3F438 /* ImageChooserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66ED85D11D5BA30F00A3F438 /* ImageChooserViewController.swift */; };
 		66ED85D61D6236B400A3F438 /* AddAnswerTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66ED85D51D6236B400A3F438 /* AddAnswerTableViewController.swift */; };
 		66ED85D81D6236C600A3F438 /* AddHintTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66ED85D71D6236C600A3F438 /* AddHintTableViewController.swift */; };
+		66EFCF551E2BA726003075AE /* AppventureStepParse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66345ACA1DAA560C0095F6D8 /* AppventureStepParse.swift */; };
 		66F32C6C1D51438900D99701 /* AppventureMakerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F32C6B1D51438900D99701 /* AppventureMakerCell.swift */; };
 		66F32C701D57582300D99701 /* Profile.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66F32C6F1D57582300D99701 /* Profile.storyboard */; };
 		66F32C721D57589500D99701 /* Maker.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66F32C711D57589500D99701 /* Maker.storyboard */; };
@@ -160,7 +160,6 @@
 		667411F41CAFB9D700F42F81 /* EditTextClueViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditTextClueViewController.swift; sourceTree = "<group>"; };
 		667411F61CAFB9E700F42F81 /* RateViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RateViewController.swift; sourceTree = "<group>"; };
 		667968B31CD75DDA00FD512B /* MainNavViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MainNavViewController.swift; path = "../EA Clues Client/MainNavViewController.swift"; sourceTree = "<group>"; };
-		668803581DCF85DD0010868F /* CoreData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreData.swift; sourceTree = "<group>"; };
 		668953551E2A49A8002163EC /* CoreDataStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
 		668953671E2A4FFC002163EC /* Appventure+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Appventure+CoreDataClass.swift"; sourceTree = "<group>"; };
 		668953681E2A4FFC002163EC /* Appventure+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Appventure+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -179,6 +178,8 @@
 		66B3DB5B1E2A60B600CEB1AA /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		66B3DB5D1E2A61E000CEB1AA /* CoreUser+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CoreUser+CoreDataClass.swift"; sourceTree = "<group>"; };
 		66B3DB5E1E2A61E000CEB1AA /* CoreUser+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CoreUser+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		66B3DB831E2BA24500CEB1AA /* AppventureStep+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AppventureStep+CoreDataClass.swift"; sourceTree = "<group>"; };
+		66B3DB841E2BA24500CEB1AA /* AppventureStep+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AppventureStep+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		66C916B71C61EAB300E39576 /* EditAppventureDetailsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditAppventureDetailsTableViewController.swift; sourceTree = "<group>"; };
 		66CEFE6A1C67370A00EEC5FD /* SplashViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		66D7CD5B1C5B3F4E00ACB8E3 /* EA - Clues.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "EA - Clues.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -289,6 +290,8 @@
 		66345AC71DA9243D0095F6D8 /* AppventureStep */ = {
 			isa = PBXGroup;
 			children = (
+				66B3DB831E2BA24500CEB1AA /* AppventureStep+CoreDataClass.swift */,
+				66B3DB841E2BA24500CEB1AA /* AppventureStep+CoreDataProperties.swift */,
 				66D7CD971C5B409400ACB8E3 /* AppventureStep.swift */,
 				66B3DB821E2BA10800CEB1AA /* Old */,
 			);
@@ -476,7 +479,6 @@
 				66D7CD9F1C5B40BD00ACB8E3 /* HelperFunctions.swift */,
 				6663EAC81D64C4D4000F7BF9 /* largeTextContent.swift */,
 				6650D5151DA10D22008EAD27 /* RoundedButton.swift */,
-				668803581DCF85DD0010868F /* CoreData.swift */,
 				666678C21C64821100C4309C /* ObjC */,
 			);
 			name = "Shared Func";
@@ -757,7 +759,6 @@
 				66F32C771D575A5C00D99701 /* TextClueViewController.swift in Sources */,
 				6663EAC71D647299000F7BF9 /* InstructionsViewController.swift in Sources */,
 				6644AF381D6E2CD1007B7AEF /* UserFriend.swift in Sources */,
-				66345AC41DA922380095F6D8 /* StepOld.swift in Sources */,
 				66ED85D61D6236B400A3F438 /* AddAnswerTableViewController.swift in Sources */,
 				66C916B81C61EAB300E39576 /* EditAppventureDetailsTableViewController.swift in Sources */,
 				66ED85D21D5BA30F00A3F438 /* ImageChooserViewController.swift in Sources */,
@@ -765,6 +766,7 @@
 				66ED85D81D6236C600A3F438 /* AddHintTableViewController.swift in Sources */,
 				6650D5161DA10D22008EAD27 /* RoundedButton.swift in Sources */,
 				6663EACD1D64C9DF000F7BF9 /* RTFDisplayViewController.swift in Sources */,
+				66B3DB861E2BA24500CEB1AA /* AppventureStep+CoreDataProperties.swift in Sources */,
 				66D7CDA61C5B40CC00ACB8E3 /* LoginViewController.swift in Sources */,
 				66F32C791D575A5C00D99701 /* SoundClueViewController.swift in Sources */,
 				668953691E2A4FFC002163EC /* Appventure+CoreDataClass.swift in Sources */,
@@ -791,7 +793,6 @@
 				666678C01C64820600C4309C /* UIImage+ImageEffects.m in Sources */,
 				6614726A1D5A86A70093C65B /* UserSignInViewController.swift in Sources */,
 				666149DA1C607D6B0068D416 /* Filter.swift in Sources */,
-				66345ACB1DAA560C0095F6D8 /* AppventureStepParse.swift in Sources */,
 				66F32C741D575A5600D99701 /* LocalTableViewController.swift in Sources */,
 				666678BA1C64772F00C4309C /* Alt1ProfileViewController.swift in Sources */,
 				662A74B01C7701510052C71C /* AppventureRating.swift in Sources */,
@@ -801,6 +802,7 @@
 				66F32C7B1D575A5C00D99701 /* AnswerHintViewController.swift in Sources */,
 				6663EAC51D62E961000F7BF9 /* WriteReviewViewController.swift in Sources */,
 				66F32C851D575A6700D99701 /* EditTextClueViewController.swift in Sources */,
+				66EFCF551E2BA726003075AE /* AppventureStepParse.swift in Sources */,
 				66F32C751D575A5600D99701 /* AppventureStartViewController.swift in Sources */,
 				66F32C6C1D51438900D99701 /* AppventureMakerCell.swift in Sources */,
 				66F32C7A1D575A5C00D99701 /* MapCompassViewController.swift in Sources */,
@@ -815,8 +817,8 @@
 				66D7CD931C5B405400ACB8E3 /* UserSummaryViewController.swift in Sources */,
 				66B3DB5F1E2A61E000CEB1AA /* CoreUser+CoreDataClass.swift in Sources */,
 				66B3DB5C1E2A60B600CEB1AA /* User.swift in Sources */,
+				66B3DB851E2BA24500CEB1AA /* AppventureStep+CoreDataClass.swift in Sources */,
 				66D7CDA11C5B40BD00ACB8E3 /* HelperFunctions.swift in Sources */,
-				668803591DCF85DD0010868F /* CoreData.swift in Sources */,
 				663166EF1D49ED910043064B /* SettingsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

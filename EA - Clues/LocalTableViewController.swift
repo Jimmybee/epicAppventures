@@ -185,7 +185,7 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
                 if let aastvc = segue.destination as? AppventureStartViewController {
                     switch localPublicControl.selectedSegmentIndex {
                     case 0:
-                        aastvc.appventure = localAppventures[indexPath.row]
+                        aastvc.appventure = CoreUser.user!.appventuresArray[indexPath.row]
                     case 1:
                         aastvc.appventure = publicAppventures[indexPath.row]
                     case 2:
@@ -223,7 +223,7 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
     override func numberOfSections(in tableView: UITableView) -> Int {
         switch localPublicControl.selectedSegmentIndex {
         case 0:
-            if self.localAppventures.count > 0 {
+            if CoreUser.user!.appventuresArray.count > 0 {
                 self.tableView.separatorStyle = UITableViewCellSeparatorStyle.singleLine
                 self.tableView.backgroundView = UIView()
                 return 1
@@ -266,7 +266,7 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
         var rows = 0
         switch localPublicControl.selectedSegmentIndex {
         case 0:
-           rows = localAppventures.count
+           rows = CoreUser.user!.appventuresArray.count
         case 1:
             rows = publicAppventures.count
         case 2:
@@ -282,7 +282,7 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
         let row = indexPath.row
         switch localPublicControl.selectedSegmentIndex {
         case 0:
-            cell.appventure = localAppventures[row]
+            cell.appventure = CoreUser.user!.appventuresArray[row]
         case 1:
             cell.appventure = publicAppventures[row]
         case 2:

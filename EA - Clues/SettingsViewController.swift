@@ -132,8 +132,9 @@ class SettingsTableViewController: UITableViewController {
     }
     
     func restoreLocalData() {
-        CoreDataHelpers.deleteAllData(Appventure.CoreKeys.entityName)
-        CoreDataHelpers.deleteAllData(AppventureStep.CoreKeys.entityName)
+        // TODO: Call context reset
+//        CoreDataHelpers.deleteAllData(Appventure.CoreKeys.entityName)
+//        CoreDataHelpers.deleteAllData(AppventureStep.CoreKeys.entityName)
         Appventure.loadUserAppventure(User.user!.pfObject, handler: self, handlerCase: UserAppventuresHC)
     }
 

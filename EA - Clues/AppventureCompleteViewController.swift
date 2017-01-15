@@ -40,8 +40,8 @@ class AppventureCompleteViewController: UIViewController {
         updateUI()
         
 
-        if User.checkLogin(false, vc: self)     {
-            userFKID = (User.user?.pfObject)!
+        if CoreUser.checkLogin(false, vc: self)     {
+//            userFKID = (CoreUser.user?.pfObject)!
         }
         
         fbShareButton()
@@ -55,7 +55,7 @@ class AppventureCompleteViewController: UIViewController {
     //MARK: IB actions
     
     @IBAction func appventureDone(_ sender: UIButton) {
-        saveCompletedAppventure()
+//        saveCompletedAppventure()
         self.dismiss(animated: true, completion: nil)
     }
 

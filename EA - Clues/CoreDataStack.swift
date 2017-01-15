@@ -55,6 +55,18 @@ class CoreDataStack {
         }
     }
     
+    func rollbackContext() {
+        let context = persistentContainer.viewContext
+        context.rollback()
+        print("rolled back")
+    }
+    
+    func delete(object: NSManagedObject) {
+        let context = persistentContainer.viewContext
+        context.delete(object)
+        saveContext()   
+    }
+    
 
     
 }

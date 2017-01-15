@@ -63,7 +63,7 @@ class CheckInHintViewController: UIViewController {
         let config = GMSPlacePickerConfig(viewport: viewport)
         placePicker = GMSPlacePicker(config: config)
         
-        placePicker?.pickPlace(callback: { (place: GMSPlace?, error: NSError?) -> Void in
+        placePicker?.pickPlace(callback: {place, error in
             if let error = error {
                 print("Pick Place error: \(error.localizedDescription)")
                 return
@@ -90,7 +90,7 @@ class CheckInHintViewController: UIViewController {
             } else {
                 print("No place selected")
             }
-        } as! GMSPlaceResultCallback)
+        })
         
     }
     

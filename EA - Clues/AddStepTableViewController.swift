@@ -13,24 +13,24 @@ import AVFoundation
 
 protocol AddStepTableViewControllerDelegate: NSObjectProtocol  {
     
-    func appendStep(_ step: AppventureStep, stepNumber: Int16?)
-    func updateAppventureLocation(_ location: CLLocationCoordinate2D)
+    func updateAppventureLocation(_ location: CLLocation)
 }
 
 struct PlaceCache {
     let name: String?
-    let coordinate : CLLocationCoordinate2D
+    let coordinate : CLLocation
     let address: String
     
     init (step: AppventureStep) {
         self.name = step.nameOrLocation
-        self.coordinate = step.coordinate
+        self.coordinate = step.coordinate2D!
         self.address = step.locationSubtitle
     }
     
     init (place: GMSPlace) {
         self.name = place.name
-        self.coordinate = place.coordinate
+        let coordinate = place.coordinate
+        self.coordinate = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
         if let formAddr = place.formattedAddress {
             self.address = formAddr
         } else {
@@ -58,7 +58,7 @@ class AddStepTableViewController: UITableViewController, UITextFieldDelegate, UI
     var placeCache: PlaceCache?
     
     //set
-    lazy var currentStep = AppventureStep()
+    var currentStep: AppventureStep!
     lazy var editOfCurrentStep = false
     
     weak var delegate: AddStepTableViewControllerDelegate?
@@ -125,7 +125,7 @@ class AddStepTableViewController: UITableViewController, UITextFieldDelegate, UI
         saveButton.isEnabled = false
 
         if editOfCurrentStep == true {
-             appventureStep = AppventureStep(step: currentStep)
+             appventureStep = currentStep
         }
         
         setCaches()
@@ -276,6 +276,7 @@ class AddStepTableViewController: UITableViewController, UITextFieldDelegate, UI
     //MARK: IB Actions
     
     @IBAction func cancel(_ sender: UIBarButtonItem) {
+        AppDelegate.coreDataStack.rollbackContext()
         self.dismiss(animated: true, completion: nil)
     }
     
@@ -283,32 +284,14 @@ class AddStepTableViewController: UITableViewController, UITextFieldDelegate, UI
         
         updateStep()
         
-        self.dismiss(animated: true, completion: nil)
-        if editOfCurrentStep == true {
-            currentStep = AppventureStep(step: appventureStep)
-            delegate?.appendStep(currentStep, stepNumber: currentStep.stepNumber)
-            currentStep.saveAndSync()
-        } else {
-            delegate?.appendStep(appventureStep, stepNumber: nil)
-            appventureStep.saveAndSync()
-        }
-        
         if appventureStep.stepNumber == 1 {
-            delegate?.updateAppventureLocation(appventureStep.coordinate)
+            delegate?.updateAppventureLocation(appventureStep.coordinate2D!)
         }
         
-       
-        let context = AppDelegate.coreDataStack.persistentContainer.viewContext
-        if appventureStep.managedObjectContext == nil {
-            context.insert(appventureStep)
-        }
+        AppDelegate.coreDataStack.saveContext()
         
-        do {
-            try context.save()
-        } catch {
-            
-        }
-        
+        self.dismiss(animated: true, completion: nil)
+
     }
     
     func updateStep() {
@@ -336,9 +319,10 @@ class AddStepTableViewController: UITableViewController, UITextFieldDelegate, UI
         
         self.appventureStep.completionText = self.completionTextView.text
         self.appventureStep.sound = soundDataCache
-        self.appventureStep.coordinate = placeCache!.coordinate
+        self.appventureStep.coordinate2D = placeCache!.coordinate
         self.appventureStep.nameOrLocation = placeCache!.name
         self.appventureStep.locationSubtitle = placeCache!.address
+        
     }
     
     

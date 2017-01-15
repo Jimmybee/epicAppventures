@@ -12,54 +12,27 @@ import MapKit
 import CoreData
 
 
- public class AppventureStep: NSManagedObject {
+ extension AppventureStep {
     
-     static let appventureStepsHc = "appventureStepsHc"
-    
-     struct setup {
-        static let textClue = "textClue"
-        static let pictureClue = "pictureClue"
-        static let soundClue = "soundClue"
-        static let checkIn = "checkIn"
-        static let isLocation = "isLocation"
-        static let locationShown = "locationShown"
-        static let compassShown = "compassShown"
-        static let distanceShown = "distanceShown"
-    }
-    
-        
-    struct CoreKeys {
-        static let entityName = "AppventureStep"
-    }
-    
-    
-    convenience init () {
-        let context = AppDelegate.coreDataStack.persistentContainer.viewContext
-        let entity = NSEntityDescription.entity(forEntityName: CoreKeys.entityName, in: context)
-        self.init(entity: entity!, insertInto: nil)
-    }
+    @nonobjc static var dataLoads = [String : Int]()
     
     func updateCoreDataBridges() {
-        if let image = self.image {self.imageData = UIImagePNGRepresentation(image)}
-        self.setupObj = self.setup as NSObject
-        self.answerHintObj = self.answerHint as NSObject
-        self.answerTextObj = self.answerText as NSObject
-        self.coordinateLon = self.coordinate.longitude
-        self.coordinateLat = self.coordinate.latitude
+      //  if let image = self.image {self.imageData = UIImagePNGRepresentation(image)}
+       // self.setupObj = self.setup as NSObject
+      //  self.answerHintObj = self.answerHint as NSObject
+      //  self.answerTextObj = self.answerText as NSObject
+//        self.coordinateLon = self.coordinate.longitude
+//        self.coordinateLat = self.coordinate.latitude
     }
     
-    func addToContext() {
-        self.updateCoreDataBridges()
-        let context = AppDelegate.coreDataStack.persistentContainer.viewContext
-        context.insert(self)
-    }
+    
     
     func setValuesForObject() {
-        self.setup = self.setupObj! as! [String : Bool]
-        self.answerHint = self.answerHintObj! as! [String]
-        self.answerText = self.answerTextObj! as! [String]
-        self.coordinate = CLLocationCoordinate2DMake(self.coordinateLat, self.coordinateLon)
-        if let data = self.imageData {self.image = UIImage(data: data as Data)}
+       // self.setup = self.setupObj! as! [String : Bool]
+      //  self.answerHint = self.answerHintObj! as! [String]
+      //  self.answerText = self.answerTextObj! as! [String]
+//        self.coordinate = CLLocationCoordinate2DMake(self.coordinateLat, self.coordinateLon)
+      //  if let data = self.imageData {self.image = UIImage(data: data as Data)}
     }
 
 //     var PFObjectID: String? = ""//Given at point of save/load
@@ -67,41 +40,7 @@ import CoreData
     
      //Required for valid save
 //     var stepNumber: Int? // Given on creation
-//     var nameOrLocation = "set location"
-     var locationSubtitle = "set location"
-//     var initialText = ""
-     var image: UIImage?
-     var imagePFFile: AnyObject?
-//     var sound: NSData?
-     var soundPFFile: AnyObject?
-    
-     var coordinate = kCLLocationCoordinate2DInvalid
-     //var placemark: MKPlacemark?
-    
-     var answerText = [String]()
-     var answerHint = [String]()
-//     var freeHints: Int = 0
-//     var hintPenalty: Int = 0
-     var answerFormatHint = ""
-//     var completionText = ""
- 
-//     var locationHidden = true
-//     var checkInProximity = 0
-    
-     var saved = false
-    
-     var setup: [String:Bool] = [
-        AppventureStep.setup.textClue : Bool(),
-        AppventureStep.setup.pictureClue : Bool(),
-        AppventureStep.setup.soundClue : Bool(),
-        AppventureStep.setup.checkIn : Bool(),
-        AppventureStep.setup.isLocation : Bool(),
-        AppventureStep.setup.locationShown : Bool(),
-        AppventureStep.setup.compassShown : Bool(),
-        AppventureStep.setup.distanceShown : Bool(),
-    ]
-    
-    static var dataLoads = [String : Int]()
+//     var nameOrLocation = "set location"    
 
     
      class func convertStringToDictionary(_ text: String) -> [String:Bool]? {
@@ -137,33 +76,33 @@ import CoreData
 }
 
 //copy init
-extension AppventureStep {
+//extension AppventureStep {
     
-    convenience init(step: AppventureStep) {
-        let context = AppDelegate.coreDataStack.persistentContainer.viewContext
-        let entity = NSEntityDescription.entity(forEntityName: CoreKeys.entityName, in: context)
-        self.init(entity: entity!, insertInto: nil)
-        
-        self.pFObjectID = step.pFObjectID
-        self.appventurePFObjectID = step.appventurePFObjectID
-        self.nameOrLocation = step.nameOrLocation
-        self.locationSubtitle = step.locationSubtitle
-        self.initialText = step.initialText
-        self.answerText = step.answerText
-        self.answerHint = step.answerHint
-        self.answerFormatHint = step.answerFormatHint
-        self.completionText = step.completionText
-        self.stepNumber = step.stepNumber
-        self.freeHints = step.freeHints
-        self.hintPenalty = step.hintPenalty
-        self.saved =  step.saved
-        self.image = step.image
-        self.imagePFFile = step.imagePFFile
-        self.soundPFFile = step.soundPFFile
-        self.sound = step.sound
-        self.setup = step.setup
-        self.coordinate = step.coordinate
-        self.checkInProximity = step.checkInProximity
-    }
+//    convenience init(step: AppventureStep) {
+//        let context = AppDelegate.coreDataStack.persistentContainer.viewContext
+//        let entity = NSEntityDescription.entity(forEntityName: CoreKeys.entityName, in: context)
+//        self.init(entity: entity!, insertInto: nil)
+//        
+//        self.pFObjectID = step.pFObjectID
+//        self.appventurePFObjectID = step.appventurePFObjectID
+//        self.nameOrLocation = step.nameOrLocation
+//        self.locationSubtitle = step.locationSubtitle
+//        self.initialText = step.initialText
+//        self.answerText = step.answerText
+//        self.answerHint = step.answerHint
+//        self.answerFormatHint = step.answerFormatHint
+//        self.completionText = step.completionText
+//        self.stepNumber = step.stepNumber
+//        self.freeHints = step.freeHints
+//        self.hintPenalty = step.hintPenalty
+//        self.saved =  step.saved
+//        self.image = step.image
+//        self.imagePFFile = step.imagePFFile
+//        self.soundPFFile = step.soundPFFile
+//        self.sound = step.sound
+//        self.setup = step.setup
+//        self.coordinate = step.coordinate
+//        self.checkInProximity = step.checkInProximity
+//    }
     
-}
+

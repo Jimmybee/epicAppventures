@@ -146,8 +146,8 @@ class CreateAppventureViewController: UIViewController, UITableViewDelegate, UIT
     override func viewDidAppear(_ animated: Bool) {
         updateUI()
         if newAppventure!.appventureSteps.count > 0 {
-            if CLLocationCoordinate2DIsValid(newAppventure!.appventureSteps[0].coordinate) {
-                newAppventure!.coordinate = newAppventure!.appventureSteps[0].coordinate
+            if CLLocationCoordinate2DIsValid(newAppventure!.appventureSteps[0].coordinate2D!.coordinate) {
+                newAppventure!.location = newAppventure!.appventureSteps[0].coordinate2D!
                 drawMap()
             }
         }
@@ -163,8 +163,8 @@ class CreateAppventureViewController: UIViewController, UITableViewDelegate, UIT
     func drawMap() {
         
         if let isAppventure = newAppventure {
-        let lat = isAppventure.appventureSteps[0].coordinate.latitude
-        let long = isAppventure.appventureSteps[0].coordinate.longitude
+        let lat = isAppventure.appventureSteps[0].coordinate2D!.coordinate.latitude
+        let long = isAppventure.appventureSteps[0].coordinate2D!.coordinate.longitude
         
         var top =  lat + 0.01
         var left =  long - 0.01
@@ -176,7 +176,7 @@ class CreateAppventureViewController: UIViewController, UITableViewDelegate, UIT
         var bounds = GMSCoordinateBounds()
         self.mapMarkers.removeAll()
         for step in isAppventure.appventureSteps {
-            let marker = GMSMarker(position: step.coordinate)
+            let marker = GMSMarker(position: step.coordinate2D!.coordinate)
             marker.title = ("\(step.stepNumber): \(step.nameOrLocation)")
             marker.snippet = step.locationSubtitle
             marker.map = self.mapView
@@ -192,13 +192,13 @@ class CreateAppventureViewController: UIViewController, UITableViewDelegate, UIT
              bounds = GMSCoordinateBounds(coordinate: northEast, coordinate: southWest)
             
             //distance calculation
-            let currentLocation = CLLocation(latitude: step.coordinate.latitude, longitude: step.coordinate.longitude)
+            let currentLocation = CLLocation(latitude: step.coordinate2D!.coordinate.latitude, longitude: step.coordinate2D!.coordinate.longitude)
             totalDistance = totalDistance + currentLocation.distance(from: previousLocation)
             previousLocation = currentLocation
         }
         
         isAppventure.totalDistance = totalDistance
-            let upD = GMSCameraUpdate.setTarget(isAppventure.appventureSteps[0].coordinate, zoom: 12.0)
+            let upD = GMSCameraUpdate.setTarget(isAppventure.appventureSteps[0].coordinate2D!.coordinate, zoom: 12.0)
 //        let update = GMSCameraUpdate.fitBounds(bounds!)
             
         mapView.moveCamera(upD)
@@ -279,7 +279,7 @@ class CreateAppventureViewController: UIViewController, UITableViewDelegate, UIT
     
     @IBAction func statusSegmentChange(_ sender: UISegmentedControl) {
         let message = goodForLive()
-
+        
         func revertToDevelop() {
             self.newAppventure.liveStatus = .inDevelopment
             sender.selectedSegmentIndex = 0
@@ -293,10 +293,10 @@ class CreateAppventureViewController: UIViewController, UITableViewDelegate, UIT
         func tryForPublic() {
             self.newAppventure.liveStatus = .waitingForApproval
             let alert = UIAlertController(title: "Public Adventure", message: "This adventure will be looked at by one of our team, and if suitable made available to everyone.", preferredStyle: UIAlertControllerStyle.alert)
-        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: nil))
-
-        
-        self.present(alert, animated: true, completion: nil)
+            alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: nil))
+            
+            
+            self.present(alert, animated: true, completion: nil)
         }
         
         
@@ -311,6 +311,7 @@ class CreateAppventureViewController: UIViewController, UITableViewDelegate, UIT
             break
         }
         
+        AppDelegate.coreDataStack.saveContext()
         // TODO: Save to backend enabled for appventure.
 //        self.newAppventure.
     }
@@ -417,13 +418,7 @@ class CreateAppventureViewController: UIViewController, UITableViewDelegate, UIT
 //MARK: Navigation
     
     @IBAction func cancel(_ sender: UIBarButtonItem) {
-        if self.newAppventure.title == Constants.newTitle {
-            self.newAppventure.deleteAppventure()
-            self.navigationController?.popViewController(animated: true)
-        }
-        
         self.navigationController?.popViewController(animated: true)
-
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -438,8 +433,10 @@ class CreateAppventureViewController: UIViewController, UITableViewDelegate, UIT
                             asvc.currentStep = appventureStep
                             asvc.editOfCurrentStep = true
                         } else {
-                            asvc.appventureStep.stepNumber = newAppventure.appventureSteps.count + 1
-                            asvc.appventureStep.appventurePFObjectID = newAppventure.pFObjectID
+                            let appventureStep = AppventureStep(appventure: newAppventure)
+                            appventureStep.stepNumber = Int16(newAppventure.appventureSteps.count)
+                            appventureStep.appventurePFObjectID = newAppventure.pFObjectID
+                            asvc.appventureStep = appventureStep
                         }
                         asvc.lastLocation = self.lastLocation
                         asvc.delegate = self
@@ -475,7 +472,7 @@ class CreateAppventureViewController: UIViewController, UITableViewDelegate, UIT
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if CLLocationCoordinate2DIsValid(newAppventure.coordinate!) {
+        if CLLocationCoordinate2DIsValid(newAppventure.location.coordinate) {
             return newAppventure.appventureSteps.count + 1
         } else {
             return 1
@@ -484,7 +481,6 @@ class CreateAppventureViewController: UIViewController, UITableViewDelegate, UIT
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: Constants.cellName) as! AppventureStepTableViewCell
-        
         let row = indexPath.row
         
         if row < newAppventure.appventureSteps.count  {
@@ -566,7 +562,6 @@ class CreateAppventureViewController: UIViewController, UITableViewDelegate, UIT
         newAppventure.appventureSteps.remove(at: sourceIndexPath.row);
         newAppventure.appventureSteps.insert(step, at: destinationIndexPath.row)
     
-    
         for step in newAppventure.appventureSteps {
             step.stepNumber = newAppventure.appventureSteps.index(of: step)! + 1
         }
@@ -577,19 +572,8 @@ class CreateAppventureViewController: UIViewController, UITableViewDelegate, UIT
 
 extension CreateAppventureViewController : AddStepTableViewControllerDelegate {
     
-    func appendStep(_ step: AppventureStep, stepNumber: Int16?) {
-        if let number = stepNumber as Int16! {
-            newAppventure.appventureSteps[number - 1] = step
-        } else {
-            newAppventure.appventureSteps.append(step)
-        }
-        tableView.reloadData()
-        
-        print("reload step table")
-    }
-    
-    func updateAppventureLocation(_ location: CLLocationCoordinate2D) {
-        self.newAppventure.coordinate = location
+    func updateAppventureLocation(_ location: CLLocation) {
+        self.newAppventure.location = location
     }
 }
 
@@ -604,23 +588,6 @@ extension CreateAppventureViewController : ParseQueryHandler {
     }
 }
 
-extension CreateAppventureViewController : EditAppventureDetailsTableViewControllerDelegate {
-    
-    func completedEdit(_ appventure: Appventure) {
-        
-    }
-//    func completedEdit (edittedAppventure: Appventure) {
-//        newAppventure = Appventure(appventure: edittedAppventure)
-//        if newAppventure.liveStatus == .live { newAppventure.liveStatus = .waitingForApproval}
-//        newAppventure.save()
-//        updateUI()
-//        if appventureIndexRow == 999 {
-//            delegate?.appendNewAppventure(newAppventure, indexRow: Int?())
-//        } else {
-//            delegate?.appendNewAppventure(newAppventure, indexRow: appventureIndexRow)
-//        }
-//    }
-}
 
 
 

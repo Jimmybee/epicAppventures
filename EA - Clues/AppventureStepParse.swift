@@ -11,23 +11,23 @@ import Foundation
 
 extension AppventureStep {
     struct pfStep {
-        static let pfClass = "AppventureStep"
-        static let pfStepNumber = "stepNumber"
-        static let pfNameOrLocation = "nameOrLocation"
-        static let pfCheckInProximity = "checkInProximity"
-        static let pfLocationSubtitle = "locationSubtitle"
-        static let pfGeoPoint = "coordinate"
-        static let pfInitialText = "intialText"
-        static let pfAnswerText = "answerTextArray"
-        static let pfAppventureIDKey = "appventureID"
-        static let pfAnswerHintText = "answerHintArray"
-        static let pfAnswerFormatText = "answerFormat"
-        static let pfCompletionText = "completionText"
-        static let pfStepImage = "stepImage"
-        static let pfStepSound = "stepSound"
-        static let pfFreeHints = "freeHints"
-        static let pfHintPenalty = "hintPenalty"
-        static let pfSetup = "Setup"
+        @nonobjc static let pfClass = "AppventureStep"
+        @nonobjc static let pfStepNumber = "stepNumber"
+        @nonobjc static let pfNameOrLocation = "nameOrLocation"
+        @nonobjc static let pfCheckInProximity = "checkInProximity"
+        @nonobjc static let pfLocationSubtitle = "locationSubtitle"
+        @nonobjc static let pfGeoPoint = "coordinate"
+        @nonobjc static let pfInitialText = "intialText"
+        @nonobjc static let pfAnswerText = "answerTextArray"
+        @nonobjc static let pfAppventureIDKey = "appventureID"
+        @nonobjc static let pfAnswerHintText = "answerHintArray"
+        @nonobjc static let pfAnswerFormatText = "answerFormat"
+        @nonobjc static let pfCompletionText = "completionText"
+        @nonobjc static let pfStepImage = "stepImage"
+        @nonobjc static let pfStepSound = "stepSound"
+        @nonobjc static let pfFreeHints = "freeHints"
+        @nonobjc static let pfHintPenalty = "hintPenalty"
+        @nonobjc static let pfSetup = "Setup"
         
     }
 
@@ -127,7 +127,7 @@ extension AppventureStep {
     }
     
 
-    class func loadSteps(_ appventure: Appventure, handler: () -> ()) {
+    @nonobjc class func loadSteps(_ appventure: Appventure, handler: () -> ()) {
 //        let query = PFQuery(className: pfStep.pfClass)
 //        query.whereKey(pfStep.pfAppventureIDKey, equalTo: appventure.pFObjectID!)
 //        query.limit = 20
@@ -147,7 +147,7 @@ extension AppventureStep {
 //        }
     }
     
-    fileprivate class func getStepData(_ appventure: Appventure, handler: () -> ()) {
+    @nonobjc fileprivate class func getStepData(_ appventure: Appventure, handler: () -> ()) {
 //        print("Appventure \(appventure.title!)")
 //        dataLoads[appventure.pFObjectID!] = 100
 //        for step in appventure.appventureSteps {
@@ -181,11 +181,11 @@ extension AppventureStep {
 
     }
     
-    fileprivate class func checkAndSave(_ appventure: Appventure, handler: () -> ()) {
+    @nonobjc fileprivate class func checkAndSave(_ appventure: Appventure, handler: () -> ()) {
         
 //        print("Appventure: \(appventure.title)  & loads:\(dataLoads[appventure.pFObjectID!])")
         if dataLoads[appventure.pFObjectID!] == 0 {
-            appventure.saveToCoreData(handler)
+//            appventure.saveToCoreData(handler)
         }
     }
     

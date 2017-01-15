@@ -15,7 +15,7 @@ protocol StepCompleteViewControllerDelegate : NSObjectProtocol {
 }
 class StepCompleteViewController: UIViewController {
     
-    lazy var step = AppventureStep()
+    var step: AppventureStep!
     lazy var currentTimeD = 0.0
     weak var delegate : StepCompleteViewControllerDelegate!
 

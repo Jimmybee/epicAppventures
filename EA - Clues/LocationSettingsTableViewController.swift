@@ -14,7 +14,7 @@ class LocationSettingsTableViewController: UITableViewController {
         static let backImage = "BackButton"
     }
     
-    lazy var step = AppventureStep()
+    var step: AppventureStep!
 
     @IBOutlet weak var showLocation: UISwitch!
     @IBOutlet weak var showCompass: UISwitch!
