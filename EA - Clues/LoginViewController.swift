@@ -49,6 +49,7 @@ class LoginViewController: UIViewController {
 
     @IBAction func facebookLogin(_ sender: UIButton) {
         centralDispatchGroup.enter()
+        UserManager.loginWithFacebook()
         centralDispatchGroup.notify(queue: .main) {
             UserManager.mapBackendlessToCoreUser()
             self.dismiss(animated: true, completion: nil)

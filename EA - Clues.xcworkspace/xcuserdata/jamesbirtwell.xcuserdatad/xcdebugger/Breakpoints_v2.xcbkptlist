@@ -1366,11 +1366,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "EA - Clues/LoginViewController.swift"
-            timestampString = "506207553.30598"
+            timestampString = "506285713.994745"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "55"
-            endingLineNumber = "55"
+            startingLineNumber = "56"
+            endingLineNumber = "56"
             landmarkName = "facebookLogin(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1653,11 +1653,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "EA - Clues/SettingsViewController.swift"
-            timestampString = "506211642.748745"
+            timestampString = "506285498.477673"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "155"
-            endingLineNumber = "155"
+            startingLineNumber = "168"
+            endingLineNumber = "168"
             landmarkName = "setupHeaderView()"
             landmarkType = "7">
          </BreakpointContent>
@@ -1675,6 +1675,38 @@
             startingLineNumber = "79"
             endingLineNumber = "79"
             landmarkName = "updateUI()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "EA - Clues/MainTabBarController.swift"
+            timestampString = "506285538.886626"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "27"
+            endingLineNumber = "27"
+            landmarkName = "viewDidLoad()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "EA - Clues/AppDelegate.swift"
+            timestampString = "506286039.416436"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "114"
+            endingLineNumber = "114"
+            landmarkName = "application(_:open:sourceApplication:annotation:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

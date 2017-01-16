@@ -74,8 +74,10 @@ class UserManager {
     static func loginWithFacebook() {
         backendless!.userService.easyLogin(withFacebookFieldsMapping: UserManager.fieldsMapping, permissions:  ["public_profile", "email", "user_friends"], response: { (result) in
             print("Result: \(result)")
+            centralDispatchGroup.leave()
             
         }, error: { (fault) in
+            centralDispatchGroup.leave()
             print("Server reported an error: \(fault)")
             
         })

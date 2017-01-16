@@ -14,18 +14,7 @@ import CoreData
 public class CoreUser: NSManagedObject {
     
     static var user: CoreUser?
-    var facebookPictureAccess: UIImage? {
-        get {
-            if facebookPicture != nil {
-                return facebookPicture
-            } else {
-                self.facebookPicture = self.loadFacebookPicture()
-                return facebookPicture
-            }
-        }
 
-    }
-    
     var userType: UserType {
         get { return UserType(rawValue: self.userTypeInt) ?? .noLogin }
         set { self.userTypeInt = newValue.rawValue }
@@ -47,19 +36,17 @@ public class CoreUser: NSManagedObject {
         }
     }
     
-    func loadFacebookPicture() -> UIImage? {
-        guard let url = pictureUrl else { return nil }
+    func loadFacebookPicture(completion: @escaping () -> ()) {
+        
+        guard let url = pictureUrl else { return }
         DispatchQueue.global(qos: .userInitiated).async {
             if let getURL = URL(string: url) {
                 if let data = try? Data(contentsOf: getURL){
+                    self.facebookPicture = UIImage(data: data)
+                    completion()
                 }
             }
         }
-        
-        return UIImage(data: data)
-
-       
-        return nil
     }
     
     

@@ -147,8 +147,21 @@ class SettingsTableViewController: UITableViewController {
         
         profileHeaderContainer.alpha = 1
         nonFacebookHeader.alpha = 0
-        embeddedProfileHeader.circledImageView.image = CoreUser.user!.facebookPictureAccess
-        embeddedProfileHeader.updateCircleImage()
+        if let picture = CoreUser.user?.facebookPicture {
+            embeddedProfileHeader.circledImageView.image = picture
+            embeddedProfileHeader.updateCircleImage()
+        } else {
+            // start spinner
+            CoreUser.user?.loadFacebookPicture(completion: {
+                //if success
+                print(Thread.isMainThread)
+                self.embeddedProfileHeader.circledImageView.image = CoreUser.user!.facebookPicture
+                self.embeddedProfileHeader.updateCircleImage()
+
+                //stop spinner
+                //if fail display ?
+            })
+        }
         embeddedProfileHeader.nameLabel.text = CoreUser.user?.name
         
         if let facebookPicture = CoreUser.user!.facebookPicture {

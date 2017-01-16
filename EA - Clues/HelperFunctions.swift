@@ -126,7 +126,7 @@ class HelperFunctions {
     class func resizeImage(_ image: UIImage, newWidth: CGFloat) -> UIImage {
         
         let oldData = UIImageJPEGRepresentation(image, 1)
-        print(oldData?.count)
+        print(oldData?.count as Any)
         
         let scale = newWidth / image.size.width
         let newHeight = image.size.height * scale
