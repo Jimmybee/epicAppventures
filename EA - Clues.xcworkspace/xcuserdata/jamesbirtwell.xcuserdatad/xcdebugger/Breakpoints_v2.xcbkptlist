@@ -1366,7 +1366,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "EA - Clues/LoginViewController.swift"
-            timestampString = "506285713.994745"
+            timestampString = "506299449.404901"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "56"
@@ -1653,11 +1653,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "EA - Clues/SettingsViewController.swift"
-            timestampString = "506285498.477673"
+            timestampString = "506211642.748745"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "168"
-            endingLineNumber = "168"
+            startingLineNumber = "155"
+            endingLineNumber = "155"
             landmarkName = "setupHeaderView()"
             landmarkType = "7">
          </BreakpointContent>
@@ -1684,29 +1684,13 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "EA - Clues/MainTabBarController.swift"
-            timestampString = "506285538.886626"
+            filePath = "EA - Clues/UserManager.swift"
+            timestampString = "506298627.160441"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "27"
-            endingLineNumber = "27"
-            landmarkName = "viewDidLoad()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "EA - Clues/AppDelegate.swift"
-            timestampString = "506286039.416436"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "114"
-            endingLineNumber = "114"
-            landmarkName = "application(_:open:sourceApplication:annotation:)"
+            startingLineNumber = "35"
+            endingLineNumber = "35"
+            landmarkName = "setupUser()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

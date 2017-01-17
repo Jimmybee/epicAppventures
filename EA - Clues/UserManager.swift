@@ -27,7 +27,7 @@ class UserManager {
         "last_name" : "fb_last_name",
         "gender": "gender",
         "email": "email",
-        "pictureURL": backendlessFields.pictureUrl
+//        "pictureURL": backendlessFields.pictureUrl
         
     ]
     
