@@ -29,6 +29,10 @@ class MainTabBarController: UITabBarController {
                 pvc.showForUser()
             }
         }
+        
+        let brest = BackendlessRest()
+        brest.postRequestAlamo()
+        
     }
 
     

@@ -27,7 +27,7 @@ class UserManager {
         "last_name" : "fb_last_name",
         "gender": "gender",
         "email": "email",
-        "pictureURL": backendlessFields.pictureUrl
+//        "pictureURL": backendlessFields.pictureUrl
         
     ]
     
@@ -66,7 +66,7 @@ class UserManager {
         let user = backendless!.userService.currentUser
         CoreUser.user?.name = user?.getProperty(backendlessFields.name) as? String
         CoreUser.user?.facebookId = user?.getProperty(backendlessFields.facebookId) as? String
-        CoreUser.user?.pictureUrl = user?.getProperty(backendlessFields.pictureUrl) as? String
+//        CoreUser.user?.pictureUrl = user?.getProperty(backendlessFields.pictureUrl) as? String
     }
     
     
