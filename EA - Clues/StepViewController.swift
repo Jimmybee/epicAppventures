@@ -87,7 +87,7 @@ class StepViewController: UIViewController {
         setupViews()
         scrollHolder.myScroll = self.scrollCluePicker
         setupScrollViews(0)
-        Appventure.setCurrentAppventure(self.appventure)
+//        Appventure.setCurrentAppventure(self.appventure)
 
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(StepViewController.dismissKeyboard))
         view.addGestureRecognizer(tap)
@@ -327,7 +327,7 @@ class StepViewController: UIViewController {
     func flagContent() {
         let stepIs = self.step
         let stepID = stepIs.pFObjectID
-        let flaggedContent = FlaggedContent(appventureFKID: self.appventure.pFObjectID!, stepFKID: stepID!)
+        let flaggedContent = FlaggedContent(appventureFKID: self.appventure.backendlessId!, stepFKID: stepID!)
         flaggedContent.save()
     }
     

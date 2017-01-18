@@ -11,39 +11,21 @@ import CoreData
 import CoreLocation
 
 public class Appventure: NSManagedObject {
-
-    
-    static fileprivate var currentAppventure: Appventure?
-    
-    var imageAccess: UIImage? {
-        get {
-            if image != nil {
-                return image
-            } else {
-                self.image = self.loadImageFromDocuments()
-                return image
-            }
-        }
-    }
-    var image: UIImage?
+   
     var pfFile: AnyObject?
-
+    
+    static var currentAppventure: Appventure?
     var downloaded = true
     var liveStatus:LiveStatus {
             get { return LiveStatus(rawValue: self.liveStatusNum) ?? .inDevelopment }
             set { self.liveStatusNum = newValue.rawValue }
     }
-    
     var appventureSteps: [AppventureStep] {
-        get {
-            return Array(steps)
-        }
-        set {
-            print("setting steps")
-        }
+        get { return Array(steps) }
+        set { print("setting steps") }
     }
-    var appventureRating = AppventureRating()
     
+    var appventureRating = AppventureRating()
     //non-parse
     var saved = true
     var distanceToSearch = 0.0
@@ -60,14 +42,6 @@ public class Appventure: NSManagedObject {
         self.liveStatus = .inDevelopment
     }
     
-    static func currentAppventureID() -> String? {
-        return Appventure.currentAppventure?.pFObjectID
-    }
-    
-    static func setCurrentAppventure(_ appventure: Appventure) {
-        Appventure.currentAppventure = appventure
-    }
-    
     //MARK: CoreData
     
     struct CoreKeys {
@@ -80,8 +54,6 @@ public class Appventure: NSManagedObject {
      //   AppventureStep.loadSteps(self, handler: handler)
     }
     
-    
-    
     func saveContext(handler: () -> ()) {
         if self.managedObjectContext  == nil {
             let context = AppDelegate.coreDataStack.persistentContainer.viewContext
@@ -89,38 +61,11 @@ public class Appventure: NSManagedObject {
             self.owner = CoreUser.user!
         }
         
-        saveImageToDocuments()
         AppDelegate.coreDataStack.saveContext()
         handler()
     }
     
-    /// saves appventure image to documents and under the filename of the managed objectId.
-    private func saveImageToDocuments() {
-        guard let image = self.image,
-            let rep = UIImageJPEGRepresentation(image, 1.0),
-            let data = NSData(data: rep) as? NSData else { return }
-        
-        imageFilename = String(describing: self.managedObjectContext)
-        
-        let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
-        guard let path = dir?.appendingPathComponent(imageFilename!) else { return }
-        
-        let success = data.write(to: path, atomically: true)
-        
-        if !success {
-            print("failed local image save")
-        }
-        
-    }
     
-    private func loadImageFromDocuments() -> UIImage? {
-        guard let filename = imageFilename else { return nil }
-        let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
-        guard let path = dir?.appendingPathComponent(filename),
-            let data = NSData(contentsOf: path),
-            let image = UIImage(data: data as Data) else { return nil }
-        return image
-    }
     
     class func saveAllToCoreData(_ appventures: [Appventure]) {
         for appventure in appventures {
@@ -149,29 +94,7 @@ public class Appventure: NSManagedObject {
         }
     }
     
-    //MARK: Make Copy
     
-    convenience init(appventure: Appventure, previousContext: NSManagedObjectContext?) {
-        let context = AppDelegate.coreDataStack.persistentContainer.viewContext
-        
-        //        let context = (UIApplication.shared.delegate as! AppDelegate).managedObjectContext
-        let entity = NSEntityDescription.entity(forEntityName: CoreKeys.entityName, in: context)
-        self.init(entity: entity!, insertInto: previousContext)
-        self.pFObjectID = appventure.pFObjectID
-        self.title = appventure.title
-        self.subtitle = appventure.subtitle
-        self.pfFile = appventure.pfFile
-        self.location = appventure.location
-        self.totalDistance = appventure.totalDistance
-        self.startingLocationName = appventure.startingLocationName
-        self.duration = appventure.duration
-        self.image = appventure.image
-        self.keyFeatures = appventure.keyFeatures
-        self.restrictions = appventure.restrictions
-        self.liveStatus = appventure.liveStatus
-        self.rating = appventure.rating
-        
-    }
 }
 
 enum LiveStatus: Int16 {

@@ -19,7 +19,6 @@ class SettingsTableViewController: UITableViewController {
     let rtfDisplay = "rtfDisplay"
     let UserAppventuresHC = "UserAppventuresHC"
     
-    
     var myTable = UITableView()
     
     @IBOutlet weak var howToPlayCell: UITableViewCell!
@@ -38,16 +37,9 @@ class SettingsTableViewController: UITableViewController {
     @IBOutlet weak var profileHeaderContainer: UIView!
     @IBOutlet weak var nonFacebookHeader: UIView!
     
-
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        let nsCenter = NotificationCenter.default
-        nsCenter.addObserver(self, selector:  #selector(SettingsTableViewController.setupHeaderView), name: NSNotification.Name(rawValue: fbImageLoadNotification), object: nil)
-        
         updateUI()
-
     }
     
     //MARK: Get container view controllers & Navigation
@@ -80,14 +72,61 @@ class SettingsTableViewController: UITableViewController {
         }
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
+    //MARK: HeaderView
+    
+    func setupHeaderView () {
+        
+        profileHeaderContainer.alpha = 1
+        nonFacebookHeader.alpha = 0
+        if let picture = CoreUser.user?.facebookPicture {
+            embeddedProfileHeader.circledImageView.image = picture
+            embeddedProfileHeader.updateCircleImage()
+        } else {
+            // start spinner
+            CoreUser.user?.loadFacebookPicture(completion: { (image) in
+                //if success
+                DispatchQueue.main.async {
+                    print(Thread.isMainThread)
+                    self.embeddedProfileHeader.circledImageView.image = image
+                    CoreUser.user?.facebookPicture = image
+                    AppDelegate.coreDataStack.saveContext()
+                    self.embeddedProfileHeader.updateCircleImage()
+                }
+//                stop spinner
+//                if fail display ?
+            })
+        }
+    
+        embeddedProfileHeader.nameLabel.text = CoreUser.user?.name
+        
+        if let facebookPicture = CoreUser.user!.facebookPicture {
+//            if let blur = User.user!.blurPicture {
+//                embeddedProfileHeader.blurredImageView.image = blur
+//            } else {
+//                let frame = embeddedProfileHeader.blurredImageView.frame
+//                let blurImageSized = HelperFunctions.resizeImage(User.user!.profilePicture!, newWidth: 600)
+//                if let blurImage = HelperFunctions.blurImage(blurImageSized, radius: 8, forRect: frame) {
+//                    embeddedProfileHeader.blurredImageView.image = blurImage
+//                    User.user?.blurPicture = blurImage
+//                    User.user?.saveLocalData()
+//                }
+//            }
+        } else {
+//            User.user?.getFBImage()
+        }
     }
-    
-    
-    //MARK: table methods
-    
-    
+
+    func parseUserHeader() {
+        profileHeaderContainer.alpha = 0
+        nonFacebookHeader.alpha = 1
+        embeddedNonFacebookHeader.headerLabel.text = "User1"
+    }
+
+}
+
+// MARK: - Table functions
+
+extension SettingsTableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let cell = tableView.cellForRow(at: indexPath) {
             
@@ -113,10 +152,10 @@ class SettingsTableViewController: UITableViewController {
         }
         
         tableView.deselectRow(at: indexPath, animated: true)
-
+        
     }
-    
-    func logoutPopup() {
+
+    private func logoutPopup() {
         let alert = UIAlertController(title: "Log out user", message: "Log out user", preferredStyle: UIAlertControllerStyle.alert)
         alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: nil))
         alert.addAction(UIAlertAction(title: "Confirm", style: UIAlertActionStyle.destructive, handler: { action in
@@ -129,68 +168,12 @@ class SettingsTableViewController: UITableViewController {
         self.present(alert, animated: true, completion: nil)
     }
     
-    func restoreLocalData() {
-        // TODO: Call context reset
-//        CoreDataHelpers.deleteAllData(Appventure.CoreKeys.entityName)
-//        CoreDataHelpers.deleteAllData(AppventureStep.CoreKeys.entityName)
-        Appventure.loadUserAppventure(User.user!.pfObject, handler: self, handlerCase: UserAppventuresHC)
+    private func restoreLocalData() {
+        // TODO: Call context reset and load all backendless appventures owned by user.
     }
-
-    @IBAction func dismissVC(_ sender: AnyObject) {
-        self.dismiss(animated: true, completion: nil)
-    }
-    
-    
-    //MARK: HeaderView
-    
-    @objc func setupHeaderView () {
-        
-        profileHeaderContainer.alpha = 1
-        nonFacebookHeader.alpha = 0
-        if let picture = CoreUser.user?.facebookPicture {
-            embeddedProfileHeader.circledImageView.image = picture
-            embeddedProfileHeader.updateCircleImage()
-        } else {
-            // start spinner
-            CoreUser.user?.loadFacebookPicture(completion: {
-                //if success
-                print(Thread.isMainThread)
-                self.embeddedProfileHeader.circledImageView.image = CoreUser.user!.facebookPicture
-                self.embeddedProfileHeader.updateCircleImage()
-
-                //stop spinner
-                //if fail display ?
-            })
-        }
-        embeddedProfileHeader.nameLabel.text = CoreUser.user?.name
-        
-        if let facebookPicture = CoreUser.user!.facebookPicture {
-//            if let blur = User.user!.blurPicture {
-//                embeddedProfileHeader.blurredImageView.image = blur
-//            } else {
-//                let frame = embeddedProfileHeader.blurredImageView.frame
-//                let blurImageSized = HelperFunctions.resizeImage(User.user!.profilePicture!, newWidth: 600)
-//                if let blurImage = HelperFunctions.blurImage(blurImageSized, radius: 8, forRect: frame) {
-//                    embeddedProfileHeader.blurredImageView.image = blurImage
-//                    User.user?.blurPicture = blurImage
-//                    User.user?.saveLocalData()
-//                }
-//            }
-        } else {
-//            User.user?.getFBImage()
-        }
-        
-        
-        
-    }
-
-    func parseUserHeader() {
-        profileHeaderContainer.alpha = 0
-        nonFacebookHeader.alpha = 1
-        embeddedNonFacebookHeader.headerLabel.text = "User1"
-    }
-
 }
+
+
 
 
 extension SettingsTableViewController : UserDataHandler {

@@ -82,7 +82,7 @@ class FriendsTableViewController: UITableViewController {
         let alert = UIAlertController(title: "Share", message: "Share with friend?", preferredStyle: UIAlertControllerStyle.alert)
         alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: nil))
         alert.addAction(UIAlertAction(title: "Confirm", style: UIAlertActionStyle.default, handler: { action in
-            FriendsAdventures.saveObject(self.appventure!.pFObjectID!, fbUserID: friendID, delegate: self)
+            FriendsAdventures.saveObject(self.appventure!.backendlessId!, fbUserID: friendID, delegate: self)
         }))
         
         self.present(alert, animated: true, completion: nil)

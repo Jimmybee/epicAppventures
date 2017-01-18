@@ -72,7 +72,7 @@ class LocalAppventureTableViewCell: UITableViewCell {
         duration.text = appventure?.duration
         appventureTitle.text = appventure?.title
         ratingDisplay.rating = (appventure?.rating)!
-        appventureImage.image = appventure?.imageAccess
+        appventureImage.image = appventure?.image
         if appventure?.image == nil {
             DispatchQueue.global(qos: DispatchQoS.QoSClass.background).async { () -> Void in
                 if self.appventure?.pfFile != nil {

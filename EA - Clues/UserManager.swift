@@ -66,7 +66,7 @@ class UserManager {
         let user = backendless!.userService.currentUser
         CoreUser.user?.name = user?.getProperty(backendlessFields.name) as? String
         CoreUser.user?.facebookId = user?.getProperty(backendlessFields.facebookId) as? String
-        CoreUser.user?.pictureUrl = user?.getProperty(backendlessFields.pictureUrl) as? String
+        CoreUser.user?.pictureUrl = "https://graph.facebook.com/\(CoreUser.user!.facebookId!)/picture?type=large"
     }
     
     
@@ -74,10 +74,8 @@ class UserManager {
     static func loginWithFacebook() {
         backendless!.userService.easyLogin(withFacebookFieldsMapping: UserManager.fieldsMapping, permissions:  ["public_profile", "email", "user_friends"], response: { (result) in
             print("Result: \(result)")
-            centralDispatchGroup.leave()
             
         }, error: { (fault) in
-            centralDispatchGroup.leave()
             print("Server reported an error: \(fault)")
             
         })

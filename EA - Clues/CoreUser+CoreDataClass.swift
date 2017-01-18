@@ -17,7 +17,9 @@ public class CoreUser: NSManagedObject {
 
     var userType: UserType {
         get { return UserType(rawValue: self.userTypeInt) ?? .noLogin }
-        set { self.userTypeInt = newValue.rawValue }
+        set {
+            self.userTypeInt = newValue.rawValue
+        }
     }
     
     var appventuresArray: [Appventure] {
@@ -36,14 +38,27 @@ public class CoreUser: NSManagedObject {
         }
     }
     
-    func loadFacebookPicture(completion: @escaping () -> ()) {
+    func loadFacebookPicture(completion: @escaping (UIImage) -> ()) {
         
         guard let url = pictureUrl else { return }
+        print(url)
         DispatchQueue.global(qos: .userInitiated).async {
             if let getURL = URL(string: url) {
                 if let data = try? Data(contentsOf: getURL){
-                    self.facebookPicture = UIImage(data: data)
-                    completion()
+                    guard let image = UIImage(data: data) else { return }
+//                    self.facebookPicture = image
+                    completion(image)
+                }
+            }
+        }
+    }
+    
+    func getFBImage() {
+        if let url = self.pictureUrl as String! {
+            if let getURL = URL(string: url) {
+                if let data = try? Data(contentsOf: getURL){
+                    let image = UIImage(data: data)
+                    self.facebookPicture = image
                 }
             }
         }

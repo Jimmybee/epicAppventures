@@ -184,7 +184,7 @@ extension AppventureStep {
     @nonobjc fileprivate class func checkAndSave(_ appventure: Appventure, handler: () -> ()) {
         
 //        print("Appventure: \(appventure.title)  & loads:\(dataLoads[appventure.pFObjectID!])")
-        if dataLoads[appventure.pFObjectID!] == 0 {
+        if dataLoads[appventure.backendlessId!] == 0 {
 //            appventure.saveToCoreData(handler)
         }
     }

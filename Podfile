@@ -15,6 +15,7 @@ pod ‘FBSDKCoreKit’
 pod ’FBSDKLoginKit’
 pod ‘FBSDKShareKit’
 pod 'Backendless’
+pod 'Alamofire'
 
 end
 

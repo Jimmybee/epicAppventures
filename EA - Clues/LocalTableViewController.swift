@@ -83,7 +83,24 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
         }
         
 //        Appventure.loadAppventuresFromCoreData(handlingDownloadedAppventures)
-
+//        getBackendlessAppventure()
+    }
+    
+    func getBackendlessAppventure () -> BackendlessAppventure1? {
+        let dataStore = Backendless.sharedInstance().data.of(BackendlessAppventure1.ofClass())
+        
+        dataStore?.findFirst(
+            { (result) in
+                print("Found: \(result)")
+                if let withData = result as? BackendlessAppventure1 {
+                    print("Appventure: \(withData)")
+                }
+        },
+            error: { (fault) in
+                print("Server reported an error: \(fault)")
+        })
+        
+        return nil
     }
     
     func handlingDownloadedAppventures(_ appventures: [Appventure]) -> () {

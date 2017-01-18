@@ -12,7 +12,9 @@ import FBSDKCoreKit
 
 
 class MainTabBarController: UITabBarController {
-    
+
+    let backendless = Backendless.sharedInstance()
+
     var stdFrame: CGRect?
     
     override func viewDidLoad() {
@@ -29,7 +31,10 @@ class MainTabBarController: UITabBarController {
                 pvc.showForUser()
             }
         }
+        
     }
 
+    
+    
     
 }

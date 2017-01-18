@@ -305,6 +305,7 @@ class CreateAppventureViewController: UIViewController, UITableViewDelegate, UIT
             self.newAppventure.liveStatus = .inDevelopment
         case 1:
             message == "" ? (self.newAppventure.liveStatus = .local) : (revertToDevelop())
+            BackendlessAppventure1.save(appventure: newAppventure, withImage: true, completion: saveComplete)
         case 2:
             message == "" ? (tryForPublic()) : (revertToDevelop())
         default:
@@ -314,6 +315,12 @@ class CreateAppventureViewController: UIViewController, UITableViewDelegate, UIT
         AppDelegate.coreDataStack.saveContext()
         // TODO: Save to backend enabled for appventure.
 //        self.newAppventure.
+    }
+    
+    func saveComplete() {
+        DispatchQueue.main.async {
+            AppDelegate.coreDataStack.saveContext()
+        }
     }
     
     
@@ -435,7 +442,7 @@ class CreateAppventureViewController: UIViewController, UITableViewDelegate, UIT
                         } else {
                             let appventureStep = AppventureStep(appventure: newAppventure)
                             appventureStep.stepNumber = Int16(newAppventure.appventureSteps.count)
-                            appventureStep.appventurePFObjectID = newAppventure.pFObjectID
+                            appventureStep.appventurePFObjectID = newAppventure.backendlessId
                             asvc.appventureStep = appventureStep
                         }
                         asvc.lastLocation = self.lastLocation

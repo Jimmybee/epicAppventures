@@ -62,7 +62,7 @@ class AppventureCompleteViewController: UIViewController {
     
     func saveCompletedAppventure() {
         let teamName = teamNameField.text
-        let completedAppventure = CompletedAppventure(userFKID: userFKID, teamName: teamName!, appventureFKID: appventure.pFObjectID!, date: Date(), time: completeTime)
+        let completedAppventure = CompletedAppventure(userFKID: userFKID, teamName: teamName!, appventureFKID: appventure.backendlessId!, date: Date(), time: completeTime)
         completedAppventure.save()
     }
     

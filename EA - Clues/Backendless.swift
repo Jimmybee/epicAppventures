@@ -1,0 +1,115 @@
+//
+//  File.swift
+//  EA - Clues
+//
+//  Created by James Birtwell on 17/01/2017.
+//  Copyright © 2017 James Birtwell. All rights reserved.
+//
+
+import Foundation
+
+
+extension Appventure {
+    
+    func deleteAppventureFromBackend() {
+        //        let query = PFQuery(className: Appventure.pfAppventure.pfClass)
+        //        query.getObjectInBackgroundWithId(self.pFObjectID!) {
+        //            (object: PFObject?, error: NSError?) -> Void in
+        //            if error != nil {
+        //                print("delete error \(error)")
+        //            } else {
+        //                object?.deleteInBackground()
+        //            }
+        //        }
+        
+        
+        
+    }
+    
+}
+
+
+
+class BackendlessAppventure1: NSObject {
+    
+    static let backendless = Backendless.sharedInstance()
+    static let dataStore = backendless?.persistenceService.of(BackendlessAppventure1.ofClass())
+
+    public var duration: String?
+//    public var keyFeatures = [String]()
+    public var liveStatusNum: Int16 = 0
+    public var objectId: String?
+//    public var restrictions: [String]?
+    public var startingLocationName: String?
+    public var subtitle: String?
+    public var title: String?
+    public var totalDistance: Double? = 0
+    public var location: GeoPoint?
+    
+    init(appventure: Appventure) {
+        self.duration = appventure.duration
+//        self.keyFeatures = appventure.keyFeatures!
+        self.liveStatusNum = appventure.liveStatusNum
+        self.objectId = appventure.backendlessId
+        self.title = appventure.title!
+        self.totalDistance = appventure.totalDistance
+        self.location = GeoPoint.geoPoint(
+            GEO_POINT(latitude: appventure.location.coordinate.latitude, longitude: appventure.location.coordinate.longitude),
+            categories: ["Appventure"],
+            metadata: ["Tag":"Great"]
+            ) as? GeoPoint
+    }
+    
+    private func save(completion: @escaping (String?) -> ()) {
+        
+        BackendlessAppventure1.dataStore?.save(self, response: { (returnObject) in
+            guard let dict = returnObject as? Dictionary<String, Any> ,
+            let objectId = dict["objectId"] as? String else { return }
+            completion(objectId)
+        }) { (error) in
+            print(error ?? "no error?")
+        }
+    }
+    
+    
+    /// save an appventure to backend. Checks if objectId is nil as this is needed to pictureUrl
+    class func save(appventure: Appventure, withImage: Bool, completion: @escaping () -> ()) {
+        let backendlessAppventure = BackendlessAppventure1(appventure: appventure)
+        
+        if backendlessAppventure.objectId == nil {
+            backendlessAppventure.save(completion: { (objectId) in
+                appventure.backendlessId = objectId
+                BackendlessAppventure1.save(appventure: appventure, withImage: withImage, completion: completion)
+            })
+        } else if withImage == true { uploadImageAsync(objectId: appventure.backendlessId, image: appventure.image, completion: { () in
+            BackendlessAppventure1.save(appventure: appventure, withImage: false, completion: completion)
+        })
+            
+        } else {
+            backendlessAppventure.save { (_) in
+                completion()
+            }
+        }
+    }
+    
+    class func uploadImageAsync(objectId: String?, image: UIImage?, completion: @escaping () -> ()) {
+        print("\n============ Uploading files with the ASYNC API ============")
+        guard  let image = image  else { return }
+        guard let id = objectId else { return }
+        
+        let url = "myfiles/\(id)/appventure.jpg"
+        let data = UIImagePNGRepresentation(image)
+        
+        BackendlessAppventure1.backendless?.fileService.upload(
+            url,
+            content: data,
+            overwrite:true,
+            response: { ( uploadedFile ) in
+                print("File has been uploaded. File URL is - \(uploadedFile?.fileURL)")
+                completion()
+        },
+            error: { ( fault ) in
+                print("Server reported an error: \(fault)")
+        })
+    }
+}
