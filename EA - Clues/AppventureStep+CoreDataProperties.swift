@@ -27,7 +27,7 @@ extension AppventureStep {
     @NSManaged public var initialText: String?
     @NSManaged public var locationHidden: Bool
     @NSManaged public var nameOrLocation: String?
-    @NSManaged public var pFObjectID: String?
+    @NSManaged public var backendlessId: String?
     @NSManaged public var setup: [String : Bool]!
     @NSManaged public var sound: Data?
     @NSManaged public var stepNumber: Int16

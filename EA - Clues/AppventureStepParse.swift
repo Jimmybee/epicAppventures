@@ -83,7 +83,7 @@ extension AppventureStep {
     }
     
     fileprivate func saveBackend(){
-        if self.pFObjectID == "" {
+        if self.backendlessId == "" {
 //            let saveObj = PFObject(className: pfStep.pfClass)
 //            saveObject(saveObj)
         } else {

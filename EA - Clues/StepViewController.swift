@@ -326,7 +326,7 @@ class StepViewController: UIViewController {
     
     func flagContent() {
         let stepIs = self.step
-        let stepID = stepIs.pFObjectID
+        let stepID = stepIs.backendlessId
         let flaggedContent = FlaggedContent(appventureFKID: self.appventure.backendlessId!, stepFKID: stepID!)
         flaggedContent.save()
     }

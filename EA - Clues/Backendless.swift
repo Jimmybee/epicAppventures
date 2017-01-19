@@ -35,16 +35,18 @@ class BackendlessAppventure1: NSObject {
     static let backendless = Backendless.sharedInstance()
     static let dataStore = backendless?.persistenceService.of(BackendlessAppventure1.ofClass())
 
+    public var objectId: String?
+    
     public var duration: String?
 //    public var keyFeatures = [String]()
     public var liveStatusNum: Int16 = 0
-    public var objectId: String?
 //    public var restrictions: [String]?
     public var startingLocationName: String?
     public var subtitle: String?
     public var title: String?
     public var totalDistance: Double? = 0
     public var location: GeoPoint?
+    public var steps: [BackendlessStep] = []
     
     init(appventure: Appventure) {
         self.duration = appventure.duration
@@ -58,13 +60,24 @@ class BackendlessAppventure1: NSObject {
             categories: ["Appventure"],
             metadata: ["Tag":"Great"]
             ) as? GeoPoint
+        for step in appventure.steps {
+            let backendlessStep = BackendlessStep(step: step)
+            self.steps.append(backendlessStep)
+        }
     }
     
     private func save(completion: @escaping (String?) -> ()) {
-        
         BackendlessAppventure1.dataStore?.save(self, response: { (returnObject) in
-            guard let dict = returnObject as? Dictionary<String, Any> ,
-            let objectId = dict["objectId"] as? String else { return }
+            guard let dict = returnObject as? Dictionary<String, Any> else { return }
+            guard let objectId = dict["objectId"] as? String else { return }
+            guard let steps = dict["steps"] as? [Dictionary<String, Any>] else { return }
+            var stepIds = [String]()
+            for step in steps {
+                if let stepId = step["objectId"] as? String {
+                    stepIds.append(stepId)
+                }
+            }
+            print(stepIds)
             completion(objectId)
         }) { (error) in
             print(error ?? "no error?")
