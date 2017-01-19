@@ -495,12 +495,12 @@ class CreateAppventureViewController: UIViewController, UITableViewDelegate, UIT
                 
                 cell.StepID.text = "Step: \(step.stepNumber) \(step.nameOrLocation!)"
                 var includedClues = [String]()
-                if step.setup[AppventureStep.setup.pictureClue] == true {includedClues.append("Picture")}
-                if step.setup[AppventureStep.setup.textClue] == true {includedClues.append("Text")}
-                if step.setup[AppventureStep.setup.soundClue] == true {includedClues.append("Sound Clip")}
+                if step.setup.pictureClue == true {includedClues.append("Picture")}
+                if step.setup.textClue == true {includedClues.append("Text")}
+                if step.setup.soundClue == true {includedClues.append("Sound Clip")}
                 cell.shortDescription.text = "Clues: \(includedClues.joined(separator: ","))"
                 
-                if step.setup[AppventureStep.setup.checkIn] == true {
+                if step.setup.checkIn == true {
                     cell.answer.text = "Check In"}
                 else {
                     cell.answer.text = "Text Answer"}

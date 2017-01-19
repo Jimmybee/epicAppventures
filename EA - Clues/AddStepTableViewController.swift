@@ -157,9 +157,9 @@ class AddStepTableViewController: UITableViewController, UITextFieldDelegate, UI
         
 
         var locationSetupString = [String]()
-        appventureStep.setup[AppventureStep.setup.locationShown]! ?  locationSetupString.append("Location on map") : locationSetupString.append("No location on map")
-        appventureStep.setup[AppventureStep.setup.compassShown]! ?  locationSetupString.append("Show direction") : locationSetupString.append("No direction")
-        appventureStep.setup[AppventureStep.setup.distanceShown]! ?  locationSetupString.append("Show distance") : locationSetupString.append("No distance")
+        appventureStep.setup.locationShown ?  locationSetupString.append("Location on map") : locationSetupString.append("No location on map")
+        appventureStep.setup.compassShown ? locationSetupString.append("Show direction") : locationSetupString.append("No direction")
+        appventureStep.setup.distanceShown ?  locationSetupString.append("Show distance") : locationSetupString.append("No distance")
         locationSetupDetails.text = locationSetupString.joined(separator: ",")
         
         //section1 - Clues
@@ -186,9 +186,9 @@ class AddStepTableViewController: UITableViewController, UITextFieldDelegate, UI
         
         
         //section1 - Clues
-        soundSwitch.isOn = appventureStep.setup[AppventureStep.setup.soundClue]!
-        pictureSwitch.isOn = appventureStep.setup[AppventureStep.setup.pictureClue]!
-        intialTextSwitch.isOn = appventureStep.setup[AppventureStep.setup.textClue]!
+        soundSwitch.isOn = appventureStep.setup.soundClue
+        pictureSwitch.isOn = appventureStep.setup.pictureClue
+        intialTextSwitch.isOn = appventureStep.setup.textClue
         //SoundView
         if let soundData = soundDataCache {
             do {
@@ -205,7 +205,7 @@ class AddStepTableViewController: UITableViewController, UITextFieldDelegate, UI
         }
         
         //section2 - Answer
-        self.appventureStep.setup[AppventureStep.setup.checkIn] == true ? (self.checkInControl.selectedSegmentIndex = 0) : (self.checkInControl.selectedSegmentIndex = 1)
+        self.appventureStep.setup.checkIn == true ? (self.checkInControl.selectedSegmentIndex = 0) : (self.checkInControl.selectedSegmentIndex = 1)
         self.checkInTextField.text = String(appventureStep.checkInProximity)
 
         
@@ -299,13 +299,13 @@ class AddStepTableViewController: UITableViewController, UITextFieldDelegate, UI
         if let penalty = Int16(self.hintPenalty.text!) { self.appventureStep.hintPenalty = penalty }
         if let freeHints = Int16(self.freeHintsTextField.text!) { self.appventureStep.freeHints = freeHints }
         if checkInControl.selectedSegmentIndex == 0 {
-            appventureStep.setup[AppventureStep.setup.checkIn] = true
+            appventureStep.setup.checkIn = true
         } else {
-            appventureStep.setup[AppventureStep.setup.checkIn] = false
+            appventureStep.setup.checkIn = false
         }
-        appventureStep.setup[AppventureStep.setup.soundClue] = soundSwitch.isOn
-        appventureStep.setup[AppventureStep.setup.pictureClue]  = pictureSwitch.isOn
-        appventureStep.setup[AppventureStep.setup.textClue] = intialTextSwitch.isOn
+        appventureStep.setup.soundClue = soundSwitch.isOn
+        appventureStep.setup.pictureClue = pictureSwitch.isOn
+        appventureStep.setup.textClue = intialTextSwitch.isOn
         if let distanceText = checkInTextField.text {
             if let distance = Int16(distanceText) {
                 appventureStep.checkInProximity = distance

@@ -34,3 +34,22 @@ extension AppventureStep {
     @NSManaged var appventure: Appventure?
 
 }
+
+//@NSManaged public var answerHint: [String]!
+//@NSManaged public var answerText: [String]!
+//@NSManaged public var appventurePFObjectID: String?
+//@NSManaged public var checkInProximity: Int16
+//@NSManaged public var completionText: String?
+//@NSManaged public var freeHints: Int16
+//@NSManaged public var hintPenalty: Int16
+//@NSManaged public var image: UIImage?
+//@NSManaged public var initialText: String?
+//@NSManaged public var locationHidden: Bool
+//@NSManaged public var nameOrLocation: String?
+//@NSManaged public var backendlessId: String?
+//@NSManaged public var setup: [String : Bool]!
+//@NSManaged public var sound: Data?
+//@NSManaged public var stepNumber: Int16
+//@NSManaged public var coordinate2D: CLLocation?
+//@NSManaged public var appventure: Appventure?
+//@NSManaged public var stepSetup: StepSetup?

@@ -33,10 +33,10 @@
         <attribute name="initialText" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="locationHidden" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="nameOrLocation" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="setup" optional="YES" attributeType="Transformable" customClassName="[String : Bool]" syncable="YES"/>
         <attribute name="sound" optional="YES" attributeType="Transformable" customClassName="Data" syncable="YES"/>
         <attribute name="stepNumber" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <relationship name="appventure" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Appventure" inverseName="steps" inverseEntity="Appventure" syncable="YES"/>
+        <relationship name="setup" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="StepSetup" inverseName="step" inverseEntity="StepSetup" syncable="YES"/>
     </entity>
     <entity name="CoreUser" representedClassName=".CoreUser" syncable="YES">
         <attribute name="facebookId" optional="YES" attributeType="String" syncable="YES"/>
@@ -48,9 +48,21 @@
         <relationship name="downloaded" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Appventure" inverseName="buyer" inverseEntity="Appventure" syncable="YES"/>
         <relationship name="ownedAppventures" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Appventure" inverseName="owner" inverseEntity="Appventure" syncable="YES"/>
     </entity>
+    <entity name="StepSetup" representedClassName=".StepSetup" syncable="YES">
+        <attribute name="checkIn" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="compassShown" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="distanceShown" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="isLocation" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="locationShown" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="pictureClue" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="soundClue" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="textClue" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <relationship name="step" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="AppventureStep" inverseName="setup" inverseEntity="AppventureStep" syncable="YES"/>
+    </entity>
     <elements>
         <element name="Appventure" positionX="-63" positionY="-18" width="128" height="300"/>
         <element name="AppventureStep" positionX="-54" positionY="90" width="128" height="300"/>
         <element name="CoreUser" positionX="-63" positionY="135" width="128" height="165"/>
+        <element name="StepSetup" positionX="-54" positionY="135" width="128" height="180"/>
     </elements>
 </model>

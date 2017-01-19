@@ -24,13 +24,13 @@ class LocationSettingsTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if step.setup[AppventureStep.setup.locationShown]! == true {
+        if step.setup.locationShown == true {
             showLocation.isOn = true
         }
-        if step.setup[AppventureStep.setup.compassShown]! == true {
+        if step.setup.compassShown == true {
             showCompass.isOn = true
         }
-        if step.setup[AppventureStep.setup.distanceShown]! == false {
+        if step.setup.distanceShown == false {
             showDistance.isOn = false
         }
         
@@ -47,13 +47,13 @@ class LocationSettingsTableViewController: UITableViewController {
     }
 
     @IBAction func updateShowLocation(_ sender: UISwitch) {
-        step.setup[AppventureStep.setup.locationShown] = showLocation.isOn
+        step.setup.locationShown = showLocation.isOn
     }
     @IBAction func updateShowCompass(_ sender: AnyObject) {
-        step.setup[AppventureStep.setup.compassShown] = showLocation.isOn
+        step.setup.compassShown = showLocation.isOn
     }
     @IBAction func updateShowDistance(_ sender: UISwitch) {
-        step.setup[AppventureStep.setup.distanceShown] = showLocation.isOn
+        step.setup.distanceShown = showLocation.isOn
     }
     
    

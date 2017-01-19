@@ -152,7 +152,7 @@ class StepViewController: UIViewController {
         activeScrollLabels.removeAll()
         
         //Text
-        if  step.setup[AppventureStep.setup.textClue]! {
+        if  step.setup.textClue {
             textClueView.clueText = step.initialText
             textClueView.setup()
             clueSelectWidth.constant = scrollViewWidth.constant
@@ -163,7 +163,7 @@ class StepViewController: UIViewController {
         }
         
         //Sound
-        if  step.setup[AppventureStep.setup.soundClue]! {
+        if  step.setup.soundClue {
             if let isSound = step.sound as Data! {
                 soundClueView.sound = isSound
                 soundClueView.setupAP()
@@ -174,7 +174,7 @@ class StepViewController: UIViewController {
         } else { soundSelectWidth.constant = 0 }
         
         //Image
-        if  step.setup[AppventureStep.setup.pictureClue]! {
+        if  step.setup.pictureClue {
             if let isImage = step.image as UIImage! {
                 pictureClueView.clueImage = isImage
                 pictureClueView.setup()
@@ -188,16 +188,16 @@ class StepViewController: UIViewController {
         
         //Map
         mapComapassView.stepCoordinate = step.coordinate2D!.coordinate
-        mapComapassView.showLocation = step.setup[AppventureStep.setup.locationShown]!
-        mapComapassView.showCompass = step.setup[AppventureStep.setup.compassShown]!
-        mapComapassView.showDistance = step.setup[AppventureStep.setup.distanceShown]!
+        mapComapassView.showLocation = step.setup.locationShown
+        mapComapassView.showCompass = step.setup.compassShown
+        mapComapassView.showDistance = step.setup.distanceShown
         mapComapassView.setup()
         activeViews.append(mapComapassView.view)
         activeScrollLabels.append(mapScrollLabel)
 
         
         //Complete
-        if step.setup[AppventureStep.setup.checkIn]! {
+        if step.setup.checkIn {
             checkInHintView.stepLocationName = step.nameOrLocation
             checkInHintView.stepCoordinate = step.coordinate2D!.coordinate
             checkInHintView.answerHint = self.step.answerHint

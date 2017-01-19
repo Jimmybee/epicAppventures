@@ -31,8 +31,8 @@ extension Appventure {
     @NSManaged public var userID: String?
     @NSManaged public var steps: Set<AppventureStep>
     @NSManaged public var owner: CoreUser
+    @NSManaged public var buyer: CoreUser
     @NSManaged public var location: CLLocation
-
 
 }
 

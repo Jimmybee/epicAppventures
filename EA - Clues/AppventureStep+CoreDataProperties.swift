@@ -2,7 +2,7 @@
 //  AppventureStep+CoreDataProperties.swift
 //  EA - Clues
 //
-//  Created by James Birtwell on 15/01/2017.
+//  Created by James Birtwell on 19/01/2017.
 //  Copyright © 2017 James Birtwell. All rights reserved.
 //
 
@@ -28,10 +28,10 @@ extension AppventureStep {
     @NSManaged public var locationHidden: Bool
     @NSManaged public var nameOrLocation: String?
     @NSManaged public var backendlessId: String?
-    @NSManaged public var setup: [String : Bool]!
     @NSManaged public var sound: Data?
     @NSManaged public var stepNumber: Int16
     @NSManaged public var coordinate2D: CLLocation?
     @NSManaged public var appventure: Appventure?
-
+    @NSManaged public var setup: StepSetup!
+    
 }

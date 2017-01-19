@@ -75,6 +75,8 @@
 		66E5A9EB1E2EBA1F008A1A6C /* LegacyAppventure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E5A9EA1E2EBA1F008A1A6C /* LegacyAppventure.swift */; };
 		66E5A9ED1E2EBA74008A1A6C /* Backendless.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E5A9EC1E2EBA74008A1A6C /* Backendless.swift */; };
 		66E5A9EF1E300624008A1A6C /* AppventureRest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E5A9EE1E300624008A1A6C /* AppventureRest.swift */; };
+		66E5A9F21E316FA1008A1A6C /* StepSetup+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E5A9F01E316FA1008A1A6C /* StepSetup+CoreDataClass.swift */; };
+		66E5A9F31E316FA1008A1A6C /* StepSetup+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E5A9F11E316FA1008A1A6C /* StepSetup+CoreDataProperties.swift */; };
 		66ED85D21D5BA30F00A3F438 /* ImageChooserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66ED85D11D5BA30F00A3F438 /* ImageChooserViewController.swift */; };
 		66ED85D61D6236B400A3F438 /* AddAnswerTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66ED85D51D6236B400A3F438 /* AddAnswerTableViewController.swift */; };
 		66ED85D81D6236C600A3F438 /* AddHintTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66ED85D71D6236C600A3F438 /* AddHintTableViewController.swift */; };
@@ -221,6 +223,8 @@
 		66E5A9EA1E2EBA1F008A1A6C /* LegacyAppventure.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LegacyAppventure.swift; sourceTree = "<group>"; };
 		66E5A9EC1E2EBA74008A1A6C /* Backendless.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Backendless.swift; sourceTree = "<group>"; };
 		66E5A9EE1E300624008A1A6C /* AppventureRest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppventureRest.swift; sourceTree = "<group>"; };
+		66E5A9F01E316FA1008A1A6C /* StepSetup+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "StepSetup+CoreDataClass.swift"; sourceTree = "<group>"; };
+		66E5A9F11E316FA1008A1A6C /* StepSetup+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "StepSetup+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		66ED85D11D5BA30F00A3F438 /* ImageChooserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageChooserViewController.swift; sourceTree = "<group>"; };
 		66ED85D51D6236B400A3F438 /* AddAnswerTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddAnswerTableViewController.swift; sourceTree = "<group>"; };
 		66ED85D71D6236C600A3F438 /* AddHintTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddHintTableViewController.swift; sourceTree = "<group>"; };
@@ -303,6 +307,7 @@
 		66345AC71DA9243D0095F6D8 /* AppventureStep */ = {
 			isa = PBXGroup;
 			children = (
+				66E5A9F41E316FF0008A1A6C /* Se */,
 				66B3DB831E2BA24500CEB1AA /* AppventureStep+CoreDataClass.swift */,
 				66B3DB841E2BA24500CEB1AA /* AppventureStep+CoreDataProperties.swift */,
 				66D7CD971C5B409400ACB8E3 /* AppventureStep.swift */,
@@ -542,6 +547,15 @@
 				66DA2F251C5B445600751528 /* LocalAppventureTableViewCell.swift */,
 			);
 			name = Cells;
+			sourceTree = "<group>";
+		};
+		66E5A9F41E316FF0008A1A6C /* Se */ = {
+			isa = PBXGroup;
+			children = (
+				66E5A9F01E316FA1008A1A6C /* StepSetup+CoreDataClass.swift */,
+				66E5A9F11E316FA1008A1A6C /* StepSetup+CoreDataProperties.swift */,
+			);
+			name = Se;
 			sourceTree = "<group>";
 		};
 		66ED85D31D5F442900A3F438 /* Storyboards */ = {
@@ -788,10 +802,12 @@
 				66C916B81C61EAB300E39576 /* EditAppventureDetailsTableViewController.swift in Sources */,
 				66ED85D21D5BA30F00A3F438 /* ImageChooserViewController.swift in Sources */,
 				66DA2F2C1C5B445600751528 /* RatingControl.swift in Sources */,
+				66E5A9F21E316FA1008A1A6C /* StepSetup+CoreDataClass.swift in Sources */,
 				66ED85D81D6236C600A3F438 /* AddHintTableViewController.swift in Sources */,
 				6650D5161DA10D22008EAD27 /* RoundedButton.swift in Sources */,
 				6663EACD1D64C9DF000F7BF9 /* RTFDisplayViewController.swift in Sources */,
 				66B3DB861E2BA24500CEB1AA /* AppventureStep+CoreDataProperties.swift in Sources */,
+				66E5A9F31E316FA1008A1A6C /* StepSetup+CoreDataProperties.swift in Sources */,
 				66D7CDA61C5B40CC00ACB8E3 /* LoginViewController.swift in Sources */,
 				66F32C791D575A5C00D99701 /* SoundClueViewController.swift in Sources */,
 				668953691E2A4FFC002163EC /* Appventure+CoreDataClass.swift in Sources */,
