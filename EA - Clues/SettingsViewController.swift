@@ -99,7 +99,7 @@ class SettingsTableViewController: UITableViewController {
     
         embeddedProfileHeader.nameLabel.text = CoreUser.user?.name
         
-        if let facebookPicture = CoreUser.user!.facebookPicture {
+        if CoreUser.user!.facebookPicture != nil {
 //            if let blur = User.user!.blurPicture {
 //                embeddedProfileHeader.blurredImageView.image = blur
 //            } else {

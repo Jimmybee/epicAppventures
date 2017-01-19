@@ -54,10 +54,9 @@ public class AppventureStep: NSManagedObject {
     }
     
     var locationSubtitle = "set location"
-    var imagePFFile: AnyObject?
-    var soundPFFile: AnyObject?
+    var saveSound = false
+    var saveImage = false
     
     var answerFormatHint = ""
 
-    var saved = false
 }

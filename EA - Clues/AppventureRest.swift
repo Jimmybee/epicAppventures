@@ -23,7 +23,7 @@ extension Appventure {
         Alamofire.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: headers).responseJSON { (response) in
             print(response.request!)
             print(response.result)
-            print(response.response)
+            print(response.response!)
         }
     }
 

@@ -84,7 +84,7 @@ class CheckInHintViewController: UIViewController {
                     }
                     
                 } else {
-                    print(self.stepLocationName)
+                    print(self.stepLocationName! )
                     self.warningLabel.text = "Incorrect place selected. Try Again."
                 }
             } else {

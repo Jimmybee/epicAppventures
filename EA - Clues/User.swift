@@ -158,7 +158,7 @@ class User: NSObject {
     
     func loadFBData() {
         let fbGraph = FBSDKGraphRequest.init(graphPath: "me", parameters: ["fields": "email, first_name, last_name, gender, picture.type(large)"]) //
-        fbGraph?.start(completionHandler: { (connection, resultAny, error) -> Void in
+        _ = fbGraph?.start(completionHandler: { (connection, resultAny, error) -> Void in
             
             if error != nil {
                 print("Error: \(error)")
@@ -181,12 +181,12 @@ class User: NSObject {
     func getFriends() {
         self.facebookFriends.removeAll()
          let fbGraph = FBSDKGraphRequest.init(graphPath: "me/friends", parameters: ["fields": "first_name, last_name, picture.type(small)"])
-        fbGraph?.start(completionHandler: { (connection, resultAny, error) -> Void in
+        _ = fbGraph?.start(completionHandler: { (connection, resultAny, error) -> Void in
             if error != nil {
                 print("Error: \(error)")
             }
             else {
-                let result = resultAny as! AnyObject
+                let result = resultAny as AnyObject
                 if let friendArray = result.object(forKey: "data") as? NSArray {
                     for friend in friendArray {
                         if let pictureURL = (friend as AnyObject).value(forKeyPath: "picture.data.url") as? String {

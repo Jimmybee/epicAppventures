@@ -109,7 +109,7 @@ class AppventureStartViewController: UIViewController {
     }
     
     @IBAction func popController(_ sender: UIBarButtonItem) {
-        self.navigationController?.popViewController(animated: true)
+       _ = self.navigationController?.popViewController(animated: true)
     }
     
     //MARK: IBActions

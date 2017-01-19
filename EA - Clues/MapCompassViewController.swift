@@ -88,7 +88,7 @@ class MapCompassViewController: UIViewController, CLLocationManagerDelegate {
         if let pvc = self.parent as? StepViewController   {
             pvc.updateLastLocation(lastLocation)
         }
-        if showDistance {calculateDistanceCallParent()}
+        if showDistance {_ = calculateDistanceCallParent()}
         if showCompass {compassUpdate()}
         compassMarkerCircle.position = lastLocation.coordinate
         compassMarker.position = lastLocation.coordinate
@@ -177,7 +177,7 @@ class MapCompassViewController: UIViewController, CLLocationManagerDelegate {
             degree = 360+degree
         }
         
-        let floaty = CGFloat(degree)
+        _ = CGFloat(degree)
         
 //        self.compassImage.image? = compassRotateImage!.imageRotatedByDegrees(floaty, flip: false)
         

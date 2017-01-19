@@ -173,7 +173,7 @@ class CreateAppventureViewController: UIViewController, UITableViewDelegate, UIT
         var totalDistance = 0.0
         var previousLocation = CLLocation(latitude: lat, longitude: long)
         
-        var bounds = GMSCoordinateBounds()
+//        var bounds = GMSCoordinateBounds()
         self.mapMarkers.removeAll()
         for step in isAppventure.appventureSteps {
             let marker = GMSMarker(position: step.coordinate2D!.coordinate)
@@ -187,9 +187,9 @@ class CreateAppventureViewController: UIViewController, UITableViewDelegate, UIT
             if marker.position.longitude > right { right = marker.position.longitude }
             if marker.position.longitude < left { left = marker.position.longitude }
             
-            let northEast = CLLocationCoordinate2DMake(top, right)
-            let southWest = CLLocationCoordinate2DMake(bottom, left)
-             bounds = GMSCoordinateBounds(coordinate: northEast, coordinate: southWest)
+//            let northEast = CLLocationCoordinate2DMake(top, right)
+//            let southWest = CLLocationCoordinate2DMake(bottom, left)
+//             bounds = GMSCoordinateBounds(coordinate: northEast, coordinate: southWest)
             
             //distance calculation
             let currentLocation = CLLocation(latitude: step.coordinate2D!.coordinate.latitude, longitude: step.coordinate2D!.coordinate.longitude)
@@ -425,7 +425,7 @@ class CreateAppventureViewController: UIViewController, UITableViewDelegate, UIT
 //MARK: Navigation
     
     @IBAction func cancel(_ sender: UIBarButtonItem) {
-        self.navigationController?.popViewController(animated: true)
+      _ = self.navigationController?.popViewController(animated: true)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -504,11 +504,6 @@ class CreateAppventureViewController: UIViewController, UITableViewDelegate, UIT
                     cell.answer.text = "Check In"}
                 else {
                     cell.answer.text = "Text Answer"}
-                
-                
-                if step.saved == false {
-                    newAppventure.saved = false
-                }
                 
             }
         } else {

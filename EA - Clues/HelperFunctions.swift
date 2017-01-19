@@ -63,10 +63,10 @@ class HelperFunctions {
         
         if let targetURLGoogle = URL(string:"comgooglemaps://?q=\(query)") {
             if UIApplication.shared.canOpenURL(targetURLGoogle) {
-                UIApplication.shared.openURL(targetURLGoogle)
+                UIApplication.shared.open(targetURLGoogle, options: [:], completionHandler: nil)
             } else if let targetURLApple = URL(string: "http://maps.apple.com/?q=\(query)")  {
             if UIApplication.shared.canOpenURL(targetURLApple) {
-                UIApplication.shared.openURL(targetURLApple)
+                UIApplication.shared.open(targetURLApple, options: [:], completionHandler: nil)
             }
         }
         else {
@@ -104,7 +104,7 @@ class HelperFunctions {
     }
     
     class func convertImage (_ image: UIImage) -> AnyObject? {
-        let imageData = UIImagePNGRepresentation(image) as Data!
+        _ = UIImagePNGRepresentation(image) as Data!
 //        let imageFile = PFFile(name:"image.png", data:imageData)
 //        return imageFile!
         return nil
@@ -134,7 +134,7 @@ class HelperFunctions {
         image.draw(in: CGRect(x: 0, y: 0, width: newWidth, height: newHeight))
         let newImage = UIGraphicsGetImageFromCurrentImageContext()
         let imageData = UIImageJPEGRepresentation(newImage!, 0.8)
-        print(imageData?.count)
+        print(imageData?.count ?? "")
         let finalImage = UIImage(data: imageData!)
         UIGraphicsEndImageContext()
         

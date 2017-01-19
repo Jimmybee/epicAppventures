@@ -10,7 +10,7 @@ import UIKit
 //import Parse
 import CoreLocation
 import FBSDKCoreKit
-
+import SwiftyJSON
 
 class LocalTableViewController: UITableViewController, CLLocationManagerDelegate{
     
@@ -83,23 +83,23 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
         }
         
 //        Appventure.loadAppventuresFromCoreData(handlingDownloadedAppventures)
-//        getBackendlessAppventure()
+        _ = getBackendlessAppventure()
     }
     
+    /// Move to backendless/model layer.
     func getBackendlessAppventure () -> BackendlessAppventure1? {
         let dataStore = Backendless.sharedInstance().data.of(BackendlessAppventure1.ofClass())
         
-        dataStore?.findFirst(
-            { (result) in
-                print("Found: \(result)")
-                if let withData = result as? BackendlessAppventure1 {
-                    print("Appventure: \(withData)")
-                }
-        },
-            error: { (fault) in
-                print("Server reported an error: \(fault)")
+        dataStore?.find({ (collection) in
+            let page1 = collection!.getCurrentPage()
+            for obj in page1! {
+                guard let dict = obj as? Dictionary<String, Any> else { return }
+                _ = BackendlessAppventure1(dict: dict)
+            }
+        }, error: { (fault) in
+            print("Server reported an error: \(fault)")
+
         })
-        
         return nil
     }
     
@@ -160,14 +160,14 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
 //            self.tableView.reloadData()
 //        }
         
-        if let user = CoreUser.user {
+//        if let user = CoreUser.user {
 //            Appventure.loadUserAppventure(user.pfObject, handler: self, handlerCase: LocalAppventures)
 //            FriendsAdventures.fetchFriendAdventures({ (friendsAdventures) in
 //                self.friendsAppventures = friendsAdventures
 //                self.tableView.reloadData()
 //            })
             
-        }
+//        }
     }
     
     func loadAppventures() {

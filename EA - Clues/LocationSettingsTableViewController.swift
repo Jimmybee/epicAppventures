@@ -38,7 +38,7 @@ class LocationSettingsTableViewController: UITableViewController {
    }
 
     @IBAction func backButton(_ sender: AnyObject) {
-        self.navigationController?.popViewController(animated: true)
+       _ = self.navigationController?.popViewController(animated: true)
     }
     
     override func didReceiveMemoryWarning() {

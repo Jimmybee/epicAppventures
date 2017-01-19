@@ -66,6 +66,23 @@ class BackendlessAppventure1: NSObject {
         }
     }
     
+    init(dict:  Dictionary<String, Any> ) {
+        self.objectId = dict["objectId"] as? String
+        self.duration = dict["duration"] as? String
+        //        self.keyFeatures = appventure.keyFeatures!
+        self.liveStatusNum = dict["liveStatusNum"] as! Int16
+        self.title = dict["title"] as? String
+        self.totalDistance = dict["totalDistance"] as? Double
+        self.location = dict["location"] as? GeoPoint
+        
+        if let stepDicts = dict["steps"] as? [Dictionary<String, Any>] {
+            for stepDict in stepDicts {
+                let step =  BackendlessStep(dict: stepDict)
+                self.steps.append(step)
+            }
+        }
+    }
+    
     private func save(completion: @escaping (String?, [String]?) -> ()) {
         BackendlessAppventure1.dataStore?.save(self, response: { (returnObject) in
             guard let dict = returnObject as? Dictionary<String, Any> else { return }

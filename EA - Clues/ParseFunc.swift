@@ -14,7 +14,7 @@ class ParseFunc {
     
     static let objectIdColumn = "objectId"
     
-    class func getParseObject(_ objectID:String, pfClass: String, objFunc: (_ object: AnyObject) -> ()) {
+//    class func getParseObject(_ objectID:String, pfClass: String, objFunc: (_ object: AnyObject) -> ()) {
 //        print("\(objectID) & \(pfClass)")
 //        let query = PFQuery(className: pfClass)
 //        query.getObjectInBackgroundWithId(objectID) {
@@ -26,16 +26,16 @@ class ParseFunc {
 //                objFunc(object: object!)
 //            }
 //        }
-    }
+//    }
 
-    class func convertImage (_ image: UIImage) -> AnyObject? {
-        let imageData = UIImagePNGRepresentation(image) as Data!
+//    class func convertImage (_ image: UIImage) -> AnyObject? {
+//        let imageData = UIImagePNGRepresentation(image) as Data!
 //        let imageFile = PFFile(name:"image.png", data:imageData)
 //        return imageFile!
-        return nil
-    }
+//        return nil
+//    }
     
-    class func loadParseImage (_ pfFile: AnyObject, getParseImage: (UIImage) -> ()) -> (){
+//    class func loadParseImage (_ pfFile: AnyObject, getParseImage: (UIImage) -> ()) -> (){
 //        pfFile.getDataInBackgroundWithBlock {
 //            (imageData: NSData?, error: NSError?) -> Void in
 //            if error == nil {
@@ -51,9 +51,9 @@ class ParseFunc {
 //            
 //        }
         
-    }
+//    }
     
-   class func loadImage(_ appventure: Appventure) {
+//   class func loadImage(_ appventure: Appventure) {
         //Blocks main queue
 //        if let pfImageFile = appventure.pfFile as PFFile! {
 //            pfImageFile.getDataInBackgroundWithBlock {
@@ -68,7 +68,7 @@ class ParseFunc {
 //                }
 //            }
 //        }
-    }
+//    }
     
     class func parseQuery(_ className: String, location2D: CLLocationCoordinate2D?, whereClause: String?, WhereKey: String, vcHandler: ParseQueryHandler, handlerCase: String? = nil) {
         

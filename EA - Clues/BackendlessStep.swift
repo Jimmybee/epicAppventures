@@ -23,4 +23,10 @@ class BackendlessStep : NSObject {
         self.nameOrLocation = step.nameOrLocation
     }
     
+    init(dict: Dictionary<String, Any>) {
+        self.objectId = dict["objectId"] as? String
+        self.stepNumber = dict["stepNumber"] as? Int16
+        self.nameOrLocation = dict["nameOrLocation"] as? String
+    }
+    
 }

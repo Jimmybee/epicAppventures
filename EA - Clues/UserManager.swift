@@ -46,6 +46,7 @@ class UserManager {
             fatalError("Unresolved error")
         }
         
+        
         let backendless = Backendless.sharedInstance()
         if backendless?.userService.currentUser == nil {
             CoreUser.user?.userType = .noLogin

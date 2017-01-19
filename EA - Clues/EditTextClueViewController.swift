@@ -40,11 +40,11 @@ class EditTextClueViewController: UIViewController {
 
     @IBAction func submit(_ sender: UIBarButtonItem) {
         step.initialText = reviewTextView.text
-        self.navigationController?.popViewController(animated: true)
+        _ = self.navigationController?.popViewController(animated: true)
     }
     
     @IBAction func cancel(_ sender: AnyObject) {
-        self.navigationController?.popViewController(animated: true)
+        _ = self.navigationController?.popViewController(animated: true)
     }
     
     func keyboardWillShow(_ notification: Notification) {

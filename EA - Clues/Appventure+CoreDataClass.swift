@@ -26,11 +26,11 @@ public class Appventure: NSManagedObject {
     }
     
     var appventureRating = AppventureRating()
-    //non-parse
-    var saved = true
-    var distanceToSearch = 0.0
-    var tags: [String]?
-    var rating = 2
+    var saveImage = false
+    
+//    var distanceToSearch = 0.0
+//    var tags: [String]?
+    var rating = 5
     
     convenience init () {
         let context = AppDelegate.coreDataStack.persistentContainer.viewContext
