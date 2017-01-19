@@ -66,7 +66,7 @@ class BackendlessAppventure1: NSObject {
         }
     }
     
-    private func save(completion: @escaping (String?) -> ()) {
+    private func save(completion: @escaping (String?, [String]?) -> ()) {
         BackendlessAppventure1.dataStore?.save(self, response: { (returnObject) in
             guard let dict = returnObject as? Dictionary<String, Any> else { return }
             guard let objectId = dict["objectId"] as? String else { return }
@@ -77,32 +77,42 @@ class BackendlessAppventure1: NSObject {
                     stepIds.append(stepId)
                 }
             }
-            print(stepIds)
-            completion(objectId)
+            completion(objectId, stepIds)
         }) { (error) in
             print(error ?? "no error?")
         }
     }
     
+    static let apiUploadGroup = DispatchGroup()
     
     /// save an appventure to backend. Checks if objectId is nil as this is needed to pictureUrl
     class func save(appventure: Appventure, withImage: Bool, completion: @escaping () -> ()) {
         let backendlessAppventure = BackendlessAppventure1(appventure: appventure)
         
-        if backendlessAppventure.objectId == nil {
-            backendlessAppventure.save(completion: { (objectId) in
-                appventure.backendlessId = objectId
-                BackendlessAppventure1.save(appventure: appventure, withImage: withImage, completion: completion)
-            })
-        } else if withImage == true { uploadImageAsync(objectId: appventure.backendlessId, image: appventure.image, completion: { () in
-            BackendlessAppventure1.save(appventure: appventure, withImage: false, completion: completion)
-        })
-            
-        } else {
-            backendlessAppventure.save { (_) in
-                completion()
+        apiUploadGroup.enter()
+        backendlessAppventure.save(completion: { (objectId, stepIds) in
+            appventure.backendlessId = objectId
+            for (index, objectId) in stepIds!.enumerated() {
+                appventure.appventureSteps[index].backendlessId = objectId
             }
+            if withImage == true {
+                uploadImageAsync(objectId: appventure.backendlessId, image: appventure.image, completion: { () in
+
+                })
+            }
+            for step in appventure.appventureSteps {
+                uploadImageAsync(objectId: step.backendlessId, image: step.image, completion: {
+                })
+            }
+            apiUploadGroup.leave()
+        })
+        
+        apiUploadGroup.notify(queue: .main) {
+            print("notified")
+            completion()
         }
+        
+        
     }
     
     class func uploadImageAsync(objectId: String?, image: UIImage?, completion: @escaping () -> ()) {
@@ -113,12 +123,14 @@ class BackendlessAppventure1: NSObject {
         let url = "myfiles/\(id)/appventure.jpg"
         let data = UIImagePNGRepresentation(image)
         
+        apiUploadGroup.enter()
         BackendlessAppventure1.backendless?.fileService.upload(
             url,
             content: data,
             overwrite:true,
             response: { ( uploadedFile ) in
                 print("File has been uploaded. File URL is - \(uploadedFile?.fileURL)")
+                apiUploadGroup.leave()
                 completion()
         },
             error: { ( fault ) in

@@ -18,6 +18,7 @@ class BackendlessStep : NSObject {
     public var nameOrLocation: String?
     
     init(step: AppventureStep) {
+        self.objectId = step.backendlessId
         self.stepNumber = step.stepNumber
         self.nameOrLocation = step.nameOrLocation
     }
