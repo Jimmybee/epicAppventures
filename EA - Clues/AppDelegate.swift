@@ -43,17 +43,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     //--------------------------------------
     
     //MARK: Backendless
-    
-    let APP_ID = "975C9B70-4090-2D14-FFB1-BA95CB96F300"
-    let SECRET_KEY = "EEE8A10A-F7FC-955E-FF84-EE35BF400800"
-    let VERSION_NUM = "v1"
+    static let APP_ID = "975C9B70-4090-2D14-FFB1-BA95CB96F300"
+    static let SECRET_KEY = "EEE8A10A-F7FC-955E-FF84-EE35BF400800"
+    static let VERSION_NUM = "v1"
     
     var backendless = Backendless.sharedInstance()
     static var coreDataStack = CoreDataStack()
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
-        backendless?.initApp(APP_ID, secret:SECRET_KEY, version:VERSION_NUM)
+        backendless?.initApp(AppDelegate.APP_ID, secret:AppDelegate.SECRET_KEY, version:AppDelegate.VERSION_NUM)
         backendless?.userService.setStayLoggedIn(true)
 
         //GMS

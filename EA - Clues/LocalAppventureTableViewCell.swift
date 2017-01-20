@@ -7,7 +7,7 @@
 //
 
 import UIKit
-//import Parse
+import Alamofire
 
 class LocalAppventureTableViewCell: UITableViewCell {
 
@@ -23,6 +23,7 @@ class LocalAppventureTableViewCell: UITableViewCell {
 //    @IBOutlet weak var ratingDisplay: RatingControl!
     
     override func awakeFromNib() {
+        appventureImage.image = nil
         super.awakeFromNib()
         // Initialization code
     }
@@ -39,49 +40,27 @@ class LocalAppventureTableViewCell: UITableViewCell {
 
     //MARK: Load Image
     
-    func loadImage() {
-//        if let pfImageFile = appventure!.pfFile as PFFile! {
-//            pfImageFile.getDataInBackgroundWithBlock {
-//                (imageData: NSData?, error: NSError?) -> Void in
-//                if error == nil {
-//                    if let imageData = imageData {
-//                        self.appventure!.image = UIImage(data:imageData)
-//                        dispatch_async(dispatch_get_main_queue()) { () -> Void in
-//                            self.appventureImage.image = UIImage(data:imageData)
-//                        }
-//                    } else {
-//                        let errorString = error!.userInfo["error"] as? NSString
-//                        print(errorString)
-//                    }
-//                }
-//            }
-//        }
-        
+    func loadImageFor(appventure: Appventure?) {
+        guard let objectId = appventure?.backendlessId else { return }
+        let url = "https://api.backendless.com/\(AppDelegate.APP_ID)/\(AppDelegate.VERSION_NUM)/files/myfiles/\(objectId)/appventure.jpg"
+        Alamofire.request(url).response { response in
+            guard let data = response.data else {return}
+            guard let image = UIImage(data: data) else { return }
+            appventure?.image = image
+            self.appventureImage.image = image
+            self.setNeedsDisplay()
+        }
     }
-    
-//    func loadImage(image :UIImage) -> () {
-//        dispatch_async(dispatch_get_main_queue()) { () -> Void in
-//            self.appventureImage.image = image
-//            self.appventure?.image = image
-//        }
-//    }
-
     
     func updateUI() {
         startingLocation.text = appventure?.startingLocationName
         duration.text = appventure?.duration
         appventureTitle.text = appventure?.title
         ratingDisplay.rating = (appventure?.rating)!
-        appventureImage.image = appventure?.image
-        if appventure?.image == nil {
-            DispatchQueue.global(qos: DispatchQoS.QoSClass.background).async { () -> Void in
-                if self.appventure?.pfFile != nil {
-                    self.loadImage()
-                    self.ratingDisplay.layoutSubviews()
-                }
-            }
+        if let image = appventure?.image {
+            appventureImage.image = image
         } else {
-            appventureImage.image = appventure?.image
+            loadImageFor(appventure: appventure)
         }
     }
 

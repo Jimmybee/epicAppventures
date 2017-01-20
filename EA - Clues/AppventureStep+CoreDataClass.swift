@@ -30,6 +30,15 @@ public class AppventureStep: NSManagedObject {
 
     }
     
+    convenience init(backendlessStep: BackendlessStep, persistent: Bool) {
+        let context = AppDelegate.coreDataStack.persistentContainer.viewContext
+        let entity = NSEntityDescription.entity(forEntityName: CoreKeys.entityName, in: context)
+        self.init(entity: entity!, insertInto: context)
+        
+        
+    }
+
+    
     var locationSubtitle = "set location"
     var saveSound = false
     var saveImage = false

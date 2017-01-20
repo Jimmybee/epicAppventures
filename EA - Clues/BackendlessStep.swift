@@ -11,7 +11,7 @@ import Foundation
 class BackendlessStep : NSObject {
     
     static let backendless = Backendless.sharedInstance()
-    static let dataStore = backendless?.persistenceService.of(BackendlessAppventure1.ofClass())
+    static let dataStore = backendless?.persistenceService.of(BackendlessAppventure.ofClass())
     
     public var objectId: String?
     public var stepNumber: Int16?

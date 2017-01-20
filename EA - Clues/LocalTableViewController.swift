@@ -12,8 +12,7 @@ import CoreLocation
 import FBSDKCoreKit
 import SwiftyJSON
 
-class LocalTableViewController: UITableViewController, CLLocationManagerDelegate{
-    
+class LocalTableViewController: BaseTableViewController, CLLocationManagerDelegate{
     
     let firstLaunchKey = "firstLaunch"
     let howToVC = "HowToVC"
@@ -26,9 +25,8 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
     }
     
     let locationManager = CLLocationManager()
-    var localAppventures = [Appventure] ()
-    var publicAppventures = [Appventure] ()
-    var friendsAppventures = [Appventure] ()
+    var downloadedAppventures = [Appventure]()
+    var publicAppventures = [Appventure]()
     var searchController = UISearchController()
     
     @IBOutlet weak var localPublicControl: UISegmentedControl!
@@ -82,37 +80,39 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
 
         }
         
-//        Appventure.loadAppventuresFromCoreData(handlingDownloadedAppventures)
+        if let coreUser = CoreUser.user {
+            self.downloadedAppventures = coreUser.downloadedArray
+        }
+        
         _ = getBackendlessAppventure()
     }
     
     /// Move to backendless/model layer.
-    func getBackendlessAppventure () -> BackendlessAppventure1? {
-        let dataStore = Backendless.sharedInstance().data.of(BackendlessAppventure1.ofClass())
+    func getBackendlessAppventure() {
         
-        dataStore?.find({ (collection) in
-            let page1 = collection!.getCurrentPage()
-            for obj in page1! {
-                guard let dict = obj as? Dictionary<String, Any> else { return }
-                _ = BackendlessAppventure1(dict: dict)
+        self.showProgressView()
+        let queryOptions = QueryOptions()
+        queryOptions.relationsDepth = 1;
+        
+        let liveWhere = "liveStatusNum = \(2)"
+        let dataQuery = BackendlessDataQuery()
+        dataQuery.queryOptions = queryOptions;
+        let distanceWhere = "distance( 30.26715, -97.74306, location.latitude, location.longitude ) < mi(2000000)"
+        dataQuery.whereClause = distanceWhere + " AND " + liveWhere
+        
+        BackendlessAppventure.loadBackendlessAppventures(persistent: false, dataQuery: dataQuery) { (appventures) in
+            self.publicAppventures = appventures
+            DispatchQueue.main.async {
+                self.hideProgressView()
+                self.tableView.reloadData()
             }
-        }, error: { (fault) in
-            print("Server reported an error: \(fault)")
-
-        })
-        return nil
-    }
-    
-    func handlingDownloadedAppventures(_ appventures: [Appventure]) -> () {
-//     appventures.count
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
          HelperFunctions.unhideTabBar(self)
     }
-    
-
     
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         locationManager.requestLocation()
@@ -122,7 +122,7 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
         lastLocation = locations.first?.coordinate
         print(lastLocation ?? "no location")
         if refreshing == false {
-            loadAppventures()
+            //TODO: Load locations based on geo
             refreshing = true
         }
     }
@@ -139,41 +139,6 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
         self.tableView.isUserInteractionEnabled = false
         self.refeshTable(refreshSpinner)
     }
-    
-    
-    func loadLiveAdventures() {
-        if let location = lastLocation {
-            Appventure.loadLiveAdventures(location, handler: self, handlerCase: liveAppventures)            
-        }
-    }
-    
-    func loadUserAdventures() {
-        
-//        Appventure.loadAppventuresFromCoreData { (downloadedAppventures) in
-//            for appventure in downloadedAppventures {
-//                print(appventure.liveStatus)
-//                if appventure.liveStatus != LiveStatus.inDevelopment{
-//                    self.localAppventures.append(appventure)
-//                }
-//
-//            }
-//            self.tableView.reloadData()
-//        }
-        
-//        if let user = CoreUser.user {
-//            Appventure.loadUserAppventure(user.pfObject, handler: self, handlerCase: LocalAppventures)
-//            FriendsAdventures.fetchFriendAdventures({ (friendsAdventures) in
-//                self.friendsAppventures = friendsAdventures
-//                self.tableView.reloadData()
-//            })
-            
-//        }
-    }
-    
-    func loadAppventures() {
-        self.loadLiveAdventures()
-        self.loadUserAdventures()
-    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -183,9 +148,7 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
     //MARK: Actions
     
     @IBAction func refeshTable(_ sender: UIRefreshControl) {
-        self.localAppventures.removeAll()
         self.publicAppventures.removeAll()
-        self.friendsAppventures.removeAll()
         self.tableView.reloadData()
         locationManager.requestLocation()
     }
@@ -202,11 +165,9 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
                 if let aastvc = segue.destination as? AppventureStartViewController {
                     switch localPublicControl.selectedSegmentIndex {
                     case 0:
-                        aastvc.appventure = CoreUser.user!.appventuresArray[indexPath.row]
+                        aastvc.appventure = downloadedAppventures[indexPath.row]
                     case 1:
                         aastvc.appventure = publicAppventures[indexPath.row]
-                    case 2:
-                        aastvc.appventure = friendsAppventures[indexPath.row]
                     default:
                         break
                     }
@@ -240,19 +201,12 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
     override func numberOfSections(in tableView: UITableView) -> Int {
         switch localPublicControl.selectedSegmentIndex {
         case 0:
-            if CoreUser.user!.appventuresArray.count > 0 {
+            if self.downloadedAppventures.count > 0 {
                 self.tableView.separatorStyle = UITableViewCellSeparatorStyle.singleLine
                 self.tableView.backgroundView = UIView()
                 return 1
             } else {
-                if User.user == nil {
-                    let message = "You need to sign in to create your own adventures."
-                    HelperFunctions.noTableDataMessage(tableView, message: message)
-                } else {
-                    let message = "Go to the maker tab to create your own adventures."
-                    HelperFunctions.noTableDataMessage(tableView, message: message)
-                }
-           
+                HelperFunctions.noTableDataMessage(tableView, message: publicAppventuresMessage)
             }
             return 0
         case 1:
@@ -262,15 +216,6 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
                 return 1
             } else {
                 HelperFunctions.noTableDataMessage(tableView, message: publicAppventuresMessage)
-            }
-            return 0
-        case 2:
-            if self.friendsAppventures.count > 0 {
-                self.tableView.separatorStyle = UITableViewCellSeparatorStyle.singleLine
-                self.tableView.backgroundView = UIView()
-                return 1
-            } else {
-                HelperFunctions.noTableDataMessage(tableView, message: friendsAppventuresMessage)
             }
             return 0
         default:
@@ -283,11 +228,9 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
         var rows = 0
         switch localPublicControl.selectedSegmentIndex {
         case 0:
-           rows = CoreUser.user!.appventuresArray.count
+           rows = downloadedAppventures.count
         case 1:
             rows = publicAppventures.count
-        case 2:
-            rows = friendsAppventures.count
         default:
             break
         }
@@ -299,11 +242,9 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
         let row = indexPath.row
         switch localPublicControl.selectedSegmentIndex {
         case 0:
-            cell.appventure = CoreUser.user!.appventuresArray[row]
+            cell.appventure = downloadedAppventures[row]
         case 1:
             cell.appventure = publicAppventures[row]
-        case 2:
-            cell.appventure = friendsAppventures[row]
         default:
             break
         }
@@ -368,7 +309,7 @@ extension LocalTableViewController : ParseQueryHandler {
 
 extension LocalTableViewController : LoginViewControllerDelegate {
     func skippedLogin() {
-         loadAppventures()
+//         loadAppventures()
     }
 }
 

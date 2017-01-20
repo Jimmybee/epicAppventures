@@ -305,7 +305,7 @@ class CreateAppventureViewController: UIViewController, UITableViewDelegate, UIT
             self.newAppventure.liveStatus = .inDevelopment
         case 1:
             message == "" ? (self.newAppventure.liveStatus = .local) : (revertToDevelop())
-            BackendlessAppventure1.save(appventure: newAppventure, withImage: true, completion: saveComplete)
+            BackendlessAppventure.save(appventure: newAppventure, withImage: true, completion: saveComplete)
         case 2:
             message == "" ? (tryForPublic()) : (revertToDevelop())
         default:

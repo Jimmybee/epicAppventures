@@ -42,6 +42,24 @@ public class Appventure: NSManagedObject {
         self.liveStatus = .inDevelopment
     }
     
+    convenience init (backendlessAppventure: BackendlessAppventure, persistent: Bool) {
+        let context = persistent ? AppDelegate.coreDataStack.persistentContainer.viewContext : AppDelegate.coreDataStack.tempContainer.viewContext
+        let entity = NSEntityDescription.entity(forEntityName: CoreKeys.entityName, in: context)
+        self.init(entity: entity!, insertInto: context)
+        
+        self.backendlessId = backendlessAppventure.objectId
+        self.title = backendlessAppventure.title
+        self.liveStatusNum = backendlessAppventure.liveStatusNum
+        self.startingLocationName = backendlessAppventure.startingLocationName
+        let geoPoint = backendlessAppventure.location
+        self.location = CLLocation(latitude: geoPoint!.latitude as! Double, longitude: geoPoint!.longitude as! Double)
+        self.liveStatus = .inDevelopment
+        
+        for backendlessStep in backendlessAppventure.steps {
+            let step = AppventureStep()
+        }
+    }
+    
     //MARK: CoreData
     
     struct CoreKeys {
@@ -78,7 +96,7 @@ public class Appventure: NSManagedObject {
     //delete from context
     
     func deleteAppventure() {
-        self.deleteAppventureFromBackend()
+//        self.deleteAppventureFromBackend()
         self.deleteFromContext({})
     }
     
@@ -93,6 +111,7 @@ public class Appventure: NSManagedObject {
             print("Could not save to CD.. \(error), \(error.userInfo)")
         }
     }
+    
     
     
 }

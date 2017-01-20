@@ -8,32 +8,10 @@
 
 import Foundation
 
-
-extension Appventure {
-    
-    func deleteAppventureFromBackend() {
-        //        let query = PFQuery(className: Appventure.pfAppventure.pfClass)
-        //        query.getObjectInBackgroundWithId(self.pFObjectID!) {
-        //            (object: PFObject?, error: NSError?) -> Void in
-        //            if error != nil {
-        //                print("delete error \(error)")
-        //            } else {
-        //                object?.deleteInBackground()
-        //            }
-        //        }
-        
-        
-        
-    }
-    
-}
-
-
-
-class BackendlessAppventure1: NSObject {
+class BackendlessAppventure: NSObject {
     
     static let backendless = Backendless.sharedInstance()
-    static let dataStore = backendless?.persistenceService.of(BackendlessAppventure1.ofClass())
+    static let dataStore = backendless?.persistenceService.of(BackendlessAppventure.ofClass())
 
     public var objectId: String?
     
@@ -84,7 +62,7 @@ class BackendlessAppventure1: NSObject {
     }
     
     private func save(completion: @escaping (String?, [String]?) -> ()) {
-        BackendlessAppventure1.dataStore?.save(self, response: { (returnObject) in
+        BackendlessAppventure.dataStore?.save(self, response: { (returnObject) in
             guard let dict = returnObject as? Dictionary<String, Any> else { return }
             guard let objectId = dict["objectId"] as? String else { return }
             guard let steps = dict["steps"] as? [Dictionary<String, Any>] else { return }
@@ -104,7 +82,7 @@ class BackendlessAppventure1: NSObject {
     
     /// save an appventure to backend. Checks if objectId is nil as this is needed to pictureUrl
     class func save(appventure: Appventure, withImage: Bool, completion: @escaping () -> ()) {
-        let backendlessAppventure = BackendlessAppventure1(appventure: appventure)
+        let backendlessAppventure = BackendlessAppventure(appventure: appventure)
         
         apiUploadGroup.enter()
         backendlessAppventure.save(completion: { (objectId, stepIds) in
@@ -141,7 +119,7 @@ class BackendlessAppventure1: NSObject {
         let data = UIImagePNGRepresentation(image)
         
         apiUploadGroup.enter()
-        BackendlessAppventure1.backendless?.fileService.upload(
+        BackendlessAppventure.backendless?.fileService.upload(
             url,
             content: data,
             overwrite:true,
@@ -152,6 +130,24 @@ class BackendlessAppventure1: NSObject {
         },
             error: { ( fault ) in
                 print("Server reported an error: \(fault)")
+        })
+    }
+    
+    class func loadBackendlessAppventures(persistent: Bool, dataQuery: BackendlessDataQuery, completion: @escaping ([Appventure]) -> ())  {
+        var appventures = [Appventure]()
+        let dataStore = Backendless.sharedInstance().data.of(BackendlessAppventure.ofClass())
+        dataStore?.find(dataQuery, response: { (collection) in
+            let page1 = collection!.getCurrentPage()
+            for obj in page1! {
+                guard let dict = obj as? Dictionary<String, Any> else { return }
+                let backendlessAppventure = BackendlessAppventure(dict: dict)
+                let appventure = Appventure(backendlessAppventure: backendlessAppventure, persistent: persistent)
+                appventures.append(appventure)
+            }
+            completion(appventures)
+        }, error: { (fault) in
+            print("Server reported an error: \(fault)")
+            
         })
     }
 }

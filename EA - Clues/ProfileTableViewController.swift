@@ -11,10 +11,9 @@ import UIKit
 //import FBSDKShareKit
 //import FBSDKCoreKit
 
-class ProfileTableViewController: UITableViewController {
+class ProfileTableViewController: BaseTableViewController {
     
     let UserAppventures = "UserAppventure"
-    
     
     struct Constants {
         static let CellName = "Cell"
@@ -27,7 +26,7 @@ class ProfileTableViewController: UITableViewController {
         super.viewDidLoad()
         if CoreUser.checkLogin(false, vc: self) {
             if CoreUser.user!.ownedAppventures?.count == 0 {
-//                loadUserAppventures()
+                restoreAppventures()
             }
         }
         
@@ -53,20 +52,28 @@ class ProfileTableViewController: UITableViewController {
     }
     
     
-//    func loadUserAppventures(){
-//        User.user?.ownedAppventures.removeAll()
-//        self.tableView.reloadData()
-//        Appventure.loadAppventuresFromCoreData { (downloadedAppventures) in
-//            for appventure in downloadedAppventures {
-//                print(appventure.liveStatus)
-//                if appventure.userID == User.user?.pfObject {
-//                    User.user?.ownedAppventures.append(appventure)
-//                }
-//            }
-//            DispatchQueue.main.async(execute: {
-//                })
-//        }
-//    }
+    func restoreAppventures() {
+//        let userId = Backendless.sharedInstance().userService.currentUser.objectId
+//        let whereClause = "ownerId = \(id)"
+
+        let dataQuery = BackendlessDataQuery()
+//        dataQuery.whereClause = whereClause
+        let id = Backendless.sharedInstance().userService.currentUser.objectId
+        dataQuery.whereClause = "ownerId = '\(id!)'"
+        print(dataQuery.whereClause)
+        
+            self.showProgressView()
+        BackendlessAppventure.loadBackendlessAppventures(persistent: true, dataQuery: dataQuery) { (appventures) in
+            let orderedSet = NSOrderedSet(array: appventures)
+            print("ordered set: \(orderedSet.count)")
+            CoreUser.user?.addToOwnedAppventures(orderedSet)
+            DispatchQueue.main.async {
+                AppDelegate.coreDataStack.saveContext()
+                self.hideProgressView()
+                self.tableView.reloadData()
+            }
+        }
+    }
     
     @IBAction func refeshTable(_ sender: UIRefreshControl) {
         sender.endRefreshing()

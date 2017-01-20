@@ -28,6 +28,16 @@ public class CoreUser: NSManagedObject {
             return Array(appventures)
         }
     }
+    var downloadedArray: [Appventure] {
+        get {
+            guard let appventures = downloaded else { return [Appventure]() }
+            if appventures.count > 0 {
+                return Array(appventures)
+            } else {
+                return [Appventure]()
+            }
+        }
+    }
     
     /// Check if cached user object exists. Otherwise load from context or create in context.
     static func checkLogin(_ required: Bool = true, vc: UIViewController?) -> Bool {
