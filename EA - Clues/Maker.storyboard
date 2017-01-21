@@ -697,7 +697,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Not Set" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CLK-DG-Ptp">
-                                                    <rect key="frame" x="16" y="12" width="58" height="20"/>
+                                                    <rect key="frame" x="16" y="12" width="58" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -1676,7 +1676,7 @@
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics">
                         <color key="tintColor" red="0.40894466638565063" green="0.95327186584472656" blue="0.07545144110918045" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </simulatedTabBarMetrics>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="jjS-dH-uVC">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="jjS-dH-uVC">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="barTintColor" red="0.53725490200000003" green="0.25490196079999999" blue="0.46274509800000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -1699,7 +1699,7 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="IYa-ux-4Gd" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="QNm-fx-55f">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="QNm-fx-55f">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" red="0.15686274509803921" green="0.49411764705882355" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -1722,7 +1722,7 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="oxy-x2-BE5" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="sXY-mP-ndc">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="sXY-mP-ndc">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="barTintColor" red="0.53725490200000003" green="0.25490196079999999" blue="0.46274509800000002" alpha="1" colorSpace="calibratedRGB"/>
@@ -1944,7 +1944,7 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="a6H-As-jGG" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="PNu-SK-gz4">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="PNu-SK-gz4">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="barTintColor" red="0.053199561809999997" green="0.1702644401" blue="0.20602509469999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

@@ -8,9 +8,7 @@
 
 //import Parse
 import UIKit
-
-
-
+import PureLayout
 
 class AppventureStartViewController: UIViewController {
     
@@ -37,7 +35,10 @@ class AppventureStartViewController: UIViewController {
     
     @IBOutlet weak var detailsView: UIView!
 
-
+    private(set) lazy var detailsSubView: AppventureDetailsView = {
+        let detailsSubView = AppventureDetailsView()
+        return detailsSubView
+    }()
   
     //MARK: Controller Lifecyele
     override func viewDidLoad() {
@@ -49,6 +50,17 @@ class AppventureStartViewController: UIViewController {
 //        AppventureReviews.loadAppventuresReviews(appventure.pFObjectID!, handler: self)
         HelperFunctions.hideTabBar(self)
         
+        let bundle = Bundle(for: AppventureDetailsView.self)
+        let nib = bundle.loadNibNamed("AppventureDetailsView", owner: self, options: nil)
+        let dynamicView = nib?.first as? AppventureDetailsView
+        
+        detailsView.addSubview(dynamicView!)
+        dynamicView!.appventure = self.appventure
+        dynamicView!.autoCenterInSuperview()
+        dynamicView!.autoPinEdgesToSuperviewEdges()
+        dynamicView!.setup()
+//        self.navigationController?.isNavigationBarHidden = true
+
     }
     
    

@@ -47,6 +47,7 @@
 		669A97511E32C0B50023A641 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 669A97501E32C0B50023A641 /* BaseViewController.swift */; };
 		669A97571E337EBD0023A641 /* BackendlessSetup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 669A97561E337EBD0023A641 /* BackendlessSetup.swift */; };
 		669A97591E3394810023A641 /* AppventureDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 669A97581E3394810023A641 /* AppventureDetailsView.swift */; };
+		669A977D1E33D3D60023A641 /* AppventureDetailsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 669A977C1E33D3D60023A641 /* AppventureDetailsView.xib */; };
 		66B3DB5C1E2A60B600CEB1AA /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B3DB5B1E2A60B600CEB1AA /* User.swift */; };
 		66B3DB5F1E2A61E000CEB1AA /* CoreUser+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B3DB5D1E2A61E000CEB1AA /* CoreUser+CoreDataClass.swift */; };
 		66B3DB601E2A61E000CEB1AA /* CoreUser+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B3DB5E1E2A61E000CEB1AA /* CoreUser+CoreDataProperties.swift */; };
@@ -186,6 +187,8 @@
 		669A97501E32C0B50023A641 /* BaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		669A97561E337EBD0023A641 /* BackendlessSetup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackendlessSetup.swift; sourceTree = "<group>"; };
 		669A97581E3394810023A641 /* AppventureDetailsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppventureDetailsView.swift; sourceTree = "<group>"; };
+		669A977C1E33D3D60023A641 /* AppventureDetailsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AppventureDetailsView.xib; sourceTree = "<group>"; };
+		669A977E1E33D7300023A641 /* File.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
 		66A3217B1C69C36B001DDF50 /* StepViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StepViewController.swift; sourceTree = "<group>"; };
 		66A321871C69E83F001DDF50 /* TextClueViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TextClueViewController.swift; path = StepClueViews/TextClueViewController.swift; sourceTree = "<group>"; };
 		66A321881C69E83F001DDF50 /* TextClueViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TextClueViewController.xib; path = StepClueViews/TextClueViewController.xib; sourceTree = "<group>"; };
@@ -422,6 +425,8 @@
 			isa = PBXGroup;
 			children = (
 				669A97581E3394810023A641 /* AppventureDetailsView.swift */,
+				669A977C1E33D3D60023A641 /* AppventureDetailsView.xib */,
+				669A977E1E33D7300023A641 /* File.swift */,
 			);
 			name = Views;
 			path = "EA - Clues";
@@ -765,6 +770,7 @@
 				6650D5121DA10194008EAD27 /* DistanceMarker.xib in Resources */,
 				66F32C731D57595300D99701 /* LaunchAppventure.storyboard in Resources */,
 				66DA2F291C5B445600751528 /* TableSectionHeader.xib in Resources */,
+				669A977D1E33D3D60023A641 /* AppventureDetailsView.xib in Resources */,
 				66D7CD661C5B3F4E00ACB8E3 /* Assets.xcassets in Resources */,
 				66F32C701D57582300D99701 /* Profile.storyboard in Resources */,
 				666117881C7C483D00F3B48D /* Assets.xcassets in Resources */,

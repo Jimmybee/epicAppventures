@@ -82,8 +82,8 @@ class EditAppventureDetailsTableViewController: UITableViewController {
     func updateAppventure() {
         appventure!.title = appventureNameField.text
         appventure!.subtitle = appventureDescription.text
-        appventure!.duration = durationLabel.text!
-        appventure!.startingLocationName = startingLocation.text!
+        appventure!.duration = durationLabel.text
+        appventure!.startingLocationName = startingLocation.text
         appventure!.restrictions = restrictionsField.text!.splitStringToArray()
         appventure!.keyFeatures = keyFeatures.text!.splitStringToArray()
         appventure!.image = imageView.image
@@ -94,8 +94,7 @@ class EditAppventureDetailsTableViewController: UITableViewController {
     //MARK: Tableview Delegate 
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        if indexPath.row == 1{
+        if indexPath.section == 0{
             let alert = UIAlertController(title: nil, message: nil, preferredStyle: UIAlertControllerStyle.actionSheet)
             alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: nil))
             alert.addAction(UIAlertAction(title: "Take Image", style: UIAlertActionStyle.default, handler: { action in

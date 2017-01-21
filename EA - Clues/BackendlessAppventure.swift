@@ -32,6 +32,7 @@ class BackendlessAppventure: NSObject {
         self.liveStatusNum = appventure.liveStatusNum
         self.objectId = appventure.backendlessId
         self.title = appventure.title!
+        self.subtitle = appventure.subtitle
         self.totalDistance = appventure.totalDistance
         self.location = GeoPoint.geoPoint(
             GEO_POINT(latitude: appventure.location.coordinate.latitude, longitude: appventure.location.coordinate.longitude),
@@ -50,6 +51,7 @@ class BackendlessAppventure: NSObject {
         //        self.keyFeatures = appventure.keyFeatures!
         self.liveStatusNum = dict["liveStatusNum"] as! Int16
         self.title = dict["title"] as? String
+        self.subtitle = dict["subtitle"] as? String
         self.totalDistance = dict["totalDistance"] as? Double
         self.location = dict["location"] as? GeoPoint
         

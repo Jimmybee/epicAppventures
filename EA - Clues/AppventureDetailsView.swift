@@ -14,10 +14,15 @@ protocol AppventureDetailsViewDelegate: class {
     func playPressed()
 }
 
-class AppventureDetailsView: UIView {
+class AppventureDetailsView: UIView, UIScrollViewDelegate{
     
     var appventure: Appventure!
     weak var delegate: AppventureDetailsViewDelegate!
+    
+    @IBOutlet weak var appventureImage: UIImageView!
+    @IBOutlet weak var appventureTitle: UILabel!
+    @IBOutlet weak var seeMapBttn: UIButton!
+    @IBOutlet weak var descriptionLabel: UILabel!
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -28,60 +33,13 @@ class AppventureDetailsView: UIView {
     }
     
     func setup() {
-        setupConstriaints() 
+        setupModel()
     }
     
-    // MARK: - Property Accessors
-    
-    private(set) lazy var appventureImage: UIImageView = {
-        let appventureImage = UIImageView()
-        return appventureImage
-    }()
-    
-    private(set) lazy var appventureName: UILabel = {
-        let appventureName = UILabel()
-        return appventureName
-    }()
-    
-    private(set) lazy var descriptionTextView: UITextView = {
-        let description = UITextView()
-        return description
-    }()
-    
-    private(set) lazy var leftButton: UIButton = {
-        let leftButton = UIButton()
-        return leftButton
-    }()
-    
-    private(set) lazy var rightButton: UIButton = {
-        let rightButton = UIButton()
-        rightButton.backgroundColor = UIColor.green
-        return rightButton
-    }()
-    
-    private(set) lazy var buttonStackView: UIStackView = {
-        let buttonStackView = UIStackView()
-        buttonStackView.alignment = .fill
-        buttonStackView.axis = .horizontal
-        buttonStackView.spacing = 8
-        return buttonStackView
-    }()
-
-    
-}
-
-extension AppventureDetailsView {
-    
-    func setupConstriaints() {
-        self.addSubview(buttonStackView)
+    func setupModel() {
+        appventureImage.image = appventure.image
+        appventureTitle.text = appventure.title
+        descriptionLabel.text = appventure.subtitle
         
-        buttonStackView.addSubview(leftButton)
-        buttonStackView.addSubview(rightButton)
-        
-//        self.addSubview(appventureImage)
-//        self.addSubview(appventureName)
-//        self.addSubview(descriptionTextView)
-
-
     }
 }

@@ -143,7 +143,7 @@ class CreateAppventureViewController: UIViewController, UITableViewDelegate, UIT
     
     override func viewDidAppear(_ animated: Bool) {
         updateUI()
-        if newAppventure!.appventureSteps.count > 0 {
+        if newAppventure!.appventureSteps.count > 1 {
             if CLLocationCoordinate2DIsValid(newAppventure!.appventureSteps[0].location!.coordinate) {
                 newAppventure!.location = newAppventure!.appventureSteps[0].location!
                 drawMap()
