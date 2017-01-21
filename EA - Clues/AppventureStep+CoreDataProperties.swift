@@ -25,12 +25,11 @@ extension AppventureStep {
     @NSManaged public var hintPenalty: Int16
     @NSManaged public var image: UIImage?
     @NSManaged public var initialText: String?
-    @NSManaged public var locationHidden: Bool
     @NSManaged public var nameOrLocation: String?
     @NSManaged public var backendlessId: String?
     @NSManaged public var sound: Data?
     @NSManaged public var stepNumber: Int16
-    @NSManaged public var coordinate2D: CLLocation?
+    @NSManaged public var location: CLLocation?
     @NSManaged public var appventure: Appventure?
     @NSManaged public var setup: StepSetup!
     

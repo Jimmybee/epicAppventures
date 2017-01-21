@@ -89,7 +89,7 @@ class SettingsTableViewController: UITableViewController {
                     print(Thread.isMainThread)
                     self.embeddedProfileHeader.circledImageView.image = image
                     CoreUser.user?.facebookPicture = image
-                    AppDelegate.coreDataStack.saveContext()
+                    AppDelegate.coreDataStack.saveContext(completion: nil)
                     self.embeddedProfileHeader.updateCircleImage()
                 }
 //                stop spinner

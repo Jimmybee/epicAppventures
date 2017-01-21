@@ -12,8 +12,6 @@ import MapKit
 import GoogleMaps
 
 protocol CreateAppventureViewControllerDelegate: NSObjectProtocol {
-    
-    func appendNewAppventure(_ appventure: Appventure, indexRow: Int?)
     func reloadTable()
 }
 
@@ -146,8 +144,8 @@ class CreateAppventureViewController: UIViewController, UITableViewDelegate, UIT
     override func viewDidAppear(_ animated: Bool) {
         updateUI()
         if newAppventure!.appventureSteps.count > 0 {
-            if CLLocationCoordinate2DIsValid(newAppventure!.appventureSteps[0].coordinate2D!.coordinate) {
-                newAppventure!.location = newAppventure!.appventureSteps[0].coordinate2D!
+            if CLLocationCoordinate2DIsValid(newAppventure!.appventureSteps[0].location!.coordinate) {
+                newAppventure!.location = newAppventure!.appventureSteps[0].location!
                 drawMap()
             }
         }
@@ -163,8 +161,8 @@ class CreateAppventureViewController: UIViewController, UITableViewDelegate, UIT
     func drawMap() {
         
         if let isAppventure = newAppventure {
-        let lat = isAppventure.appventureSteps[0].coordinate2D!.coordinate.latitude
-        let long = isAppventure.appventureSteps[0].coordinate2D!.coordinate.longitude
+        let lat = isAppventure.appventureSteps[0].location!.coordinate.latitude
+        let long = isAppventure.appventureSteps[0].location!.coordinate.longitude
         
         var top =  lat + 0.01
         var left =  long - 0.01
@@ -176,7 +174,7 @@ class CreateAppventureViewController: UIViewController, UITableViewDelegate, UIT
 //        var bounds = GMSCoordinateBounds()
         self.mapMarkers.removeAll()
         for step in isAppventure.appventureSteps {
-            let marker = GMSMarker(position: step.coordinate2D!.coordinate)
+            let marker = GMSMarker(position: step.location!.coordinate)
             marker.title = ("\(step.stepNumber): \(step.nameOrLocation)")
             marker.snippet = step.locationSubtitle
             marker.map = self.mapView
@@ -192,13 +190,13 @@ class CreateAppventureViewController: UIViewController, UITableViewDelegate, UIT
 //             bounds = GMSCoordinateBounds(coordinate: northEast, coordinate: southWest)
             
             //distance calculation
-            let currentLocation = CLLocation(latitude: step.coordinate2D!.coordinate.latitude, longitude: step.coordinate2D!.coordinate.longitude)
+            let currentLocation = CLLocation(latitude: step.location!.coordinate.latitude, longitude: step.location!.coordinate.longitude)
             totalDistance = totalDistance + currentLocation.distance(from: previousLocation)
             previousLocation = currentLocation
         }
         
         isAppventure.totalDistance = totalDistance
-            let upD = GMSCameraUpdate.setTarget(isAppventure.appventureSteps[0].coordinate2D!.coordinate, zoom: 12.0)
+            let upD = GMSCameraUpdate.setTarget(isAppventure.appventureSteps[0].location!.coordinate, zoom: 12.0)
 //        let update = GMSCameraUpdate.fitBounds(bounds!)
             
         mapView.moveCamera(upD)
@@ -312,14 +310,14 @@ class CreateAppventureViewController: UIViewController, UITableViewDelegate, UIT
             break
         }
         
-        AppDelegate.coreDataStack.saveContext()
+        AppDelegate.coreDataStack.saveContext(completion: nil)
         // TODO: Save to backend enabled for appventure.
 //        self.newAppventure.
     }
     
     func saveComplete() {
         DispatchQueue.main.async {
-            AppDelegate.coreDataStack.saveContext()
+            AppDelegate.coreDataStack.saveContext(completion: nil)
         }
     }
     
@@ -437,8 +435,7 @@ class CreateAppventureViewController: UIViewController, UITableViewDelegate, UIT
                     if let asvc = nvc.childViewControllers[0] as? AddStepTableViewController {
                         if newAppventure.appventureSteps.count > indexPath {
                             let appventureStep = newAppventure.appventureSteps[indexPath]
-                            asvc.currentStep = appventureStep
-                            asvc.editOfCurrentStep = true
+                            asvc.appventureStep = appventureStep
                         } else {
                             let appventureStep = AppventureStep(appventure: newAppventure)
                             appventureStep.stepNumber = Int16(newAppventure.appventureSteps.count)

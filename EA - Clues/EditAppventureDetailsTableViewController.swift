@@ -18,7 +18,6 @@ class EditAppventureDetailsTableViewController: UITableViewController {
     @IBOutlet weak var appventureDescription: UITextView!
     //TextField
     @IBOutlet weak var appventureNameField: UITextField!
-    @IBOutlet weak var appventureDuration: UITextField!
     @IBOutlet weak var startingLocation: UITextField!
     //Views
     @IBOutlet weak var restrictionsField: UITextField!
@@ -27,6 +26,15 @@ class EditAppventureDetailsTableViewController: UITableViewController {
     
     @IBOutlet weak var saveBtt: UIBarButtonItem!
 
+    @IBOutlet weak var durationLabel: UILabel!
+    
+    private(set) lazy var timePicker: UIDatePicker = {
+        let timePicker = UIDatePicker()
+        timePicker.backgroundColor = UIColor.white
+        timePicker.datePickerMode = .time
+        timePicker.minuteInterval = 5
+        return timePicker
+    } ()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,7 +60,7 @@ class EditAppventureDetailsTableViewController: UITableViewController {
         }
         appventureNameField.text =  appventure!.title
         appventureDescription.text = appventure!.subtitle
-        appventureDuration.text = appventure!.duration
+        durationLabel.text = appventure!.duration
         startingLocation.text = appventure!.startingLocationName
         restrictionsField.text = appventure!.restrictions?.joined(separator: ",")
         keyFeatures.text = appventure!.keyFeatures?.joined(separator: ",")
@@ -80,14 +88,12 @@ class EditAppventureDetailsTableViewController: UITableViewController {
     func updateAppventure() {
         appventure!.title = appventureNameField.text
         appventure!.subtitle = appventureDescription.text
-        appventure!.duration = appventureDuration.text!
+        appventure!.duration = durationLabel.text!
         appventure!.startingLocationName = startingLocation.text!
         appventure!.restrictions = restrictionsField.text!.splitStringToArray()
         appventure!.keyFeatures = keyFeatures.text!.splitStringToArray()
         appventure!.image = imageView.image
-        appventure?.saveContext {
-            print("update core data handler")
-            }
+        AppDelegate.coreDataStack.saveContext(completion: nil)
     }
     
     //MARK: Tableview Delegate 
@@ -164,4 +170,13 @@ extension EditAppventureDetailsTableViewController : UITextFieldDelegate {
     
 }
 
+//MARK: UITextFieldDelegate
+extension EditAppventureDetailsTableViewController  {
+    
+    func setupConstraints() {
+        view.addSubview(timePicker)
+        
+    }
+    
+}
 

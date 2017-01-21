@@ -66,6 +66,7 @@ class BackendlessAppventure: NSObject {
             guard let dict = returnObject as? Dictionary<String, Any> else { return }
             guard let objectId = dict["objectId"] as? String else { return }
             guard let steps = dict["steps"] as? [Dictionary<String, Any>] else { return }
+            print(dict)
             var stepIds = [String]()
             for step in steps {
                 if let stepId = step["objectId"] as? String {
@@ -115,7 +116,7 @@ class BackendlessAppventure: NSObject {
         guard  let image = image  else { return }
         guard let id = objectId else { return }
         
-        let url = "myfiles/\(id)/appventure.jpg"
+        let url = "myfiles/\(id)/image.jpg"
         let data = UIImagePNGRepresentation(image)
         
         apiUploadGroup.enter()

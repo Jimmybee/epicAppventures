@@ -53,7 +53,7 @@ class CoreDataStack {
     
     // MARK: - Core Data Saving support
     
-    func saveContext () {
+    func saveContext (completion: ((Void) -> (Void))?) {
         let context = persistentContainer.viewContext
         if context.hasChanges {
             do {
@@ -72,10 +72,10 @@ class CoreDataStack {
         print("rolled back")
     }
     
-    func delete(object: NSManagedObject) {
+    func delete(object: NSManagedObject, completion: ((Void) -> (Void))?) {
         let context = persistentContainer.viewContext
         context.delete(object)
-        saveContext()   
+        saveContext(completion: nil)
     }
     
 

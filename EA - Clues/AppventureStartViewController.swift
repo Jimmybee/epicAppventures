@@ -56,7 +56,7 @@ class AppventureStartViewController: UIViewController {
     func updateUI () {
         self.navigationItem.title = appventure.title
         self.appventureTitle.text = appventure.title
-        descriptionLabel.text = appventure.subtitle!
+        descriptionLabel.text = appventure.subtitle
         self.startingLocation.text = self.appventure.startingLocationName
         
         appventure.keyFeatures?.count == 0 ? (self.keyFeaturesLabel.text = "None") : (self.keyFeaturesLabel.text = self.appventure.keyFeatures?.joined(separator: ", "))
@@ -70,7 +70,6 @@ class AppventureStartViewController: UIViewController {
     }
     
     //MARK: Navigation
-    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == Constants.StartAdventureSegue {
             if let svc = segue.destination as? StepViewController {
@@ -80,31 +79,19 @@ class AppventureStartViewController: UIViewController {
         }
     }
     
+    /// Popup to remove downloaded appventure
     @IBAction func menuPopUp(_ sender: AnyObject) {
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: nil))
         alert.addAction(UIAlertAction(title: "Remove Downloaded Content", style: .default, handler: { action in
-            if self.appventure.userID != User.user?.pfObject {
-                self.appventure.deleteFromContext({
+                AppDelegate.coreDataStack.delete(object: self.appventure, completion: { (Void) -> (Void) in
                     DispatchQueue.main.async { () -> Void in
                         let completedRemoval = UIAlertController(title: "Removed", message: "Delete this appventure from your maker profile.", preferredStyle: UIAlertControllerStyle.alert)
                         completedRemoval.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
                         self.present(completedRemoval, animated: true, completion: nil)
                     }
                 })
-            } else {
-                self.appventure.liveStatus = LiveStatus.inDevelopment
-//                self.appventure.saveAndSync()
-//                self.appventure.completeSaveToContext({
-//                    DispatchQueue.main.async { () -> Void in
-//                        let ownedAlert = UIAlertController(title: "Locally Created", message: "Appventure set to in development. Delete this appventure from your maker profile.", preferredStyle: UIAlertControllerStyle.alert)
-//                        ownedAlert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default , handler: nil))
-//                        self.present(ownedAlert, animated: true, completion: nil)
-//                    }
-//                })
-            }
         }))
-
         self.present(alert, animated: true, completion: nil)
     }
     

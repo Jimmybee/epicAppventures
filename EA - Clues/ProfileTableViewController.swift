@@ -51,29 +51,24 @@ class ProfileTableViewController: BaseTableViewController {
         HelperFunctions.unhideTabBar(self)
     }
     
-    
+    /// Query all appventures with user id & load all data and images
     func restoreAppventures() {
-//        let userId = Backendless.sharedInstance().userService.currentUser.objectId
-//        let whereClause = "ownerId = \(id)"
-
         let dataQuery = BackendlessDataQuery()
-//        dataQuery.whereClause = whereClause
         let id = Backendless.sharedInstance().userService.currentUser.objectId
         dataQuery.whereClause = "ownerId = '\(id!)'"
-        print(dataQuery.whereClause)
-        
-            self.showProgressView()
+        self.showProgressView()
         BackendlessAppventure.loadBackendlessAppventures(persistent: true, dataQuery: dataQuery) { (appventures) in
             let orderedSet = NSOrderedSet(array: appventures)
-            print("ordered set: \(orderedSet.count)")
             CoreUser.user?.addToOwnedAppventures(orderedSet)
             DispatchQueue.main.async {
-                AppDelegate.coreDataStack.saveContext()
+                AppDelegate.coreDataStack.saveContext(completion: nil)
                 self.hideProgressView()
                 self.tableView.reloadData()
             }
         }
     }
+    
+    
     
     @IBAction func refeshTable(_ sender: UIRefreshControl) {
         sender.endRefreshing()
@@ -121,7 +116,7 @@ class ProfileTableViewController: BaseTableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
-         let cell = tableView.dequeueReusableCell(withIdentifier: Constants.CellName) as! AppventureMakerCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: Constants.CellName) as! AppventureMakerCell
         
         let row = indexPath.row
         let appventureArray = Array(CoreUser.user!.ownedAppventures!)
@@ -145,7 +140,6 @@ class ProfileTableViewController: BaseTableViewController {
         alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: nil))
         alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.destructive, handler: { action in
             self.deleteAppventureFromDB(indexPath)
-            self.tableView.reloadData()
         }))
         
         self.present(alert, animated: true, completion: nil)
@@ -154,7 +148,7 @@ class ProfileTableViewController: BaseTableViewController {
     func deleteAppventureFromDB (_ indexPath: IndexPath) {
         let appventureArray = Array(CoreUser.user!.ownedAppventures!)
         let appventure = appventureArray[indexPath.row]
-        AppDelegate.coreDataStack.delete(object: appventure)
+        AppDelegate.coreDataStack.delete(object: appventure, completion: nil)
         tableView.reloadData()
         // TODO: remove from backendless
     }
@@ -163,16 +157,6 @@ class ProfileTableViewController: BaseTableViewController {
 
 
 extension ProfileTableViewController : CreateAppventureViewControllerDelegate {
-    func appendNewAppventure(_ appventure: Appventure, indexRow: Int?) {
-//        if let row = indexRow as Int! {
-//            User.user!.ownedAppventures[row] = appventure
-//        } else {
-//            User.user!.ownedAppventures.append(appventure)
-//        }
-//        
-//        tableView.reloadData()
-        
-    }
     
     func reloadTable() {
         tableView.reloadData()

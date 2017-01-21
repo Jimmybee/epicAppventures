@@ -26,11 +26,11 @@
         <attribute name="backendlessId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="checkInProximity" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="completionText" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="coordinate2D" optional="YES" attributeType="Transformable" customClassName="CLLocation" syncable="YES"/>
         <attribute name="freeHints" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="hintPenalty" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="image" optional="YES" attributeType="Transformable" allowsExternalBinaryDataStorage="YES" customClassName="UIImage" syncable="YES"/>
         <attribute name="initialText" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="location" optional="YES" attributeType="Transformable" customClassName="CLLocation" syncable="YES"/>
         <attribute name="locationHidden" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="nameOrLocation" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="sound" optional="YES" attributeType="Transformable" customClassName="Data" syncable="YES"/>
@@ -49,14 +49,14 @@
         <relationship name="ownedAppventures" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Appventure" inverseName="owner" inverseEntity="Appventure" syncable="YES"/>
     </entity>
     <entity name="StepSetup" representedClassName=".StepSetup" syncable="YES">
-        <attribute name="checkIn" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="compassShown" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="distanceShown" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="isLocation" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="locationShown" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="pictureClue" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="soundClue" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="textClue" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="checkIn" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="compassShown" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="distanceShown" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="isLocation" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="locationShown" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="pictureClue" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="soundClue" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="textClue" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES" syncable="YES"/>
         <relationship name="step" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="AppventureStep" inverseName="setup" inverseEntity="AppventureStep" syncable="YES"/>
     </entity>
     <elements>

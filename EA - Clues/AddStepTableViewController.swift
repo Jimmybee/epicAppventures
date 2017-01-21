@@ -23,7 +23,7 @@ struct PlaceCache {
     
     init (step: AppventureStep) {
         self.name = step.nameOrLocation
-        self.coordinate = step.coordinate2D!
+        self.coordinate = step.location!
         self.address = step.locationSubtitle
     }
     
@@ -56,10 +56,6 @@ class AddStepTableViewController: UITableViewController, UITextFieldDelegate, UI
     var lastLocation: CLLocation?
     var soundDataCache: Data?
     var placeCache: PlaceCache?
-    
-    //set
-    var currentStep: AppventureStep!
-    lazy var editOfCurrentStep = false
     
     weak var delegate: AddStepTableViewControllerDelegate?
     //Sound
@@ -124,15 +120,9 @@ class AddStepTableViewController: UITableViewController, UITextFieldDelegate, UI
         recorderSetUp()
         saveButton.isEnabled = false
 
-        if editOfCurrentStep == true {
-             appventureStep = currentStep
-        }
-        
         setCaches()
         
         initialUISetup()
-        
-        
     }
     
     override func viewDidAppear(_ animated: Bool)  {
@@ -285,10 +275,10 @@ class AddStepTableViewController: UITableViewController, UITextFieldDelegate, UI
         updateStep()
         
         if appventureStep.stepNumber == 1 {
-            delegate?.updateAppventureLocation(appventureStep.coordinate2D!)
+            delegate?.updateAppventureLocation(appventureStep.location!)
         }
         
-        AppDelegate.coreDataStack.saveContext()
+        AppDelegate.coreDataStack.saveContext(completion: nil)
         
         self.dismiss(animated: true, completion: nil)
 
@@ -319,7 +309,7 @@ class AddStepTableViewController: UITableViewController, UITextFieldDelegate, UI
         
         self.appventureStep.completionText = self.completionTextView.text
         self.appventureStep.sound = soundDataCache
-        self.appventureStep.coordinate2D = placeCache!.coordinate
+        self.appventureStep.location = placeCache!.coordinate
         self.appventureStep.nameOrLocation = placeCache!.name
         self.appventureStep.locationSubtitle = placeCache!.address
         

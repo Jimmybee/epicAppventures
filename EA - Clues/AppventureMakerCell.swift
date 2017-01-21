@@ -10,7 +10,7 @@
 import UIKit
 //import Parse
 
-class AppventureMakerCell: UITableViewCell {
+class AppventureMakerCell: UITableViewCell, AppventureImageCell {
     
     var appventure: Appventure? { didSet { updateUI()  }}
     
@@ -49,7 +49,6 @@ class AppventureMakerCell: UITableViewCell {
         self.locationLabel.text = appventure?.startingLocationName
         self.stausLabel.text = " \((appventure?.liveStatus.label)!) "
         self.appventureTitle.text = appventure?.title
-        self.appventureImage.image = appventure?.image
         if let status = appventure?.liveStatus {
             switch status {
             case LiveStatus.inDevelopment :
@@ -62,43 +61,28 @@ class AppventureMakerCell: UITableViewCell {
                 self.stausLabel.backgroundColor = Colours.myGreen
             }
         }
+        
+        if appventure?.image != nil {
+            self.appventureImage.image = appventure?.image
+        } else {
+            appventureImage.image = nil
+            appventure?.loadImageFor(cell: self)
+            
+        }
 
         
-        
         DispatchQueue.global(qos: DispatchQoS.QoSClass.background).async { () -> Void in
-//            if self.appventure?.image == nil {
-//                if let isFile = self.appventure?.pfFile as PFFile! {
-////                    ParseFunc.loadParseImage(isFile, getParseImage: self.loadImage)
-//                }
-//            } else {
-//                self.appventureImage.image = self.appventure?.image
-//            }
+
         }
     }
 
     
-    //MARK: Load Image
-    
-    func loadImage() {
-        
-//        if let pfImageFile = appventure!.pfFile as PFFile! {
-//            pfImageFile.getDataInBackgroundWithBlock {
-//                (imageData: NSData?, error: NSError?) -> Void in
-//                if error == nil {
-//                    if let imageData = imageData {
-//                        self.appventure!.image = UIImage(data:imageData)
-//                        self.appventureImage.image = UIImage(data:imageData)
-//                    } else {
-//                        let errorString = error!.userInfo["error"] as? NSString
-//                        print(errorString)
-//                    }
-//                }
-//            }
-//        }
-        
-    }
-    
     
 }
 
+protocol AppventureImageCell {
+    var appventureImage: UIImageView! {get set}
+    
+    func setNeedsDisplay()
+}
 

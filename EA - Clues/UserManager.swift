@@ -38,7 +38,7 @@ class UserManager {
             let users = try context.fetch(fetchRequest)
             if users.count == 0 {
                 CoreUser.user = CoreUser(context: context)
-                AppDelegate.coreDataStack.saveContext()
+                AppDelegate.coreDataStack.saveContext(completion: nil)
             } else {
                 CoreUser.user = users[0]
             }

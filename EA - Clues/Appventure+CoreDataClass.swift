@@ -9,6 +9,7 @@
 import UIKit
 import CoreData
 import CoreLocation
+import Alamofire
 
 public class Appventure: NSManagedObject {
    
@@ -25,6 +26,10 @@ public class Appventure: NSManagedObject {
         set { print("setting steps") }
     }
     
+    struct CoreKeys {
+        static let entityName = "Appventure"
+    }
+    
     var appventureRating = AppventureRating()
     var saveImage = false
     
@@ -32,16 +37,20 @@ public class Appventure: NSManagedObject {
 //    var tags: [String]?
     var rating = 5
     
+    
+    /// init for a new appventure
     convenience init () {
         let context = AppDelegate.coreDataStack.persistentContainer.viewContext
         let entity = NSEntityDescription.entity(forEntityName: CoreKeys.entityName, in: context)
-        self.init(entity: entity!, insertInto: nil)
+        self.init(entity: entity!, insertInto: context)
         
         let coordinate: CLLocationCoordinate2D = kCLLocationCoordinate2DInvalid
         self.location = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
         self.liveStatus = .inDevelopment
+        self.owner = CoreUser.user!
     }
     
+    /// init for appventure using backendless API data
     convenience init (backendlessAppventure: BackendlessAppventure, persistent: Bool) {
         let context = persistent ? AppDelegate.coreDataStack.persistentContainer.viewContext : AppDelegate.coreDataStack.tempContainer.viewContext
         let entity = NSEntityDescription.entity(forEntityName: CoreKeys.entityName, in: context)
@@ -53,17 +62,12 @@ public class Appventure: NSManagedObject {
         self.startingLocationName = backendlessAppventure.startingLocationName
         let geoPoint = backendlessAppventure.location
         self.location = CLLocation(latitude: geoPoint!.latitude as! Double, longitude: geoPoint!.longitude as! Double)
-        self.liveStatus = .inDevelopment
+        self.liveStatusNum = backendlessAppventure.liveStatusNum
         
         for backendlessStep in backendlessAppventure.steps {
-            let step = AppventureStep()
+            let step = AppventureStep(backendlessStep: backendlessStep, persistent: persistent)
+            self.addToSteps(step)
         }
-    }
-    
-    //MARK: CoreData
-    
-    struct CoreKeys {
-        static let entityName = "Appventure"
     }
     
     //Save methods
@@ -72,48 +76,26 @@ public class Appventure: NSManagedObject {
      //   AppventureStep.loadSteps(self, handler: handler)
     }
     
-    func saveContext(handler: () -> ()) {
-        if self.managedObjectContext  == nil {
-            let context = AppDelegate.coreDataStack.persistentContainer.viewContext
-            context.insert(self)
-            self.owner = CoreUser.user!
-        }
-        
-        AppDelegate.coreDataStack.saveContext()
-        handler()
-    }
-    
-    
-    
-    class func saveAllToCoreData(_ appventures: [Appventure]) {
-        for appventure in appventures {
-            appventure.downloadAndSaveToCoreData({
-                
-            })
-        }
-    }
-    
-    //delete from context
+    //Delete from context
     
     func deleteAppventure() {
 //        self.deleteAppventureFromBackend()
-        self.deleteFromContext({})
+        AppDelegate.coreDataStack.delete(object: self, completion: nil)
     }
     
-    func deleteFromContext(_ handler: () -> ()) {
-        let context = AppDelegate.coreDataStack.persistentContainer.viewContext
-        
-        context.delete(self)
-        do {
-            try self.managedObjectContext?.save()
-            handler()
-        } catch let error as NSError  {
-            print("Could not save to CD.. \(error), \(error.userInfo)")
+    
+    //MARK: Load Image
+    func loadImageFor(cell: AppventureImageCell) {
+        guard let objectId = self.backendlessId else { return }
+        let url = "https://api.backendless.com/\(AppDelegate.APP_ID)/\(AppDelegate.VERSION_NUM)/files/myfiles/\(objectId)/image.jpg"
+        Alamofire.request(url).response { response in
+            guard let data = response.data else {return}
+            guard let image = UIImage(data: data) else { return }
+            self.image = image
+            cell.appventureImage.image = image
+            cell.setNeedsDisplay()
         }
     }
-    
-    
-    
 }
 
 enum LiveStatus: Int16 {

@@ -16,28 +16,32 @@ public class AppventureStep: NSManagedObject {
         @nonobjc static var entityName = "AppventureStep"
     }
     
+    /// init for creating a step
     convenience init (appventure: Appventure) {
         let context = AppDelegate.coreDataStack.persistentContainer.viewContext
         let entity = NSEntityDescription.entity(forEntityName: CoreKeys.entityName, in: context)
         self.init(entity: entity!, insertInto: context)
         
-        self.setup = StepSetup(context: context)
+        self.setup = StepSetup(step: self, context: context)
         self.answerHint = [String]()
         self.answerText = [String]()
         self.appventure = appventure
         let coordinate = kCLLocationCoordinate2DInvalid
-        self.coordinate2D = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
+        self.location = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
 
     }
     
+    /// init for creating a step from backendless API
     convenience init(backendlessStep: BackendlessStep, persistent: Bool) {
-        let context = AppDelegate.coreDataStack.persistentContainer.viewContext
+        let context = persistent ? AppDelegate.coreDataStack.persistentContainer.viewContext : AppDelegate.coreDataStack.tempContainer.viewContext
         let entity = NSEntityDescription.entity(forEntityName: CoreKeys.entityName, in: context)
         self.init(entity: entity!, insertInto: context)
         
-        
+        self.backendlessId = backendlessStep.objectId
+        self.nameOrLocation = backendlessStep.nameOrLocation
+        self.stepNumber = backendlessStep.stepNumber ?? 0
     }
-
+    
     
     var locationSubtitle = "set location"
     var saveSound = false

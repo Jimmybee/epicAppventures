@@ -9,7 +9,7 @@
 import UIKit
 import Alamofire
 
-class LocalAppventureTableViewCell: UITableViewCell {
+class LocalAppventureTableViewCell: UITableViewCell, AppventureImageCell {
 
     var appventure: Appventure? {
         didSet {
@@ -37,20 +37,6 @@ class LocalAppventureTableViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
-
-    //MARK: Load Image
-    
-    func loadImageFor(appventure: Appventure?) {
-        guard let objectId = appventure?.backendlessId else { return }
-        let url = "https://api.backendless.com/\(AppDelegate.APP_ID)/\(AppDelegate.VERSION_NUM)/files/myfiles/\(objectId)/appventure.jpg"
-        Alamofire.request(url).response { response in
-            guard let data = response.data else {return}
-            guard let image = UIImage(data: data) else { return }
-            appventure?.image = image
-            self.appventureImage.image = image
-            self.setNeedsDisplay()
-        }
-    }
     
     func updateUI() {
         startingLocation.text = appventure?.startingLocationName
@@ -60,7 +46,7 @@ class LocalAppventureTableViewCell: UITableViewCell {
         if let image = appventure?.image {
             appventureImage.image = image
         } else {
-            loadImageFor(appventure: appventure)
+            appventure?.loadImageFor(cell: self)
         }
     }
 

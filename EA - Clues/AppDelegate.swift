@@ -32,7 +32,6 @@ struct Licensing {
 }
 
 
-
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
