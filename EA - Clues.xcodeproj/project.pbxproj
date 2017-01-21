@@ -46,6 +46,7 @@
 		6691FE371DA1801000BC54D0 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6691FE351DA1801000BC54D0 /* Model.xcdatamodeld */; };
 		669A97511E32C0B50023A641 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 669A97501E32C0B50023A641 /* BaseViewController.swift */; };
 		669A97571E337EBD0023A641 /* BackendlessSetup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 669A97561E337EBD0023A641 /* BackendlessSetup.swift */; };
+		669A97591E3394810023A641 /* AppventureDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 669A97581E3394810023A641 /* AppventureDetailsView.swift */; };
 		66B3DB5C1E2A60B600CEB1AA /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B3DB5B1E2A60B600CEB1AA /* User.swift */; };
 		66B3DB5F1E2A61E000CEB1AA /* CoreUser+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B3DB5D1E2A61E000CEB1AA /* CoreUser+CoreDataClass.swift */; };
 		66B3DB601E2A61E000CEB1AA /* CoreUser+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B3DB5E1E2A61E000CEB1AA /* CoreUser+CoreDataProperties.swift */; };
@@ -184,6 +185,7 @@
 		6691FE361DA1801000BC54D0 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		669A97501E32C0B50023A641 /* BaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		669A97561E337EBD0023A641 /* BackendlessSetup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackendlessSetup.swift; sourceTree = "<group>"; };
+		669A97581E3394810023A641 /* AppventureDetailsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppventureDetailsView.swift; sourceTree = "<group>"; };
 		66A3217B1C69C36B001DDF50 /* StepViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StepViewController.swift; sourceTree = "<group>"; };
 		66A321871C69E83F001DDF50 /* TextClueViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TextClueViewController.swift; path = StepClueViews/TextClueViewController.swift; sourceTree = "<group>"; };
 		66A321881C69E83F001DDF50 /* TextClueViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TextClueViewController.xib; path = StepClueViews/TextClueViewController.xib; sourceTree = "<group>"; };
@@ -416,6 +418,15 @@
 			name = Catalog;
 			sourceTree = "<group>";
 		};
+		669A975A1E3394860023A641 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				669A97581E3394810023A641 /* AppventureDetailsView.swift */,
+			);
+			name = Views;
+			path = "EA - Clues";
+			sourceTree = "<group>";
+		};
 		66A3218D1C69E9E9001DDF50 /* ClueViews */ = {
 			isa = PBXGroup;
 			children = (
@@ -454,6 +465,7 @@
 				66ED85D31D5F442900A3F438 /* Storyboards */,
 				66DA2F2F1C5B6D3D00751528 /* TableCells */,
 				669A97541E3366D80023A641 /* ViewControllers */,
+				669A975A1E3394860023A641 /* Views */,
 				66DA2F2D1C5B445C00751528 /* Ancillary Files */,
 				66D7CDA81C5B40D100ACB8E3 /* Shared Nib */,
 				66D7CD5C1C5B3F4E00ACB8E3 /* Products */,
@@ -833,6 +845,7 @@
 				66F32C891D575A7200D99701 /* LocalAppventureTableViewCell.swift in Sources */,
 				66D7CD5F1C5B3F4E00ACB8E3 /* AppDelegate.swift in Sources */,
 				669A97571E337EBD0023A641 /* BackendlessSetup.swift in Sources */,
+				669A97591E3394810023A641 /* AppventureDetailsView.swift in Sources */,
 				66F32C771D575A5C00D99701 /* TextClueViewController.swift in Sources */,
 				6633C7431E30F13500F65D50 /* BackendlessStep.swift in Sources */,
 				6663EAC71D647299000F7BF9 /* InstructionsViewController.swift in Sources */,

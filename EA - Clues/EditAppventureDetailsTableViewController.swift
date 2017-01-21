@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import PureLayout
 
 class EditAppventureDetailsTableViewController: UITableViewController {
     
@@ -28,13 +29,6 @@ class EditAppventureDetailsTableViewController: UITableViewController {
 
     @IBOutlet weak var durationLabel: UILabel!
     
-    private(set) lazy var timePicker: UIDatePicker = {
-        let timePicker = UIDatePicker()
-        timePicker.backgroundColor = UIColor.white
-        timePicker.datePickerMode = .time
-        timePicker.minuteInterval = 5
-        return timePicker
-    } ()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -96,22 +90,24 @@ class EditAppventureDetailsTableViewController: UITableViewController {
         AppDelegate.coreDataStack.saveContext(completion: nil)
     }
     
+    
     //MARK: Tableview Delegate 
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        let alert = UIAlertController(title: nil, message: nil, preferredStyle: UIAlertControllerStyle.actionSheet)
-        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: nil))
-        alert.addAction(UIAlertAction(title: "Take Image", style: UIAlertActionStyle.default, handler: { action in
-            HelperFunctions.getImage(true, delegate: self, presenter: self)
-            
-        }))
-        alert.addAction(UIAlertAction(title: "Pick From Library", style: UIAlertActionStyle.default, handler: { action in
-            HelperFunctions.getImage(false, delegate: self, presenter: self)
-            
-        }))
-        self.present(alert, animated: true, completion: nil)
-
+        if indexPath.row == 1{
+            let alert = UIAlertController(title: nil, message: nil, preferredStyle: UIAlertControllerStyle.actionSheet)
+            alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: nil))
+            alert.addAction(UIAlertAction(title: "Take Image", style: UIAlertActionStyle.default, handler: { action in
+                HelperFunctions.getImage(true, delegate: self, presenter: self)
+                
+            }))
+            alert.addAction(UIAlertAction(title: "Pick From Library", style: UIAlertActionStyle.default, handler: { action in
+                HelperFunctions.getImage(false, delegate: self, presenter: self)
+                
+            }))
+            self.present(alert, animated: true, completion: nil)
+        } 
     }
 }
 
@@ -166,16 +162,6 @@ extension EditAppventureDetailsTableViewController : UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
-    }
-    
-}
-
-//MARK: UITextFieldDelegate
-extension EditAppventureDetailsTableViewController  {
-    
-    func setupConstraints() {
-        view.addSubview(timePicker)
-        
     }
     
 }

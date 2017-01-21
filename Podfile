@@ -17,6 +17,7 @@ pod ‘FBSDKShareKit’
 pod 'Backendless’
 pod 'Alamofire'
 pod 'SwiftyJSON'
+pod 'PureLayout'
 
 end
 
