@@ -10,7 +10,7 @@ import UIKit
 
 class AddAnswerTableViewController: UITableViewController {
     
-    var step = AppventureStep()
+    var step: AppventureStep!
 
     override func viewDidLoad() {
         super.viewDidLoad()

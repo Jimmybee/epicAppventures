@@ -62,7 +62,7 @@ public class Appventure: NSManagedObject {
         self.startingLocationName = backendlessAppventure.startingLocationName
         self.subtitle = backendlessAppventure.subtitle
         let geoPoint = backendlessAppventure.location
-        self.location = CLLocation(latitude: geoPoint!.latitude as! Double, longitude: geoPoint!.longitude as! Double)
+        self.location = CLLocation(latitude: geoPoint!.latitude as Double, longitude: geoPoint!.longitude as Double)
         self.liveStatusNum = backendlessAppventure.liveStatusNum
         
         for backendlessStep in backendlessAppventure.steps {

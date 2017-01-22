@@ -88,8 +88,6 @@
 	<array>
 		<string>armv7</string>
 	</array>
-	<key>UIStatusBarStyle</key>
-	<string>UIStatusBarStyleLightContent</string>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
@@ -98,5 +96,9 @@
 	<false/>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Photo usage warning</string>
+	<key>UIStatusBarStyle</key>
+	<string>UIStatusBarStyleDefault</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>This app can use your microphone to record audio for clues.</string>
 </dict>
 </plist>

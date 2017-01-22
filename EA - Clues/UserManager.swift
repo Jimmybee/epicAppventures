@@ -82,4 +82,8 @@ class UserManager {
         })
     }
     
+    static func logout() {
+        backendless!.userService.logout()
+    }
+    
 }

@@ -10,7 +10,7 @@ import UIKit
 
 class EditTextClueViewController: UIViewController {
     
-    var step = AppventureStep()
+    var step: AppventureStep!
     
     @IBOutlet weak var reviewTextView: UITextView!
     @IBOutlet weak var bottomConstraint: NSLayoutConstraint!

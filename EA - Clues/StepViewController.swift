@@ -45,9 +45,9 @@ class StepViewController: UIViewController {
     @IBOutlet weak var imageSelectConstantWidth: NSLayoutConstraint!
     
     //MARK: Model
-    lazy var appventure = Appventure()
+    var appventure: Appventure!
     lazy var completedAppventures = [CompletedAppventure]()
-    var step = AppventureStep()
+    var step: AppventureStep!
     var stepNumber = 0 { didSet {
         step = appventure.appventureSteps[stepNumber]
         //        setupForStep()
@@ -326,7 +326,7 @@ class StepViewController: UIViewController {
     
     func flagContent() {
         let stepIs = self.step
-        let stepID = stepIs.backendlessId
+        let stepID = stepIs?.backendlessId
         let flaggedContent = FlaggedContent(appventureFKID: self.appventure.backendlessId!, stepFKID: stepID!)
         flaggedContent.save()
     }

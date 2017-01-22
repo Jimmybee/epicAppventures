@@ -16,7 +16,6 @@ class AppventureMakerCell: UITableViewCell, AppventureImageCell {
     
     @IBOutlet weak var appventureImage: UIImageView! //dont block main thread
     @IBOutlet weak var appventureTitle: UILabel!
-    @IBOutlet weak var stausLabel: UILabel!
     @IBOutlet weak var locationLabel: UILabel!
 
     
@@ -47,20 +46,7 @@ class AppventureMakerCell: UITableViewCell, AppventureImageCell {
     
     func updateUI() {
         self.locationLabel.text = appventure?.startingLocationName
-        self.stausLabel.text = " \((appventure?.liveStatus.label)!) "
         self.appventureTitle.text = appventure?.title
-        if let status = appventure?.liveStatus {
-            switch status {
-            case LiveStatus.inDevelopment :
-                self.stausLabel.backgroundColor = Colours.myRed
-            case LiveStatus.local :
-                self.stausLabel.backgroundColor = Colours.myBlue
-            case LiveStatus.waitingForApproval :
-                self.stausLabel.backgroundColor = Colours.myYellow
-            case LiveStatus.live :
-                self.stausLabel.backgroundColor = Colours.myGreen
-            }
-        }
         
         if appventure?.image != nil {
             self.appventureImage.image = appventure?.image
@@ -69,7 +55,6 @@ class AppventureMakerCell: UITableViewCell, AppventureImageCell {
             appventure?.loadImageFor(cell: self)
             
         }
-
         
         DispatchQueue.global(qos: DispatchQoS.QoSClass.background).async { () -> Void in
 

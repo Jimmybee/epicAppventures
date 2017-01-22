@@ -39,7 +39,19 @@ public class AppventureStep: NSManagedObject {
         
         self.backendlessId = backendlessStep.objectId
         self.nameOrLocation = backendlessStep.nameOrLocation
-        self.stepNumber = backendlessStep.stepNumber ?? 0
+        self.stepNumber = backendlessStep.stepNumber
+        self.initialText = backendlessStep.initialText
+        self.completionText = backendlessStep.completionText
+        self.checkInProximity = backendlessStep.checkInProximity
+        self.hintPenalty = backendlessStep.hintPenalty
+        self.freeHints = backendlessStep.freeHints
+        self.answerHint = backendlessStep.answerHint?.splitStringToArray()
+        self.answerText = backendlessStep.answerText?.splitStringToArray()
+        let geoPoint = backendlessStep.location
+        self.location = CLLocation(latitude: geoPoint!.latitude as Double, longitude: geoPoint!.longitude as Double)
+        
+        self.setup = StepSetup(backendlesSetup: backendlessStep.setup!, context: context)
+
     }
     
     

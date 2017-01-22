@@ -10,7 +10,7 @@ import UIKit
 
 class AddHintTableViewController: UITableViewController {
     
-    var step = AppventureStep()
+    var step: AppventureStep!
 
     override func viewDidLoad() {
         super.viewDidLoad()

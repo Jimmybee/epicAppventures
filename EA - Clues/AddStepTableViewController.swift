@@ -52,7 +52,7 @@ class AddStepTableViewController: UITableViewController, UITextFieldDelegate, UI
     }
     
     //MARK: Model
-    var appventureStep = AppventureStep()
+    var appventureStep: AppventureStep!
     var lastLocation: CLLocation?
     var soundDataCache: Data?
     var placeCache: PlaceCache?

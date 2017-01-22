@@ -23,6 +23,7 @@ class AppventureDetailsView: UIView, UIScrollViewDelegate{
     @IBOutlet weak var appventureTitle: UILabel!
     @IBOutlet weak var seeMapBttn: UIButton!
     @IBOutlet weak var descriptionLabel: UILabel!
+    @IBOutlet weak var greyBox: UIView!
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -34,6 +35,13 @@ class AppventureDetailsView: UIView, UIScrollViewDelegate{
     
     func setup() {
         setupModel()
+        setView()   
+    }
+    
+    func setView() {
+        greyBox.layer.cornerRadius = 4
+        greyBox.layer.borderWidth = 0.5
+        greyBox.layer.borderColor = UIColor.lightGray.cgColor
     }
     
     func setupModel() {

@@ -23,4 +23,19 @@ public class StepSetup: NSManagedObject {
         self.step = step
     }
     
+    convenience init(backendlesSetup: BackendlessSetup, context: NSManagedObjectContext) {
+        let entity = NSEntityDescription.entity(forEntityName: CoreKeys.entityName, in: context)
+        self.init(entity: entity!, insertInto: context)
+        
+        self.textClue = backendlesSetup.textClue
+        self.soundClue = backendlesSetup.soundClue
+        self.pictureClue = backendlesSetup.pictureClue
+        self.checkIn = backendlesSetup.checkIn
+        self.isLocation  = backendlesSetup.isLocation
+        self.locationShown = backendlesSetup.locationShown
+        self.compassShown = backendlesSetup.compassShown
+        self.distanceShown = backendlesSetup.distanceShown
+
+    }
+    
 }

@@ -10,7 +10,7 @@ import UIKit
 
 class ImageChooserViewController: UIViewController,UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
-    var step = AppventureStep()
+    var step: AppventureStep!
     
     @IBOutlet weak var selectImageLabel: UILabel!
     

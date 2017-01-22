@@ -23,21 +23,16 @@ class AppventureStartViewController: UIViewController {
 
 //    @IBOutlet weak var startAppventure: UIButton!
     @IBOutlet weak var startButton: UIButton!
-    @IBOutlet weak var imageView: UIImageView!
-    @IBOutlet weak var appventureTitle: UILabel!
-    @IBOutlet weak var duration: UILabel!
-    @IBOutlet weak var descriptionLabel: UILabel!
-    @IBOutlet weak var startingLocation: UILabel!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var detailsSegmentControl: UISegmentedControl!
-    @IBOutlet weak var keyFeaturesLabel: UILabel!
-    @IBOutlet weak var restrictionsLabel: UILabel!
     
     @IBOutlet weak var detailsView: UIView!
 
     private(set) lazy var detailsSubView: AppventureDetailsView = {
-        let detailsSubView = AppventureDetailsView()
-        return detailsSubView
+        let bundle = Bundle(for: AppventureDetailsView.self)
+        let nib = bundle.loadNibNamed("AppventureDetailsView", owner: self, options: nil)
+        let view = nib?.first as? AppventureDetailsView
+        return view!
     }()
   
     //MARK: Controller Lifecyele
@@ -50,15 +45,13 @@ class AppventureStartViewController: UIViewController {
 //        AppventureReviews.loadAppventuresReviews(appventure.pFObjectID!, handler: self)
         HelperFunctions.hideTabBar(self)
         
-        let bundle = Bundle(for: AppventureDetailsView.self)
-        let nib = bundle.loadNibNamed("AppventureDetailsView", owner: self, options: nil)
-        let dynamicView = nib?.first as? AppventureDetailsView
         
-        detailsView.addSubview(dynamicView!)
-        dynamicView!.appventure = self.appventure
-        dynamicView!.autoCenterInSuperview()
-        dynamicView!.autoPinEdgesToSuperviewEdges()
-        dynamicView!.setup()
+        
+        detailsView.addSubview(detailsSubView)
+        detailsSubView.appventure = self.appventure
+        detailsSubView.autoCenterInSuperview()
+        detailsSubView.autoPinEdgesToSuperviewEdges()
+        detailsSubView.setup()
 //        self.navigationController?.isNavigationBarHidden = true
 
     }
@@ -66,16 +59,6 @@ class AppventureStartViewController: UIViewController {
    
     
     func updateUI () {
-        self.navigationItem.title = appventure.title
-        self.appventureTitle.text = appventure.title
-        descriptionLabel.text = appventure.subtitle
-        self.startingLocation.text = self.appventure.startingLocationName
-        
-        appventure.keyFeatures?.count == 0 ? (self.keyFeaturesLabel.text = "None") : (self.keyFeaturesLabel.text = self.appventure.keyFeatures?.joined(separator: ", "))
-        appventure.restrictions?.count == 0 ? (self.restrictionsLabel.text = "None") : (self.restrictionsLabel.text = self.appventure.restrictions?.joined(separator: ", "))
-        
-        imageView.image = halfImage(appventure.image!)
-        duration.text = appventure.duration
         if self.appventure.downloaded == true {
             startButton.setTitle("Play", for: UIControlState())
         }

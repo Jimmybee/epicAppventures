@@ -27,6 +27,13 @@ class CreateAppventureViewController: UIViewController, UITableViewDelegate, UIT
         static let shareWithFriend = "shareWithFriend"
     }
     
+    private(set) lazy var detailsSubView: AppventureDetailsView = {
+        let bundle = Bundle(for: AppventureDetailsView.self)
+        let nib = bundle.loadNibNamed("AppventureDetailsView", owner: self, options: nil)
+        let view = nib?.first as? AppventureDetailsView
+        return view!
+    }()
+    
 //    Model
     var newAppventure: Appventure!
     var delegate: CreateAppventureViewControllerDelegate?
@@ -45,7 +52,6 @@ class CreateAppventureViewController: UIViewController, UITableViewDelegate, UIT
     @IBOutlet weak var stepsContainer: UIView!
     @IBOutlet weak var detailsView: UIView!
     @IBOutlet weak var mapView: GMSMapView!
-    @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet var containerView: UIView!
     //Constraints
@@ -78,23 +84,14 @@ class CreateAppventureViewController: UIViewController, UITableViewDelegate, UIT
     //UI Control
     @IBOutlet weak var segmentControl: UISegmentedControl!
     @IBOutlet weak var editButton: UIBarButtonItem!
-    
-    //Labels
-    @IBOutlet weak var nameLabel: UILabel!
-    @IBOutlet weak var descriptionLabel: UILabel!
-    @IBOutlet weak var durationLabel: UILabel!
-    @IBOutlet weak var startingPositionLabel: UILabel!
-//    @IBOutlet weak var tagsLabel: UILabel!
-  
-    @IBOutlet weak var shareButton: UIButton!
 
 
 //    MARK: View Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        shareButton.layer.borderWidth = 1.5
-        shareButton.layer.borderColor = UIColor.white.cgColor
+//        shareButton.layer.borderWidth = 1.5
+//        shareButton.layer.borderColor = UIColor.white.cgColor
         
         HelperFunctions.hideTabBar(self)
         
@@ -110,7 +107,13 @@ class CreateAppventureViewController: UIViewController, UITableViewDelegate, UIT
 //            AppventureStep.loadSteps(newAppventure!, handler: stepsLoaded)
             updateUI()
         }
-
+        
+        detailsView.addSubview(detailsSubView)
+        detailsSubView.appventure = self.newAppventure
+        detailsSubView.autoCenterInSuperview()
+        detailsSubView.autoPinEdgesToSuperviewEdges()
+        detailsSubView.setup()
+        
         //Location Manager
         self.locationManager.delegate = self
         getQuickLocationUpdate()
@@ -225,12 +228,6 @@ class CreateAppventureViewController: UIViewController, UITableViewDelegate, UIT
     
     func updateUI () {
         
-        self.navigationItem.title = newAppventure.title
-        imageView.image = newAppventure.image
-        nameLabel.text =  newAppventure.title
-        descriptionLabel.text = newAppventure.subtitle
-        durationLabel.text = newAppventure.duration
-        startingPositionLabel.text = newAppventure.startingLocationName
         tableView.reloadData()
 //        newAppventure.liveStatus == .inDevelopment ? (liveStatusSwitch.on = false) : (liveStatusSwitch.on = true)
         //segmented control

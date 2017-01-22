@@ -246,7 +246,6 @@ extension String {
     func splitStringToArray() -> [String] {
         return self.characters.split{$0 == ","}.map(String.init)
     }
-    
 }
 
 

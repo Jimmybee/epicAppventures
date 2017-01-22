@@ -159,7 +159,7 @@ extension SettingsTableViewController {
         let alert = UIAlertController(title: "Log out user", message: "Log out user", preferredStyle: UIAlertControllerStyle.alert)
         alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: nil))
         alert.addAction(UIAlertAction(title: "Confirm", style: UIAlertActionStyle.destructive, handler: { action in
-            User.user!.logout()
+            UserManager.logout()
             if let pwvc = self.parent as? ProfileWrapperViewController  {
                 pwvc.showForSignIn()
             }
