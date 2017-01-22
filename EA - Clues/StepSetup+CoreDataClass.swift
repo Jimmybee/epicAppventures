@@ -27,6 +27,7 @@ public class StepSetup: NSManagedObject {
         let entity = NSEntityDescription.entity(forEntityName: CoreKeys.entityName, in: context)
         self.init(entity: entity!, insertInto: context)
         
+        self.backendlessId = backendlesSetup.objectId
         self.textClue = backendlesSetup.textClue
         self.soundClue = backendlesSetup.soundClue
         self.pictureClue = backendlesSetup.pictureClue

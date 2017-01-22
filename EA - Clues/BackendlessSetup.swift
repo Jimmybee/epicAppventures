@@ -21,6 +21,7 @@ class BackendlessSetup: NSObject {
      public var objectId: String!
     
     init(setup: StepSetup) {
+        self.objectId = setup.backendlessId
         self.textClue = setup.textClue
         self.soundClue = setup.soundClue
         self.pictureClue = setup.pictureClue

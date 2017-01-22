@@ -11,7 +11,9 @@ import PureLayout
 
 protocol AppventureDetailsViewDelegate: class {
     
-    func playPressed()
+    func leftBttnPressed()
+    func rightBttnPressed()
+
 }
 
 class AppventureDetailsView: UIView, UIScrollViewDelegate{
@@ -44,10 +46,18 @@ class AppventureDetailsView: UIView, UIScrollViewDelegate{
         greyBox.layer.borderColor = UIColor.lightGray.cgColor
     }
     
+    @IBAction func leftBttnPressed(_ sender: UIButton) {
+        delegate.leftBttnPressed()
+    }
+    
+    @IBAction func rightBttnPressed(_ sender: UIButton) {
+        delegate.rightBttnPressed()
+    }
+    
+    
     func setupModel() {
-        appventureImage.image = appventure.image
+        if let image = appventure.image { appventureImage.image = appventure.image }
         appventureTitle.text = appventure.title
         descriptionLabel.text = appventure.subtitle
-        
     }
 }

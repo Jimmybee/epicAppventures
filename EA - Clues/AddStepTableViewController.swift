@@ -48,9 +48,15 @@ class AddStepTableViewController: UITableViewController, UITextFieldDelegate, UI
         static let locationSettingsSegue = "locationSettingsSegue"
         static let ImageChooser = "ImageChooser"
         static let EditTextClue = "EditTextClue"
+        static let HintPenalty = "HintPenalty"
 
     }
-    
+        
+ 
+
+    var showPenaltyPicker = false
+    let proximity = ["∞", "10", "20", "30", "40", "50", "60", "70", "80", "90", "100"]
+
     //MARK: Model
     var appventureStep: AppventureStep!
     var lastLocation: CLLocation?
@@ -101,21 +107,20 @@ class AddStepTableViewController: UITableViewController, UITextFieldDelegate, UI
     @IBOutlet weak var checkInControl: UISegmentedControl!
     @IBOutlet weak var answersLabel: UILabel!
     @IBOutlet weak var checkInLabel: UILabel!
-    @IBOutlet weak var checkInTextField: UITextField!
+    @IBOutlet weak var requiredProximityPicker: UIPickerView!
+    @IBOutlet weak var proximityLabel: UILabel!
     
     //section 3 - Hints
-    @IBOutlet weak var freeHintsTextField: UITextField!
     @IBOutlet weak var hintsLabel: UILabel!
-    @IBOutlet weak var hintPenalty: UITextField!
+    @IBOutlet weak var freeHintsLabel: UILabel!
+    @IBOutlet weak var penaltyLabel: UILabel!
     
     //section 4 - Completion
     @IBOutlet weak var completionTextView: UITextView!
     
     //MARK: View Controller Lifecycle
     override func viewDidLoad() {
-        checkInTextField.delegate = self
         completionTextView.delegate = self
-        freeHintsTextField.delegate = self
         
         recorderSetUp()
         saveButton.isEnabled = false
@@ -123,6 +128,7 @@ class AddStepTableViewController: UITableViewController, UITextFieldDelegate, UI
         setCaches()
         
         initialUISetup()
+        setupPickerView()
     }
     
     override func viewDidAppear(_ animated: Bool)  {
@@ -167,7 +173,8 @@ class AddStepTableViewController: UITableViewController, UITextFieldDelegate, UI
         
         //section3 - Hints
         self.appventureStep.answerHint.count == 0 ? (self.hintsLabel.text = "Set hints...") : (self.hintsLabel.text = "Hints availabe: \(appventureStep.answerHint.count)")
-        
+        self.penaltyLabel.text = String(appventureStep.hintPenalty)
+
     }
     
     func initialUISetup () {
@@ -179,6 +186,7 @@ class AddStepTableViewController: UITableViewController, UITextFieldDelegate, UI
         soundSwitch.isOn = appventureStep.setup.soundClue
         pictureSwitch.isOn = appventureStep.setup.pictureClue
         intialTextSwitch.isOn = appventureStep.setup.textClue
+        
         //SoundView
         if let soundData = soundDataCache {
             do {
@@ -196,13 +204,12 @@ class AddStepTableViewController: UITableViewController, UITextFieldDelegate, UI
         
         //section2 - Answer
         self.appventureStep.setup.checkIn == true ? (self.checkInControl.selectedSegmentIndex = 0) : (self.checkInControl.selectedSegmentIndex = 1)
-        self.checkInTextField.text = String(appventureStep.checkInProximity)
+        self.proximityLabel.text = String(appventureStep.checkInProximity)
 
         
         //section3 - Hints
         self.appventureStep.answerHint.count == 0 ? (self.hintsLabel.text = "Set hints...") : (self.hintsLabel.text = "Hints availabe: \(appventureStep.answerHint.count)")
-        self.freeHintsTextField.text = String(appventureStep.freeHints)
-        self.hintPenalty.text = String(appventureStep.hintPenalty)
+//        self.freeHintsTextField.text = String(appventureStep.freeHints)
         
         //section4 - Completion Text
         self.completionTextView.text = appventureStep.completionText
@@ -286,8 +293,8 @@ class AddStepTableViewController: UITableViewController, UITextFieldDelegate, UI
     
     func updateStep() {
         //add in all step sections here 
-        if let penalty = Int16(self.hintPenalty.text!) { self.appventureStep.hintPenalty = penalty }
-        if let freeHints = Int16(self.freeHintsTextField.text!) { self.appventureStep.freeHints = freeHints }
+//        if let penalty = Int16(self.hintPenalty.text!) { self.appventureStep.hintPenalty = penalty }
+//        if let freeHints = Int16(self.freeHintsTextField.text!) { self.appventureStep.freeHints = freeHints }
         if checkInControl.selectedSegmentIndex == 0 {
             appventureStep.setup.checkIn = true
         } else {
@@ -296,17 +303,12 @@ class AddStepTableViewController: UITableViewController, UITextFieldDelegate, UI
         appventureStep.setup.soundClue = soundSwitch.isOn
         appventureStep.setup.pictureClue = pictureSwitch.isOn
         appventureStep.setup.textClue = intialTextSwitch.isOn
-        if let distanceText = checkInTextField.text {
+        if let distanceText = proximityLabel.text {
             if let distance = Int16(distanceText) {
                 appventureStep.checkInProximity = distance
             }
         }
-        if let hintNumberText = freeHintsTextField.text {
-            if let freeHintsInt = Int16(hintNumberText) {
-                appventureStep.freeHints = freeHintsInt
-            }
-        }
-        
+
         self.appventureStep.completionText = self.completionTextView.text
         self.appventureStep.sound = soundDataCache
         self.appventureStep.location = placeCache!.coordinate
@@ -319,29 +321,34 @@ class AddStepTableViewController: UITableViewController, UITextFieldDelegate, UI
     //MARK: Boolean Functions
     
     @IBAction func locationSwitched(_ sender: UISwitch) {
-        tableView.reloadData()
+        tableView.beginUpdates()
+        tableView.endUpdates()
         checkSaveButton()
     }
     
     @IBAction func soundSwitched(_ sender: UISwitch) {
-        tableView.reloadData()
+        tableView.beginUpdates()
+        tableView.endUpdates()
         checkSaveButton()
     }
     
     @IBAction func pictureSwitched(_ sender: UISwitch) {
-        tableView.reloadData()
+        tableView.beginUpdates()
+        tableView.endUpdates()
         checkSaveButton()
     }
     
     @IBAction func textSwitched(_ sender: UISwitch) {
         TextClueCell.isHidden = !sender.isOn
-        tableView.reloadData()
+        tableView.beginUpdates()
+        tableView.endUpdates()
 
         checkSaveButton()
     }
     
     @IBAction func checkInControl(_ sender: UISegmentedControl) {
-        tableView.reloadData()
+        tableView.beginUpdates()
+        tableView.endUpdates()
         checkSaveButton()
     }
 
@@ -532,6 +539,7 @@ class AddStepTableViewController: UITableViewController, UITextFieldDelegate, UI
             }
             if let place = place {
                 self.placeCache = PlaceCache(place: place)
+                self.updatePartUI()
             } else {
                 print("No place selected")
             }
@@ -570,6 +578,11 @@ class AddStepTableViewController: UITableViewController, UITextFieldDelegate, UI
                 ahtvc.step = self.appventureStep
             }
         }
+        if segue.identifier == Constants.HintPenalty {
+            if let tpvc = segue.destination as? TimePenaltyViewController {
+                tpvc.step = self.appventureStep
+            }
+        }
   
     }
     
@@ -579,191 +592,159 @@ class AddStepTableViewController: UITableViewController, UITextFieldDelegate, UI
     let locationButton = IndexPath(row: 0, section: 0)
     let pickLocationPath = IndexPath(row: 1, section: 0)
     let locationSettingsPath = IndexPath(row: 2, section: 0)
+    
     let intitalTextPath = IndexPath(row: 1, section: 1)
     let imagePath = IndexPath(row: 3, section: 1)
     let soundPath = IndexPath(row: 5, section: 1)
+    
     let textAnswerArray = IndexPath(row: 1, section: 2)
     let checkInLocation = IndexPath(row: 2, section: 2)
     let checkInDistance = IndexPath(row: 3, section: 2)
+    let proximityPickerIndex = IndexPath(row: 4, section:2)
+    
     let hintArray = IndexPath(row: 0, section: 3)
+    let freeHints = IndexPath(row: 1, section: 3)
+
+    
     let completion = IndexPath(row: 0, section: 4)
 
+    
+}
 
-
-
+extension AddStepTableViewController {
+    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let cell = tableView.cellForRow(at: indexPath)
         if cell == locationNameCell {
             self.pickLocation()
         }
-    }
-        override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-            var float:CGFloat = 44.0
-            
-
-            
-            switch indexPath {
-            case locationButton:
-                float = 0.0
-            case pickLocationPath:
-                self.locationSwitch.isOn ?  (float = 44.0) : (float = 0.0 )
-            case locationSettingsPath:
-                self.locationSwitch.isOn ?  (float = 44.0) : (float = 0.0 )
-            case intitalTextPath:
-                self.intialTextSwitch.isOn ?( float = 44.0) : (float = 0.0 )
-            case imagePath:
-                self.pictureSwitch.isOn ? (float = 132.0) : (float = 0.0 )
-            case soundPath:
-                self.soundSwitch.isOn ? (float = 88.0) : (float = 0.0 )
-            case textAnswerArray:
-                self.checkInControl.selectedSegmentIndex == 1 ? (float = 44) : (float = 0.0 )
-            case checkInLocation:
-                self.checkInControl.selectedSegmentIndex == 0 ? (float = 44) : (float = 0.0 )
-            case checkInDistance:
-                self.checkInControl.selectedSegmentIndex == 0 ? (float = 44) : (float = 0.0 )
-            case completion:
-                float = 132
-            default:
-                break
+        
+        switch  indexPath {
+        case checkInDistance:
+            if showPenaltyPicker {
+                hideDatePickerCell(containingDatePicker: requiredProximityPicker)
+            } else {
+                showDatePickerCell(containingDatePicker: requiredProximityPicker)
             }
-            
-            
-            
-            return float
+//            let set = NSIndexSet(index: indexPath.section)
+//            tableView.reloadSections(set as IndexSet, with: .automatic)
+        default:
+            break
         }
-            
-    
-//    
-//    override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-//        return 44
-//    }
-//    
-//    override func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-//        let title = sections(rawValue: section)?.footerTitle()
-//        let button = sections(rawValue: section)?.footerButton(self, footerFrame: CGRect(), tableView: tableView)
-//        if title == nil && button == nil {
-//            return 0
-//        } else {
-//            return 30
-//        }
-//    }
-//    
-//    enum sections: Int {
-//        case location = 0
-//        case clues
-//        case answer
-//        case completion
-//        case other
-//        
-//        func headerTitle() -> UILabel? {
-//            let cgRect = CGRect(x: 10, y: 10, width: 200, height: 30)
-//            let title = UILabel(frame: cgRect)
-//            title.font = UIFont.boldSystemFontOfSize(14.0)
-////            title.textColor = UIColor
-//            switch self {
-//            case .location:
-//                title.text = "Set Location"
-//                return title
-//            case .clues:
-//                title.text = "Clues (min 1):"
-//                return title
-//            case .answer:
-//                title.text = "Answer or Checkin:"
-//                return title
-//            case .completion:
-//                title.text = "Completion Page:"
-//                return title
-//            case .other:
-//                title.text = "Tags"
-//                return title
-//            }
-//        }
-//        
-//        func headerButton(vc: AnyObject?, headerFrame: CGRect, tableView: UITableView) -> UIButton? {
-//            let headBttn:UIButton = UIButton(type: UIButtonType.Custom) as UIButton
-//            headBttn.frame = CGRectMake(headerFrame.size.width - 200, 10, 170, 30)
-//            headBttn.setTitleColor(headBttn.tintColor, forState: UIControlState.Normal)
-//            headBttn.titleLabel?.font = UIFont(name: "Helvetica", size: 12)
-//            headBttn.enabled = true
-//            headBttn.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Right
-//            switch self {
-//            case .location:
-//                headBttn.setTitle("Pick ->", forState: UIControlState.Normal)
-//                headBttn.addTarget(vc, action: #selector(AddStepTableViewController.pickLocation(_:)), forControlEvents: UIControlEvents.TouchUpInside)
-////                headBttn.tag = 
-//                return headBttn
-//            default:
-//                return nil
-//            }
-//        }
-//        
-//        func footerTitle() -> UILabel? {
-//            return nil
-//        }
-//        
-//        func footerButton(vc: AnyObject?, footerFrame: CGRect, tableView: UITableView) -> UIButton? {
-//            let bttn:UIButton = UIButton(type: UIButtonType.Custom) as UIButton
-//            bttn.frame = CGRectMake(footerFrame.size.width - 200, 10, 170, 30)
-//            bttn.setTitleColor(bttn.tintColor, forState: UIControlState.Normal)
-//            bttn.titleLabel?.font = UIFont(name: "Helvetica", size: 12)
-//            bttn.enabled = true
-//            bttn.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Right
-//            switch self {
-//                case .location:
-//                bttn.setTitle("location Settings->", forState: UIControlState.Normal)
-//                bttn.addTarget(vc, action: #selector(AddStepTableViewController.locationSettings), forControlEvents: UIControlEvents.TouchUpInside)
-//                return bttn
-//                default:
-//                return nil
-//            }
-//
-//        }
-//    }
-//    
-//    override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-//        let headerFrame:CGRect = tableView.frame
-//        
-//        let titleLabel = sections(rawValue: section)?.headerTitle()
-//        let headerButton = sections(rawValue: section)?.headerButton(self, headerFrame: headerFrame, tableView: tableView)
-//        
-//        let headerView:UIView = UIView(frame: CGRectMake(0, 0, headerFrame.size.width, headerFrame.size.height))
-////        headerView.backgroundColor = UIColor(red: 108/255, green: 185/255, blue: 0/255, alpha: 0.9)
-//        
-//        if let isTitle = titleLabel as UILabel! {
-//            headerView.addSubview(isTitle)
-//        }
-//        if let headBttn = headerButton as UIButton! {
-//            headerView.addSubview(headBttn)
-//        }
-//
-//        return headerView
-//
-//    }
-//    
-//    
-//    override func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-//        let footerFrame:CGRect = tableView.frame
-//        
-//        let titleLabel = sections(rawValue: section)?.footerTitle()
-//        let footerButton = sections(rawValue: section)?.footerButton(self, footerFrame: footerFrame, tableView: tableView)
-//        
-//        let headerView:UIView = UIView(frame: CGRectMake(0, 0, footerFrame.size.width, footerFrame.size.height))
-//        //        headerView.backgroundColor = UIColor(red: 108/255, green: 185/255, blue: 0/255, alpha: 0.9)
-//        
-//        if let isTitle = titleLabel as UILabel! {
-//            headerView.addSubview(isTitle)
-//        }
-//        if let footBttn = footerButton as UIButton! {
-//            headerView.addSubview(footBttn)
-//        }
-//        
-//        return headerView
-//    }
-    
- 
+        
+        tableView.deselectRow(at: indexPath, animated: true)
 
+    }
     
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        var float:CGFloat = 44.0
+        
+        
+        
+        switch indexPath {
+        case locationButton:
+            float = 0.0
+        case pickLocationPath:
+            self.locationSwitch.isOn ?  (float = 44.0) : (float = 0.0 )
+        case locationSettingsPath:
+            self.locationSwitch.isOn ?  (float = 44.0) : (float = 0.0 )
+        case intitalTextPath:
+            self.intialTextSwitch.isOn ?( float = 44.0) : (float = 0.0 )
+        case imagePath:
+            self.pictureSwitch.isOn ? (float = 132.0) : (float = 0.0 )
+        case soundPath:
+            self.soundSwitch.isOn ? (float = 88.0) : (float = 0.0 )
+        case textAnswerArray:
+            self.checkInControl.selectedSegmentIndex == 1 ? (float = 44) : (float = 0.0 )
+        case checkInLocation:
+            self.checkInControl.selectedSegmentIndex == 0 ? (float = 44) : (float = 0.0 )
+        case checkInDistance:
+            self.checkInControl.selectedSegmentIndex == 0 ? (float = 44) : (float = 0.0 )
+        case completion:
+            float = 132
+        case proximityPickerIndex:
+            float = showPenaltyPicker ? 218 : 0
+        case freeHints:
+            float = 0
+        default:
+            break
+        }
+        
+        
+        
+        return float
+    }
+    
+    func showDatePickerCell(containingDatePicker picker: UIPickerView)
+    {
+        if picker == requiredProximityPicker {
+            showPenaltyPicker = true
+        }
+        
+        tableView.beginUpdates()
+        tableView.endUpdates()
+        
+        picker.isHidden = false
+        picker.alpha = 0.0
+        
+        UIView.animate(withDuration: 0.25) { () -> Void in
+            picker.alpha = 1.0
+        }
+    }
+    
+    func hideDatePickerCell(containingDatePicker picker: UIPickerView)
+    {
+        if picker == requiredProximityPicker {
+            
+            showPenaltyPicker = false
+            
+        }
+      
+        UIView.animate(withDuration: 0.25,
+                                   animations: { () -> Void in
+                                    
+                                    picker.alpha = 0.0
+        },
+                                   completion:{ (finished) -> Void in
+                                    
+                                    picker.isHidden = true
+        }
+        )
+        
+        
+        
+        tableView.beginUpdates()
+        tableView.endUpdates()
+        
+    }
 }
+
+extension AddStepTableViewController: UIPickerViewDelegate, UIPickerViewDataSource {
+    
+    func setupPickerView () {
+        requiredProximityPicker.alpha = 0
+        requiredProximityPicker.delegate = self
+        requiredProximityPicker.dataSource = self
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return proximity[row]
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return proximity.count
+    }
+    
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        proximityLabel.text = proximity[row]
+    }
+}
+    
+
 
 
 

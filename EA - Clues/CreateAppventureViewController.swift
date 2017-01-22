@@ -31,8 +31,13 @@ class CreateAppventureViewController: UIViewController, UITableViewDelegate, UIT
         let bundle = Bundle(for: AppventureDetailsView.self)
         let nib = bundle.loadNibNamed("AppventureDetailsView", owner: self, options: nil)
         let view = nib?.first as? AppventureDetailsView
+        view?.delegate = self
         return view!
     }()
+    
+    
+    var aboveBottom: NSLayoutConstraint!
+    var belowBottom: NSLayoutConstraint!
     
 //    Model
     var newAppventure: Appventure!
@@ -65,7 +70,6 @@ class CreateAppventureViewController: UIViewController, UITableViewDelegate, UIT
     @IBOutlet weak var detailsEqualSegmentControlBottom: NSLayoutConstraint! //detailsTop - starts active
     @IBOutlet weak var detailsBottomLayoutBottom: NSLayoutConstraint! //startsActive
     @IBOutlet weak var detailsTopEqualLayoutBottom: NSLayoutConstraint! //startsInactive
-    @IBOutlet weak var developLocalPublicControl: UISegmentedControl! 
     
     func detailsUp () {
         detailsBottomLayoutBottom.isActive = true
@@ -90,9 +94,6 @@ class CreateAppventureViewController: UIViewController, UITableViewDelegate, UIT
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        shareButton.layer.borderWidth = 1.5
-//        shareButton.layer.borderColor = UIColor.white.cgColor
-        
         HelperFunctions.hideTabBar(self)
         
         if newAppventure == nil {
@@ -113,7 +114,8 @@ class CreateAppventureViewController: UIViewController, UITableViewDelegate, UIT
         detailsSubView.autoCenterInSuperview()
         detailsSubView.autoPinEdgesToSuperviewEdges()
         detailsSubView.setup()
-        
+        self.containerView.bringSubview(toFront: detailsView)
+
         //Location Manager
         self.locationManager.delegate = self
         getQuickLocationUpdate()
@@ -122,7 +124,7 @@ class CreateAppventureViewController: UIViewController, UITableViewDelegate, UIT
         editButton.title = "Edit"
 //        editButton.action = "editDetailsSegue:"
 //        editButton.action = #selector(CreateAppventureViewController.editDetailsSegue(_:))
-    
+        
     }
     
     func stepsLoaded(){
@@ -227,96 +229,56 @@ class CreateAppventureViewController: UIViewController, UITableViewDelegate, UIT
     //MARK: UI Interface
     
     func updateUI () {
-        
         tableView.reloadData()
-//        newAppventure.liveStatus == .inDevelopment ? (liveStatusSwitch.on = false) : (liveStatusSwitch.on = true)
-        //segmented control
-        if newAppventure.liveStatus.segmentValue() == 3 {
-            self.developLocalPublicControl.selectedSegmentIndex = 2
-            if let dlps = developLocalPublicControl as? DevelopLocalPublicSegmented {
-                dlps.setToLive()
-            }
-        } else {
-            self.developLocalPublicControl.selectedSegmentIndex = newAppventure.liveStatus.segmentValue()
-        }
-        self.segmentControl.layer.cornerRadius = 15.0;
-        self.segmentControl.layer.borderColor = UIColor.white.cgColor
-        self.segmentControl.layer.borderWidth = 1.0
-        self.segmentControl.layer.masksToBounds = true
-        stylizeFonts()
-        
-        
-
     }
     
-    func stylizeFonts(){
-        let normalFont = UIFont(name: "Helvetica", size: 16.0)
-        let boldFont = UIFont(name: "Helvetica-Bold", size: 16.0)
-        
-        let normalTextAttributes: [AnyHashable: Any] = [
-            NSForegroundColorAttributeName: UIColor.darkGray,
-            NSFontAttributeName: normalFont!
-        ]
-        
-        let boldTextAttributes: [AnyHashable: Any] = [
-            NSForegroundColorAttributeName : UIColor.darkGray,
-            NSFontAttributeName : boldFont!,
-            ]
-        
-        self.segmentControl.setTitleTextAttributes(normalTextAttributes, for: UIControlState())
-        self.segmentControl.setTitleTextAttributes(normalTextAttributes, for: .highlighted)
-        self.segmentControl.setTitleTextAttributes(boldTextAttributes, for: .selected)
-    }
+  
     
     
     //MARK: IB Actions
     
+//    
+//    @IBAction func statusSegmentChange(_ sender: UISegmentedControl) {
+//        let message = goodForLive()
+//        
+//        func revertToDevelop() {
+//            self.newAppventure.liveStatus = .inDevelopment
+//            sender.selectedSegmentIndex = 0
+//            let fullMessage = "Complete the " + message
+//            let alert = UIAlertController(title: nil, message: fullMessage, preferredStyle: UIAlertControllerStyle.alert)
+//            alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: nil))
+//            self.present(alert, animated: true, completion: nil)
+//            
+//        }
+//        
+//        func tryForPublic() {
+//            self.newAppventure.liveStatus = .waitingForApproval
+//            let alert = UIAlertController(title: "Public Adventure", message: "This adventure will be looked at by one of our team, and if suitable made available to everyone.", preferredStyle: UIAlertControllerStyle.alert)
+//            alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: nil))
+//            
+//            
+//            self.present(alert, animated: true, completion: nil)
+//        }
+//        
+//        
+//        switch sender.selectedSegmentIndex {
+//        case 0:
+//            self.newAppventure.liveStatus = .inDevelopment
+//        case 1:
+//            message == "" ? (self.newAppventure.liveStatus = .local) : (revertToDevelop())
+//            BackendlessAppventure.save(appventure: newAppventure, withImage: true, completion: saveComplete)
+//        case 2:
+//            message == "" ? (tryForPublic()) : (revertToDevelop())
+//        default:
+//            break
+//        }
+//        
+//        AppDelegate.coreDataStack.saveContext(completion: nil)
+//        // TODO: Save to backend enabled for appventure.
+////        self.newAppventure.
+//    }
     
-    @IBAction func statusSegmentChange(_ sender: UISegmentedControl) {
-        let message = goodForLive()
-        
-        func revertToDevelop() {
-            self.newAppventure.liveStatus = .inDevelopment
-            sender.selectedSegmentIndex = 0
-            let fullMessage = "Complete the " + message
-            let alert = UIAlertController(title: nil, message: fullMessage, preferredStyle: UIAlertControllerStyle.alert)
-            alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: nil))
-            self.present(alert, animated: true, completion: nil)
-            
-        }
-        
-        func tryForPublic() {
-            self.newAppventure.liveStatus = .waitingForApproval
-            let alert = UIAlertController(title: "Public Adventure", message: "This adventure will be looked at by one of our team, and if suitable made available to everyone.", preferredStyle: UIAlertControllerStyle.alert)
-            alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: nil))
-            
-            
-            self.present(alert, animated: true, completion: nil)
-        }
-        
-        
-        switch sender.selectedSegmentIndex {
-        case 0:
-            self.newAppventure.liveStatus = .inDevelopment
-        case 1:
-            message == "" ? (self.newAppventure.liveStatus = .local) : (revertToDevelop())
-            BackendlessAppventure.save(appventure: newAppventure, withImage: true, completion: saveComplete)
-        case 2:
-            message == "" ? (tryForPublic()) : (revertToDevelop())
-        default:
-            break
-        }
-        
-        AppDelegate.coreDataStack.saveContext(completion: nil)
-        // TODO: Save to backend enabled for appventure.
-//        self.newAppventure.
-    }
-    
-    func saveComplete() {
-        DispatchQueue.main.async {
-            AppDelegate.coreDataStack.saveContext(completion: nil)
-        }
-    }
+ 
     
     
     func goodForLive() -> String {
@@ -333,59 +295,19 @@ class CreateAppventureViewController: UIViewController, UITableViewDelegate, UIT
         let controlValue = sender.selectedSegmentIndex
         switch controlValue {
         case 0:
-            detailsView.isHidden = false
             editButton.title = "Edit"
             editButton.isEnabled = true
-//                        editButton.action = "editDetailsSegue"
-//            editButton.action = #selector(CreateAppventureViewController.editDetailsSegue(_:))
-            
             self.containerView.bringSubview(toFront: detailsView)
-            tableView.setEditing(false , animated: true)
-
-            UIView.animate(withDuration: 0.3, animations: {
-                self.stepsTopSegmentBottomCon.isActive = false
-                self.stepsHeight.isActive = true
-//                self.mapBottomLayoutBottom.active = false
-//                self.mapBottomSegmentBottom.active = true
-                self.detailsUp()
-                self.view.layoutIfNeeded()
-                })
-
         case 1:
             stepsContainer.isHidden = false
             editButton.isEnabled = true
             editButton.title = "Edit"
-//            editButton.action = "editStepTable:"
-//            editButton.action = #selector(CreateAppventureViewController.editStepTable(_:))
             self.containerView.bringSubview(toFront: stepsContainer)
-            
-            UIView.animate(withDuration: 0.3, animations: {
-                self.stepsTopSegmentBottomCon.isActive = true
-                self.stepsHeight.isActive = false
-                self.detailsDown()
-
-//                self.mapBottomLayoutBottom.active = false
-//                self.mapBottomSegmentBottom.active = true
-                self.view.layoutIfNeeded()
-                })
-            
-            
-        
         case 2:
-            
+            self.containerView.bringSubview(toFront: mapView)
             tableView.setEditing(false , animated: true)
-
             editButton.isEnabled = false
             editButton.title = nil
-            mapView.isHidden = false
-            UIView.animate(withDuration: 0.3, animations: {
-                self.stepsTopSegmentBottomCon.isActive = false
-                self.stepsHeight.isActive = true
-                self.detailsDown()
-//                self.mapBottomLayoutBottom.active = true
-//                self.mapBottomSegmentBottom.active = false
-                self.view.layoutIfNeeded()
-                })
         default: break
         }
         
@@ -566,6 +488,25 @@ class CreateAppventureViewController: UIViewController, UITableViewDelegate, UIT
 }
 
 
+extension CreateAppventureViewController : AppventureDetailsViewDelegate {
+    
+    func leftBttnPressed() {
+        //show map
+    }
+    
+    func rightBttnPressed() {
+        BackendlessAppventure.save(appventure: newAppventure, withImage: true) { 
+            self.saveComplete()
+        }
+    }
+    
+    func saveComplete() {
+        DispatchQueue.main.async {
+            AppDelegate.coreDataStack.saveContext(completion: nil)
+        }
+    }
+}
+
 extension CreateAppventureViewController : AddStepTableViewControllerDelegate {
     
     func updateAppventureLocation(_ location: CLLocation) {
@@ -583,6 +524,7 @@ extension CreateAppventureViewController : ParseQueryHandler {
         
     }
 }
+
 
 
 

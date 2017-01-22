@@ -26,5 +26,6 @@ extension StepSetup {
     @NSManaged public var compassShown: Bool
     @NSManaged public var distanceShown: Bool
     @NSManaged public var step: AppventureStep?
+    @NSManaged public var backendlessId: String?
 
 }

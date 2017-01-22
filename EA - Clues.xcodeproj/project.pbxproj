@@ -48,11 +48,14 @@
 		669A97571E337EBD0023A641 /* BackendlessSetup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 669A97561E337EBD0023A641 /* BackendlessSetup.swift */; };
 		669A97591E3394810023A641 /* AppventureDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 669A97581E3394810023A641 /* AppventureDetailsView.swift */; };
 		669A977D1E33D3D60023A641 /* AppventureDetailsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 669A977C1E33D3D60023A641 /* AppventureDetailsView.xib */; };
+		669A97811E34DBA80023A641 /* TimePicker.xib in Resources */ = {isa = PBXBuildFile; fileRef = 669A97801E34DBA80023A641 /* TimePicker.xib */; };
+		669A97831E34DCB40023A641 /* TimePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 669A97821E34DCB40023A641 /* TimePicker.swift */; };
 		66B3DB5C1E2A60B600CEB1AA /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B3DB5B1E2A60B600CEB1AA /* User.swift */; };
 		66B3DB5F1E2A61E000CEB1AA /* CoreUser+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B3DB5D1E2A61E000CEB1AA /* CoreUser+CoreDataClass.swift */; };
 		66B3DB601E2A61E000CEB1AA /* CoreUser+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B3DB5E1E2A61E000CEB1AA /* CoreUser+CoreDataProperties.swift */; };
 		66B3DB851E2BA24500CEB1AA /* AppventureStep+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B3DB831E2BA24500CEB1AA /* AppventureStep+CoreDataClass.swift */; };
 		66B3DB861E2BA24500CEB1AA /* AppventureStep+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B3DB841E2BA24500CEB1AA /* AppventureStep+CoreDataProperties.swift */; };
+		66C097001E3561820003F455 /* TimePenaltyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C096FF1E3561820003F455 /* TimePenaltyViewController.swift */; };
 		66C916B81C61EAB300E39576 /* EditAppventureDetailsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C916B71C61EAB300E39576 /* EditAppventureDetailsTableViewController.swift */; };
 		66D7CD5F1C5B3F4E00ACB8E3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D7CD5E1C5B3F4E00ACB8E3 /* AppDelegate.swift */; };
 		66D7CD661C5B3F4E00ACB8E3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 66D7CD651C5B3F4E00ACB8E3 /* Assets.xcassets */; };
@@ -189,6 +192,8 @@
 		669A97581E3394810023A641 /* AppventureDetailsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppventureDetailsView.swift; sourceTree = "<group>"; };
 		669A977C1E33D3D60023A641 /* AppventureDetailsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AppventureDetailsView.xib; sourceTree = "<group>"; };
 		669A977E1E33D7300023A641 /* File.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
+		669A97801E34DBA80023A641 /* TimePicker.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TimePicker.xib; sourceTree = "<group>"; };
+		669A97821E34DCB40023A641 /* TimePicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimePicker.swift; sourceTree = "<group>"; };
 		66A3217B1C69C36B001DDF50 /* StepViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StepViewController.swift; sourceTree = "<group>"; };
 		66A321871C69E83F001DDF50 /* TextClueViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TextClueViewController.swift; path = StepClueViews/TextClueViewController.swift; sourceTree = "<group>"; };
 		66A321881C69E83F001DDF50 /* TextClueViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TextClueViewController.xib; path = StepClueViews/TextClueViewController.xib; sourceTree = "<group>"; };
@@ -197,6 +202,7 @@
 		66B3DB5E1E2A61E000CEB1AA /* CoreUser+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CoreUser+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		66B3DB831E2BA24500CEB1AA /* AppventureStep+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AppventureStep+CoreDataClass.swift"; sourceTree = "<group>"; };
 		66B3DB841E2BA24500CEB1AA /* AppventureStep+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AppventureStep+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		66C096FF1E3561820003F455 /* TimePenaltyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimePenaltyViewController.swift; sourceTree = "<group>"; };
 		66C916B71C61EAB300E39576 /* EditAppventureDetailsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditAppventureDetailsTableViewController.swift; sourceTree = "<group>"; };
 		66CEFE6A1C67370A00EEC5FD /* SplashViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		66D7CD5B1C5B3F4E00ACB8E3 /* EA - Clues.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "EA - Clues.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -424,12 +430,30 @@
 		669A975A1E3394860023A641 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				669A97581E3394810023A641 /* AppventureDetailsView.swift */,
-				669A977C1E33D3D60023A641 /* AppventureDetailsView.xib */,
+				669A97851E34DCDE0023A641 /* AppventureDetailsView */,
 				669A977E1E33D7300023A641 /* File.swift */,
+				669A97841E34DCD70023A641 /* TimePicker */,
 			);
 			name = Views;
 			path = "EA - Clues";
+			sourceTree = "<group>";
+		};
+		669A97841E34DCD70023A641 /* TimePicker */ = {
+			isa = PBXGroup;
+			children = (
+				669A97801E34DBA80023A641 /* TimePicker.xib */,
+				669A97821E34DCB40023A641 /* TimePicker.swift */,
+			);
+			name = TimePicker;
+			sourceTree = "<group>";
+		};
+		669A97851E34DCDE0023A641 /* AppventureDetailsView */ = {
+			isa = PBXGroup;
+			children = (
+				669A97581E3394810023A641 /* AppventureDetailsView.swift */,
+				669A977C1E33D3D60023A641 /* AppventureDetailsView.xib */,
+			);
+			name = AppventureDetailsView;
 			sourceTree = "<group>";
 		};
 		66A3218D1C69E9E9001DDF50 /* ClueViews */ = {
@@ -458,6 +482,14 @@
 				66345AC21DA922380095F6D8 /* StepOld.swift */,
 			);
 			name = Old;
+			sourceTree = "<group>";
+		};
+		66C097011E3561880003F455 /* TimePenaltyVC */ = {
+			isa = PBXGroup;
+			children = (
+				66C096FF1E3561820003F455 /* TimePenaltyViewController.swift */,
+			);
+			name = TimePenaltyVC;
 			sourceTree = "<group>";
 		};
 		66D7CD521C5B3F4E00ACB8E3 = {
@@ -531,6 +563,7 @@
 				666678BB1C6477F600C4309C /* Alt */,
 				660055381C5F203C0094F0A1 /* Cells */,
 				661472651D5A522E0093C65B /* DevelopLocalPublicSegmented.swift */,
+				66C097011E3561880003F455 /* TimePenaltyVC */,
 			);
 			name = Create;
 			path = "EA - Clues";
@@ -579,7 +612,6 @@
 		66DA2F2E1C5B6C6F00751528 /* Search/Do */ = {
 			isa = PBXGroup;
 			children = (
-				6600554A1C5F44B60094F0A1 /* Assets.xcassets */,
 				661E5F571C634A7D00DB2612 /* Alt */,
 				661E5F551C634A7800DB2612 /* LocalTableViewController.swift */,
 				661E5F581C635F9B00DB2612 /* AppventureStartViewController.swift */,
@@ -617,6 +649,7 @@
 		66ED85D31D5F442900A3F438 /* Storyboards */ = {
 			isa = PBXGroup;
 			children = (
+				6600554A1C5F44B60094F0A1 /* Assets.xcassets */,
 				66D7CD7E1C5B3FA600ACB8E3 /* Main.storyboard */,
 				66F32C711D57589500D99701 /* Maker.storyboard */,
 				66F32C6F1D57582300D99701 /* Profile.storyboard */,
@@ -776,6 +809,7 @@
 				666117881C7C483D00F3B48D /* Assets.xcassets in Resources */,
 				66D7CD7F1C5B3FA600ACB8E3 /* Main.storyboard in Resources */,
 				66F32C801D575A5C00D99701 /* MapCompassViewController.xib in Resources */,
+				669A97811E34DBA80023A641 /* TimePicker.xib in Resources */,
 				66F32C811D575A5C00D99701 /* AnswerHintViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -847,6 +881,7 @@
 				66D7CD941C5B405400ACB8E3 /* CreateAppventureViewController.swift in Sources */,
 				66706AA51C71FA8000038A74 /* ProfileTableViewController.swift in Sources */,
 				66D7CD9C1C5B40A700ACB8E3 /* CompletedAppventure.swift in Sources */,
+				669A97831E34DCB40023A641 /* TimePicker.swift in Sources */,
 				66F32C781D575A5C00D99701 /* PictureClueViewController.swift in Sources */,
 				66F32C891D575A7200D99701 /* LocalAppventureTableViewCell.swift in Sources */,
 				66D7CD5F1C5B3F4E00ACB8E3 /* AppDelegate.swift in Sources */,
@@ -910,6 +945,7 @@
 				66F32C7A1D575A5C00D99701 /* MapCompassViewController.swift in Sources */,
 				66DA2F271C5B445600751528 /* TargetHelperFunctions.swift in Sources */,
 				6644AF3A1D6E35A2007B7AEF /* FriendsTableViewController.swift in Sources */,
+				66C097001E3561820003F455 /* TimePenaltyViewController.swift in Sources */,
 				6644AF3C1D6E3974007B7AEF /* FriendsAdventures.swift in Sources */,
 				66B3DB601E2A61E000CEB1AA /* CoreUser+CoreDataProperties.swift in Sources */,
 				669A97511E32C0B50023A641 /* BaseViewController.swift in Sources */,

@@ -49,6 +49,7 @@
         <relationship name="ownedAppventures" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Appventure" inverseName="owner" inverseEntity="Appventure" syncable="YES"/>
     </entity>
     <entity name="StepSetup" representedClassName=".StepSetup" syncable="YES">
+        <attribute name="backendlessId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="checkIn" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="compassShown" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="distanceShown" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES" syncable="YES"/>
@@ -63,6 +64,6 @@
         <element name="Appventure" positionX="-63" positionY="-18" width="128" height="300"/>
         <element name="AppventureStep" positionX="-54" positionY="90" width="128" height="300"/>
         <element name="CoreUser" positionX="-63" positionY="135" width="128" height="165"/>
-        <element name="StepSetup" positionX="-54" positionY="135" width="128" height="180"/>
+        <element name="StepSetup" positionX="-54" positionY="135" width="128" height="195"/>
     </elements>
 </model>

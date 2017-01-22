@@ -31,6 +31,8 @@ class UserManager {
         
     ]
     
+    
+    /// Load latest coredata user. Check if core
     static func setupUser() {
         let context = AppDelegate.coreDataStack.persistentContainer.viewContext
         do {
@@ -53,6 +55,12 @@ class UserManager {
             return
         }
         
+        
+        if let token = backendless?.userService.isValidUserToken() {
+            print(token)
+//            CoreUser.user?.userType = .noLogin
+        }
+
         mapBackendlessToCoreUser()
         
         if CoreUser.user?.facebookId == nil {

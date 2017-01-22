@@ -22,25 +22,25 @@
                         <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tV3-zS-EOm">
                             <rect key="frame" x="0.0" y="0.0" width="375" height="432.5"/>
                             <subviews>
-                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="vIo-Ou-tbE">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="233.5"/>
+                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="common_image_placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="vIo-Ou-tbE">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="234"/>
                                 </imageView>
                                 <view alpha="0.40000000000000002" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="axG-ip-VEb">
-                                    <rect key="frame" x="0.0" y="140" width="375" height="93.5"/>
+                                    <rect key="frame" x="0.0" y="140" width="375" height="94"/>
                                     <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 </view>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="69y-TI-Pci">
-                                    <rect key="frame" x="0.0" y="140" width="375" height="93.5"/>
+                                    <rect key="frame" x="0.0" y="140" width="375" height="94"/>
                                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JCN-P7-wNR">
-                                    <rect key="frame" x="18" y="283" width="338" height="104"/>
+                                    <rect key="frame" x="18" y="283.5" width="338" height="104"/>
                                     <color key="backgroundColor" red="0.9065064709595958" green="0.9065064709595958" blue="0.9065064709595958" alpha="1" colorSpace="calibratedRGB"/>
                                 </view>
                                 <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="inn-jX-83i">
-                                    <rect key="frame" x="0.0" y="234.5" width="375" height="40"/>
+                                    <rect key="frame" x="0.0" y="235" width="375" height="40"/>
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XDJ-qv-Dis">
                                             <rect key="frame" x="0.0" y="0.0" width="187.5" height="40"/>
@@ -51,6 +51,9 @@
                                             <state key="normal" title="MAP">
                                                 <color key="titleColor" red="0.62745098040000002" green="0.62745098040000002" blue="0.62745098040000002" alpha="1" colorSpace="calibratedRGB"/>
                                             </state>
+                                            <connections>
+                                                <action selector="leftBttnPressed:" destination="iN0-l3-epB" eventType="touchUpInside" id="Td6-gO-aar"/>
+                                            </connections>
                                         </button>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ckt-7Q-FEQ">
                                             <rect key="frame" x="187.5" y="0.0" width="187.5" height="40"/>
@@ -58,18 +61,21 @@
                                             <state key="normal" title="SHARE">
                                                 <color key="titleColor" red="0.62745098040000002" green="0.62745098040000002" blue="0.62745098040000002" alpha="1" colorSpace="calibratedRGB"/>
                                             </state>
+                                            <connections>
+                                                <action selector="rightBttnPressed:" destination="iN0-l3-epB" eventType="touchUpInside" id="dQW-Jc-rrR"/>
+                                            </connections>
                                         </button>
                                     </subviews>
                                 </stackView>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="04M-6J-3IW">
-                                    <rect key="frame" x="-0.5" y="274.5" width="375" height="1"/>
+                                    <rect key="frame" x="-0.5" y="275" width="375" height="1"/>
                                     <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="1" id="rrO-DZ-B5t"/>
                                     </constraints>
                                 </view>
-                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="5b1-Xa-VeW">
-                                    <rect key="frame" x="18" y="291.5" width="338" height="117"/>
+                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="18" translatesAutoresizingMaskIntoConstraints="NO" id="5b1-Xa-VeW">
+                                    <rect key="frame" x="18" y="292" width="338" height="123"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="GFG-PQ-3ej">
                                             <rect key="frame" x="0.0" y="0.0" width="338" height="87"/>
@@ -137,7 +143,7 @@
                                             <edgeInsets key="layoutMargins" top="0.0" left="12" bottom="0.0" right="12"/>
                                         </stackView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aTZ-te-OHv">
-                                            <rect key="frame" x="0.0" y="99" width="338" height="18"/>
+                                            <rect key="frame" x="0.0" y="105" width="338" height="18"/>
                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                             <color key="textColor" red="0.43529411759999997" green="0.4431372549" blue="0.47450980390000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
@@ -202,6 +208,7 @@
         </view>
     </objects>
     <resources>
+        <image name="common_image_placeholder" width="750" height="750"/>
         <image name="vc_stopwatch_pink_30" width="30" height="30"/>
     </resources>
 </document>

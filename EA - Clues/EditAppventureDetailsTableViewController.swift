@@ -12,8 +12,19 @@ import PureLayout
 class EditAppventureDetailsTableViewController: UITableViewController {
     
     var appventure: Appventure?
-        
-    @IBOutlet weak var selectImageLabel: UILabel!
+    
+    private(set) lazy var timePickerView: TimePicker = {
+        let bundle = Bundle(for: TimePicker.self)
+        let nib = bundle.loadNibNamed("TimePicker", owner: self, options: nil)
+        let view = nib?.first as? TimePicker
+        view?.delegate = self
+        return view!
+    }()
+    
+    
+    var aboveBottom: NSLayoutConstraint!
+    var belowBottom: NSLayoutConstraint!
+    
     //MARK: Outlets
     //TextView
     @IBOutlet weak var appventureDescription: UITextView!
@@ -21,8 +32,6 @@ class EditAppventureDetailsTableViewController: UITableViewController {
     @IBOutlet weak var appventureNameField: UITextField!
     @IBOutlet weak var startingLocation: UITextField!
     //Views
-    @IBOutlet weak var restrictionsField: UITextField!
-    @IBOutlet weak var keyFeatures: UITextField!
     @IBOutlet weak var imageView: UIImageView!
     
     @IBOutlet weak var saveBtt: UIBarButtonItem!
@@ -37,6 +46,24 @@ class EditAppventureDetailsTableViewController: UITableViewController {
         } else {
             self.updateUI()
         }
+    
+        setupConstraints()
+        
+    }
+
+
+    
+    func setupConstraints(){
+        guard let navView = self.navigationController?.view else { return }
+        navView.addSubview(timePickerView)
+        timePickerView.autoMatch(.height, to: .height, of: navView)
+        timePickerView.autoMatch(.width, to: .width, of: navView)
+        timePickerView.autoAlignAxis(.vertical, toSameAxisOf: navView)
+        
+        aboveBottom = timePickerView.autoPinEdge(.bottom, to: .bottom, of: navView)
+        aboveBottom.isActive = false
+        belowBottom = timePickerView.autoPinEdge(.top, to: .bottom, of: navView)
+        belowBottom.isActive = true
     }
 
     override func didReceiveMemoryWarning() {
@@ -50,14 +77,13 @@ class EditAppventureDetailsTableViewController: UITableViewController {
     func updateUI(){
         if appventure?.image != nil {
             imageView.image = appventure!.image
-            selectImageLabel.alpha = 0
         }
         appventureNameField.text =  appventure!.title
         appventureDescription.text = appventure!.subtitle
         durationLabel.text = appventure!.duration
         startingLocation.text = appventure!.startingLocationName
-        restrictionsField.text = appventure!.restrictions?.joined(separator: ",")
-        keyFeatures.text = appventure!.keyFeatures?.joined(separator: ",")
+//        restrictionsField.text = appventure!.restrictions?.joined(separator: ",")
+//        keyFeatures.text = appventure!.keyFeatures?.joined(separator: ",")
         self.saveBtt.isEnabled = false
     }
     
@@ -84,8 +110,8 @@ class EditAppventureDetailsTableViewController: UITableViewController {
         appventure!.subtitle = appventureDescription.text
         appventure!.duration = durationLabel.text
         appventure!.startingLocationName = startingLocation.text
-        appventure!.restrictions = restrictionsField.text!.splitStringToArray()
-        appventure!.keyFeatures = keyFeatures.text!.splitStringToArray()
+//        appventure!.restrictions = restrictionsField.text!.splitStringToArray()
+//        appventure!.keyFeatures = keyFeatures.text!.splitStringToArray()
         appventure!.image = imageView.image
         AppDelegate.coreDataStack.saveContext(completion: nil)
     }
@@ -106,7 +132,14 @@ class EditAppventureDetailsTableViewController: UITableViewController {
                 
             }))
             self.present(alert, animated: true, completion: nil)
-        } 
+        } else {
+            UIView.animate(withDuration: 0.6, animations: {
+                self.belowBottom.isActive = false
+                self.aboveBottom.isActive = true
+                self.navigationController?.view.layoutIfNeeded()
+            })
+
+        }
     }
 }
 
@@ -163,5 +196,19 @@ extension EditAppventureDetailsTableViewController : UITextFieldDelegate {
         return true
     }
     
+}
+
+extension EditAppventureDetailsTableViewController: TimePickerDelegate {
+    func dismissPressed() {
+        UIView.animate(withDuration: 0.6, animations: {
+            self.aboveBottom.isActive = false
+            self.belowBottom.isActive = true
+            self.navigationController?.view.layoutIfNeeded()
+        })
+    }
+    
+    func donePressed() {
+        
+    }
 }
 

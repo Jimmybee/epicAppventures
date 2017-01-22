@@ -63,19 +63,11 @@ class BackendlessAppventure: NSObject {
         }
     }
     
-    private func save(completion: @escaping (String?, [String]?) -> ()) {
+    private func save(completion: @escaping (Dictionary<String, Any>) -> ()) {
         BackendlessAppventure.dataStore?.save(self, response: { (returnObject) in
             guard let dict = returnObject as? Dictionary<String, Any> else { return }
-            guard let objectId = dict["objectId"] as? String else { return }
-            guard let steps = dict["steps"] as? [Dictionary<String, Any>] else { return }
+                        completion(dict)
             print(dict)
-            var stepIds = [String]()
-            for step in steps {
-                if let stepId = step["objectId"] as? String {
-                    stepIds.append(stepId)
-                }
-            }
-            completion(objectId, stepIds)
         }) { (error) in
             print(error ?? "no error?")
         }
@@ -88,11 +80,18 @@ class BackendlessAppventure: NSObject {
         let backendlessAppventure = BackendlessAppventure(appventure: appventure)
         
         apiUploadGroup.enter()
-        backendlessAppventure.save(completion: { (objectId, stepIds) in
+        backendlessAppventure.save(completion: { (dict) in
+            guard let objectId = dict["objectId"] as? String else { return }
             appventure.backendlessId = objectId
-            for (index, objectId) in stepIds!.enumerated() {
-                appventure.appventureSteps[index].backendlessId = objectId
+            guard let stepDicts = dict["steps"] as? [Dictionary<String, Any>] else { return }
+            for (index, stepDict) in stepDicts.enumerated() {
+                guard let  stepId = stepDict["objectId"] as? String else { return }
+                appventure.appventureSteps[index].backendlessId = stepId
+                guard let setupDict = stepDict["setup"] as? Dictionary<String, Any> else { return }
+                guard let  setupId = setupDict["objectId"] as? String else { return }
+                appventure.appventureSteps[index].setup.backendlessId = setupId
             }
+
             if withImage == true {
                 uploadImageAsync(objectId: appventure.backendlessId, image: appventure.image, completion: { () in
 
@@ -100,6 +99,7 @@ class BackendlessAppventure: NSObject {
             }
             for step in appventure.appventureSteps {
                 uploadImageAsync(objectId: step.backendlessId, image: step.image, completion: {
+                    
                 })
             }
             apiUploadGroup.leave()
