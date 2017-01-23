@@ -46,6 +46,7 @@ class LocalAppventureTableViewCell: UITableViewCell, AppventureImageCell {
         if let image = appventure?.image {
             appventureImage.image = image
         } else {
+            appventureImage.alpha = 0
             appventure?.loadImageFor(cell: self)
         }
     }

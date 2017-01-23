@@ -94,6 +94,9 @@ public class Appventure: NSManagedObject {
             guard let image = UIImage(data: data) else { return }
             self.image = image
             cell.appventureImage.image = image
+            UIView.animate(withDuration: 1, animations: {
+                cell.appventureImage.alpha = 1
+            })
             cell.setNeedsDisplay()
         }
     }

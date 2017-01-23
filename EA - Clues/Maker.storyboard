@@ -535,8 +535,8 @@
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Not Set" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CLK-DG-Ptp">
-                                                    <rect key="frame" x="348" y="11" width="58" height="21"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0 hours 30 minutes" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CLK-DG-Ptp">
+                                                    <rect key="frame" x="245" y="11" width="149" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -544,7 +544,7 @@
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="CLK-DG-Ptp" firstAttribute="centerY" secondItem="Yek-7D-V1P" secondAttribute="centerY" id="2z0-03-34d"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="CLK-DG-Ptp" secondAttribute="trailing" id="hgF-7T-xVN"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="CLK-DG-Ptp" secondAttribute="trailing" constant="12" id="hgF-7T-xVN"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -555,11 +555,14 @@
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="217"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="countDownTimer" minuteInterval="5" translatesAutoresizingMaskIntoConstraints="NO" id="2KY-63-DC1">
+                                                <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="countDownTimer" minuteInterval="15" translatesAutoresizingMaskIntoConstraints="NO" id="2KY-63-DC1">
                                                     <rect key="frame" x="0.0" y="0.0" width="414" height="216"/>
                                                     <date key="date" timeIntervalSinceReferenceDate="506813623.52480698">
                                                         <!--2017-01-22 21:33:43 +0000-->
                                                     </date>
+                                                    <connections>
+                                                        <action selector="durationPickerChanged:" destination="wAu-6L-krn" eventType="valueChanged" id="bdt-ww-yOx"/>
+                                                    </connections>
                                                 </datePicker>
                                             </subviews>
                                             <constraints>
@@ -611,8 +614,8 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="D7c-Tz-n3x">
-                                                    <rect key="frame" x="352" y="11" width="42" height="21"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="12:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="D7c-Tz-n3x">
+                                                    <rect key="frame" x="351" y="11" width="43" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -639,8 +642,8 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZkD-Gw-H0g">
-                                                    <rect key="frame" x="352" y="11" width="42" height="21"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="12:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZkD-Gw-H0g">
+                                                    <rect key="frame" x="351" y="11" width="43" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -661,11 +664,14 @@
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="217"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="countDownTimer" minuteInterval="5" translatesAutoresizingMaskIntoConstraints="NO" id="MRb-Dn-7nt">
+                                                <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="time" minuteInterval="15" translatesAutoresizingMaskIntoConstraints="NO" id="MRb-Dn-7nt">
                                                     <rect key="frame" x="0.0" y="0.0" width="414" height="216"/>
                                                     <date key="date" timeIntervalSinceReferenceDate="506813623.52480698">
                                                         <!--2017-01-22 21:33:43 +0000-->
                                                     </date>
+                                                    <connections>
+                                                        <action selector="restrictionsPickerChanged:" destination="wAu-6L-krn" eventType="valueChanged" id="Dfv-2b-3lw"/>
+                                                    </connections>
                                                 </datePicker>
                                             </subviews>
                                             <constraints>
@@ -704,8 +710,12 @@
                         <outlet property="appventureDescription" destination="kyU-T5-1Fv" id="3DP-gh-WxI"/>
                         <outlet property="appventureNameField" destination="F8o-R1-pkL" id="99n-Pr-P3M"/>
                         <outlet property="durationLabel" destination="CLK-DG-Ptp" id="mdd-xV-cSf"/>
+                        <outlet property="durationPicker" destination="2KY-63-DC1" id="Yvy-NC-KLg"/>
+                        <outlet property="endTimeLabel" destination="ZkD-Gw-H0g" id="Zkg-7E-19D"/>
                         <outlet property="imageView" destination="IQ0-zl-gAy" id="iCU-0P-gDD"/>
+                        <outlet property="restrictionsPicker" destination="MRb-Dn-7nt" id="ADx-AF-kti"/>
                         <outlet property="saveBtt" destination="NdT-kp-Zj1" id="93f-2c-5Wr"/>
+                        <outlet property="startTimeLabel" destination="D7c-Tz-n3x" id="WfI-q8-LjS"/>
                         <outlet property="startingLocation" destination="egy-5U-Sp1" id="s8d-xl-Wix"/>
                     </connections>
                 </tableViewController>
@@ -2031,12 +2041,12 @@
         <image name="stop-1" width="256" height="256"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="bxr-4S-MDJ"/>
-        <segue reference="oC0-wO-E23"/>
         <segue reference="YWN-gl-ie4"/>
+        <segue reference="bxr-4S-MDJ"/>
+        <segue reference="3Ve-Pc-YcS"/>
         <segue reference="XeW-9H-Ju8"/>
         <segue reference="zM8-3K-2aY"/>
-        <segue reference="vVR-r8-AlU"/>
         <segue reference="oM4-JG-xLl"/>
+        <segue reference="vVR-r8-AlU"/>
     </inferredMetricsTieBreakers>
 </document>

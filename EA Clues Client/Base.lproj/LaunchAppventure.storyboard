@@ -295,13 +295,13 @@ Adventure Completed!</string>
                                     <stackView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="255" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="09f-cI-TzX">
                                         <rect key="frame" x="96" y="145.5" width="151" height="19"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Current time:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ycF-Ve-XF7">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Current time:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ycF-Ve-XF7">
                                                 <rect key="frame" x="0.0" y="0.0" width="101.5" height="19"/>
                                                 <fontDescription key="fontDescription" name="Palatino-Roman" family="Palatino" pointSize="17"/>
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="J9w-EO-J3G">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="J9w-EO-J3G">
                                                 <rect key="frame" x="109.5" y="0.0" width="41.5" height="19"/>
                                                 <fontDescription key="fontDescription" name="Palatino-Roman" family="Palatino" pointSize="17"/>
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -1085,11 +1085,11 @@ Adventure Completed!</string>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
-                                <exclude reference="1Gq-UH-fDB"/>
-                                <exclude reference="7zz-uY-ZAh"/>
                                 <exclude reference="B1t-Mg-i0X"/>
                                 <exclude reference="FTa-Zu-aIJ"/>
                                 <exclude reference="Qvn-HX-6Cz"/>
+                                <exclude reference="1Gq-UH-fDB"/>
+                                <exclude reference="7zz-uY-ZAh"/>
                             </mask>
                         </variation>
                     </view>

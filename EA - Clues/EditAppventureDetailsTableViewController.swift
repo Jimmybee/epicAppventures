@@ -13,18 +13,6 @@ class EditAppventureDetailsTableViewController: UITableViewController {
     
     var appventure: Appventure?
     
-    private(set) lazy var timePickerView: TimePicker = {
-        let bundle = Bundle(for: TimePicker.self)
-        let nib = bundle.loadNibNamed("TimePicker", owner: self, options: nil)
-        let view = nib?.first as? TimePicker
-        view?.delegate = self
-        return view!
-    }()
-    
-    
-    var aboveBottom: NSLayoutConstraint!
-    var belowBottom: NSLayoutConstraint!
-    
     //MARK: Outlets
     //TextView
     @IBOutlet weak var appventureDescription: UITextView!
@@ -37,8 +25,24 @@ class EditAppventureDetailsTableViewController: UITableViewController {
     @IBOutlet weak var saveBtt: UIBarButtonItem!
 
     @IBOutlet weak var durationLabel: UILabel!
+    @IBOutlet weak var durationPicker: UIDatePicker!
     
+    @IBOutlet weak var startTimeLabel: UILabel!
+    @IBOutlet weak var endTimeLabel: UILabel!
+    @IBOutlet weak var restrictionsPicker: UIDatePicker!
+    
+    
+    let duationLabelIndex = IndexPath(row: 0, section: 4)
+    let durationPickerIndex = IndexPath(row: 1, section: 4)
+    let startTimeIndex = IndexPath(row:0, section: 6)
+    let endTimeIndex = IndexPath(row: 1, section: 6)
+    let restrictionTimePickerIndex = IndexPath(row: 2, section: 6)
 
+    //MARK: Flags
+    var edittingDuration = false
+    var edittingStartTime = false
+    var edittingEndTime = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         if appventure == nil {
@@ -46,30 +50,23 @@ class EditAppventureDetailsTableViewController: UITableViewController {
         } else {
             self.updateUI()
         }
-    
-        setupConstraints()
-        
+
     }
-
-
     
-    func setupConstraints(){
-        guard let navView = self.navigationController?.view else { return }
-        navView.addSubview(timePickerView)
-        timePickerView.autoMatch(.height, to: .height, of: navView)
-        timePickerView.autoMatch(.width, to: .width, of: navView)
-        timePickerView.autoAlignAxis(.vertical, toSameAxisOf: navView)
-        
-        aboveBottom = timePickerView.autoPinEdge(.bottom, to: .bottom, of: navView)
-        aboveBottom.isActive = false
-        belowBottom = timePickerView.autoPinEdge(.top, to: .bottom, of: navView)
-        belowBottom.isActive = true
+    func setupViews() {
+        restrictionsPicker.isHidden = true
+        restrictionsPicker.alpha = 0
+        restrictionsPicker.setDate(Date(), animated: false)
+        restrictionsPicker.locale = Locale(identifier: "en_GB")
+        durationPicker.isHidden = true
+        durationPicker.alpha = 0
+        durationPicker.setDate(Date(), animated: false)
     }
-
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
     func setupForNewAppventure() {
         
     }
@@ -116,31 +113,19 @@ class EditAppventureDetailsTableViewController: UITableViewController {
         AppDelegate.coreDataStack.saveContext(completion: nil)
     }
     
-    
-    //MARK: Tableview Delegate 
-    
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if indexPath.section == 0{
-            let alert = UIAlertController(title: nil, message: nil, preferredStyle: UIAlertControllerStyle.actionSheet)
-            alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: nil))
-            alert.addAction(UIAlertAction(title: "Take Image", style: UIAlertActionStyle.default, handler: { action in
-                HelperFunctions.getImage(true, delegate: self, presenter: self)
-                
-            }))
-            alert.addAction(UIAlertAction(title: "Pick From Library", style: UIAlertActionStyle.default, handler: { action in
-                HelperFunctions.getImage(false, delegate: self, presenter: self)
-                
-            }))
-            self.present(alert, animated: true, completion: nil)
-        } else {
-            UIView.animate(withDuration: 0.6, animations: {
-                self.belowBottom.isActive = false
-                self.aboveBottom.isActive = true
-                self.navigationController?.view.layoutIfNeeded()
-            })
-
-        }
+    @IBAction func durationPickerChanged(_ sender: UIDatePicker) {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "HH hr m minutes"
+        durationLabel.text = dateFormatter.string(from: sender.date)
     }
+    
+    @IBAction func restrictionsPickerChanged(_ sender: UIDatePicker) {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "HH : mm"
+        if edittingStartTime { startTimeLabel.text = dateFormatter.string(from: sender.date)}
+        if edittingEndTime { endTimeLabel.text = dateFormatter.string(from: sender.date)}
+    }
+    
 }
 
 //MARK: UIImagePickerControllerDelegate
@@ -198,17 +183,90 @@ extension EditAppventureDetailsTableViewController : UITextFieldDelegate {
     
 }
 
-extension EditAppventureDetailsTableViewController: TimePickerDelegate {
-    func dismissPressed() {
-        UIView.animate(withDuration: 0.6, animations: {
-            self.aboveBottom.isActive = false
-            self.belowBottom.isActive = true
-            self.navigationController?.view.layoutIfNeeded()
-        })
+
+// MARK: Table Functions
+extension EditAppventureDetailsTableViewController {
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        
+        
+        switch indexPath {
+        case duationLabelIndex:
+            edittingDuration = !edittingDuration
+        case startTimeIndex:
+            edittingStartTime = !edittingStartTime
+            edittingEndTime = false
+        case endTimeIndex:
+            edittingEndTime = !edittingEndTime
+            edittingStartTime = false
+        default:
+            break
+        }
+
+        animation()
+
+        tableView.beginUpdates()
+        tableView.endUpdates()
+        
+        if self.edittingStartTime || self.edittingEndTime {
+            self.tableView.scrollToRow(at: self.restrictionTimePickerIndex, at: .bottom, animated: true)
+        }
+        
+        if indexPath.section == 1 {
+            let alert = UIAlertController(title: nil, message: nil, preferredStyle: UIAlertControllerStyle.actionSheet)
+            alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: nil))
+            alert.addAction(UIAlertAction(title: "Take Image", style: UIAlertActionStyle.default, handler: { action in
+                HelperFunctions.getImage(true, delegate: self, presenter: self)
+                
+            }))
+            alert.addAction(UIAlertAction(title: "Pick From Library", style: UIAlertActionStyle.default, handler: { action in
+                HelperFunctions.getImage(false, delegate: self, presenter: self)
+                
+            }))
+            self.present(alert, animated: true, completion: nil)
+        } else {
+            UIView.animate(withDuration: 0.6, animations: {
+                self.navigationController?.view.layoutIfNeeded()
+            })
+            
+        }
+
     }
     
-    func donePressed() {
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        var height:CGFloat = 44
         
+        switch indexPath {
+        case durationPickerIndex:
+            height = edittingDuration ? 218 : 0
+        case restrictionTimePickerIndex:
+            if edittingStartTime || edittingEndTime { height = 218 } else { height = 0}
+        default:
+            height = UITableViewAutomaticDimension
+        }
+        
+        return height
     }
+    
+    func animation() {
+        restrictionsPicker.isHidden = edittingStartTime || edittingEndTime ? false : true
+        durationPicker.isHidden = edittingDuration ?  false : true
+        UIView.animate(withDuration: 1.2, animations: {
+            self.durationPicker.alpha = self.edittingDuration ? 1 : 0
+            self.restrictionsPicker.alpha = self.edittingStartTime || self.edittingEndTime ? 1 : 0
+        }) { (complete) in
+        
+        }
+        
+        durationLabel.textColor = edittingDuration ? UIColor.blue : UIColor.black
+        startTimeLabel.textColor = edittingStartTime ? UIColor.blue : UIColor.black
+        endTimeLabel.textColor = edittingEndTime ? UIColor.blue : UIColor.black
+
+    }
+    
+    
 }
+
+
 

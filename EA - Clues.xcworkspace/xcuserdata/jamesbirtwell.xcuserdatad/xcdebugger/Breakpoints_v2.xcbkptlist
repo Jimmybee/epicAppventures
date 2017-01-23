@@ -26,11 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "EA - Clues/AddStepTableViewController.swift"
-            timestampString = "506816968.37689"
+            timestampString = "506896930.410807"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "181"
-            endingLineNumber = "181"
+            startingLineNumber = "179"
+            endingLineNumber = "179"
             landmarkName = "initialUISetup()"
             landmarkType = "7">
          </BreakpointContent>
@@ -376,11 +376,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "EA - Clues/AddStepTableViewController.swift"
-            timestampString = "506816968.37689"
+            timestampString = "506896930.410807"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "571"
-            endingLineNumber = "571"
+            startingLineNumber = "569"
+            endingLineNumber = "569"
             landmarkName = "prepare(for:sender:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -488,11 +488,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "EA - Clues/AddStepTableViewController.swift"
-            timestampString = "506816968.37689"
+            timestampString = "506896930.410807"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "212"
-            endingLineNumber = "212"
+            startingLineNumber = "210"
+            endingLineNumber = "210"
             landmarkName = "initialUISetup()"
             landmarkType = "7">
          </BreakpointContent>
@@ -600,11 +600,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "EA - Clues/AddStepTableViewController.swift"
-            timestampString = "506816968.37689"
+            timestampString = "506896930.410807"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "439"
-            endingLineNumber = "439"
+            startingLineNumber = "437"
+            endingLineNumber = "437"
             landmarkName = "stopSound(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -616,7 +616,23 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "EA - Clues/AddStepTableViewController.swift"
-            timestampString = "506816968.37689"
+            timestampString = "506896930.410807"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "436"
+            endingLineNumber = "436"
+            landmarkName = "stopSound(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "EA - Clues/AddStepTableViewController.swift"
+            timestampString = "506896930.410807"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "438"
@@ -632,27 +648,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "EA - Clues/AddStepTableViewController.swift"
-            timestampString = "506816968.37689"
+            timestampString = "506896930.410807"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "440"
-            endingLineNumber = "440"
-            landmarkName = "stopSound(_:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "EA - Clues/AddStepTableViewController.swift"
-            timestampString = "506816968.37689"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "471"
-            endingLineNumber = "471"
+            startingLineNumber = "469"
+            endingLineNumber = "469"
             landmarkName = "record(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -840,11 +840,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "EA - Clues/AddStepTableViewController.swift"
-            timestampString = "506816968.37689"
+            timestampString = "506896930.410807"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "234"
-            endingLineNumber = "234"
+            startingLineNumber = "232"
+            endingLineNumber = "232"
             landmarkName = "checkSaveButton()"
             landmarkType = "7">
          </BreakpointContent>
@@ -1067,38 +1067,6 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "21"
             endingLineNumber = "21">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "-[FBSDKAppGroupAddDialog delegate]"
-                  moduleName = "FBSDKShareKit"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/jamesbirtwell/Documents/Xcode%20Project/EA%20-%20Clues/Pods/FBSDKShareKit/FBSDKShareKit/FBSDKShareKit/FBSDKAppGroupAddDialog.h"
-                  timestampString = "506819105.950739"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "41"
-                  endingLineNumber = "41"
-                  offsetFromSymbolStart = "20">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "-[FBSDKAppGroupAddDialog setDelegate:]"
-                  moduleName = "FBSDKShareKit"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/jamesbirtwell/Documents/Xcode%20Project/EA%20-%20Clues/Pods/FBSDKShareKit/FBSDKShareKit/FBSDKShareKit/FBSDKAppGroupAddDialog.h"
-                  timestampString = "506819105.953295"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "41"
-                  endingLineNumber = "41"
-                  offsetFromSymbolStart = "56">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1667,11 +1635,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "EA - Clues/AddStepTableViewController.swift"
-            timestampString = "506816968.37689"
+            timestampString = "506896930.410807"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "299"
-            endingLineNumber = "299"
+            startingLineNumber = "297"
+            endingLineNumber = "297"
             landmarkName = "updateStep()"
             landmarkType = "7">
          </BreakpointContent>
@@ -1683,11 +1651,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "EA - Clues/AddStepTableViewController.swift"
-            timestampString = "506816968.37689"
+            timestampString = "506896930.410807"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "303"
-            endingLineNumber = "303"
+            startingLineNumber = "301"
+            endingLineNumber = "301"
             landmarkName = "updateStep()"
             landmarkType = "7">
          </BreakpointContent>
@@ -1811,11 +1779,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "EA - Clues/AddStepTableViewController.swift"
-            timestampString = "506816968.37689"
+            timestampString = "506896930.410807"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "175"
-            endingLineNumber = "175"
+            startingLineNumber = "173"
+            endingLineNumber = "173"
             landmarkName = "updatePartUI()"
             landmarkType = "7">
          </BreakpointContent>
@@ -1827,11 +1795,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "EA - Clues/AddStepTableViewController.swift"
-            timestampString = "506816968.37689"
+            timestampString = "506896930.410807"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "617"
-            endingLineNumber = "617"
+            startingLineNumber = "615"
+            endingLineNumber = "615"
             landmarkName = "tableView(_:didSelectRowAt:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1843,11 +1811,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "EA - Clues/AddStepTableViewController.swift"
-            timestampString = "506816968.37689"
+            timestampString = "506896930.410807"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "680"
-            endingLineNumber = "680"
+            startingLineNumber = "678"
+            endingLineNumber = "678"
             landmarkName = "showDatePickerCell(containingDatePicker:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1945,6 +1913,38 @@
             startingLineNumber = "88"
             endingLineNumber = "88"
             landmarkName = "setupCheckmark()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "EA - Clues/EditAppventureDetailsTableViewController.swift"
+            timestampString = "506900370.261772"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "242"
+            endingLineNumber = "242"
+            landmarkName = "tableView(_:heightForRowAt:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "EA - Clues/MainTabBarController.swift"
+            timestampString = "506900428.414032"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "25"
+            endingLineNumber = "25"
+            landmarkName = "viewDidLoad()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
