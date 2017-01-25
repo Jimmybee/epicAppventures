@@ -15,6 +15,7 @@
                 <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="Sqe-h0-h7I" customClass="MainTabBarController" customModule="EA___Clues" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="5nf-ui-vvc">
+                        <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                         <color key="tintColor" red="0.40894466638565063" green="0.95327186584472656" blue="0.07545144110918045" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -29,11 +30,20 @@
                         <segue destination="uEi-4Y-Inl" kind="relationship" relationship="viewControllers" id="ckc-hD-xeN"/>
                         <segue destination="raX-b4-F1e" kind="relationship" relationship="viewControllers" id="qgv-hr-9Tl"/>
                         <segue destination="ckL-dm-P7B" kind="relationship" relationship="viewControllers" id="83d-tB-uKe"/>
+                        <segue destination="saJ-7V-gJh" kind="presentation" identifier="startupLogin" id="1rU-vW-VOy"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bjj-2h-wK9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-209" y="643"/>
+        </scene>
+        <!--Login-->
+        <scene sceneID="2u8-Q7-Zgw">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Login" id="saJ-7V-gJh" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dlm-7e-Ud1" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="601" y="718"/>
         </scene>
         <!--Profile-->
         <scene sceneID="hKj-dh-fYP">

@@ -12,6 +12,10 @@ import FBSDKCoreKit
 
 
 class MainTabBarController: UITabBarController {
+    
+    struct StoryboardNames {
+        static let startupLogin = "startupLogin"
+    }
 
     let backendless = Backendless.sharedInstance()
 
@@ -24,17 +28,17 @@ class MainTabBarController: UITabBarController {
         //MARK: CheckUser
         self.selectedIndex = 2
         
-        UserManager.setupUser()
+        UserManager.setupUser(completion: setupComplete)
         
+    }
+
+    func setupComplete() {
         if CoreUser.user?.userType == .noLogin {
+            self.performSegue(withIdentifier: StoryboardNames.startupLogin, sender: nil)
             if let pvc = self.viewControllers![1] as? ProfileWrapperViewController {
                 pvc.showForUser()
             }
         }
-        
     }
-
-    
-    
     
 }

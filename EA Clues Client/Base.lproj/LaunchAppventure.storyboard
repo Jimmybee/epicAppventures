@@ -1123,7 +1123,7 @@ Adventure Completed!</string>
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="1792" y="1322"/>
+            <point key="canvasLocation" x="2148" y="1339"/>
         </scene>
         <!--Step View Controller-->
         <scene sceneID="ULo-sI-j6n">

@@ -33,7 +33,7 @@ class UserManager {
     
     
     /// Load latest coredata user. Check if core
-    static func setupUser() {
+    static func setupUser(completion: @escaping () -> ()) {
         let context = AppDelegate.coreDataStack.persistentContainer.viewContext
         do {
             let fetchRequest: NSFetchRequest<CoreUser> = CoreUser.fetchRequest()
@@ -45,30 +45,37 @@ class UserManager {
                 CoreUser.user = users[0]
             }
         } catch {
-            fatalError("Unresolved error")
+            CoreUser.user = CoreUser(context: context)
+            AppDelegate.coreDataStack.saveContext(completion: nil)
         }
         
         
         let backendless = Backendless.sharedInstance()
         if backendless?.userService.currentUser == nil {
             CoreUser.user?.userType = .noLogin
+            completion()
             return
         }
         
         
-        if let token = backendless?.userService.isValidUserToken() {
-            print(token)
-//            CoreUser.user?.userType = .noLogin
-        }
+        backendless?.userService.isValidUserToken({ (valid) in
+            print(valid!)
+            if CoreUser.user?.facebookId == nil {
+                CoreUser.user?.userType = .backendlessOnly
 
-        mapBackendlessToCoreUser()
-        
-        if CoreUser.user?.facebookId == nil {
-            CoreUser.user?.userType = .backendlessOnly
+            } else {
+                CoreUser.user?.userType = .facebook
+            }
+            completion()
             return
-        }
+        }, error: { (fault) in
+            print(fault!)
+            _ =  backendless?.userService.logout()
+            CoreUser.user?.userType = .noLogin
+            completion()
+            return
+        })
         
-        CoreUser.user?.userType = .facebook
     }
     
     static func mapBackendlessToCoreUser() {

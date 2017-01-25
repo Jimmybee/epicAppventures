@@ -62,10 +62,6 @@ class LocalTableViewController: BaseTableViewController, CLLocationManagerDelega
 //        notificationCenter.addObserver(self, selector: #selector(beginRefresh), name: skipLoginNotification, object: nil)
 
         
-        if !CoreUser.checkLogin(true, vc: self) {
-            self.performSegue(withIdentifier: StoryboardNames.startupLogin, sender: nil)
-        }
-        
         //MARK: TableViewLoad
         
         tableView.estimatedRowHeight = tableView.rowHeight
@@ -83,6 +79,7 @@ class LocalTableViewController: BaseTableViewController, CLLocationManagerDelega
         if let coreUser = CoreUser.user {
             self.downloadedAppventures = coreUser.downloadedArray
         }
+        
         
         _ = getBackendlessAppventure()
     }
@@ -305,11 +302,3 @@ extension LocalTableViewController : ParseQueryHandler {
         
     }
 }
-
-
-extension LocalTableViewController : LoginViewControllerDelegate {
-    func skippedLogin() {
-//         loadAppventures()
-    }
-}
-

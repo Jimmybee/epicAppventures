@@ -116,7 +116,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if user != nil {
             print("AppDelegate -> application:openURL: user = \(user)")
             centralDispatchGroup.leave()
-            // do something, call some ViewController method, for example
         }
         
         return true

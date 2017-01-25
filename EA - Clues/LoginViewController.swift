@@ -13,16 +13,10 @@ import FBSDKLoginKit
 import AVKit
 import AVFoundation
 
-protocol LoginViewControllerDelegate {
-    func skippedLogin ()
-}
-
-
 var centralDispatchGroup = DispatchGroup()
 
 class LoginViewController: UIViewController {
     
-    var delegate: LoginViewControllerDelegate?
     var player: AVPlayer?
     
     let backendless = Backendless.sharedInstance()
