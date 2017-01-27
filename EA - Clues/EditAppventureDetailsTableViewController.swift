@@ -32,6 +32,7 @@ class EditAppventureDetailsTableViewController: UITableViewController {
     @IBOutlet weak var restrictionsPicker: UIDatePicker!
     
     
+    let imageViewIndex = IndexPath(row: 0, section: 1)
     let duationLabelIndex = IndexPath(row: 0, section: 4)
     let durationPickerIndex = IndexPath(row: 1, section: 4)
     let startTimeIndex = IndexPath(row:0, section: 6)
@@ -238,6 +239,8 @@ extension EditAppventureDetailsTableViewController {
         var height:CGFloat = 44
         
         switch indexPath {
+        case imageViewIndex:
+            height = 218
         case durationPickerIndex:
             height = edittingDuration ? 218 : 0
         case restrictionTimePickerIndex:

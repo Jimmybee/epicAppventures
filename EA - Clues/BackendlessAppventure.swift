@@ -8,6 +8,8 @@
 
 import Foundation
 
+typealias ServiceNewResponse = (AnyObject?, AnyObject?) -> ()
+
 class BackendlessAppventure: NSObject {
     
     static let backendless = Backendless.sharedInstance()
@@ -136,7 +138,8 @@ class BackendlessAppventure: NSObject {
         })
     }
     
-    class func loadBackendlessAppventures(persistent: Bool, dataQuery: BackendlessDataQuery, completion: @escaping ([Appventure]) -> ())  {
+    
+    class func loadBackendlessAppventures(persistent: Bool, dataQuery: BackendlessDataQuery, completion: @escaping ServiceNewResponse) {
         var appventures = [Appventure]()
         let dataStore = Backendless.sharedInstance().data.of(BackendlessAppventure.ofClass())
         dataStore?.find(dataQuery, response: { (collection) in
@@ -147,10 +150,12 @@ class BackendlessAppventure: NSObject {
                 let appventure = Appventure(backendlessAppventure: backendlessAppventure, persistent: persistent)
                 appventures.append(appventure)
             }
-            completion(appventures)
+            completion(appventures as AnyObject?, nil)
         }, error: { (fault) in
             print("Server reported an error: \(fault)")
-            
+            completion(nil, fault)
         })
     }
 }
+
+

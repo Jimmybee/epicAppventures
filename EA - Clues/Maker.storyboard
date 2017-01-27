@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="FPm-sm-HWC">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="FPm-sm-HWC">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -34,12 +34,18 @@
                                                 <constraint firstAttribute="width" constant="77" id="bTF-RD-tjK"/>
                                                 <constraint firstAttribute="height" constant="77" id="sbT-KN-5PX"/>
                                             </constraints>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="string" keyPath="heroID" value="appventureImage"/>
+                                            </userDefinedRuntimeAttributes>
                                         </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="lQX-Va-BfO">
                                             <rect key="frame" x="85" y="19" width="37" height="23"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="19"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="string" keyPath="heroID" value="appventureTitle"/>
+                                            </userDefinedRuntimeAttributes>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Location" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="l2m-2Y-4fh">
                                             <rect key="frame" x="85" y="47" width="52" height="16"/>
@@ -58,6 +64,9 @@
                                     </constraints>
                                 </tableViewCellContentView>
                                 <color key="tintColor" red="0.82679251151414146" green="0.12709948320690681" blue="0.2072987722022365" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="heroID" value="box"/>
+                                </userDefinedRuntimeAttributes>
                                 <connections>
                                     <outlet property="appventureImage" destination="RMe-0K-5Su" id="9dA-so-O0i"/>
                                     <outlet property="appventureTitle" destination="lQX-Va-BfO" id="7nG-D5-rUk"/>
@@ -94,6 +103,9 @@
                             <action selector="refeshTable:" destination="yut-A1-nPg" eventType="valueChanged" id="LvR-n9-0zc"/>
                         </connections>
                     </refreshControl>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="boolean" keyPath="isHeroEnabled" value="YES"/>
+                    </userDefinedRuntimeAttributes>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="T6x-CJ-LET" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -120,6 +132,9 @@
                                     <segment title="Map"/>
                                 </segments>
                                 <color key="tintColor" red="0.53725490200000003" green="0.25490196079999999" blue="0.46274509800000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="heroModifierString" value="scale(1.2)"/>
+                                </userDefinedRuntimeAttributes>
                                 <connections>
                                     <action selector="updateSegment:" destination="IeD-be-iO0" eventType="valueChanged" id="rxe-BH-NG2"/>
                                 </connections>
@@ -249,6 +264,9 @@
                                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
                                         <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <state key="normal" title="PLAY"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="heroModifierString" value="scale(0.5)  translate(100, 0) fade zPosition(2)"/>
+                                        </userDefinedRuntimeAttributes>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cmr-5k-7VR">
                                         <rect key="frame" x="187.5" y="0.0" width="187.5" height="40"/>
@@ -256,6 +274,9 @@
                                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
                                         <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <state key="normal" title="SHARE"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="heroModifierString" value="scale(0.5)  translate(100, 0) fade zPosition(2)"/>
+                                        </userDefinedRuntimeAttributes>
                                     </button>
                                 </subviews>
                             </stackView>
@@ -313,6 +334,9 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="boolean" keyPath="isHeroEnabled" value="YES"/>
+                    </userDefinedRuntimeAttributes>
                     <connections>
                         <outlet property="containerView" destination="57w-bH-8X8" id="9MA-EC-deC"/>
                         <outlet property="detailsEqualSegmentControlBottom" destination="cHW-qa-wsT" id="QT6-4p-ILo"/>
@@ -392,6 +416,9 @@
                                                     <rect key="frame" x="20" y="7" width="386" height="30"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                     <textInputTraits key="textInputTraits"/>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="string" keyPath="heroID" value="appventureTitle"/>
+                                                    </userDefinedRuntimeAttributes>
                                                     <connections>
                                                         <outlet property="delegate" destination="wAu-6L-krn" id="Qo7-ea-tni"/>
                                                     </connections>
@@ -426,6 +453,9 @@
                                                                 <constraint firstAttribute="height" constant="100" id="TWf-xY-MAi"/>
                                                                 <constraint firstAttribute="width" constant="100" id="lyP-Is-2LK"/>
                                                             </constraints>
+                                                            <userDefinedRuntimeAttributes>
+                                                                <userDefinedRuntimeAttribute type="string" keyPath="heroID" value="imageView"/>
+                                                            </userDefinedRuntimeAttributes>
                                                             <variation key="default">
                                                                 <mask key="constraints">
                                                                     <exclude reference="TWf-xY-MAi"/>
@@ -1610,6 +1640,9 @@
                         </textAttributes>
                     </navigationBar>
                     <nil name="viewControllers"/>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="boolean" keyPath="isHeroEnabled" value="YES"/>
+                    </userDefinedRuntimeAttributes>
                     <connections>
                         <segue destination="yut-A1-nPg" kind="relationship" relationship="rootViewController" id="Xwj-1Y-Pcq"/>
                     </connections>
@@ -1642,7 +1675,7 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="oxy-x2-BE5" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="sXY-mP-ndc">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="sXY-mP-ndc">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <textAttributes key="titleTextAttributes">
@@ -1650,6 +1683,9 @@
                         </textAttributes>
                     </navigationBar>
                     <nil name="viewControllers"/>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="boolean" keyPath="isHeroEnabled" value="YES"/>
+                    </userDefinedRuntimeAttributes>
                     <connections>
                         <segue destination="wAu-6L-krn" kind="relationship" relationship="rootViewController" id="pdL-3j-UOF"/>
                     </connections>

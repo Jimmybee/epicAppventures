@@ -40,7 +40,6 @@ class LocalTableViewController: BaseTableViewController, CLLocationManagerDelega
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         print("\(CLLocationManager.authorizationStatus())")
         
         //MARK: LocationManager
@@ -58,9 +57,8 @@ class LocalTableViewController: BaseTableViewController, CLLocationManagerDelega
         notificationCenter.addObserver(self, selector: #selector(LocalTableViewController.beginRefresh), name: NSNotification.Name(rawValue: User.userLoggedOutNotification), object: nil)
 
         notificationCenter.addObserver(self, selector: #selector(LocalTableViewController.beginRefresh), name: NSNotification.Name(rawValue: skipLoginNotification), object: nil)
-
+        notificationCenter.addObserver(self, selector: #selector(LocalTableViewController.getBackendlessAppventure), name: NSNotification.Name(rawValue: Notifications.reloadCatalogue), object: nil)
 //        notificationCenter.addObserver(self, selector: #selector(beginRefresh), name: skipLoginNotification, object: nil)
-
         
         //MARK: TableViewLoad
         
@@ -78,10 +76,11 @@ class LocalTableViewController: BaseTableViewController, CLLocationManagerDelega
         
         if let coreUser = CoreUser.user {
             self.downloadedAppventures = coreUser.downloadedArray
+            if coreUser.userType != .noLogin {
+                _ = getBackendlessAppventure()
+            }
         }
         
-        
-        _ = getBackendlessAppventure()
     }
     
     /// Move to backendless/model layer.
@@ -97,11 +96,16 @@ class LocalTableViewController: BaseTableViewController, CLLocationManagerDelega
         let distanceWhere = "distance( 30.26715, -97.74306, location.latitude, location.longitude ) < mi(2000000)"
         dataQuery.whereClause = distanceWhere + " AND " + liveWhere
         
-        BackendlessAppventure.loadBackendlessAppventures(persistent: false, dataQuery: dataQuery) { (appventures) in
-            self.publicAppventures = appventures
-            DispatchQueue.main.async {
-                self.hideProgressView()
-                self.tableView.reloadData()
+        BackendlessAppventure.loadBackendlessAppventures(persistent: false, dataQuery: dataQuery) { (response, fault) in
+            self.hideProgressView()
+            if fault == nil {
+                guard let appventures = response as? [Appventure] else { return }
+                self.publicAppventures = appventures
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
+            } else {
+                //display message
             }
         }
     }
@@ -171,15 +175,9 @@ class LocalTableViewController: BaseTableViewController, CLLocationManagerDelega
                 }
             }
         }
-        if segue.identifier == StoryboardNames.startupLogin {
-            if let lvc = segue.destination as? LoginViewController {
-                lvc.delegate = self
-            }
-        }
     }
     
     func checkFirstLaunch() {
-        print("checking")
         let defaults = UserDefaults.standard
         print(defaults.bool(forKey: firstLaunchKey))
         if defaults.bool(forKey: firstLaunchKey) == false {

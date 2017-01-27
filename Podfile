@@ -18,6 +18,7 @@ pod 'Backendless’
 pod 'Alamofire'
 pod 'SwiftyJSON'
 pod 'PureLayout'
+pod 'Hero'
 
 end
 

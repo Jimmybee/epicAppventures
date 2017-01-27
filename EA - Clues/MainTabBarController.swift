@@ -11,6 +11,8 @@ import UIKit
 import FBSDKCoreKit
 
 
+let statupDispatchGroup = DispatchGroup()
+
 class MainTabBarController: UITabBarController {
     
     struct StoryboardNames {
@@ -24,12 +26,14 @@ class MainTabBarController: UITabBarController {
     override func viewDidLoad() {
         
 //        self.tabBar.tintColor = UIColor.redColor()
-        
         //MARK: CheckUser
         self.selectedIndex = 2
         
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         UserManager.setupUser(completion: setupComplete)
-        
     }
 
     func setupComplete() {

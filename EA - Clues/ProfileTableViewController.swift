@@ -57,12 +57,13 @@ class ProfileTableViewController: BaseTableViewController {
         let id = Backendless.sharedInstance().userService.currentUser.objectId
         dataQuery.whereClause = "ownerId = '\(id!)'"
         self.showProgressView()
-        BackendlessAppventure.loadBackendlessAppventures(persistent: true, dataQuery: dataQuery) { (appventures) in
-            let orderedSet = NSOrderedSet(array: appventures)
-            CoreUser.user?.addToOwnedAppventures(orderedSet)
+        BackendlessAppventure.loadBackendlessAppventures(persistent: true, dataQuery: dataQuery) { (response, fault) in
             DispatchQueue.main.async {
-                AppDelegate.coreDataStack.saveContext(completion: nil)
                 self.hideProgressView()
+                guard let appventures = response as? [Appventure] else { return }
+                let orderedSet = NSOrderedSet(array: appventures)
+                CoreUser.user?.addToOwnedAppventures(orderedSet)
+                AppDelegate.coreDataStack.saveContext(completion: nil)
                 self.tableView.reloadData()
             }
         }

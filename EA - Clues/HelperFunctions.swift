@@ -33,6 +33,10 @@ struct RTFs {
     static let makingAnAdventure = "Making An Adventure"
 }
 
+struct Notifications {
+    static let reloadCatalogue = "reloadCatalogue"
+}
+
 let dataLoadedNotification = "dataLoadedNotification"
 let skipLoginNotification = "skipLoginNotification"
 let fbGraphLoadNotification = "fbGraphLoadNotification"

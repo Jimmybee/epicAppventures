@@ -108,14 +108,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                      open url: URL,
                      sourceApplication: String?,
                      annotation: Any) -> Bool {
-        
+        centralDispatchGroup.leave()
         print("AppDelegate -> application:openURL: \(url.scheme)")
         
         let backendless = Backendless.sharedInstance()
         let user = backendless?.userService.handleOpen(url)
         if user != nil {
             print("AppDelegate -> application:openURL: user = \(user)")
-            centralDispatchGroup.leave()
         }
         
         return true
