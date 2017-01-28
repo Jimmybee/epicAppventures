@@ -2,12 +2,11 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "KarlAppIcon60.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "KarlAppIcon120.png",
+      "filename" : "KarlAppIcon180Alpha-1.png",
       "scale" : "2x"
     },
     {

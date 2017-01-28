@@ -23,7 +23,7 @@ public class Appventure: NSManagedObject {
     }
     var appventureSteps: [AppventureStep] {
         get { return Array(steps) }
-        set { print("setting steps") }
+        set { print("*setting steps**")}
     }
     
     struct CoreKeys {
@@ -55,7 +55,9 @@ public class Appventure: NSManagedObject {
         let context = persistent ? AppDelegate.coreDataStack.persistentContainer.viewContext : AppDelegate.coreDataStack.tempContainer.viewContext
         let entity = NSEntityDescription.entity(forEntityName: CoreKeys.entityName, in: context)
         self.init(entity: entity!, insertInto: context)
-        
+        self.startTime = backendlessAppventure.startTime
+        self.endTime = backendlessAppventure.endTime
+        self.keyFeatures = backendlessAppventure.keyFeatures?.splitStringToArray()
         self.backendlessId = backendlessAppventure.objectId
         self.title = backendlessAppventure.title
         self.liveStatusNum = backendlessAppventure.liveStatusNum
@@ -74,7 +76,8 @@ public class Appventure: NSManagedObject {
     //Save methods
     
     func downloadAndSaveToCoreData (_ handler: () -> ()) {
-     //   AppventureStep.loadSteps(self, handler: handler)
+        
+//        CoreUser.user.owned
     }
     
     //Delete from context
@@ -87,19 +90,28 @@ public class Appventure: NSManagedObject {
     
     //MARK: Load Image
     func loadImageFor(cell: AppventureImageCell) {
+        loadImage(completion: {
+            cell.appventureImage.image = self.image
+            UIView.animate(withDuration: 0.3, animations: {
+                cell.appventureImage.alpha = 1
+            })
+            cell.setNeedsDisplay()
+        })
+        
+    }
+    
+    func loadImage(completion: ((Void) -> (Void))?) {
         guard let objectId = self.backendlessId else { return }
         let url = "https://api.backendless.com/\(AppDelegate.APP_ID)/\(AppDelegate.VERSION_NUM)/files/myfiles/\(objectId)/image.jpg"
         Alamofire.request(url).response { response in
             guard let data = response.data else {return}
             guard let image = UIImage(data: data) else { return }
             self.image = image
-            cell.appventureImage.image = image
-            UIView.animate(withDuration: 1, animations: {
-                cell.appventureImage.alpha = 1
-            })
-            cell.setNeedsDisplay()
+            guard let function = completion else { return }
+            function()
         }
     }
+    
 }
 
 enum LiveStatus: Int16 {

@@ -25,7 +25,6 @@ class LocalTableViewController: BaseTableViewController, CLLocationManagerDelega
     }
     
     let locationManager = CLLocationManager()
-    var downloadedAppventures = [Appventure]()
     var publicAppventures = [Appventure]()
     var searchController = UISearchController()
     
@@ -45,21 +44,15 @@ class LocalTableViewController: BaseTableViewController, CLLocationManagerDelega
         //MARK: LocationManager
         self.locationManager.delegate = self
         self.locationManager.requestWhenInUseAuthorization()
-//        self.locationManager.requestAlwaysAuthorization()
-        
 
         //Notifications
         let notificationCenter = NotificationCenter.default
         notificationCenter.addObserver(self, selector: #selector(LocalTableViewController.beginRefresh), name: NSNotification.Name(rawValue: User.userInitCompleteNotification), object: nil)
-
-//        notificationCenter.addObserver(self, selector: #selector(loadAppventures), name: User.userInitCompleteNotification, object: nil)
-//        notificationCenter.addObserver(self, selector: #selector(beginRefresh), name: User.userLoggedOutNotification, object: nil)
         notificationCenter.addObserver(self, selector: #selector(LocalTableViewController.beginRefresh), name: NSNotification.Name(rawValue: User.userLoggedOutNotification), object: nil)
 
         notificationCenter.addObserver(self, selector: #selector(LocalTableViewController.beginRefresh), name: NSNotification.Name(rawValue: skipLoginNotification), object: nil)
-        notificationCenter.addObserver(self, selector: #selector(LocalTableViewController.getBackendlessAppventure), name: NSNotification.Name(rawValue: Notifications.reloadCatalogue), object: nil)
-//        notificationCenter.addObserver(self, selector: #selector(beginRefresh), name: skipLoginNotification, object: nil)
         
+        notificationCenter.addObserver(self, selector: #selector(getBackendlessAppventure), name: NSNotification.Name(rawValue: Notifications.reloadCatalogue), object: nil)
         //MARK: TableViewLoad
         
         tableView.estimatedRowHeight = tableView.rowHeight
@@ -74,47 +67,15 @@ class LocalTableViewController: BaseTableViewController, CLLocationManagerDelega
 
         }
         
-        if let coreUser = CoreUser.user {
-            self.downloadedAppventures = coreUser.downloadedArray
-            if coreUser.userType != .noLogin {
-                _ = getBackendlessAppventure()
-            }
-        }
-        
-    }
-    
-    /// Move to backendless/model layer.
-    func getBackendlessAppventure() {
-        
-        self.showProgressView()
-        let queryOptions = QueryOptions()
-        queryOptions.relationsDepth = 1;
-        
-        let liveWhere = "liveStatusNum = \(2)"
-        let dataQuery = BackendlessDataQuery()
-        dataQuery.queryOptions = queryOptions;
-        let distanceWhere = "distance( 30.26715, -97.74306, location.latitude, location.longitude ) < mi(2000000)"
-        dataQuery.whereClause = distanceWhere + " AND " + liveWhere
-        
-        BackendlessAppventure.loadBackendlessAppventures(persistent: false, dataQuery: dataQuery) { (response, fault) in
-            self.hideProgressView()
-            if fault == nil {
-                guard let appventures = response as? [Appventure] else { return }
-                self.publicAppventures = appventures
-                DispatchQueue.main.async {
-                    self.tableView.reloadData()
-                }
-            } else {
-                //display message
-            }
-        }
+        showProgressView()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-         HelperFunctions.unhideTabBar(self)
+        HelperFunctions.unhideTabBar(self)
     }
     
+
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         locationManager.requestLocation()
     }
@@ -123,7 +84,7 @@ class LocalTableViewController: BaseTableViewController, CLLocationManagerDelega
         lastLocation = locations.first?.coordinate
         print(lastLocation ?? "no location")
         if refreshing == false {
-            //TODO: Load locations based on geo
+            getBackendlessAppventure()
             refreshing = true
         }
     }
@@ -136,8 +97,8 @@ class LocalTableViewController: BaseTableViewController, CLLocationManagerDelega
     }
     
     func beginRefresh() {
-        self.refreshSpinner.beginRefreshing()
-        self.tableView.isUserInteractionEnabled = false
+        refreshSpinner.beginRefreshing()
+        tableView.isUserInteractionEnabled = false
         self.refeshTable(refreshSpinner)
     }
 
@@ -149,8 +110,9 @@ class LocalTableViewController: BaseTableViewController, CLLocationManagerDelega
     //MARK: Actions
     
     @IBAction func refeshTable(_ sender: UIRefreshControl) {
-        self.publicAppventures.removeAll()
-        self.tableView.reloadData()
+        showProgressView()
+        publicAppventures.removeAll()
+        tableView.reloadData()
         locationManager.requestLocation()
     }
     
@@ -166,7 +128,7 @@ class LocalTableViewController: BaseTableViewController, CLLocationManagerDelega
                 if let aastvc = segue.destination as? AppventureStartViewController {
                     switch localPublicControl.selectedSegmentIndex {
                     case 0:
-                        aastvc.appventure = downloadedAppventures[indexPath.row]
+                        aastvc.appventure = CoreUser.user!.downloadedArray[indexPath.row]
                     case 1:
                         aastvc.appventure = publicAppventures[indexPath.row]
                     default:
@@ -196,7 +158,7 @@ class LocalTableViewController: BaseTableViewController, CLLocationManagerDelega
     override func numberOfSections(in tableView: UITableView) -> Int {
         switch localPublicControl.selectedSegmentIndex {
         case 0:
-            if self.downloadedAppventures.count > 0 {
+            if CoreUser.user!.downloadedArray.count > 0 {
                 self.tableView.separatorStyle = UITableViewCellSeparatorStyle.singleLine
                 self.tableView.backgroundView = UIView()
                 return 1
@@ -223,7 +185,7 @@ class LocalTableViewController: BaseTableViewController, CLLocationManagerDelega
         var rows = 0
         switch localPublicControl.selectedSegmentIndex {
         case 0:
-           rows = downloadedAppventures.count
+           rows = CoreUser.user!.downloadedArray.count
         case 1:
             rows = publicAppventures.count
         default:
@@ -237,7 +199,7 @@ class LocalTableViewController: BaseTableViewController, CLLocationManagerDelega
         let row = indexPath.row
         switch localPublicControl.selectedSegmentIndex {
         case 0:
-            cell.appventure = downloadedAppventures[row]
+            cell.appventure = CoreUser.user!.downloadedArray[row]
         case 1:
             cell.appventure = publicAppventures[row]
         default:
@@ -250,6 +212,52 @@ class LocalTableViewController: BaseTableViewController, CLLocationManagerDelega
         performSegue(withIdentifier: "Alt1", sender: indexPath)
     }
     
+}
+
+// MARK: API Calls
+
+extension LocalTableViewController {
+    
+    /// Move to backendless/model layer.
+    func getBackendlessAppventure() {
+        
+        let queryOptions = QueryOptions()
+        queryOptions.relationsDepth = 1;
+        
+        let liveWhere = "liveStatusNum = \(2)"
+        let dataQuery = BackendlessDataQuery()
+        dataQuery.queryOptions = queryOptions;
+        let distanceWhere = "distance( 30.26715, -97.74306, location.latitude, location.longitude ) < mi(2000000)"
+        dataQuery.whereClause = distanceWhere + " AND " + liveWhere
+        
+        BackendlessAppventure.loadBackendlessAppventures(persistent: false, dataQuery: dataQuery) { (response, fault) in
+            self.hideProgressView()
+            if fault == nil {
+                guard let appventures = response as? [Appventure] else { return }
+                self.publicAppventures = appventures
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
+                self.setDownloadForAppventures()
+            } else {
+                //display message
+            }
+        }
+    }
+    
+    private func setDownloadForAppventures() {
+        for (index, appventure) in publicAppventures.enumerated() {
+            let appventureId = appventure.backendlessId
+            if CoreUser.user!.downloadedArray.contains(where: { (appventure) -> Bool in
+                appventure.backendlessId == appventureId
+            }) {
+                appventure.downloaded = true
+                publicAppventures.remove(at: index)
+            } else {
+                appventure.downloaded = false
+            }
+        }
+    }
 }
 
 extension LocalTableViewController : ParseQueryHandler {

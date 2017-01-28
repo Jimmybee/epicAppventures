@@ -42,6 +42,9 @@ class MainTabBarController: UITabBarController {
             if let pvc = self.viewControllers![1] as? ProfileWrapperViewController {
                 pvc.showForUser()
             }
+        } else {
+            NotificationCenter.default.post(name: Notification.Name(rawValue: Notifications.reloadCatalogue), object: self)
+            CoreUser.user!.getFriends()
         }
     }
     

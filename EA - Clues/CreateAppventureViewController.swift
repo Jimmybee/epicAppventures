@@ -15,7 +15,7 @@ protocol CreateAppventureViewControllerDelegate: NSObjectProtocol {
     func reloadTable()
 }
 
-class CreateAppventureViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, UITextViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, CLLocationManagerDelegate {
+class CreateAppventureViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, UITextViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     struct Constants {
         static let cellName = "StepCell"
@@ -87,9 +87,24 @@ class CreateAppventureViewController: UIViewController, UITableViewDelegate, UIT
     
     //UI Control
     @IBOutlet weak var segmentControl: UISegmentedControl!
-    @IBOutlet weak var editButton: UIBarButtonItem!
+    
+    private(set) lazy var editBarButton: UIBarButtonItem = {
+        let button = UIBarButtonItem(title: "Edit", style: .plain, target: self, action: #selector(CreateAppventureViewController.editDetailsSegue))
+        button.tintColor = Colors.purple
+        return button
+    }()
+    private(set) lazy var reorderBarButton: UIBarButtonItem = {
+        let button = UIBarButtonItem(title: "Reorder", style: .plain, target: self, action: #selector(CreateAppventureViewController.editStepTable(_:)))
+        button.tintColor = Colors.purple
+        return button
+    }()
+    private(set) lazy var doneBarButton: UIBarButtonItem = {
+        let button = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(CreateAppventureViewController.doneEditStepTable(_:)))
+        button.tintColor = Colors.purple
+        return button
+    }()
 
-
+    
 //    MARK: View Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -97,15 +112,11 @@ class CreateAppventureViewController: UIViewController, UITableViewDelegate, UIT
         HelperFunctions.hideTabBar(self)
         
         if newAppventure == nil {
-            //popup for name
             newAppventure = Appventure()
             User.user?.ownedAppventures.append(newAppventure)
-//            newAppventure!.saveAndSync()
             setupForNewAppventure()
             performSegue(withIdentifier: Constants.editAppventureDetailsSegue, sender: nil)
-
         } else {
-//            AppventureStep.loadSteps(newAppventure!, handler: stepsLoaded)
             updateUI()
         }
         
@@ -121,10 +132,7 @@ class CreateAppventureViewController: UIViewController, UITableViewDelegate, UIT
         getQuickLocationUpdate()
         
         //Set default edit button action
-        editButton.title = "Edit"
-//        editButton.action = "editDetailsSegue:"
-//        editButton.action = #selector(CreateAppventureViewController.editDetailsSegue(_:))
-        
+        navigationItem.rightBarButtonItem = editBarButton
     }
     
     func stepsLoaded(){
@@ -157,74 +165,6 @@ class CreateAppventureViewController: UIViewController, UITableViewDelegate, UIT
         tableView.reloadData()
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-    //MARK: Map Location & Map Drawing
-    func drawMap() {
-        
-        if let isAppventure = newAppventure {
-        let lat = isAppventure.appventureSteps[0].location!.coordinate.latitude
-        let long = isAppventure.appventureSteps[0].location!.coordinate.longitude
-        
-        var top =  lat + 0.01
-        var left =  long - 0.01
-        var bottom = lat - 0.01
-        var right = long + 0.01
-        var totalDistance = 0.0
-        var previousLocation = CLLocation(latitude: lat, longitude: long)
-        
-//        var bounds = GMSCoordinateBounds()
-        self.mapMarkers.removeAll()
-        for step in isAppventure.appventureSteps {
-            let marker = GMSMarker(position: step.location!.coordinate)
-            marker.title = ("\(step.stepNumber): \(step.nameOrLocation)")
-            marker.snippet = step.locationSubtitle
-            marker.map = self.mapView
-            mapMarkers.append(marker)
-            
-            if marker.position.latitude > top { top = marker.position.latitude }
-            if marker.position.latitude < bottom { bottom = marker.position.latitude }
-            if marker.position.longitude > right { right = marker.position.longitude }
-            if marker.position.longitude < left { left = marker.position.longitude }
-            
-//            let northEast = CLLocationCoordinate2DMake(top, right)
-//            let southWest = CLLocationCoordinate2DMake(bottom, left)
-//             bounds = GMSCoordinateBounds(coordinate: northEast, coordinate: southWest)
-            
-            //distance calculation
-            let currentLocation = CLLocation(latitude: step.location!.coordinate.latitude, longitude: step.location!.coordinate.longitude)
-            totalDistance = totalDistance + currentLocation.distance(from: previousLocation)
-            previousLocation = currentLocation
-        }
-        
-        isAppventure.totalDistance = totalDistance
-            let upD = GMSCameraUpdate.setTarget(isAppventure.appventureSteps[0].location!.coordinate, zoom: 12.0)
-//        let update = GMSCameraUpdate.fitBounds(bounds!)
-            
-        mapView.moveCamera(upD)
-        
-        }
-        
-    }
-    
-    func getQuickLocationUpdate() {
-//        locationManager.requestAlwaysAuthorization()
-        locationManager.requestWhenInUseAuthorization()
-        locationManager.requestLocation()
-    }
-    
-    
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        lastLocation = locations.last
-    }
-    
-    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        
-    }
-
     
     //MARK: UI Interface
     
@@ -232,54 +172,13 @@ class CreateAppventureViewController: UIViewController, UITableViewDelegate, UIT
         tableView.reloadData()
     }
     
-  
-    
-    
-    //MARK: IB Actions
-    
-//    
-//    @IBAction func statusSegmentChange(_ sender: UISegmentedControl) {
-//        let message = goodForLive()
-//        
-//        func revertToDevelop() {
-//            self.newAppventure.liveStatus = .inDevelopment
-//            sender.selectedSegmentIndex = 0
-//            let fullMessage = "Complete the " + message
-//            let alert = UIAlertController(title: nil, message: fullMessage, preferredStyle: UIAlertControllerStyle.alert)
-//            alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: nil))
-//            self.present(alert, animated: true, completion: nil)
-//            
-//        }
-//        
-//        func tryForPublic() {
-//            self.newAppventure.liveStatus = .waitingForApproval
-//            let alert = UIAlertController(title: "Public Adventure", message: "This adventure will be looked at by one of our team, and if suitable made available to everyone.", preferredStyle: UIAlertControllerStyle.alert)
-//            alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: nil))
-//            
-//            
-//            self.present(alert, animated: true, completion: nil)
-//        }
-//        
-//        
-//        switch sender.selectedSegmentIndex {
-//        case 0:
-//            self.newAppventure.liveStatus = .inDevelopment
-//        case 1:
-//            message == "" ? (self.newAppventure.liveStatus = .local) : (revertToDevelop())
-//            BackendlessAppventure.save(appventure: newAppventure, withImage: true, completion: saveComplete)
-//        case 2:
-//            message == "" ? (tryForPublic()) : (revertToDevelop())
-//        default:
-//            break
-//        }
-//        
-//        AppDelegate.coreDataStack.saveContext(completion: nil)
-//        // TODO: Save to backend enabled for appventure.
-////        self.newAppventure.
-//    }
-    
- 
-    
+    //MARK: Private functions
+    @IBAction func playBttnPressed(_ sender: UIButton) {
+        let storyboard = UIStoryboard(name: Storyboards.LaunchAppventure, bundle: nil)
+        let stepViewController = storyboard.instantiateViewController(withIdentifier: ViewControllerIds.Step) as! StepViewController
+        stepViewController.appventure = self.newAppventure
+        present(stepViewController, animated: true, completion: nil)
+    }
     
     func goodForLive() -> String {
         var message = [String]()
@@ -295,43 +194,35 @@ class CreateAppventureViewController: UIViewController, UITableViewDelegate, UIT
         let controlValue = sender.selectedSegmentIndex
         switch controlValue {
         case 0:
-            editButton.title = "Edit"
-            editButton.isEnabled = true
+            navigationItem.rightBarButtonItem = editBarButton
             self.containerView.bringSubview(toFront: detailsView)
         case 1:
+            navigationItem.rightBarButtonItem = reorderBarButton
             stepsContainer.isHidden = false
-            editButton.isEnabled = true
-            editButton.title = "Edit"
             self.containerView.bringSubview(toFront: stepsContainer)
         case 2:
+            navigationItem.rightBarButtonItem = nil
             self.containerView.bringSubview(toFront: mapView)
             tableView.setEditing(false , animated: true)
-            editButton.isEnabled = false
-            editButton.title = nil
         default: break
         }
         
     }
     
-    //Edit Actions 
+    //Bar button Actions
     
     func editStepTable(_ sender: AnyObject) {
-        editButton.title = "Done"
-//        editButton.action = "doneEditStepTable:"
-//        editButton.action = #selector(self.doneEditStepTable(_:))
+        navigationItem.rightBarButtonItem = doneBarButton
         tableView.setEditing(true, animated: true)
         segmentControl.isEnabled = false
     }
     
     func doneEditStepTable(_ sender: AnyObject) {
-        editButton.title = "Edit"
-//        editButton.action = "editStepTable:"
-
-//        editButton.action = #selector(self.editStepTable(_:))
+        navigationItem.rightBarButtonItem = reorderBarButton
         tableView.setEditing(false , animated: true)
         segmentControl.isEnabled = true
+        AppDelegate.coreDataStack.saveContext(completion: nil)
         tableView.reloadData()
-
     }
     
     func editDetailsSegue() {
@@ -446,25 +337,22 @@ class CreateAppventureViewController: UIViewController, UITableViewDelegate, UIT
         alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: nil))
         alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.destructive, handler: { action in
             self.deleteStepFromDB(indexPath)
-            self.newAppventure.appventureSteps.remove(at: indexPath.row)
+            self.removeFromCoreData(indexPath)
             self.tableView.reloadData()
         }))
         
         self.present(alert, animated: true, completion: nil)
     }
     
+    func removeFromCoreData(_ indexPath: IndexPath) {
+        let step = newAppventure.appventureSteps[indexPath.row]
+        newAppventure.removeFromSteps(step)
+        AppDelegate.coreDataStack.saveContext(completion: nil)
+    }
+    
     func deleteStepFromDB(_ indexPath: IndexPath) {
-//        let objectID = newAppventure.appventureSteps[indexPath.row].pFObjectID
-//        let query = PFQuery(className: AppventureStep.pfStep.pfClass)
-//        query.getObjectInBackgroundWithId(objectID!) {
-//            (object: PFObject?, error: NSError?) -> Void in
-//            if error != nil {
-//                print(error)
-//            } else {
-//                object?.deleteInBackground()
-//            }
-//        }
-
+        guard let id = newAppventure.appventureSteps[indexPath.row].backendlessId else { return }
+        BackendlessStep.removeBy(id: id)
     }
 
     // Determine whether a given row is eligible for reordering or not.
@@ -476,17 +364,25 @@ class CreateAppventureViewController: UIViewController, UITableViewDelegate, UIT
     // Process the row move. This means updating the data model to correct the item indices.
     func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath)
     {
-        let step = newAppventure.appventureSteps[sourceIndexPath.row];
-        newAppventure.appventureSteps.remove(at: sourceIndexPath.row);
-        newAppventure.appventureSteps.insert(step, at: destinationIndexPath.row)
-    
-        for step in newAppventure.appventureSteps {
-            step.stepNumber = newAppventure.appventureSteps.index(of: step)! + 1
+        if sourceIndexPath.row == newAppventure.appventureSteps.count {
+            return
+        }
+        
+        let step = newAppventure.appventureSteps[sourceIndexPath.row]
+        newAppventure.removeFromSteps(at: sourceIndexPath.row)
+        newAppventure.insertIntoSteps(step, at: destinationIndexPath.row)
+        
+        for (index, step) in newAppventure.appventureSteps.enumerated() {
+            step.stepNumber = index + 1
+            print("\(step.stepNumber) \(step.nameOrLocation!)")
         }
     }
     
+
+    
 }
 
+//MARK: AppventureDetails Container functions
 
 extension CreateAppventureViewController : AppventureDetailsViewDelegate {
     
@@ -525,6 +421,71 @@ extension CreateAppventureViewController : ParseQueryHandler {
     }
 }
 
+//MARK: Map Location & Map Drawing
+
+extension CreateAppventureViewController: CLLocationManagerDelegate {
+    func drawMap() {
+        
+        if let isAppventure = newAppventure {
+            let lat = isAppventure.appventureSteps[0].location!.coordinate.latitude
+            let long = isAppventure.appventureSteps[0].location!.coordinate.longitude
+            
+            var top =  lat + 0.01
+            var left =  long - 0.01
+            var bottom = lat - 0.01
+            var right = long + 0.01
+            var totalDistance = 0.0
+            var previousLocation = CLLocation(latitude: lat, longitude: long)
+            
+            //        var bounds = GMSCoordinateBounds()
+            self.mapMarkers.removeAll()
+            for step in isAppventure.appventureSteps {
+                let marker = GMSMarker(position: step.location!.coordinate)
+                marker.title = ("\(step.stepNumber): \(step.nameOrLocation)")
+                marker.snippet = step.locationSubtitle
+                marker.map = self.mapView
+                mapMarkers.append(marker)
+                
+                if marker.position.latitude > top { top = marker.position.latitude }
+                if marker.position.latitude < bottom { bottom = marker.position.latitude }
+                if marker.position.longitude > right { right = marker.position.longitude }
+                if marker.position.longitude < left { left = marker.position.longitude }
+                
+                //            let northEast = CLLocationCoordinate2DMake(top, right)
+                //            let southWest = CLLocationCoordinate2DMake(bottom, left)
+                //             bounds = GMSCoordinateBounds(coordinate: northEast, coordinate: southWest)
+                
+                //distance calculation
+                let currentLocation = CLLocation(latitude: step.location!.coordinate.latitude, longitude: step.location!.coordinate.longitude)
+                totalDistance = totalDistance + currentLocation.distance(from: previousLocation)
+                previousLocation = currentLocation
+            }
+            
+            isAppventure.totalDistance = totalDistance
+            let upD = GMSCameraUpdate.setTarget(isAppventure.appventureSteps[0].location!.coordinate, zoom: 12.0)
+            //        let update = GMSCameraUpdate.fitBounds(bounds!)
+            
+            mapView.moveCamera(upD)
+            
+        }
+        
+    }
+    
+    func getQuickLocationUpdate() {
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.requestLocation()
+    }
+    
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        lastLocation = locations.last
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        
+    }
+
+}
 
 
 

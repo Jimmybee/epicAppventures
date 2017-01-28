@@ -18,19 +18,22 @@ class BackendlessAppventure: NSObject {
     public var objectId: String?
     
     public var duration: String?
-//    public var keyFeatures = [String]()
+    public var keyFeatures: String?
     public var liveStatusNum: Int16 = 0
-//    public var restrictions: [String]?
     public var startingLocationName: String?
     public var subtitle: String?
     public var title: String?
+    public var startTime: String?
+    public var endTime: String?
     public var totalDistance: Double? = 0
     public var location: GeoPoint?
     public var steps: [BackendlessStep] = []
     
     init(appventure: Appventure) {
         self.duration = appventure.duration
-//        self.keyFeatures = appventure.keyFeatures!
+        self.startTime = appventure.startTime
+        self.endTime = appventure.endTime
+        self.keyFeatures = appventure.keyFeatures?.joined(separator: ",")
         self.liveStatusNum = appventure.liveStatusNum
         self.objectId = appventure.backendlessId
         self.title = appventure.title!
@@ -50,7 +53,9 @@ class BackendlessAppventure: NSObject {
     init(dict:  Dictionary<String, Any> ) {
         self.objectId = dict["objectId"] as? String
         self.duration = dict["duration"] as? String
-        //        self.keyFeatures = appventure.keyFeatures!
+        self.keyFeatures = dict["keyFeatures"] as? String
+        self.startTime = dict["startTime"] as? String
+        self.endTime = dict["endTime"] as? String
         self.liveStatusNum = dict["liveStatusNum"] as! Int16
         self.title = dict["title"] as? String
         self.subtitle = dict["subtitle"] as? String
@@ -156,6 +161,16 @@ class BackendlessAppventure: NSObject {
             completion(nil, fault)
         })
     }
+    
+    class func removeBy(id: String) {
+        let dataStore = Backendless.sharedInstance().data.of(BackendlessAppventure.ofClass())
+        dataStore?.removeID(id, response: { (response) in
+            print(response ?? "removeResponse")
+        }, error: { (fault) in
+            print(fault ?? "removeFault")
+        })
+    }
+
 }
 
 

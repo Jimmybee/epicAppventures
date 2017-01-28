@@ -10,7 +10,7 @@
 import UIKit
 import PureLayout
 
-class AppventureStartViewController: UIViewController {
+class AppventureStartViewController: BaseViewController {
     
     struct Constants {
         static let StartAdventureSegue = "StartAdventure"
@@ -20,7 +20,8 @@ class AppventureStartViewController: UIViewController {
     lazy var appventure = Appventure()
     var completedAppventures = [CompletedAppventure]()
     var reviews = [String]()
-
+    var apiDownloadGroup = DispatchGroup()
+    
 //    @IBOutlet weak var startAppventure: UIButton!
     @IBOutlet weak var startButton: UIButton!
     @IBOutlet weak var tableView: UITableView!
@@ -34,33 +35,30 @@ class AppventureStartViewController: UIViewController {
         let view = nib?.first as? AppventureDetailsView
         return view!
     }()
-  
+    
     //MARK: Controller Lifecyele
     override func viewDidLoad() {
         updateUI()
-       detailsSegmentControl.setTitleTextAttributes([NSFontAttributeName: UIFont(name: "Palatino", size: 15)!], for: UIControlState()) //, NSForegroundColorAttributeName:UIColor.whiteColor()
+        detailsSegmentControl.setTitleTextAttributes([NSFontAttributeName: UIFont(name: "Palatino", size: 15)!], for: UIControlState())
         detailsSegmentControl.selectedSegmentIndex = 0
         //TODO: If a public appventure, then look for ratings and reviews.
 //        CompletedAppventure.loadAppventuresCompleted(appventure.pFObjectID!, handler: self)
 //        AppventureReviews.loadAppventuresReviews(appventure.pFObjectID!, handler: self)
         HelperFunctions.hideTabBar(self)
         
-        
-        
         detailsView.addSubview(detailsSubView)
         detailsSubView.appventure = self.appventure
         detailsSubView.autoCenterInSuperview()
         detailsSubView.autoPinEdgesToSuperviewEdges()
         detailsSubView.setup()
-//        self.navigationController?.isNavigationBarHidden = true
-
+        
     }
     
-   
-    
     func updateUI () {
-        if self.appventure.downloaded == true {
+        if appventure.downloaded == true {
             startButton.setTitle("Play", for: UIControlState())
+        } else {
+            startButton.setTitle("Download", for: UIControlState())
         }
     }
     
@@ -115,14 +113,11 @@ class AppventureStartViewController: UIViewController {
         if appventure.downloaded == true {
             performSegue(withIdentifier: Constants.StartAdventureSegue, sender: nil)
         } else {
-            appventure.downloadAndSaveToCoreData(downloadComplete)
+            downloadAppventure()
+            
         }
     }
-    
-    func downloadComplete() {
-        self.appventure.downloaded = true
-        self.startButton.setTitle("Play", for: UIControlState())
-    }
+
     
     //MARK: Image Function
     func halfImage(_ image: UIImage) -> UIImage? {
@@ -130,6 +125,43 @@ class AppventureStartViewController: UIViewController {
             return UIImage(cgImage: halfImage)
         }
         return nil
+    }
+    
+}
+
+// MARK: API Methods
+
+extension AppventureStartViewController {
+    
+    func downloadAppventure() {
+        let dataQuery = BackendlessDataQuery()
+        let id = appventure.backendlessId
+        dataQuery.whereClause = "objectId = '\(id!)'"
+        self.showProgressView()
+        BackendlessAppventure.loadBackendlessAppventures(persistent: true, dataQuery: dataQuery) { (response, fault) in
+            DispatchQueue.main.async {
+                self.hideProgressView()
+                guard let appventures = response as? [Appventure] else { return }
+                let appventure = appventures.first
+                appventure?.downloaded = true
+                CoreUser.user?.insertIntoDownloaded(appventure!, at: 0)
+               
+                for step in (appventure?.steps)! {
+                    self.apiDownloadGroup.enter()
+                    step.loadImage(completion: {
+                        self.apiDownloadGroup.leave()
+                    })
+                }
+            }
+            
+            
+            self.apiDownloadGroup.notify(queue: .main, execute: {
+                self.hideProgressView()
+                AppDelegate.coreDataStack.saveContext(completion: nil)
+                self.startButton.setTitle("Play", for: UIControlState())
+            })
+            
+        }
     }
     
 }

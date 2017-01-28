@@ -16,14 +16,11 @@ extension Appventure {
         return NSFetchRequest<Appventure>(entityName: "Appventure");
     }
 
-    @NSManaged public var coordinateLat: Double
-    @NSManaged public var coordinateLon: Double
     @NSManaged public var duration: String?
     @NSManaged public var image: UIImage?
     @NSManaged public var keyFeatures: [String]?
     @NSManaged public var liveStatusNum: Int16
     @NSManaged public var backendlessId: String?
-    @NSManaged public var restrictions: [String]?
     @NSManaged public var startingLocationName: String?
     @NSManaged public var subtitle: String?
     @NSManaged public var title: String?
@@ -33,6 +30,9 @@ extension Appventure {
     @NSManaged public var owner: CoreUser
     @NSManaged public var buyer: CoreUser
     @NSManaged public var location: CLLocation
+    @NSManaged public var startTime: String?
+    @NSManaged public var endTime: String?
+
 
 }
 

@@ -18,6 +18,8 @@
 		663166EF1D49ED910043064B /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663166EE1D49ED910043064B /* SettingsViewController.swift */; };
 		6633C7431E30F13500F65D50 /* BackendlessStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6633C7421E30F13500F65D50 /* BackendlessStep.swift */; };
 		66345AC91DA926B80095F6D8 /* AppventureParse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66345AC81DA926B80095F6D8 /* AppventureParse.swift */; };
+		66437B561E3CC74A00855EAE /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66437B551E3CC74A00855EAE /* Constants.swift */; };
+		66437B581E3CD76B00855EAE /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66437B571E3CD76B00855EAE /* BaseViewController.swift */; };
 		6644AF381D6E2CD1007B7AEF /* UserFriend.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6644AF371D6E2CD1007B7AEF /* UserFriend.swift */; };
 		6644AF3A1D6E35A2007B7AEF /* FriendsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6644AF391D6E35A2007B7AEF /* FriendsTableViewController.swift */; };
 		6644AF3C1D6E3974007B7AEF /* FriendsAdventures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6644AF3B1D6E3974007B7AEF /* FriendsAdventures.swift */; };
@@ -44,7 +46,7 @@
 		6689536B1E2A4FFC002163EC /* Appventure+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668953681E2A4FFC002163EC /* Appventure+CoreDataProperties.swift */; };
 		6689536C1E2A4FFC002163EC /* Appventure+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668953681E2A4FFC002163EC /* Appventure+CoreDataProperties.swift */; };
 		6691FE371DA1801000BC54D0 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6691FE351DA1801000BC54D0 /* Model.xcdatamodeld */; };
-		669A97511E32C0B50023A641 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 669A97501E32C0B50023A641 /* BaseViewController.swift */; };
+		669A97511E32C0B50023A641 /* BaseTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 669A97501E32C0B50023A641 /* BaseTableViewController.swift */; };
 		669A97571E337EBD0023A641 /* BackendlessSetup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 669A97561E337EBD0023A641 /* BackendlessSetup.swift */; };
 		669A97591E3394810023A641 /* AppventureDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 669A97581E3394810023A641 /* AppventureDetailsView.swift */; };
 		669A977D1E33D3D60023A641 /* AppventureDetailsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 669A977C1E33D3D60023A641 /* AppventureDetailsView.xib */; };
@@ -151,6 +153,8 @@
 		66345AC21DA922380095F6D8 /* StepOld.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StepOld.swift; sourceTree = "<group>"; };
 		66345AC81DA926B80095F6D8 /* AppventureParse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppventureParse.swift; sourceTree = "<group>"; };
 		66345ACA1DAA560C0095F6D8 /* AppventureStepParse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppventureStepParse.swift; sourceTree = "<group>"; };
+		66437B551E3CC74A00855EAE /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		66437B571E3CD76B00855EAE /* BaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		664484621C607508004B29F9 /* HowToViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HowToViewController.swift; path = "../EA Clues Client/HowToViewController.swift"; sourceTree = "<group>"; };
 		6644AF371D6E2CD1007B7AEF /* UserFriend.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserFriend.swift; sourceTree = "<group>"; };
 		6644AF391D6E35A2007B7AEF /* FriendsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendsTableViewController.swift; sourceTree = "<group>"; };
@@ -187,7 +191,7 @@
 		668A0B8C1C6B2BD400E7EEF7 /* CheckInHintViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckInHintViewController.swift; sourceTree = "<group>"; };
 		668A0B8D1C6B2BD400E7EEF7 /* CheckInHintViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CheckInHintViewController.xib; sourceTree = "<group>"; };
 		6691FE361DA1801000BC54D0 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
-		669A97501E32C0B50023A641 /* BaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
+		669A97501E32C0B50023A641 /* BaseTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseTableViewController.swift; sourceTree = "<group>"; };
 		669A97561E337EBD0023A641 /* BackendlessSetup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackendlessSetup.swift; sourceTree = "<group>"; };
 		669A97581E3394810023A641 /* AppventureDetailsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppventureDetailsView.swift; sourceTree = "<group>"; };
 		669A977C1E33D3D60023A641 /* AppventureDetailsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AppventureDetailsView.xib; sourceTree = "<group>"; };
@@ -396,7 +400,8 @@
 		669A97521E32C0BC0023A641 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
-				669A97501E32C0B50023A641 /* BaseViewController.swift */,
+				669A97501E32C0B50023A641 /* BaseTableViewController.swift */,
+				66437B571E3CD76B00855EAE /* BaseViewController.swift */,
 			);
 			name = ViewController;
 			sourceTree = "<group>";
@@ -588,6 +593,7 @@
 				6663EAC81D64C4D4000F7BF9 /* largeTextContent.swift */,
 				6650D5151DA10D22008EAD27 /* RoundedButton.swift */,
 				666678C21C64821100C4309C /* ObjC */,
+				66437B551E3CC74A00855EAE /* Constants.swift */,
 			);
 			name = "Shared Func";
 			path = "EA - Clues";
@@ -757,7 +763,7 @@
 				TargetAttributes = {
 					66D7CD5A1C5B3F4E00ACB8E3 = {
 						CreatedOnToolsVersion = 7.2;
-						DevelopmentTeam = WM7B35DDT2;
+						DevelopmentTeam = G55S74JQUS;
 						LastSwiftMigration = 0820;
 					};
 					66D7CD6E1C5B3F4E00ACB8E3 = {
@@ -891,6 +897,7 @@
 				6633C7431E30F13500F65D50 /* BackendlessStep.swift in Sources */,
 				6663EAC71D647299000F7BF9 /* InstructionsViewController.swift in Sources */,
 				6644AF381D6E2CD1007B7AEF /* UserFriend.swift in Sources */,
+				66437B581E3CD76B00855EAE /* BaseViewController.swift in Sources */,
 				66E5A9EB1E2EBA1F008A1A6C /* LegacyAppventure.swift in Sources */,
 				66ED85D61D6236B400A3F438 /* AddAnswerTableViewController.swift in Sources */,
 				66C916B81C61EAB300E39576 /* EditAppventureDetailsTableViewController.swift in Sources */,
@@ -911,6 +918,7 @@
 				66F32C871D575A6D00D99701 /* HowToViewController.swift in Sources */,
 				666149DD1C60A72C0068D416 /* AppventureReviews.swift in Sources */,
 				66DA2F281C5B445600751528 /* ImageFullscreenViewController.swift in Sources */,
+				66437B561E3CC74A00855EAE /* Constants.swift in Sources */,
 				6689536B1E2A4FFC002163EC /* Appventure+CoreDataProperties.swift in Sources */,
 				66F32C761D575A5600D99701 /* StepViewController.swift in Sources */,
 				661472681D5A82D90093C65B /* ProfileWrapperViewController.swift in Sources */,
@@ -948,7 +956,7 @@
 				66C097001E3561820003F455 /* TimePenaltyViewController.swift in Sources */,
 				6644AF3C1D6E3974007B7AEF /* FriendsAdventures.swift in Sources */,
 				66B3DB601E2A61E000CEB1AA /* CoreUser+CoreDataProperties.swift in Sources */,
-				669A97511E32C0B50023A641 /* BaseViewController.swift in Sources */,
+				669A97511E32C0B50023A641 /* BaseTableViewController.swift in Sources */,
 				66F32C7C1D575A5C00D99701 /* CheckInHintViewController.swift in Sources */,
 				6650D5141DA102BA008EAD27 /* DistanceMarker.swift in Sources */,
 				66D7CD991C5B409400ACB8E3 /* AppventureStep.swift in Sources */,
@@ -1101,7 +1109,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				DEVELOPMENT_TEAM = WM7B35DDT2;
+				DEVELOPMENT_TEAM = G55S74JQUS;
 				INFOPLIST_FILE = "EA - Clues/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1120,7 +1128,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				DEVELOPMENT_TEAM = WM7B35DDT2;
+				DEVELOPMENT_TEAM = G55S74JQUS;
 				INFOPLIST_FILE = "EA - Clues/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

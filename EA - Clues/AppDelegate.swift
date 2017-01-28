@@ -115,6 +115,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let user = backendless?.userService.handleOpen(url)
         if user != nil {
             print("AppDelegate -> application:openURL: user = \(user)")
+            print(backendless?.userService.currentUser.getToken() ?? "no backendless token *******")
+            print(FBSDKAccessToken.current() ?? "no token")
         }
         
         return true

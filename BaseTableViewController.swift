@@ -8,10 +8,10 @@
 
 import Foundation
 
-class BaseViewController: UIViewController {
+class BaseTableViewController: UITableViewController {
     
     var activityView = UIActivityIndicatorView()
-    
+
     private(set) lazy var progressView: UIView = {
         let size = CGSize(width: 60, height: 60)
         let center = CGPoint(x: UIScreen.main.bounds.size.width / 2 - 30, y: UIScreen.main.bounds.size.height / 2 - 30)
@@ -25,11 +25,11 @@ class BaseViewController: UIViewController {
         progressView.addSubview(self.activityView)
         return progressView
     }()
-    
+
     
 }
 
-extension BaseViewController {
+extension BaseTableViewController {
     
     func showProgressView() {
         let appdelegate = UIApplication.shared.delegate as! AppDelegate

@@ -9,12 +9,13 @@
 
 import Foundation
 import CoreData
+import FBSDKCoreKit
 
 //@objc(CoreUser)
 public class CoreUser: NSManagedObject {
     
     static var user: CoreUser?
-
+    
     var userType: UserType {
         get { return UserType(rawValue: self.userTypeInt) ?? .noLogin }
         set {
@@ -38,6 +39,8 @@ public class CoreUser: NSManagedObject {
             }
         }
     }
+    
+    var facebookFriends = [UserFriend]()
     
     /// Check if cached user object exists. Otherwise load from context or create in context.
     static func checkLogin(_ required: Bool = true, vc: UIViewController?) -> Bool {
@@ -75,6 +78,40 @@ public class CoreUser: NSManagedObject {
     }
     
     
+}
+
+
+// MARK: Facebook
+
+extension CoreUser {
+    
+    func getFriends() {
+      facebookFriends.removeAll()
+        let fbGraph = FBSDKGraphRequest.init(graphPath: "me/friends", parameters: ["fields": "first_name, last_name, picture.type(small)"])
+        _ = fbGraph?.start(completionHandler: { (connection, resultAny, error) -> Void in
+            if error != nil {
+                print("Error: \(error)")
+            }
+            else {
+                let result = resultAny as AnyObject
+                if let friendArray = result.object(forKey: "data") as? NSArray {
+                    for friend in friendArray {
+                        if let pictureURL = (friend as AnyObject).value(forKeyPath: "picture.data.url") as? String {
+                            let friendFirstName = (friend as AnyObject).value(forKey: "first_name") as! String
+                            let friendLastName = (friend as AnyObject).value(forKey: "last_name") as! String
+                            let id = (friend as AnyObject).value(forKey: "id") as! String
+                            let url = URL(string: pictureURL)
+                            let userFriend = UserFriend(id: id, firstName: friendFirstName, lastName: friendLastName, url: url!)
+                            self.facebookFriends.append(userFriend)
+                        }
+                    }
+                    print(self.facebookFriends.count)
+                }
+                
+            }
+        })
+    }
+
 }
 
 enum UserType: Int16 {

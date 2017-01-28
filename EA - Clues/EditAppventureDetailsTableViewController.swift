@@ -33,6 +33,7 @@ class EditAppventureDetailsTableViewController: UITableViewController {
     
     
     let imageViewIndex = IndexPath(row: 0, section: 1)
+    let descriptionTextIndex = IndexPath(row:0, section: 2)
     let duationLabelIndex = IndexPath(row: 0, section: 4)
     let durationPickerIndex = IndexPath(row: 1, section: 4)
     let startTimeIndex = IndexPath(row:0, section: 6)
@@ -80,9 +81,9 @@ class EditAppventureDetailsTableViewController: UITableViewController {
         appventureDescription.text = appventure!.subtitle
         durationLabel.text = appventure!.duration
         startingLocation.text = appventure!.startingLocationName
-//        restrictionsField.text = appventure!.restrictions?.joined(separator: ",")
+        startTimeLabel.text = appventure?.startTime
+        endTimeLabel.text = appventure?.endTime
 //        keyFeatures.text = appventure!.keyFeatures?.joined(separator: ",")
-        self.saveBtt.isEnabled = false
     }
     
     func checkSave() {
@@ -108,16 +109,18 @@ class EditAppventureDetailsTableViewController: UITableViewController {
         appventure!.subtitle = appventureDescription.text
         appventure!.duration = durationLabel.text
         appventure!.startingLocationName = startingLocation.text
-//        appventure!.restrictions = restrictionsField.text!.splitStringToArray()
+        appventure?.duration = durationLabel.text
+        appventure?.startTime = startTimeLabel.text
+        appventure?.endTime = endTimeLabel.text
 //        appventure!.keyFeatures = keyFeatures.text!.splitStringToArray()
         appventure!.image = imageView.image
         AppDelegate.coreDataStack.saveContext(completion: nil)
     }
     
     @IBAction func durationPickerChanged(_ sender: UIDatePicker) {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "HH hr m minutes"
-        durationLabel.text = dateFormatter.string(from: sender.date)
+        let calendar = Calendar.current
+        let components = calendar.dateComponents([.hour, .minute], from: sender.date)
+        durationLabel.text = ("\(components.hour!) hours \(components.minute!) minutes")
     }
     
     @IBAction func restrictionsPickerChanged(_ sender: UIDatePicker) {
@@ -241,6 +244,8 @@ extension EditAppventureDetailsTableViewController {
         switch indexPath {
         case imageViewIndex:
             height = 218
+        case descriptionTextIndex:
+            height = 180
         case durationPickerIndex:
             height = edittingDuration ? 218 : 0
         case restrictionTimePickerIndex:

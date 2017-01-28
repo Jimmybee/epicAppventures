@@ -69,4 +69,13 @@ class BackendlessStep : NSObject {
         
     }
     
+    static func removeBy(id: String) {
+        let dataStore = Backendless.sharedInstance().data.of(BackendlessStep.ofClass())
+        dataStore?.removeID(id, response: { (response) in
+            print(response ?? "removeResponse")
+        }, error: { (fault) in
+            print(fault ?? "removeResponse")
+        })
+    }
+    
 }

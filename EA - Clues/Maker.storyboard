@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="FPm-sm-HWC">
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="FPm-sm-HWC">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -267,6 +267,9 @@
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="string" keyPath="heroModifierString" value="scale(0.5)  translate(100, 0) fade zPosition(2)"/>
                                         </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <action selector="playBttnPressed:" destination="IeD-be-iO0" eventType="touchUpInside" id="E7I-lw-aqd"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cmr-5k-7VR">
                                         <rect key="frame" x="187.5" y="0.0" width="187.5" height="40"/>
@@ -326,13 +329,6 @@
                                 <action selector="cancel:" destination="IeD-be-iO0" id="TmB-WX-v29"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="Item" id="1nG-z1-BnW">
-                            <color key="tintColor" red="0.53725490200000003" green="0.25490196079999999" blue="0.46274509800000002" alpha="1" colorSpace="calibratedRGB"/>
-                            <connections>
-                                <action selector="testIt:" destination="IeD-be-iO0" id="hcq-uf-og9"/>
-                                <segue destination="oxy-x2-BE5" kind="presentation" identifier="Edit Appventure Details" id="3Ve-Pc-YcS"/>
-                            </connections>
-                        </barButtonItem>
                     </navigationItem>
                     <userDefinedRuntimeAttributes>
                         <userDefinedRuntimeAttribute type="boolean" keyPath="isHeroEnabled" value="YES"/>
@@ -343,7 +339,6 @@
                         <outlet property="detailsEqualSuperHeight" destination="hAn-vY-j2K" id="Cfn-q4-IRs"/>
                         <outlet property="detailsTopEqualLayoutBottom" destination="p2c-w1-cxk" id="BAZ-LJ-VCB"/>
                         <outlet property="detailsView" destination="eJY-0o-Kal" id="4AT-zf-qqH"/>
-                        <outlet property="editButton" destination="1nG-z1-BnW" id="wWJ-C6-te5"/>
                         <outlet property="mapView" destination="rUz-gc-VtF" id="Ulp-4r-DhO"/>
                         <outlet property="segmentControl" destination="7pv-Tb-Cia" id="G1a-LL-BgW"/>
                         <outlet property="stepsContainer" destination="8PJ-H1-Woo" id="IOm-cz-MNC"/>
@@ -453,9 +448,6 @@
                                                                 <constraint firstAttribute="height" constant="100" id="TWf-xY-MAi"/>
                                                                 <constraint firstAttribute="width" constant="100" id="lyP-Is-2LK"/>
                                                             </constraints>
-                                                            <userDefinedRuntimeAttributes>
-                                                                <userDefinedRuntimeAttribute type="string" keyPath="heroID" value="imageView"/>
-                                                            </userDefinedRuntimeAttributes>
                                                             <variation key="default">
                                                                 <mask key="constraints">
                                                                     <exclude reference="TWf-xY-MAi"/>
@@ -736,6 +728,9 @@
                     </navigationItem>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="414" height="1500"/>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="boolean" keyPath="isHeroEnabled" value="NO"/>
+                    </userDefinedRuntimeAttributes>
                     <connections>
                         <outlet property="appventureDescription" destination="kyU-T5-1Fv" id="3DP-gh-WxI"/>
                         <outlet property="appventureNameField" destination="F8o-R1-pkL" id="99n-Pr-P3M"/>
@@ -1675,7 +1670,7 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="oxy-x2-BE5" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="sXY-mP-ndc">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="sXY-mP-ndc">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <textAttributes key="titleTextAttributes">
@@ -2077,12 +2072,11 @@
         <image name="stop-1" width="256" height="256"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="zM8-3K-2aY"/>
         <segue reference="YWN-gl-ie4"/>
         <segue reference="bxr-4S-MDJ"/>
-        <segue reference="3Ve-Pc-YcS"/>
         <segue reference="XeW-9H-Ju8"/>
-        <segue reference="zM8-3K-2aY"/>
-        <segue reference="oM4-JG-xLl"/>
         <segue reference="vVR-r8-AlU"/>
+        <segue reference="oM4-JG-xLl"/>
     </inferredMetricsTieBreakers>
 </document>

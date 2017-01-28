@@ -8,6 +8,7 @@
 
 import Foundation
 import CoreData
+import Alamofire
 
 public class AppventureStep: NSManagedObject {
     @nonobjc static var appventureStepsHc = "appventureStepsHc"
@@ -61,4 +62,15 @@ public class AppventureStep: NSManagedObject {
     
     var answerFormatHint = ""
 
+    
+    func loadImage(completion: @escaping () -> ()?) {
+        guard let objectId = self.backendlessId else { return }
+        let url = "https://api.backendless.com/\(AppDelegate.APP_ID)/\(AppDelegate.VERSION_NUM)/files/myfiles/\(objectId)/image.jpg"
+        Alamofire.request(url).response { response in
+            guard let data = response.data else {return}
+            guard let image = UIImage(data: data) else { return }
+            self.image = image
+            completion()
+        }
+    }
 }

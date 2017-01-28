@@ -178,32 +178,7 @@ class User: NSObject {
         })
     }
     
-    func getFriends() {
-        self.facebookFriends.removeAll()
-         let fbGraph = FBSDKGraphRequest.init(graphPath: "me/friends", parameters: ["fields": "first_name, last_name, picture.type(small)"])
-        _ = fbGraph?.start(completionHandler: { (connection, resultAny, error) -> Void in
-            if error != nil {
-                print("Error: \(error)")
-            }
-            else {
-                let result = resultAny as AnyObject
-                if let friendArray = result.object(forKey: "data") as? NSArray {
-                    for friend in friendArray {
-                        if let pictureURL = (friend as AnyObject).value(forKeyPath: "picture.data.url") as? String {
-                            let friendFirstName = (friend as AnyObject).value(forKey: "first_name") as! String
-                            let friendLastName = (friend as AnyObject).value(forKey: "last_name") as! String
-                            let id = (friend as AnyObject).value(forKey: "id") as! String
-                            let url = URL(string: pictureURL)
-                            let userFriend = UserFriend(id: id, firstName: friendFirstName, lastName: friendLastName, url: url!)
-                            self.facebookFriends.append(userFriend)
-                        }
-                    }
-                }
-                
-            }
-        })
-    }
-    
+        
     func getFBImage() {
         if let url = self.pictureURL as String! {
             if let getURL = URL(string: url) {

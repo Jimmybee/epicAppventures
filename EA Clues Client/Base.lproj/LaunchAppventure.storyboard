@@ -966,7 +966,7 @@ Adventure Completed!</string>
                     <tabBarItem key="tabBarItem" title="Adventure" image="trailIcon-X" id="Dt4-3B-Ro2"/>
                     <toolbarItems/>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" translucent="NO" id="U8e-dP-2Ft">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="U8e-dP-2Ft">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -1128,7 +1128,7 @@ Adventure Completed!</string>
         <!--Step View Controller-->
         <scene sceneID="ULo-sI-j6n">
             <objects>
-                <viewController id="BxS-r5-5t0" customClass="StepViewController" customModule="EA___Clues" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="StepViewController" id="BxS-r5-5t0" customClass="StepViewController" customModule="EA___Clues" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="yMZ-yl-Ugr"/>
                         <viewControllerLayoutGuide type="bottom" id="Vlr-jq-gon"/>
@@ -1137,31 +1137,30 @@ Adventure Completed!</string>
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XEw-s0-jiR" userLabel="AnswerView">
-                                <rect key="frame" x="0.0" y="20" width="414" height="40"/>
+                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XEw-s0-jiR" userLabel="AnswerView">
+                                <rect key="frame" x="0.0" y="20" width="375" height="40"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CdJ-fo-RP1">
-                                        <rect key="frame" x="81" y="11" width="52" height="24"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CdJ-fo-RP1">
+                                        <rect key="frame" x="61.5" y="11" width="52" height="24"/>
                                         <fontDescription key="fontDescription" name="Palatino-Roman" family="Palatino" pointSize="21"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="comments" translatesAutoresizingMaskIntoConstraints="NO" id="RXd-Kv-s1p">
-                                        <rect key="frame" x="187" y="0.0" width="40" height="40"/>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="comments" translatesAutoresizingMaskIntoConstraints="NO" id="RXd-Kv-s1p">
+                                        <rect key="frame" x="167.5" y="0.0" width="40" height="40"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="0px-q6-czP"/>
                                             <constraint firstAttribute="width" constant="40" id="tlu-9M-SY2"/>
                                         </constraints>
                                     </imageView>
-                                    <view alpha="0.5" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9bP-ir-bTz">
-                                        <rect key="frame" x="0.0" y="-80" width="414" height="120"/>
+                                    <view alpha="0.5" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9bP-ir-bTz">
+                                        <rect key="frame" x="0.0" y="-80" width="375" height="120"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="414" id="Prg-vV-tne"/>
                                             <constraint firstAttribute="height" constant="120" id="r0z-0i-XcU"/>
                                         </constraints>
                                     </view>
-                                    <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RTT-0W-cbj">
-                                        <rect key="frame" x="20" y="37" width="374" height="1"/>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RTT-0W-cbj">
+                                        <rect key="frame" x="20" y="37" width="335" height="1"/>
                                         <color key="backgroundColor" red="0.54586886456518457" green="0.54586886456518457" blue="0.54586886456518457" alpha="0.73983847128378377" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="1" id="KhU-9T-9dc"/>
@@ -1198,14 +1197,14 @@ Adventure Completed!</string>
                                     </mask>
                                 </variation>
                             </view>
-                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ANg-Ra-15U" customClass="clickParentScroll" customModule="EA___Clues" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="632" width="414" height="60"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ANg-Ra-15U" customClass="clickParentScroll" customModule="EA___Clues" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="563" width="375" height="60"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="BottomBar1" translatesAutoresizingMaskIntoConstraints="NO" id="flZ-do-afA">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="60"/>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="BottomBar1" translatesAutoresizingMaskIntoConstraints="NO" id="flZ-do-afA">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
                                     </imageView>
-                                    <scrollView multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" pagingEnabled="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IMG-iX-jBM">
-                                        <rect key="frame" x="162" y="0.0" width="90" height="60"/>
+                                    <scrollView multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IMG-iX-jBM">
+                                        <rect key="frame" x="142.5" y="0.0" width="90" height="60"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Clue" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8hW-ml-MXM">
                                                 <rect key="frame" x="0.0" y="0.0" width="90" height="60"/>
@@ -1289,8 +1288,8 @@ Adventure Completed!</string>
                                     <outletCollection property="gestureRecognizers" destination="8Fk-YW-f17" appends="YES" id="UEv-8Z-2C6"/>
                                 </connections>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="71j-Do-5CH">
-                                <rect key="frame" x="353" y="24" width="33" height="33"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="71j-Do-5CH">
+                                <rect key="frame" x="318" y="24" width="33" height="33"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="33" id="5h9-iA-MQB"/>
                                     <constraint firstAttribute="width" constant="33" id="Fve-vD-n3W"/>
@@ -1300,8 +1299,8 @@ Adventure Completed!</string>
                                     <action selector="moreActions:" destination="BxS-r5-5t0" eventType="touchUpInside" id="ekL-VK-h78"/>
                                 </connections>
                             </button>
-                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Typ-T3-Jwm">
-                                <rect key="frame" x="0.0" y="62" width="414" height="570"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Typ-T3-Jwm">
+                                <rect key="frame" x="0.0" y="62" width="375" height="501"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <gestureRecognizers/>
                             </view>
@@ -1329,9 +1328,7 @@ Adventure Completed!</string>
                             </mask>
                         </variation>
                     </view>
-                    <toolbarItems>
-                        <barButtonItem title="Item" id="lwQ-qW-26y"/>
-                    </toolbarItems>
+                    <toolbarItems/>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="answerContainer" destination="9bP-ir-bTz" id="AFL-Of-MLH"/>
@@ -1362,7 +1359,7 @@ Adventure Completed!</string>
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="2625" y="1322"/>
+            <point key="canvasLocation" x="2978" y="1314"/>
         </scene>
         <!--Instructions-->
         <scene sceneID="WfO-Y0-JgL">

@@ -29,7 +29,6 @@ extension Appventure {
         self.duration = appventure.duration
         self.image = appventure.image
         self.keyFeatures = appventure.keyFeatures
-        self.restrictions = appventure.restrictions
         self.liveStatus = appventure.liveStatus
         self.rating = appventure.rating
         
