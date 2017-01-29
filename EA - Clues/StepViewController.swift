@@ -27,7 +27,7 @@ class StepViewController: UIViewController {
     @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var timerLabel: UILabel!
 
-    @IBOutlet weak var clueTypeStackView: UIStackView!
+    @IBOutlet weak var clueSelectionContainer: UIView!
     
     //MARK: Model
     var appventure: Appventure!
@@ -41,19 +41,25 @@ class StepViewController: UIViewController {
     
     //ViewVariable
     var activeViews = [UIView]()
+    var activeBttns = [UIButton]()
     
     //Child View Controllers
     let textClueView : TextClueViewController = TextClueViewController(nibName: "TextClueViewController", bundle: nil)
     let pictureClueView : PictureClueViewController = PictureClueViewController(nibName: "PictureClueViewController", bundle: nil)
     let soundClueView : SoundClueViewController = SoundClueViewController(nibName: "SoundClueViewController", bundle: nil)
     let mapComapassView : MapCompassViewController = MapCompassViewController(nibName: "MapCompassViewController", bundle: nil)
-
+    
+    private(set) var clueTypeStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .horizontal
+        return stackView
+    }()
     
     private(set) var textClueBttn: UIButton = {
         let bttn = UIButton(frame: .zero)
         bttn.setImage(UIImage(named: ImageNames.VcStep.file), for: .normal)
         bttn.setImage(UIImage(named: ImageNames.VcStep.fileSelected), for: .selected)
-        bttn.addTarget(self, action: #selector(textClueTapped), for: .touchUpInside)
+        bttn.addTarget(self, action: #selector(clueBttnTapped(sender:)), for: .touchUpInside)
         return bttn
     }()
     
@@ -61,7 +67,7 @@ class StepViewController: UIViewController {
         let bttn = UIButton(frame: .zero)
         bttn.setImage(UIImage(named: ImageNames.VcStep.camera), for: .normal)
         bttn.setImage(UIImage(named: ImageNames.VcStep.cameraSelected), for: .selected)
-        bttn.addTarget(self, action: #selector(imageClueTapped), for: .touchUpInside)
+        bttn.addTarget(self, action: #selector(clueBttnTapped(sender:)), for: .touchUpInside)
         return bttn
     }()
     
@@ -69,7 +75,7 @@ class StepViewController: UIViewController {
         let bttn = UIButton(frame: .zero)
         bttn.setImage(UIImage(named: ImageNames.VcStep.map), for: .normal)
         bttn.setImage(UIImage(named: ImageNames.VcStep.mapSelected), for: .selected)
-        bttn.addTarget(self, action: #selector(mapClueTapped), for: .touchUpInside)
+        bttn.addTarget(self, action: #selector(clueBttnTapped(sender:)), for: .touchUpInside)
         return bttn
     }()
     
@@ -81,21 +87,30 @@ class StepViewController: UIViewController {
     
     private(set)  var separatorLine1: UIView = {
         let view = UIView(frame: .zero)
-        view.backgroundColor = UIColor.darkGray
+        view.backgroundColor = UIColor.lightGray
         return view
     }()
     
     private(set)  var separatorLine2: UIView = {
         let view = UIView(frame: .zero)
-        view.backgroundColor = UIColor.darkGray
+        view.backgroundColor = UIColor.lightGray
         return view
     }()
     
     private(set)  var separatorLine3: UIView = {
         let view = UIView(frame: .zero)
-        view.backgroundColor = UIColor.darkGray
+        view.backgroundColor = UIColor.lightGray
         return view
     }()
+    
+    private(set)  var answerBttn: UIButton = {
+        let bttn = UIButton(frame: .zero)
+        return bttn
+    }()
+    
+    var purpleLineVertical : NSLayoutConstraint?
+    var purpleLineWidth : NSLayoutConstraint?
+
     
     //MARK: Lifecycle
     override func viewDidLoad() {
@@ -103,13 +118,12 @@ class StepViewController: UIViewController {
         timerLabel.text = HelperFunctions.formatTime(0, nano: false)
         step = appventure.appventureSteps[0]
         loadControllers()
+        setupConstraints()
         setupViews()
-//        Appventure.setCurrentAppventure(self.appventure)
+        setupBttnConstraints()
 
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(StepViewController.dismissKeyboard))
         view.addGestureRecognizer(tap)
-        
-        setupConstraints()
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -128,25 +142,32 @@ extension StepViewController {
     //MARK: Constraints
     
     func setupConstraints() {
-        clueTypeStackView.addArrangedSubview(textClueBttn)
-        clueTypeStackView.addArrangedSubview(separatorLine2)
-        clueTypeStackView.addArrangedSubview(imageClueBttn)
-        clueTypeStackView.addArrangedSubview(separatorLine3)
-        clueTypeStackView.addArrangedSubview(mapClueBttn)
-
-
-        textClueBttn.autoSetDimension(.height, toSize: 30)
-        separatorLine2.autoMatch(.height, to: .height, of: clueTypeStackView, withMultiplier: 0.9)
-        separatorLine2.autoSetDimension(.width, toSize: 1)
-        imageClueBttn.autoSetDimension(.height, toSize: 25)
-        separatorLine3.autoMatch(.height, to: .height, of: clueTypeStackView, withMultiplier: 0.9)
-        separatorLine3.autoSetDimension(.width, toSize: 1)
-        mapClueBttn.autoSetDimension(.height, toSize: 30)
+        clueSelectionContainer.addSubview(clueTypeStackView)
         
+        clueTypeStackView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)) // Causing error
         
+        clueSelectionContainer.addSubview(separatorLine1)
+        
+        separatorLine1.autoMatch(.width, to: .width, of: clueSelectionContainer)
+        separatorLine1.autoPinEdge(toSuperviewEdge: .bottom, withInset: 0)
+        separatorLine1.autoAlignAxis(toSuperviewAxis: .vertical)
+        separatorLine1.autoSetDimension(.height, toSize: 2)
+        
+        clueSelectionContainer.addSubview(purpleLine)
+        purpleLine.autoSetDimension(.height, toSize: 5)
+        purpleLine.autoPinEdge(toSuperviewEdge: .bottom)
+        
+    
     }
     
+    
+    
     //MARK: Setup
+    
+    func setupAnswerBttn() {
+        answerBttn.setImage(UIImage(named: ImageNames.VcStep.map), for: .normal)
+        answerBttn.setImage(UIImage(named: ImageNames.VcStep.mapSelected), for: .selected)
+    }
     
     func loadControllers() {
         func addController (_ vc: UIViewController) {
@@ -165,12 +186,18 @@ extension StepViewController {
     
     func setupViews() {
         activeViews.removeAll()
+        activeBttns.removeAll()
+        
+        for view in clueTypeStackView.arrangedSubviews {
+            clueTypeStackView.removeArrangedSubview(view)
+        }
         
         //Text
         if  step.setup.textClue {
             textClueView.clueText = step.initialText
             textClueView.setup()
             activeViews.append(textClueView.view)
+            activeBttns.append(textClueBttn)
         }
         
         //Sound
@@ -179,6 +206,7 @@ extension StepViewController {
                 soundClueView.sound = isSound
                 soundClueView.setupAP()
                 activeViews.append(soundClueView.view)
+//                activeBttns.append(textClueBttn)
             }
         }
         
@@ -188,6 +216,7 @@ extension StepViewController {
                 pictureClueView.clueImage = isImage
                 pictureClueView.setup()
                 activeViews.append(pictureClueView.view)
+                activeBttns.append(imageClueBttn)
             }
         }
         
@@ -198,13 +227,40 @@ extension StepViewController {
         mapComapassView.showDistance = step.setup.distanceShown
         mapComapassView.setup()
         activeViews.append(mapComapassView.view)
-        
+        activeBttns.append(mapClueBttn)
         
         //Complete
         self.view.sendSubview(toBack: containerView)
         
         //set scrollbar at bottom to clue
         containerView.bringSubview(toFront: activeViews[0])
+        
+    }
+    
+    func setupBttnConstraints() {
+        purpleLineVertical?.autoRemove()
+        purpleLineWidth?.autoRemove()
+
+        for (index ,bttn) in activeBttns.enumerated() {
+            clueTypeStackView.addArrangedSubview(bttn)
+            bttn.tag = index
+            if index > 0 {
+                activeBttns[index].autoMatch(.width, to: .width, of: activeBttns[index - 1])
+            }
+            if index < activeBttns.count - 1 {
+                let separator = UIView()
+                separator.backgroundColor = UIColor.lightGray
+                clueTypeStackView.addArrangedSubview(separator)
+                separator.autoMatch(.height, to: .height, of: clueTypeStackView, withMultiplier: 0.9)
+                separator.autoSetDimension(.width, toSize: 1)
+            }
+        }
+        
+        activeBttns[0].isSelected = true
+        purpleLineVertical = purpleLine.autoAlignAxis(.vertical, toSameAxisOf: activeBttns[0])
+        purpleLineWidth = purpleLine.autoMatch(.width, to: .width, of: activeBttns[0], withMultiplier: 0.9)
+
+        
     }
 }
 
@@ -212,16 +268,21 @@ extension StepViewController {
 
 extension StepViewController {
     
-    func textClueTapped() {
-        textClueBttn.isSelected = !textClueBttn.isSelected
-    }
-    
-    func imageClueTapped() {
-        imageClueBttn.isSelected = !imageClueBttn.isSelected
-    }
-    
-    func mapClueTapped() {
-        mapClueBttn.isSelected = !mapClueBttn.isSelected
+    func clueBttnTapped(sender: UIButton) {
+        purpleLineVertical?.autoRemove()
+
+        for bttn in activeBttns {
+            bttn.isSelected = false
+        }
+        activeBttns[sender.tag].isSelected = true
+        containerView.bringSubview(toFront: activeViews[sender.tag])
+        purpleLineVertical!.autoRemove()
+        
+        UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseInOut, animations: {
+            self.purpleLineVertical = self.purpleLine.autoAlignAxis(.vertical, toSameAxisOf: self.activeBttns[sender.tag])
+            self.clueSelectionContainer.layoutIfNeeded()
+        }, completion: nil)
+
     }
     
     /// Menu button for exit, report, instructions

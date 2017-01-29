@@ -34,10 +34,8 @@ class PictureClueViewController: UIViewController {
     
     @IBAction func zoomTap(_ sender: UITapGestureRecognizer) {
         if scrollView.zoomScale == 1 {
-            
             scrollView.isScrollEnabled = true
             scrollView.zoomScale = 2
-            delegate.closePan()
         } else {
              zoomOut()
         }

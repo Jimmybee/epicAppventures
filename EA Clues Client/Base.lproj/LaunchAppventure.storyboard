@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="skn-cX-nSS">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="15G1217" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="skn-cX-nSS">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -1140,34 +1140,44 @@ Adventure Completed!</string>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XEw-s0-jiR" userLabel="TopBar">
                                 <rect key="frame" x="0.0" y="20" width="375" height="40"/>
                                 <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="equalCentering" translatesAutoresizingMaskIntoConstraints="NO" id="QqY-Rf-OV8">
-                                        <rect key="frame" x="20" y="8" width="335" height="25"/>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="QqY-Rf-OV8">
+                                        <rect key="frame" x="20" y="0.0" width="335" height="40"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1 of 9" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="co1-Kh-oWe">
-                                                <rect key="frame" x="0.0" y="0.0" width="43" height="25"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="111.5" height="40"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="01:20" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CdJ-fo-RP1">
-                                                <rect key="frame" x="148" y="0.0" width="48" height="25"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="251" text="01:20" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CdJ-fo-RP1">
+                                                <rect key="frame" x="111.5" y="0.0" width="112" height="40"/>
                                                 <fontDescription key="fontDescription" name="Palatino-Roman" family="Palatino" pointSize="21"/>
                                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="71j-Do-5CH">
-                                                <rect key="frame" x="310" y="0.0" width="25" height="25"/>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4yZ-EE-rMW">
+                                                <rect key="frame" x="223.5" y="0.0" width="111.5" height="40"/>
+                                                <subviews>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="71j-Do-5CH">
+                                                        <rect key="frame" x="81.5" y="7" width="30" height="25"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="25" id="5h9-iA-MQB"/>
+                                                            <constraint firstAttribute="width" constant="30" id="xnk-EL-5Dk"/>
+                                                        </constraints>
+                                                        <state key="normal" image="common_menu">
+                                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        </state>
+                                                        <connections>
+                                                            <action selector="moreActions:" destination="BxS-r5-5t0" eventType="touchUpInside" id="ekL-VK-h78"/>
+                                                        </connections>
+                                                    </button>
+                                                </subviews>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="25" id="5h9-iA-MQB"/>
-                                                    <constraint firstAttribute="width" constant="25" id="Fve-vD-n3W"/>
+                                                    <constraint firstAttribute="trailing" secondItem="71j-Do-5CH" secondAttribute="trailing" id="07V-xP-w4f"/>
+                                                    <constraint firstItem="71j-Do-5CH" firstAttribute="centerY" secondItem="4yZ-EE-rMW" secondAttribute="centerY" id="ptP-FC-d3v"/>
                                                 </constraints>
-                                                <state key="normal" title="menu" image="menu-icon">
-                                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                </state>
-                                                <connections>
-                                                    <action selector="moreActions:" destination="BxS-r5-5t0" eventType="touchUpInside" id="ekL-VK-h78"/>
-                                                </connections>
-                                            </button>
+                                            </view>
                                         </subviews>
                                     </stackView>
                                 </subviews>
@@ -1181,32 +1191,15 @@ Adventure Completed!</string>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OYh-z7-Y4f" userLabel="ClueTypes">
                                 <rect key="frame" x="0.0" y="60" width="375" height="50"/>
-                                <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="yYy-rp-oWm">
-                                        <rect key="frame" x="20" y="10" width="335" height="30"/>
-                                        <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9uG-rJ-bsg">
-                                                <rect key="frame" x="0.0" y="0.0" width="24" height="30"/>
-                                                <state key="normal" image="vc_step_file"/>
-                                            </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Igf-Zp-FS8">
-                                                <rect key="frame" x="29" y="0.0" width="217" height="30"/>
-                                                <state key="normal" title="Button" image="vc_step_camera"/>
-                                            </button>
-                                            <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="252" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4ZG-sb-wQT">
-                                                <rect key="frame" x="251" y="0.0" width="84" height="30"/>
-                                                <state key="normal" title="Button" image="vc_step_map"/>
-                                            </button>
-                                        </subviews>
-                                    </stackView>
-                                </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="yYy-rp-oWm" secondAttribute="trailing" constant="20" symbolic="YES" id="0jy-gw-r0Q"/>
-                                    <constraint firstItem="yYy-rp-oWm" firstAttribute="centerY" secondItem="OYh-z7-Y4f" secondAttribute="centerY" id="YwH-gZ-wks"/>
-                                    <constraint firstItem="yYy-rp-oWm" firstAttribute="leading" secondItem="OYh-z7-Y4f" secondAttribute="leading" constant="20" symbolic="YES" id="cYR-IB-4XX"/>
                                     <constraint firstAttribute="height" constant="50" id="zhk-hK-69O"/>
                                 </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Typ-T3-Jwm">
+                                <rect key="frame" x="0.0" y="110" width="375" height="497"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <gestureRecognizers/>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fUf-6q-Ex4">
                                 <rect key="frame" x="0.0" y="607" width="375" height="60"/>
@@ -1235,11 +1228,10 @@ Adventure Completed!</string>
                                     <constraint firstItem="ZZq-3e-qMy" firstAttribute="centerY" secondItem="fUf-6q-Ex4" secondAttribute="centerY" id="sNz-0G-2cc"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Typ-T3-Jwm">
-                                <rect key="frame" x="0.0" y="110" width="375" height="497"/>
-                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <gestureRecognizers/>
-                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cYN-YG-gLa">
+                                <rect key="frame" x="157" y="567" width="60" height="60"/>
+                                <state key="normal" image="vc_step_checkIn"/>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <gestureRecognizers/>
@@ -1250,7 +1242,9 @@ Adventure Completed!</string>
                             <constraint firstItem="Typ-T3-Jwm" firstAttribute="top" secondItem="OYh-z7-Y4f" secondAttribute="bottom" id="GPT-C8-O4q"/>
                             <constraint firstItem="fUf-6q-Ex4" firstAttribute="width" secondItem="med-64-uFR" secondAttribute="width" id="IOZ-P3-HMs"/>
                             <constraint firstItem="Vlr-jq-gon" firstAttribute="top" secondItem="fUf-6q-Ex4" secondAttribute="bottom" id="d5k-ZJ-35C"/>
+                            <constraint firstItem="fUf-6q-Ex4" firstAttribute="top" secondItem="cYN-YG-gLa" secondAttribute="bottom" constant="-20" id="eK3-un-uPh"/>
                             <constraint firstItem="OYh-z7-Y4f" firstAttribute="centerX" secondItem="med-64-uFR" secondAttribute="centerX" id="ePH-ht-euS"/>
+                            <constraint firstItem="cYN-YG-gLa" firstAttribute="centerX" secondItem="med-64-uFR" secondAttribute="centerX" id="em6-40-6I4"/>
                             <constraint firstItem="OYh-z7-Y4f" firstAttribute="width" secondItem="med-64-uFR" secondAttribute="width" id="jPU-xu-exe"/>
                             <constraint firstItem="fUf-6q-Ex4" firstAttribute="centerX" secondItem="med-64-uFR" secondAttribute="centerX" id="nTy-IQ-0Uw"/>
                             <constraint firstItem="fUf-6q-Ex4" firstAttribute="top" secondItem="Typ-T3-Jwm" secondAttribute="bottom" id="nt2-MB-Gq9"/>
@@ -1268,7 +1262,7 @@ Adventure Completed!</string>
                     <toolbarItems/>
                     <connections>
                         <outlet property="closeButton" destination="71j-Do-5CH" id="tnT-aF-zWd"/>
-                        <outlet property="clueTypeStackView" destination="yYy-rp-oWm" id="TNi-gj-VnD"/>
+                        <outlet property="clueSelectionContainer" destination="OYh-z7-Y4f" id="GYa-ed-QMt"/>
                         <outlet property="containerView" destination="Typ-T3-Jwm" id="4gS-Dr-q7V"/>
                         <outlet property="timerLabel" destination="CdJ-fo-RP1" id="Ijj-yc-fUl"/>
                         <segue destination="ofg-Dh-DBt" kind="presentation" identifier="PresentInstructions" id="3Qt-vA-PUZ"/>
@@ -1392,13 +1386,11 @@ Cg
         <image name="Review50x45" width="25" height="23"/>
         <image name="SpyGlass" width="143" height="143"/>
         <image name="close-icon" width="256" height="256"/>
+        <image name="common_menu" width="24" height="18"/>
         <image name="greyMask300" width="300" height="300"/>
         <image name="locationPinA1" width="600" height="600"/>
-        <image name="menu-icon" width="512" height="512"/>
         <image name="stopwatch" width="600" height="600"/>
         <image name="trailIcon-X" width="23" height="26"/>
-        <image name="vc_step_camera" width="35" height="25"/>
-        <image name="vc_step_file" width="24" height="30"/>
-        <image name="vc_step_map" width="30" height="30"/>
+        <image name="vc_step_checkIn" width="60" height="60"/>
     </resources>
 </document>

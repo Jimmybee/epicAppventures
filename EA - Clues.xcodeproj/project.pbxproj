@@ -774,7 +774,7 @@
 				TargetAttributes = {
 					66D7CD5A1C5B3F4E00ACB8E3 = {
 						CreatedOnToolsVersion = 7.2;
-						DevelopmentTeam = G55S74JQUS;
+						DevelopmentTeam = WM7B35DDT2;
 						LastSwiftMigration = 0820;
 					};
 					66D7CD6E1C5B3F4E00ACB8E3 = {
@@ -1121,7 +1121,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				DEVELOPMENT_TEAM = G55S74JQUS;
+				DEVELOPMENT_TEAM = WM7B35DDT2;
 				INFOPLIST_FILE = "EA - Clues/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1140,7 +1140,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				DEVELOPMENT_TEAM = G55S74JQUS;
+				DEVELOPMENT_TEAM = WM7B35DDT2;
 				INFOPLIST_FILE = "EA - Clues/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
