@@ -85,9 +85,9 @@ class MapCompassViewController: UIViewController, CLLocationManagerDelegate {
             centerOnUser(self)
         }
         firstLocationUpdate = false
-        if let pvc = self.parent as? StepViewController   {
-            pvc.updateLastLocation(lastLocation)
-        }
+//        if let pvc = self.parent as? StepViewController   {
+//            pvc.updateLastLocation(lastLocation)
+//        }
         if showDistance {_ = calculateDistanceCallParent()}
         if showCompass {compassUpdate()}
         compassMarkerCircle.position = lastLocation.coordinate
