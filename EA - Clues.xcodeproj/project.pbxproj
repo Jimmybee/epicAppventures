@@ -22,7 +22,7 @@
 		66437B581E3CD76B00855EAE /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66437B571E3CD76B00855EAE /* BaseViewController.swift */; };
 		6644AF381D6E2CD1007B7AEF /* UserFriend.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6644AF371D6E2CD1007B7AEF /* UserFriend.swift */; };
 		6644AF3A1D6E35A2007B7AEF /* FriendsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6644AF391D6E35A2007B7AEF /* FriendsTableViewController.swift */; };
-		6644AF3C1D6E3974007B7AEF /* FriendsAdventures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6644AF3B1D6E3974007B7AEF /* FriendsAdventures.swift */; };
+		6644AF3C1D6E3974007B7AEF /* SharedAdventure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6644AF3B1D6E3974007B7AEF /* SharedAdventure.swift */; };
 		6644AF3E1D6F5BAF007B7AEF /* NonFacebookHeaderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6644AF3D1D6F5BAF007B7AEF /* NonFacebookHeaderViewController.swift */; };
 		6650D5121DA10194008EAD27 /* DistanceMarker.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6650D5111DA10194008EAD27 /* DistanceMarker.xib */; };
 		6650D5141DA102BA008EAD27 /* DistanceMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6650D5131DA102BA008EAD27 /* DistanceMarker.swift */; };
@@ -158,7 +158,7 @@
 		664484621C607508004B29F9 /* HowToViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HowToViewController.swift; path = "../EA Clues Client/HowToViewController.swift"; sourceTree = "<group>"; };
 		6644AF371D6E2CD1007B7AEF /* UserFriend.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserFriend.swift; sourceTree = "<group>"; };
 		6644AF391D6E35A2007B7AEF /* FriendsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendsTableViewController.swift; sourceTree = "<group>"; };
-		6644AF3B1D6E3974007B7AEF /* FriendsAdventures.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendsAdventures.swift; sourceTree = "<group>"; };
+		6644AF3B1D6E3974007B7AEF /* SharedAdventure.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SharedAdventure.swift; sourceTree = "<group>"; };
 		6644AF3D1D6F5BAF007B7AEF /* NonFacebookHeaderViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NonFacebookHeaderViewController.swift; sourceTree = "<group>"; };
 		6650D5111DA10194008EAD27 /* DistanceMarker.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DistanceMarker.xib; sourceTree = "<group>"; };
 		6650D5131DA102BA008EAD27 /* DistanceMarker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DistanceMarker.swift; sourceTree = "<group>"; };
@@ -461,6 +461,14 @@
 			name = AppventureDetailsView;
 			sourceTree = "<group>";
 		};
+		669F6C4B1E3D193D002AE722 /* SharedAppventure */ = {
+			isa = PBXGroup;
+			children = (
+				6644AF3B1D6E3974007B7AEF /* SharedAdventure.swift */,
+			);
+			name = SharedAppventure;
+			sourceTree = "<group>";
+		};
 		66A3218D1C69E9E9001DDF50 /* ClueViews */ = {
 			isa = PBXGroup;
 			children = (
@@ -543,11 +551,11 @@
 				668953741E2A5EFF002163EC /* User */,
 				66345AC61DA924340095F6D8 /* Appventure */,
 				66345AC71DA9243D0095F6D8 /* AppventureStep */,
+				669F6C4B1E3D193D002AE722 /* SharedAppventure */,
 				66D7CD9A1C5B40A700ACB8E3 /* CompletedAppventure.swift */,
 				662A74AF1C7701510052C71C /* AppventureRating.swift */,
 				666149DC1C60A72C0068D416 /* AppventureReviews.swift */,
 				6644AF371D6E2CD1007B7AEF /* UserFriend.swift */,
-				6644AF3B1D6E3974007B7AEF /* FriendsAdventures.swift */,
 				666149D91C607D6B0068D416 /* Filter.swift */,
 				66DA2F261C5B445600751528 /* RatingControl.swift */,
 				661A156C1D58F5FA002877B8 /* FlaggedContent.swift */,
@@ -954,7 +962,7 @@
 				66DA2F271C5B445600751528 /* TargetHelperFunctions.swift in Sources */,
 				6644AF3A1D6E35A2007B7AEF /* FriendsTableViewController.swift in Sources */,
 				66C097001E3561820003F455 /* TimePenaltyViewController.swift in Sources */,
-				6644AF3C1D6E3974007B7AEF /* FriendsAdventures.swift in Sources */,
+				6644AF3C1D6E3974007B7AEF /* SharedAdventure.swift in Sources */,
 				66B3DB601E2A61E000CEB1AA /* CoreUser+CoreDataProperties.swift in Sources */,
 				669A97511E32C0B50023A641 /* BaseTableViewController.swift in Sources */,
 				66F32C7C1D575A5C00D99701 /* CheckInHintViewController.swift in Sources */,

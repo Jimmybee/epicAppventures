@@ -7,7 +7,7 @@
 //
 
 import Foundation
-
+import FBSDKLoginKit
 
 class UserManager {
     
@@ -34,6 +34,7 @@ class UserManager {
     
     /// Load latest coredata user. Check if core
     static func setupUser(completion: @escaping () -> ()) {
+
         let context = AppDelegate.coreDataStack.persistentContainer.viewContext
         do {
             let fetchRequest: NSFetchRequest<CoreUser> = CoreUser.fetchRequest()
@@ -59,11 +60,10 @@ class UserManager {
         
         
         backendless?.userService.isValidUserToken({ (valid) in
-            print(valid!)
-            if CoreUser.user?.facebookId == nil {
+            if FBSDKAccessToken.current() == nil {
                 CoreUser.user?.userType = .backendlessOnly
-
             } else {
+                
                 CoreUser.user?.userType = .facebook
             }
             completion()
@@ -83,19 +83,22 @@ class UserManager {
         CoreUser.user?.name = user?.getProperty(backendlessFields.name) as? String
         CoreUser.user?.facebookId = user?.getProperty(backendlessFields.facebookId) as? String
         CoreUser.user?.pictureUrl = "https://graph.facebook.com/\(CoreUser.user!.facebookId!)/picture?type=large"
+        DispatchQueue.main.async {
+            AppDelegate.coreDataStack.saveContext(completion: nil)
+        }
     }
     
-    
-    
-    static func loginWithFacebook() {
-
-        backendless!.userService.easyLogin(withFacebookFieldsMapping: UserManager.fieldsMapping, permissions:  ["public_profile", "email", "user_friends"], response: { (result) in
-            print("Result: \(result)")
-            
-        }, error: { (fault) in
-            print("Server reported an error: \(fault)")
-            
-        })
+    static func loginWithFacebookSDK(viewController: UIViewController) {
+        let loginManager = FBSDKLoginManager()
+        loginManager.logIn(withReadPermissions: ["public_profile", "email", "user_friends"], from: viewController) { (result, error) in
+            let token = FBSDKAccessToken.current()
+            backendless?.userService.login(withFacebookSDK: token, fieldsMapping: fieldsMapping, response: { (user) in
+                mapBackendlessToCoreUser()
+                viewController.dismiss(animated: true, completion: nil)
+            }, error: { (fault) in
+                print("Server reported an error: \(fault)")
+            })
+        }
     }
     
     static func logout() {

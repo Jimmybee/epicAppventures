@@ -966,7 +966,7 @@ Adventure Completed!</string>
                     <tabBarItem key="tabBarItem" title="Adventure" image="trailIcon-X" id="Dt4-3B-Ro2"/>
                     <toolbarItems/>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="U8e-dP-2Ft">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" translucent="NO" id="U8e-dP-2Ft">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -1143,7 +1143,7 @@ Adventure Completed!</string>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CdJ-fo-RP1">
                                         <rect key="frame" x="61.5" y="11" width="52" height="24"/>
                                         <fontDescription key="fontDescription" name="Palatino-Roman" family="Palatino" pointSize="21"/>
-                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="comments" translatesAutoresizingMaskIntoConstraints="NO" id="RXd-Kv-s1p">
@@ -1161,13 +1161,13 @@ Adventure Completed!</string>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RTT-0W-cbj">
                                         <rect key="frame" x="20" y="37" width="335" height="1"/>
-                                        <color key="backgroundColor" red="0.54586886456518457" green="0.54586886456518457" blue="0.54586886456518457" alpha="0.73983847128378377" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="1" id="KhU-9T-9dc"/>
                                         </constraints>
                                     </view>
                                 </subviews>
-                                <color key="backgroundColor" red="0.89411764709999997" green="0.33725490200000002" blue="0.38823529410000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" red="0.89411764709999997" green="0.33725490200000002" blue="0.38823529410000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstItem="CdJ-fo-RP1" firstAttribute="top" secondItem="XEw-s0-jiR" secondAttribute="top" constant="11" id="0TW-Rj-YwE"/>
                                     <constraint firstItem="9bP-ir-bTz" firstAttribute="centerX" secondItem="XEw-s0-jiR" secondAttribute="centerX" id="BdR-Ua-bEV"/>
@@ -1192,10 +1192,28 @@ Adventure Completed!</string>
                                         <exclude reference="ORE-bh-tYc"/>
                                         <exclude reference="kQJ-Fm-C1w"/>
                                         <exclude reference="sj2-zF-nye"/>
-                                        <exclude reference="f9X-E5-OQp"/>
                                         <exclude reference="MTq-bO-lL5"/>
+                                        <exclude reference="f9X-E5-OQp"/>
                                     </mask>
                                 </variation>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="71j-Do-5CH">
+                                <rect key="frame" x="326" y="24" width="25" height="25"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="25" id="5h9-iA-MQB"/>
+                                    <constraint firstAttribute="width" constant="25" id="Fve-vD-n3W"/>
+                                </constraints>
+                                <state key="normal" image="menu-icon">
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="moreActions:" destination="BxS-r5-5t0" eventType="touchUpInside" id="ekL-VK-h78"/>
+                                </connections>
+                            </button>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Typ-T3-Jwm">
+                                <rect key="frame" x="0.0" y="62" width="375" height="501"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <gestureRecognizers/>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ANg-Ra-15U" customClass="clickParentScroll" customModule="EA___Clues" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="563" width="375" height="60"/>
@@ -1288,24 +1306,8 @@ Adventure Completed!</string>
                                     <outletCollection property="gestureRecognizers" destination="8Fk-YW-f17" appends="YES" id="UEv-8Z-2C6"/>
                                 </connections>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="71j-Do-5CH">
-                                <rect key="frame" x="318" y="24" width="33" height="33"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="33" id="5h9-iA-MQB"/>
-                                    <constraint firstAttribute="width" constant="33" id="Fve-vD-n3W"/>
-                                </constraints>
-                                <state key="normal" image="menu-icon"/>
-                                <connections>
-                                    <action selector="moreActions:" destination="BxS-r5-5t0" eventType="touchUpInside" id="ekL-VK-h78"/>
-                                </connections>
-                            </button>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Typ-T3-Jwm">
-                                <rect key="frame" x="0.0" y="62" width="375" height="501"/>
-                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <gestureRecognizers/>
-                            </view>
                         </subviews>
-                        <color key="backgroundColor" red="0.45215899811010096" green="0.014717389573988026" blue="0.17433375747252294" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="Vlr-jq-gon" firstAttribute="top" secondItem="Typ-T3-Jwm" secondAttribute="bottom" id="2Uf-kU-IAM"/>

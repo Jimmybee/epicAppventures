@@ -32,18 +32,22 @@ fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
 }
 
 
-class FriendsTableViewController: UITableViewController {
+class FriendsTableViewController: BaseTableViewController {
     
     var appventure: Appventure?
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        loadFriends()   
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    
+    func loadFriends() {
+        showProgressView()
+        CoreUser.user?.getFriends(completion: {
+            self.hideProgressView()
+            self.tableView.reloadData()
+        })
     }
 
     @IBAction func dismiss(_ sender: AnyObject) {
@@ -54,12 +58,12 @@ class FriendsTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         
-        cell.textLabel?.text = User.user!.facebookFriends[indexPath.row].firstName + " " + User.user!.facebookFriends[indexPath.row].lastName
+        cell.textLabel?.text = CoreUser.user!.facebookFriends[indexPath.row].firstName + " " + CoreUser.user!.facebookFriends[indexPath.row].lastName
         return cell
     }
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        if User.user?.facebookFriends.count > 0 {
+        if CoreUser.user?.facebookFriends.count > 0 {
             self.tableView.separatorStyle = UITableViewCellSeparatorStyle.singleLine
             self.tableView.backgroundView = UIView()
             return 1
@@ -71,18 +75,18 @@ class FriendsTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return (User.user?.facebookFriends.count)!
+        return (CoreUser.user?.facebookFriends.count)!
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let row = indexPath.row
-        let friendID = User.user!.facebookFriends[row].id
+        let friendID = CoreUser.user!.facebookFriends[row].id
         
         let alert = UIAlertController(title: "Share", message: "Share with friend?", preferredStyle: UIAlertControllerStyle.alert)
         alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: nil))
         alert.addAction(UIAlertAction(title: "Confirm", style: UIAlertActionStyle.default, handler: { action in
-            FriendsAdventures.saveObject(self.appventure!.backendlessId!, fbUserID: friendID, delegate: self)
+            let share = SharedAdventure(shareeFbId: friendID, appventureId: self.appventure!.backendlessId!)
+            share.save(completion: {print("handler in share ")})
         }))
         
         self.present(alert, animated: true, completion: nil)
@@ -93,7 +97,7 @@ class FriendsTableViewController: UITableViewController {
 
 }
 
-extension FriendsTableViewController : FriendsAdventuresDelegate {
+extension FriendsTableViewController {
     
     func shareComplete(_ succes: Bool) {
         var message : String = ""

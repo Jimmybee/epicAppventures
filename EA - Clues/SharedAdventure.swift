@@ -7,39 +7,30 @@
 //
 
 import Foundation
-//import Parse
 
-protocol FriendsAdventuresDelegate: NSObjectProtocol {
-    func shareComplete(_ succes: Bool)
-}
-
-class FriendsAdventures: NSObject {
+class SharedAdventure: NSObject {
     
-    struct parseCol {
-//        static let ownerID = "OwnerID"
-        static let pfClass = "FriendsAdventures"
-        static let fbUserID = "fbUserID"
-        static let appventureFKID = "appventureFKID"
+    var creatorFbId: String?
+    var shareeFbId: String?
+    var appventureId: String?
+    
+    init(shareeFbId: String, appventureId: String) {
+        self.creatorFbId = CoreUser.user!.facebookId!
+        self.shareeFbId = shareeFbId
+        self.appventureId = appventureId
     }
     
     
-    
-    static func saveObject(_ appventureID: String, fbUserID: String, delegate: FriendsAdventuresDelegate) {
-//        let save = PFObject(className: parseCol.pfClass)
-//
-//        save[parseCol.fbUserID] = fbUserID
-//        save[parseCol.appventureFKID] = appventureID
-//        save.saveInBackgroundWithBlock { (success: Bool, error: NSError?) -> Void in
-//            if let error = error {
-//                let errorString = error.userInfo["error"] as? NSString
-//                print(errorString)
-//                delegate.shareComplete(false)
-//            } else {
-//                delegate.shareComplete(true)
-//            }
-//        }
+    func save(completion: @escaping () -> ()) {
+        BackendlessAppventure.dataStore?.save(self, response: { (returnObject) in
+            guard let dict = returnObject as? Dictionary<String, Any> else { return }
+            completion()
+            print(dict)
+        }) { (error) in
+            print(error ?? "no error?")
+        }
     }
-
+    
     
     static func fetchFriendAdventures(_ handler: ([Appventure]) -> Void) {
 //        var friendsAdventures = [Appventure]()

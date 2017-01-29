@@ -85,7 +85,7 @@ public class CoreUser: NSManagedObject {
 
 extension CoreUser {
     
-    func getFriends() {
+    func getFriends(completion: @escaping () -> ()) {
       facebookFriends.removeAll()
         let fbGraph = FBSDKGraphRequest.init(graphPath: "me/friends", parameters: ["fields": "first_name, last_name, picture.type(small)"])
         _ = fbGraph?.start(completionHandler: { (connection, resultAny, error) -> Void in
@@ -105,7 +105,7 @@ extension CoreUser {
                             self.facebookFriends.append(userFriend)
                         }
                     }
-                    print(self.facebookFriends.count)
+                    completion()
                 }
                 
             }

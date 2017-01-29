@@ -51,6 +51,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
+        FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
+        
         backendless?.initApp(AppDelegate.APP_ID, secret:AppDelegate.SECRET_KEY, version:AppDelegate.VERSION_NUM)
         backendless?.userService.setStayLoggedIn(true)
 
@@ -104,33 +106,34 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
     
+//    func application(_ application: UIApplication,
+//                     open url: URL,
+//                     sourceApplication: String?,
+//                     annotation: Any) -> Bool {
+//        centralDispatchGroup.leave()
+//        print("AppDelegate -> application:openURL: \(url.scheme)")
+//        
+//        let backendless = Backendless.sharedInstance()
+//        let user = backendless?.userService.handleOpen(url)
+//        if user != nil {
+//            print("AppDelegate -> application:openURL: user = \(user)")
+//            print(backendless?.userService.currentUser.getToken() ?? "no backendless token *******")
+//            print(FBSDKAccessToken.current() ?? "no token")
+//        }
+//        
+//        return true
+//    }
+    
     func application(_ application: UIApplication,
-                     open url: URL,
-                     sourceApplication: String?,
-                     annotation: Any) -> Bool {
-        centralDispatchGroup.leave()
-        print("AppDelegate -> application:openURL: \(url.scheme)")
-        
-        let backendless = Backendless.sharedInstance()
-        let user = backendless?.userService.handleOpen(url)
-        if user != nil {
-            print("AppDelegate -> application:openURL: user = \(user)")
-            print(backendless?.userService.currentUser.getToken() ?? "no backendless token *******")
-            print(FBSDKAccessToken.current() ?? "no token")
-        }
-        
+        open url: URL,
+        sourceApplication: String?,
+        annotation: Any) -> Bool {
+        FBSDKApplicationDelegate.sharedInstance().application(application,
+                                                                           open: url,
+                                                                           sourceApplication: sourceApplication,
+                                                                           annotation: annotation)
         return true
     }
-    
-//    func application(_ application: UIApplication,
-//        open url: URL,
-//        sourceApplication: String?,
-//        annotation: Any) -> Bool {
-//            return FBSDKApplicationDelegate.sharedInstance().application(application,
-//                open: url,
-//                sourceApplication: sourceApplication,
-//                annotation: annotation)
-//    }
     
     
     //Make sure it isn't already declared in the app delegate (possible redefinition of func error)

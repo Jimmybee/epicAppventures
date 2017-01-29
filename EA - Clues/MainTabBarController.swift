@@ -44,7 +44,6 @@ class MainTabBarController: UITabBarController {
             }
         } else {
             NotificationCenter.default.post(name: Notification.Name(rawValue: Notifications.reloadCatalogue), object: self)
-            CoreUser.user!.getFriends()
         }
     }
     

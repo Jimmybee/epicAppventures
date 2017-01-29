@@ -394,6 +394,8 @@ extension CreateAppventureViewController : AppventureDetailsViewDelegate {
         BackendlessAppventure.save(appventure: newAppventure, withImage: true) { 
             self.saveComplete()
         }
+        
+        performSegue(withIdentifier: Constants.shareWithFriend, sender: self)
     }
     
     func saveComplete() {

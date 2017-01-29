@@ -43,7 +43,7 @@ class LoginViewController: UIViewController {
 
     @IBAction func facebookLogin(_ sender: UIButton) {
         centralDispatchGroup.enter()
-        UserManager.loginWithFacebook()
+        UserManager.loginWithFacebookSDK(viewController: self)
         centralDispatchGroup.notify(queue: .main) {
             UserManager.mapBackendlessToCoreUser()
             NotificationCenter.default.post(name: Notification.Name(rawValue: Notifications.reloadCatalogue), object: self)
