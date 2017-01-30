@@ -23,7 +23,7 @@ PODS:
     - GooglePlaces (= 2.1.1)
   - GooglePlaces (2.1.1):
     - GoogleMaps/Base (= 2.1.1)
-  - Hero (0.1.1)
+  - Hero (0.1.2)
   - PureLayout (3.0.2)
   - SwiftyJSON (3.1.4)
 
@@ -51,7 +51,7 @@ SPEC CHECKSUMS:
   GoogleMaps: a5b5bbe47734e2443bde781a6aa64e69fdb6d785
   GooglePlacePicker: 665f39f931f2df32f9dd3fcc45f7e8abf71e535c
   GooglePlaces: 35636d86e5020cba3856eb988c09a5491de0a65a
-  Hero: b855122bc80662e7446300ca18c9e4bcb0679540
+  Hero: 1465b8e2ca4224620d17d09044728dbbe5c08b7a
   PureLayout: 4d550abe49a94f24c2808b9b95db9131685fe4cd
   SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
 
