@@ -10,6 +10,7 @@ import UIKit
 import CoreGraphics
 import GoogleMaps
 import PureLayout
+import GooglePlacePicker
 
 class StepViewController: UIViewController {
     
@@ -27,7 +28,11 @@ class StepViewController: UIViewController {
     @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var timerLabel: UILabel!
 
+    @IBOutlet weak var submitBttn: UIButton!
+    
     @IBOutlet weak var clueSelectionContainer: UIView!
+    
+    var submitTextField: UITextField!
     
     //MARK: Model
     var appventure: Appventure!
@@ -38,6 +43,10 @@ class StepViewController: UIViewController {
         }}
     var timer : Timer?
     var ms = 0.0
+
+    var placePicker: GMSPlacePicker?
+    var lastLocation: CLLocation?
+    
     
     //ViewVariable
     var activeViews = [UIView]()
@@ -85,29 +94,6 @@ class StepViewController: UIViewController {
         return view
     }()
     
-    private(set)  var separatorLine1: UIView = {
-        let view = UIView(frame: .zero)
-        view.backgroundColor = UIColor.lightGray
-        return view
-    }()
-    
-    private(set)  var separatorLine2: UIView = {
-        let view = UIView(frame: .zero)
-        view.backgroundColor = UIColor.lightGray
-        return view
-    }()
-    
-    private(set)  var separatorLine3: UIView = {
-        let view = UIView(frame: .zero)
-        view.backgroundColor = UIColor.lightGray
-        return view
-    }()
-    
-    private(set)  var answerBttn: UIButton = {
-        let bttn = UIButton(frame: .zero)
-        return bttn
-    }()
-    
     var purpleLineVertical : NSLayoutConstraint?
     var purpleLineWidth : NSLayoutConstraint?
 
@@ -120,7 +106,6 @@ class StepViewController: UIViewController {
         loadControllers()
         setupConstraints()
         setupViews()
-        setupBttnConstraints()
 
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(StepViewController.dismissKeyboard))
         view.addGestureRecognizer(tap)
@@ -132,7 +117,7 @@ class StepViewController: UIViewController {
             self.startTimer()
         }
     }
-
+    
 }
 
 //MARK: Constraints & Setup of views
@@ -146,27 +131,33 @@ extension StepViewController {
         
         clueTypeStackView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)) // Causing error
         
-        clueSelectionContainer.addSubview(separatorLine1)
+        let separator = UIView()
+        separator.backgroundColor = UIColor.lightGray
         
-        separatorLine1.autoMatch(.width, to: .width, of: clueSelectionContainer)
-        separatorLine1.autoPinEdge(toSuperviewEdge: .bottom, withInset: 0)
-        separatorLine1.autoAlignAxis(toSuperviewAxis: .vertical)
-        separatorLine1.autoSetDimension(.height, toSize: 2)
+        clueSelectionContainer.addSubview(separator)
+        
+        separator.autoMatch(.width, to: .width, of: clueSelectionContainer)
+        separator.autoPinEdge(toSuperviewEdge: .bottom, withInset: 0)
+        separator.autoAlignAxis(toSuperviewAxis: .vertical)
+        separator.autoSetDimension(.height, toSize: 2)
         
         clueSelectionContainer.addSubview(purpleLine)
         purpleLine.autoSetDimension(.height, toSize: 5)
         purpleLine.autoPinEdge(toSuperviewEdge: .bottom)
-        
-    
     }
     
     
     
     //MARK: Setup
     
-    func setupAnswerBttn() {
-        answerBttn.setImage(UIImage(named: ImageNames.VcStep.map), for: .normal)
-        answerBttn.setImage(UIImage(named: ImageNames.VcStep.mapSelected), for: .selected)
+    func setupSubmitBttn() {
+        if step.setup.checkIn == true {
+            submitBttn.setImage(UIImage(named: ImageNames.VcStep.checkIn), for: .normal)
+            submitBttn.addTarget(self, action: #selector(checkInPressed), for: .touchUpInside)
+        } else {
+            submitBttn.setImage(UIImage(named: ImageNames.VcStep.submit), for: .normal)
+            submitBttn.addTarget(self, action: #selector(submitPressed), for: .touchUpInside)
+        }
     }
     
     func loadControllers() {
@@ -230,10 +221,14 @@ extension StepViewController {
         activeBttns.append(mapClueBttn)
         
         //Complete
-        self.view.sendSubview(toBack: containerView)
+        view.sendSubview(toBack: containerView)
         
         //set scrollbar at bottom to clue
         containerView.bringSubview(toFront: activeViews[0])
+        
+        setupBttnConstraints()
+        setupSubmitBttn()
+
         
     }
     
@@ -267,6 +262,7 @@ extension StepViewController {
 // MARK: Private Functions
 
 extension StepViewController {
+    
     
     func clueBttnTapped(sender: UIButton) {
         purpleLineVertical?.autoRemove()
@@ -372,5 +368,82 @@ extension StepViewController : StepCompleteViewControllerDelegate {
     func setTime(_ currentTime : Double) {
         ms = currentTime
     }
+}
+
+extension StepViewController {
+    
+    func updateLastLocation(location: CLLocation) {
+        self.lastLocation = location
+    }
+    
+    func checkInPressed() {
+        var center: CLLocationCoordinate2D?
+        
+        if let currentCoordinate = lastLocation?.coordinate as CLLocationCoordinate2D! {
+            center = CLLocationCoordinate2DMake(currentCoordinate.latitude, currentCoordinate.longitude)
+        } else {
+            center = CLLocationCoordinate2DMake(0, 0)
+        }
+        
+        let northEast = CLLocationCoordinate2DMake(center!.latitude + 0.001, center!.longitude + 0.001)
+        let southWest = CLLocationCoordinate2DMake(center!.latitude - 0.001, center!.longitude - 0.001)
+        
+        let viewport = GMSCoordinateBounds(coordinate: northEast, coordinate: southWest)
+        
+        let config = GMSPlacePickerConfig(viewport: viewport)
+        placePicker = GMSPlacePicker(config: config)
+        
+        placePicker?.pickPlace(callback: {place, error in
+            if let error = error {
+                print("Pick Place error: \(error.localizedDescription)")
+                return
+            }
+            if let place = place {
+                if place.name == self.step.nameOrLocation {
+                    let placeCenter = CLLocation(latitude: place.coordinate.latitude, longitude: place.coordinate.longitude)
+                    let distanceToPlace = placeCenter.distance(from: self.lastLocation!)
+                    print(self.lastLocation!.coordinate)
+                    print(placeCenter.coordinate)
+                    print(distanceToPlace)
+                    if self.step.checkInProximity == 0 ||  distanceToPlace < Double(self.step.checkInProximity) {
+                        self.stepComplete()
+                    } else {
+                        print("display dialog too far")
+                    }
+                } else {
+                    print("display dialog incorrect")
+                }
+            } else {
+                print("No place selected")
+            }
+        })
+    }
+    
+    func submitPressed() {
+        let newWordPrompt = UIAlertController(title: "Submit Answer", message: "", preferredStyle: UIAlertControllerStyle.alert)
+        newWordPrompt.addTextField(configurationHandler: addTextField)
+        newWordPrompt.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.default, handler: nil))
+        newWordPrompt.addAction(UIAlertAction(title: "Confirm", style: UIAlertActionStyle.default, handler: submitConfirmed))
+        present(newWordPrompt, animated: true, completion: nil)
+    }
+    
+    func addTextField(textField: UITextField!){
+        textField.placeholder = ""
+        self.submitTextField = textField
+    }
+    
+    func submitConfirmed(alert: UIAlertAction!) {
+        var submission = submitTextField.text!
+        submission = submission.replacingOccurrences(of: " ", with: "").lowercased()
+        
+        if step.answerText.contains(submission) {
+            stepComplete()
+        } else {
+            print("display dialog incorrect")
+        }
+    }
+    
+   
+    
 }
 

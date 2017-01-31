@@ -16,5 +16,7 @@ struct ImageNames {
         static let fileSelected = "vc_step_file_selected"
         static let camera = "vc_step_camera"
         static let cameraSelected = "vc_step_camera_selected"
+        static let checkIn = "vc_step_checkIn"
+        static let submit = "vc_step_submit"
     }
 }

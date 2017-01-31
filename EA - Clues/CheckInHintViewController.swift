@@ -22,8 +22,8 @@ class CheckInHintViewController: UIViewController {
     
     @IBOutlet weak var hintButton: UIButton!
     
-    
     var placePicker: GMSPlacePicker?
+
     
 //    @IBOutlet weak var hint: UILabel!
     @IBOutlet weak var checkIn: UIButton!
@@ -46,7 +46,7 @@ class CheckInHintViewController: UIViewController {
     }
 
     //MARK: Check In Method
-    @IBAction func checkIn(_ sender: UIButton) {
+    func checkIne() {
         var center: CLLocationCoordinate2D?
         
         if let currentCoordinate = lastLocation.coordinate as CLLocationCoordinate2D! {
