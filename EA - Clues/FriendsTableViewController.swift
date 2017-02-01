@@ -56,9 +56,10 @@ class FriendsTableViewController: BaseTableViewController {
     // MARK: - Table view data source
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! FacebookFriendTableCell
+        cell.facebookFriend = CoreUser.user?.facebookFriends[indexPath.row]
+        cell.setupViewContent()
         
-        cell.textLabel?.text = CoreUser.user!.facebookFriends[indexPath.row].firstName + " " + CoreUser.user!.facebookFriends[indexPath.row].lastName
         return cell
     }
 
@@ -91,6 +92,10 @@ class FriendsTableViewController: BaseTableViewController {
         
         self.present(alert, animated: true, completion: nil)
 
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 88
     }
  
 

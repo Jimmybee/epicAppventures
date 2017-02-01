@@ -27,6 +27,7 @@ class StepViewController: UIViewController {
     @IBOutlet weak var closeButton: UIButton!
     @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var timerLabel: UILabel!
+    @IBOutlet weak var stepNumberLabel: UILabel!
 
     @IBOutlet weak var submitBttn: UIButton!
     
@@ -228,6 +229,8 @@ extension StepViewController {
         
         setupBttnConstraints()
         setupSubmitBttn()
+        
+        stepNumberLabel.text = "\(step.stepNumber) of \(appventure.steps.count)"
 
         
     }

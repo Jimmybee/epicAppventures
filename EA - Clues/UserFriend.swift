@@ -14,7 +14,7 @@ class UserFriend: NSObject {
     let lastName: String
     let pictureURL: URL
     let id: String
-    let profilePicture: UIImage? = nil
+    var profilePicture: UIImage? = nil
     
     
     init(id: String, firstName: String, lastName: String,  url: URL) {
@@ -23,6 +23,16 @@ class UserFriend: NSObject {
         self.lastName = lastName
         self.pictureURL = url
         
+    }
+    
+    func loadImageFor(cell: FacebookFriendTableCell) {
+//            if let getURL = URL(string: pictureURL) {
+                if let data = try? Data(contentsOf: pictureURL){
+                    self.profilePicture = UIImage(data: data)
+                    cell.profilePictureView.image = self.profilePicture
+                    HelperFunctions.circle(cell.profilePictureView)
+                }
+//        }
     }
     
 }

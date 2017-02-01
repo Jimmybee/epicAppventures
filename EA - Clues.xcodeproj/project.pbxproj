@@ -60,6 +60,7 @@
 		66B3DB861E2BA24500CEB1AA /* AppventureStep+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B3DB841E2BA24500CEB1AA /* AppventureStep+CoreDataProperties.swift */; };
 		66C097001E3561820003F455 /* TimePenaltyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C096FF1E3561820003F455 /* TimePenaltyViewController.swift */; };
 		66C916B81C61EAB300E39576 /* EditAppventureDetailsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C916B71C61EAB300E39576 /* EditAppventureDetailsTableViewController.swift */; };
+		66D4913A1E4218DB00918115 /* FacebookFriendTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D491391E4218DB00918115 /* FacebookFriendTableCell.swift */; };
 		66D7CD5F1C5B3F4E00ACB8E3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D7CD5E1C5B3F4E00ACB8E3 /* AppDelegate.swift */; };
 		66D7CD661C5B3F4E00ACB8E3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 66D7CD651C5B3F4E00ACB8E3 /* Assets.xcassets */; };
 		66D7CD691C5B3F4E00ACB8E3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66D7CD671C5B3F4E00ACB8E3 /* LaunchScreen.storyboard */; };
@@ -211,6 +212,7 @@
 		66C096FF1E3561820003F455 /* TimePenaltyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimePenaltyViewController.swift; sourceTree = "<group>"; };
 		66C916B71C61EAB300E39576 /* EditAppventureDetailsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditAppventureDetailsTableViewController.swift; sourceTree = "<group>"; };
 		66CEFE6A1C67370A00EEC5FD /* SplashViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
+		66D491391E4218DB00918115 /* FacebookFriendTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FacebookFriendTableCell.swift; sourceTree = "<group>"; };
 		66D7CD5B1C5B3F4E00ACB8E3 /* EA - Clues.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "EA - Clues.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		66D7CD5E1C5B3F4E00ACB8E3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		66D7CD651C5B3F4E00ACB8E3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = "EA - Clues/Assets.xcassets"; sourceTree = "<group>"; };
@@ -437,6 +439,7 @@
 		669A975A1E3394860023A641 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				66DA2F2F1C5B6D3D00751528 /* TableCells */,
 				669A97851E34DCDE0023A641 /* AppventureDetailsView */,
 				669A977E1E33D7300023A641 /* File.swift */,
 				669A97841E34DCD70023A641 /* TimePicker */,
@@ -507,6 +510,14 @@
 			name = TimePenaltyVC;
 			sourceTree = "<group>";
 		};
+		66D4913B1E4218E000918115 /* FacebookFriend */ = {
+			isa = PBXGroup;
+			children = (
+				66D491391E4218DB00918115 /* FacebookFriendTableCell.swift */,
+			);
+			name = FacebookFriend;
+			sourceTree = "<group>";
+		};
 		66D7CD521C5B3F4E00ACB8E3 = {
 			isa = PBXGroup;
 			children = (
@@ -515,7 +526,6 @@
 				66D7CD651C5B3F4E00ACB8E3 /* Assets.xcassets */,
 				6650D5171DA12683008EAD27 /* video.mov */,
 				66ED85D31D5F442900A3F438 /* Storyboards */,
-				66DA2F2F1C5B6D3D00751528 /* TableCells */,
 				669A97541E3366D80023A641 /* ViewControllers */,
 				669A975A1E3394860023A641 /* Views */,
 				66DA2F2D1C5B445C00751528 /* Ancillary Files */,
@@ -648,9 +658,9 @@
 			isa = PBXGroup;
 			children = (
 				669A97551E336A630023A641 /* Catalog */,
+				66D4913B1E4218E000918115 /* FacebookFriend */,
 			);
 			name = TableCells;
-			path = "EA - Clues";
 			sourceTree = "<group>";
 		};
 		66E5A9F41E316FF0008A1A6C /* Setup */ = {
@@ -951,6 +961,7 @@
 				66F32C741D575A5600D99701 /* LocalTableViewController.swift in Sources */,
 				666678BA1C64772F00C4309C /* Alt1ProfileViewController.swift in Sources */,
 				662A74B01C7701510052C71C /* AppventureRating.swift in Sources */,
+				66D4913A1E4218DB00918115 /* FacebookFriendTableCell.swift in Sources */,
 				66E5A9E91E2C0DF8008A1A6C /* UserManager.swift in Sources */,
 				66D7CDA01C5B40BD00ACB8E3 /* ParseFunc.swift in Sources */,
 				661472661D5A522E0093C65B /* DevelopLocalPublicSegmented.swift in Sources */,

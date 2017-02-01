@@ -385,11 +385,11 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" id="gk9-rb-hZN">
-                                <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" rowHeight="80" id="gk9-rb-hZN" customClass="FacebookFriendTableCell" customModule="EA___Clues" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="28" width="375" height="80"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="gk9-rb-hZN" id="cYk-pT-OlE">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="79"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
                             </tableViewCell>
@@ -410,7 +410,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WJg-LG-eya" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1912" y="2703"/>
+            <point key="canvasLocation" x="1991" y="2691"/>
         </scene>
         <!--Edit Details-->
         <scene sceneID="aeF-Mg-Dfx">
@@ -1755,13 +1755,13 @@
                     <toolbarItems/>
                     <navigationItem key="navigationItem" title="Edit Text Clue" id="8ic-pr-tel">
                         <barButtonItem key="leftBarButtonItem" title="Cancel" id="X3P-Jo-Krl">
-                            <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <connections>
                                 <action selector="cancel:" destination="3zk-IL-ZiF" id="TTW-Lk-mcN"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Confirm" id="baM-sP-Jpg">
-                            <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <connections>
                                 <action selector="submit:" destination="3zk-IL-ZiF" id="rWI-f6-8YW"/>
                             </connections>
@@ -1822,13 +1822,13 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="Answers" id="4uB-2M-TZq">
                         <barButtonItem key="leftBarButtonItem" image="BackButton" id="Obc-11-rJ2">
-                            <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
                             <connections>
                                 <action selector="backButton:" destination="cgA-y2-dOp" id="Iah-C3-f2l"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="d2E-5L-Yux">
-                            <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
                             <connections>
                                 <action selector="addAnswer:" destination="cgA-y2-dOp" id="3wN-Bj-TLC"/>
                             </connections>
@@ -2044,13 +2044,13 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="Hints" id="pjo-YR-lp2">
                         <barButtonItem key="leftBarButtonItem" image="BackButton" id="xWU-b5-zHn">
-                            <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <connections>
                                 <action selector="backButton:" destination="Sey-63-fQj" id="Zcd-i9-m0b"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="Yk7-8A-9Mk">
-                            <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <connections>
                                 <action selector="addHint:" destination="Sey-63-fQj" id="cfn-VL-gzW"/>
                             </connections>
@@ -2071,9 +2071,8 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="PNu-SK-gz4">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="barTintColor" red="0.053199561809999997" green="0.1702644401" blue="0.20602509469999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <textAttributes key="titleTextAttributes">
-                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <color key="textColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         </textAttributes>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -2083,7 +2082,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ki2-9a-jgx" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1386" y="2697"/>
+            <point key="canvasLocation" x="1209" y="2703"/>
         </scene>
     </scenes>
     <resources>
