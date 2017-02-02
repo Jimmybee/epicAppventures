@@ -44,7 +44,8 @@ class StepViewController: UIViewController {
         }}
     var timer : Timer?
     var ms = 0.0
-
+    var hintsRecieved = 0
+    
     var placePicker: GMSPlacePicker?
     var lastLocation: CLLocation?
     
@@ -307,6 +308,26 @@ extension StepViewController {
         let stepID = stepIs?.backendlessId
         let flaggedContent = FlaggedContent(appventureFKID: self.appventure.backendlessId!, stepFKID: stepID!)
         flaggedContent.save()
+    }
+    
+    func revealHint(_ sender: UIButton) {
+        if step.answerHint.count == Int(hintsRecieved) {
+            let alert = UIAlertController(title: "No Hints", message: "There are no hints remaining.", preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.cancel, handler: nil))
+            
+            self.present(alert, animated: true, completion: nil)
+            
+        } else {
+            
+            let alert = UIAlertController(title: "Get Hint", message: "Getting a hint may incur a time penalty. There are \( Int16(step.answerHint.count) - self.hintsRecieved) hints remaining.", preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: nil))
+            alert.addAction(UIAlertAction(title: "Confirm", style: UIAlertActionStyle.default, handler: { action in
+                    self.updateHintText(self.step.answerHint[Int(self.hintsRecieved)], hintsRecieved: Int16(self.hintsRecieved))
+                    self.hintsRecieved += 1
+            }))
+            
+            self.present(alert, animated: true, completion: nil)
+        }
     }
     
     func updateHintText(_ hint: String, hintsRecieved: Int16) {

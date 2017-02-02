@@ -12,6 +12,8 @@
 		661472661D5A522E0093C65B /* DevelopLocalPublicSegmented.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661472651D5A522E0093C65B /* DevelopLocalPublicSegmented.swift */; };
 		661472681D5A82D90093C65B /* ProfileWrapperViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661472671D5A82D90093C65B /* ProfileWrapperViewController.swift */; };
 		6614726A1D5A86A70093C65B /* UserSignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661472691D5A86A70093C65B /* UserSignInViewController.swift */; };
+		6615D8371E427163003492AC /* CompassViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6615D8361E427163003492AC /* CompassViewController.xib */; };
+		6615D8391E427219003492AC /* CompassViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6615D8381E427219003492AC /* CompassViewController.swift */; };
 		661A156D1D58F5FA002877B8 /* FlaggedContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661A156C1D58F5FA002877B8 /* FlaggedContent.swift */; };
 		661A15711D590080002877B8 /* AppventureHelpTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661A15701D590080002877B8 /* AppventureHelpTableViewController.swift */; };
 		662A74B01C7701510052C71C /* AppventureRating.swift in Sources */ = {isa = PBXBuildFile; fileRef = 662A74AF1C7701510052C71C /* AppventureRating.swift */; };
@@ -109,8 +111,6 @@
 		66F32C7E1D575A5C00D99701 /* PictureClueViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 668A0B7D1C6A11A700E7EEF7 /* PictureClueViewController.xib */; };
 		66F32C7F1D575A5C00D99701 /* SoundClueViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 662E255E1C6B690600F0BE7E /* SoundClueViewController.xib */; };
 		66F32C801D575A5C00D99701 /* MapCompassViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 668A0B851C6B272600E7EEF7 /* MapCompassViewController.xib */; };
-		66F32C811D575A5C00D99701 /* AnswerHintViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 668A0B891C6B2A0900E7EEF7 /* AnswerHintViewController.xib */; };
-		66F32C821D575A5C00D99701 /* CheckInHintViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 668A0B8D1C6B2BD400E7EEF7 /* CheckInHintViewController.xib */; };
 		66F32C831D575A6000D99701 /* StepCompleteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D7CD871C5B405400ACB8E3 /* StepCompleteViewController.swift */; };
 		66F32C841D575A6700D99701 /* AppventureCompleteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D7CD881C5B405400ACB8E3 /* AppventureCompleteViewController.swift */; };
 		66F32C851D575A6700D99701 /* EditTextClueViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667411F41CAFB9D700F42F81 /* EditTextClueViewController.swift */; };
@@ -142,6 +142,8 @@
 		661472651D5A522E0093C65B /* DevelopLocalPublicSegmented.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DevelopLocalPublicSegmented.swift; sourceTree = "<group>"; };
 		661472671D5A82D90093C65B /* ProfileWrapperViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileWrapperViewController.swift; sourceTree = "<group>"; };
 		661472691D5A86A70093C65B /* UserSignInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserSignInViewController.swift; sourceTree = "<group>"; };
+		6615D8361E427163003492AC /* CompassViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CompassViewController.xib; sourceTree = "<group>"; };
+		6615D8381E427219003492AC /* CompassViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompassViewController.swift; sourceTree = "<group>"; };
 		661A156C1D58F5FA002877B8 /* FlaggedContent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlaggedContent.swift; sourceTree = "<group>"; };
 		661A15701D590080002877B8 /* AppventureHelpTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppventureHelpTableViewController.swift; sourceTree = "<group>"; };
 		661E5F551C634A7800DB2612 /* LocalTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalTableViewController.swift; sourceTree = "<group>"; };
@@ -189,9 +191,7 @@
 		668A0B841C6B272600E7EEF7 /* MapCompassViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapCompassViewController.swift; sourceTree = "<group>"; };
 		668A0B851C6B272600E7EEF7 /* MapCompassViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MapCompassViewController.xib; sourceTree = "<group>"; };
 		668A0B881C6B2A0900E7EEF7 /* AnswerHintViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnswerHintViewController.swift; sourceTree = "<group>"; };
-		668A0B891C6B2A0900E7EEF7 /* AnswerHintViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AnswerHintViewController.xib; sourceTree = "<group>"; };
 		668A0B8C1C6B2BD400E7EEF7 /* CheckInHintViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckInHintViewController.swift; sourceTree = "<group>"; };
-		668A0B8D1C6B2BD400E7EEF7 /* CheckInHintViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CheckInHintViewController.xib; sourceTree = "<group>"; };
 		6691FE361DA1801000BC54D0 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		669A97501E32C0B50023A641 /* BaseTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseTableViewController.swift; sourceTree = "<group>"; };
 		669A97561E337EBD0023A641 /* BackendlessSetup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackendlessSetup.swift; sourceTree = "<group>"; };
@@ -481,14 +481,14 @@
 				668A0B7C1C6A11A700E7EEF7 /* PictureClueViewController.swift */,
 				662E255D1C6B690600F0BE7E /* SoundClueViewController.swift */,
 				668A0B841C6B272600E7EEF7 /* MapCompassViewController.swift */,
+				6615D8381E427219003492AC /* CompassViewController.swift */,
 				668A0B881C6B2A0900E7EEF7 /* AnswerHintViewController.swift */,
 				668A0B8C1C6B2BD400E7EEF7 /* CheckInHintViewController.swift */,
 				66A321881C69E83F001DDF50 /* TextClueViewController.xib */,
 				668A0B7D1C6A11A700E7EEF7 /* PictureClueViewController.xib */,
 				662E255E1C6B690600F0BE7E /* SoundClueViewController.xib */,
 				668A0B851C6B272600E7EEF7 /* MapCompassViewController.xib */,
-				668A0B891C6B2A0900E7EEF7 /* AnswerHintViewController.xib */,
-				668A0B8D1C6B2BD400E7EEF7 /* CheckInHintViewController.xib */,
+				6615D8361E427163003492AC /* CompassViewController.xib */,
 			);
 			name = ClueViews;
 			sourceTree = "<group>";
@@ -818,11 +818,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				66F32C821D575A5C00D99701 /* CheckInHintViewController.xib in Resources */,
 				66F32C7E1D575A5C00D99701 /* PictureClueViewController.xib in Resources */,
 				66D7CDA51C5B40CC00ACB8E3 /* Login.storyboard in Resources */,
 				66D7CD691C5B3F4E00ACB8E3 /* LaunchScreen.storyboard in Resources */,
 				6650D5181DA12683008EAD27 /* video.mov in Resources */,
+				6615D8371E427163003492AC /* CompassViewController.xib in Resources */,
 				66F32C721D57589500D99701 /* Maker.storyboard in Resources */,
 				66F32C7F1D575A5C00D99701 /* SoundClueViewController.xib in Resources */,
 				66F32C7D1D575A5C00D99701 /* TextClueViewController.xib in Resources */,
@@ -837,7 +837,6 @@
 				66D7CD7F1C5B3FA600ACB8E3 /* Main.storyboard in Resources */,
 				66F32C801D575A5C00D99701 /* MapCompassViewController.xib in Resources */,
 				669A97811E34DBA80023A641 /* TimePicker.xib in Resources */,
-				66F32C811D575A5C00D99701 /* AnswerHintViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -908,6 +907,7 @@
 				66D7CD941C5B405400ACB8E3 /* CreateAppventureViewController.swift in Sources */,
 				66706AA51C71FA8000038A74 /* ProfileTableViewController.swift in Sources */,
 				66D7CD9C1C5B40A700ACB8E3 /* CompletedAppventure.swift in Sources */,
+				6615D8391E427219003492AC /* CompassViewController.swift in Sources */,
 				669A97831E34DCB40023A641 /* TimePicker.swift in Sources */,
 				66F32C781D575A5C00D99701 /* PictureClueViewController.swift in Sources */,
 				66F32C891D575A7200D99701 /* LocalAppventureTableViewCell.swift in Sources */,
