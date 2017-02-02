@@ -94,28 +94,7 @@ class CheckInHintViewController: UIViewController {
         
     }
     
-    @IBAction func revealHint(_ sender: UIButton) {
-        if self.answerHint.count == Int(self.hintsRecieved) {
-            let alert = UIAlertController(title: "No Hints", message: "There are no hints remaining.", preferredStyle: UIAlertControllerStyle.alert)
-            alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.cancel, handler: nil))
-            
-            self.present(alert, animated: true, completion: nil)
-            
-        } else {
-            
-            let alert = UIAlertController(title: "Get Hint", message: "Getting a hint may incur a time penalty. There are \( Int16(self.answerHint.count) - self.hintsRecieved) hints remaining.", preferredStyle: UIAlertControllerStyle.alert)
-            alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: nil))
-            alert.addAction(UIAlertAction(title: "Confirm", style: UIAlertActionStyle.default, handler: { action in
-                if let pvc = self.parent as? StepViewController{
-                    pvc.updateHintText(self.answerHint[Int(self.hintsRecieved)], hintsRecieved: self.hintsRecieved)
-                    self.hintsRecieved += 1
-
-                }
-            }))
-            
-            self.present(alert, animated: true, completion: nil)
-        }
-    }
+    
 //
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
