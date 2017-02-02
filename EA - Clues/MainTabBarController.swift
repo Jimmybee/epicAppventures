@@ -22,13 +22,14 @@ class MainTabBarController: UITabBarController {
     let backendless = Backendless.sharedInstance()
 
     var stdFrame: CGRect?
+    var nilMe: String!
     
     override func viewDidLoad() {
         
 //        self.tabBar.tintColor = UIColor.redColor()
         //MARK: CheckUser
         self.selectedIndex = 2
-        
+    
     }
     
     override func viewDidAppear(_ animated: Bool) {
