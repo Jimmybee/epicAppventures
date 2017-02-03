@@ -239,12 +239,11 @@ class CreateAppventureViewController: UIViewController, UITableViewDelegate, UIT
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         if segue.identifier == Constants.segueNewStep {
-            if let tbCell = sender as? AppventureStepTableViewCell {
-                if let indexPath = tableView.indexPath(for: tbCell)?.row as Int! {
+            if let row = sender as? Int {
                     if let nvc = segue.destination as? UINavigationController {
                     if let asvc = nvc.childViewControllers[0] as? AddStepTableViewController {
-                        if newAppventure.appventureSteps.count > indexPath {
-                            let appventureStep = newAppventure.appventureSteps[indexPath]
+                        if newAppventure.appventureSteps.count > row {
+                            let appventureStep = newAppventure.appventureSteps[row]
                             asvc.appventureStep = appventureStep
                         } else {
                             let appventureStep = AppventureStep(appventure: newAppventure)
@@ -256,7 +255,6 @@ class CreateAppventureViewController: UIViewController, UITableViewDelegate, UIT
                         asvc.delegate = self
                         }
                     }
-                }
             }
         }
         
@@ -294,32 +292,24 @@ class CreateAppventureViewController: UIViewController, UITableViewDelegate, UIT
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: Constants.cellName) as! AppventureStepTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: Constants.cellName) as! AppventureStepTableCell
         let row = indexPath.row
         
         if row < newAppventure.appventureSteps.count  {
             if let step = newAppventure.appventureSteps[row] as AppventureStep! {
-                
-                cell.StepID.text = "Step: \(step.stepNumber) \(step.nameOrLocation!)"
-                var includedClues = [String]()
-                if step.setup.pictureClue == true {includedClues.append("Picture")}
-                if step.setup.textClue == true {includedClues.append("Text")}
-                if step.setup.soundClue == true {includedClues.append("Sound Clip")}
-                cell.shortDescription.text = "Clues: \(includedClues.joined(separator: ","))"
-                
-                if step.setup.checkIn == true {
-                    cell.answer.text = "Check In"}
-                else {
-                    cell.answer.text = "Text Answer"}
-                
+                cell.step = step
+                cell.setupView()
             }
         } else {
-            cell.StepID.text = Constants.placeholderText
-            cell.shortDescription.text = ""
-            cell.answer.text = ""
+            cell.stepNameOrLocation.text = Constants.placeholderText
+
         }
         
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        performSegue(withIdentifier: Constants.segueNewStep, sender: indexPath.row)
     }
     
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
@@ -332,29 +322,7 @@ class CreateAppventureViewController: UIViewController, UITableViewDelegate, UIT
         }
     }
     
-    func confirmDeletePopup (_ indexPath: IndexPath) {
-        let alert = UIAlertController(title: "Delete Step?", message: "Step data will be lost!", preferredStyle: UIAlertControllerStyle.alert)
-        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: nil))
-        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.destructive, handler: { action in
-            self.deleteStepFromDB(indexPath)
-            self.removeFromCoreData(indexPath)
-            self.tableView.reloadData()
-        }))
-        
-        self.present(alert, animated: true, completion: nil)
-    }
     
-    func removeFromCoreData(_ indexPath: IndexPath) {
-        let step = newAppventure.appventureSteps[indexPath.row]
-        newAppventure.removeFromSteps(step)
-        AppDelegate.coreDataStack.saveContext(completion: nil)
-    }
-    
-    func deleteStepFromDB(_ indexPath: IndexPath) {
-        guard let id = newAppventure.appventureSteps[indexPath.row].backendlessId else { return }
-        BackendlessStep.removeBy(id: id)
-    }
-
     // Determine whether a given row is eligible for reordering or not.
     func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool
     {
@@ -378,6 +346,30 @@ class CreateAppventureViewController: UIViewController, UITableViewDelegate, UIT
         }
     }
     
+
+    
+    func confirmDeletePopup (_ indexPath: IndexPath) {
+        let alert = UIAlertController(title: "Delete Step?", message: "Step data will be lost!", preferredStyle: UIAlertControllerStyle.alert)
+        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.destructive, handler: { action in
+            self.deleteStepFromDB(indexPath)
+            self.removeFromCoreData(indexPath)
+            self.tableView.reloadData()
+        }))
+        
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    func removeFromCoreData(_ indexPath: IndexPath) {
+        let step = newAppventure.appventureSteps[indexPath.row]
+        newAppventure.removeFromSteps(step)
+        AppDelegate.coreDataStack.saveContext(completion: nil)
+    }
+    
+    func deleteStepFromDB(_ indexPath: IndexPath) {
+        guard let id = newAppventure.appventureSteps[indexPath.row].backendlessId else { return }
+        BackendlessStep.removeBy(id: id)
+    }
 
     
 }

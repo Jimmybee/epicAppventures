@@ -41,6 +41,7 @@
 		666678C01C64820600C4309C /* UIImage+ImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = 666678BF1C64820600C4309C /* UIImage+ImageEffects.m */; };
 		66706AA11C71F74B00038A74 /* ProfileHeaderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66706A9D1C71F74200038A74 /* ProfileHeaderViewController.swift */; };
 		66706AA51C71FA8000038A74 /* ProfileTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66706AA41C71FA8000038A74 /* ProfileTableViewController.swift */; };
+		66880BB61E43C73100A00C56 /* AppventureStepTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66880BB51E43C73100A00C56 /* AppventureStepTableCell.swift */; };
 		668953561E2A49A8002163EC /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668953551E2A49A8002163EC /* CoreDataStack.swift */; };
 		668953571E2A49A8002163EC /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668953551E2A49A8002163EC /* CoreDataStack.swift */; };
 		668953691E2A4FFC002163EC /* Appventure+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668953671E2A4FFC002163EC /* Appventure+CoreDataClass.swift */; };
@@ -183,6 +184,7 @@
 		667411F41CAFB9D700F42F81 /* EditTextClueViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditTextClueViewController.swift; sourceTree = "<group>"; };
 		667411F61CAFB9E700F42F81 /* RateViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RateViewController.swift; sourceTree = "<group>"; };
 		667968B31CD75DDA00FD512B /* MainNavViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MainNavViewController.swift; path = "../EA Clues Client/MainNavViewController.swift"; sourceTree = "<group>"; };
+		66880BB51E43C73100A00C56 /* AppventureStepTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppventureStepTableCell.swift; sourceTree = "<group>"; };
 		668953551E2A49A8002163EC /* CoreDataStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
 		668953671E2A4FFC002163EC /* Appventure+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Appventure+CoreDataClass.swift"; sourceTree = "<group>"; };
 		668953681E2A4FFC002163EC /* Appventure+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Appventure+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -378,6 +380,14 @@
 				6663EAC41D62E961000F7BF9 /* WriteReviewViewController.swift */,
 			);
 			name = AppventureComplete;
+			sourceTree = "<group>";
+		};
+		66880BB71E43CF0D00A00C56 /* AppventureStep */ = {
+			isa = PBXGroup;
+			children = (
+				66880BB51E43C73100A00C56 /* AppventureStepTableCell.swift */,
+			);
+			name = AppventureStep;
 			sourceTree = "<group>";
 		};
 		6689536D1E2A5052002163EC /* old */ = {
@@ -659,6 +669,7 @@
 			children = (
 				669A97551E336A630023A641 /* Catalog */,
 				66D4913B1E4218E000918115 /* FacebookFriend */,
+				66880BB71E43CF0D00A00C56 /* AppventureStep */,
 			);
 			name = TableCells;
 			sourceTree = "<group>";
@@ -904,6 +915,7 @@
 			files = (
 				661A156D1D58F5FA002877B8 /* FlaggedContent.swift in Sources */,
 				66F32C831D575A6000D99701 /* StepCompleteViewController.swift in Sources */,
+				66880BB61E43C73100A00C56 /* AppventureStepTableCell.swift in Sources */,
 				66D7CD941C5B405400ACB8E3 /* CreateAppventureViewController.swift in Sources */,
 				66706AA51C71FA8000038A74 /* ProfileTableViewController.swift in Sources */,
 				66D7CD9C1C5B40A700ACB8E3 /* CompletedAppventure.swift in Sources */,
