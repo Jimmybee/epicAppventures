@@ -73,12 +73,12 @@ class CoreDataStack {
     }
     
     func delete(object: NSManagedObject, completion: ((Void) -> (Void))?) {
-        let context = persistentContainer.viewContext
+        guard let context = object.managedObjectContext else { return }
         context.delete(object)
         saveContext(completion: nil)
     }
     
-
+    
     
 }
 

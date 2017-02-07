@@ -109,7 +109,6 @@ class EditAppventureDetailsTableViewController: UITableViewController {
         appventure!.subtitle = appventureDescription.text
         appventure!.duration = durationLabel.text
         appventure!.startingLocationName = startingLocation.text
-        appventure?.duration = durationLabel.text
         appventure?.startTime = startTimeLabel.text
         appventure?.endTime = endTimeLabel.text
 //        appventure!.keyFeatures = keyFeatures.text!.splitStringToArray()

@@ -33,6 +33,7 @@ class BackendlessAppventure: NSObject {
         self.duration = appventure.duration
         self.startTime = appventure.startTime
         self.endTime = appventure.endTime
+        self.startingLocationName  = appventure.startingLocationName
         self.keyFeatures = appventure.keyFeatures?.joined(separator: ",")
         self.liveStatusNum = appventure.liveStatusNum
         self.objectId = appventure.backendlessId
@@ -53,6 +54,7 @@ class BackendlessAppventure: NSObject {
     init(dict:  Dictionary<String, Any> ) {
         self.objectId = dict["objectId"] as? String
         self.duration = dict["duration"] as? String
+        self.startingLocationName  = dict["startingLocationName"] as? String
         self.keyFeatures = dict["keyFeatures"] as? String
         self.startTime = dict["startTime"] as? String
         self.endTime = dict["endTime"] as? String

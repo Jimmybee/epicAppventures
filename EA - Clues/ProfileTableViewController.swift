@@ -30,9 +30,6 @@ class ProfileTableViewController: BaseTableViewController {
             }
         }
         
-//        let notificationCenter = NotificationCenter.default
-//        notificationCenter.addObserver(self, selector: #selector(ProfileTableViewController.loadUserAppventures), name: NSNotification.Name(rawValue: User.userInitCompleteNotification), object: nil)
-
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -73,6 +70,9 @@ class ProfileTableViewController: BaseTableViewController {
     
     @IBAction func refeshTable(_ sender: UIRefreshControl) {
         sender.endRefreshing()
+        CoreUser.user?.ownedAppventures?.map { AppDelegate.coreDataStack.delete(object: $0, completion: nil) }
+        tableView.reloadData()
+        restoreAppventures()
     }
 
     //MARK: Navigation
@@ -164,16 +164,3 @@ extension ProfileTableViewController : CreateAppventureViewControllerDelegate {
     }
 }
 
-extension ProfileTableViewController : ParseQueryHandler {
-    func handleQueryResults(_ objects: [AnyObject]?, handlerCase: String?) {
-//        if let isPFArray = objects as [PFObject]! {
-//            for object in isPFArray {
-//                let appventure = Appventure(object: object)
-//                ParseFunc.loadImage(appventure)
-//                User.user!.ownedAppventures.append(appventure)
-//            }
-//        }
-        tableMessage = "You have not created any adventures"
-        tableView.reloadData()
-    }
-}

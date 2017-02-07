@@ -24,8 +24,14 @@ class AppventureDetailsView: UIView, UIScrollViewDelegate{
     @IBOutlet weak var appventureImage: UIImageView!
     @IBOutlet weak var appventureTitle: UILabel!
     @IBOutlet weak var seeMapBttn: UIButton!
+    @IBOutlet weak var shareOrSave: UIButton!
     @IBOutlet weak var descriptionLabel: UILabel!
     @IBOutlet weak var greyBox: UIView!
+    
+    @IBOutlet weak var durationLabel: UILabel!
+    @IBOutlet weak var startingLocation: UILabel!
+    @IBOutlet weak var numberOfStepsLabel: UILabel!
+    
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -37,7 +43,7 @@ class AppventureDetailsView: UIView, UIScrollViewDelegate{
     
     func setup() {
         setupModel()
-        setView()   
+        setView()
     }
     
     func setView() {
@@ -54,10 +60,12 @@ class AppventureDetailsView: UIView, UIScrollViewDelegate{
         delegate.rightBttnPressed()
     }
     
-    
     func setupModel() {
-        if let image = appventure.image { appventureImage.image = appventure.image }
+        if let image = appventure.image { appventureImage.image = image }
         appventureTitle.text = appventure.title
         descriptionLabel.text = appventure.subtitle
+        durationLabel.text = appventure.duration
+        startingLocation.text = appventure.startingLocationName
+        numberOfStepsLabel.text = "\(appventure.appventureSteps.count) clues"
     }
 }

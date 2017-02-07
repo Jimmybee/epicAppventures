@@ -67,7 +67,9 @@ class LocalTableViewController: BaseTableViewController, CLLocationManagerDelega
 
         }
         
-        showProgressView()
+        UserManager.setupUser(completion: setupComplete)
+
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -75,6 +77,13 @@ class LocalTableViewController: BaseTableViewController, CLLocationManagerDelega
         HelperFunctions.unhideTabBar(self)
     }
     
+    func setupComplete() {
+        if CoreUser.user?.userType == .noLogin {
+            self.performSegue(withIdentifier: StoryboardNames.startupLogin, sender: nil)
+        } else {
+            NotificationCenter.default.post(name: Notification.Name(rawValue: Notifications.reloadCatalogue), object: self)
+        }
+    }
 
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         locationManager.requestLocation()
@@ -84,7 +93,6 @@ class LocalTableViewController: BaseTableViewController, CLLocationManagerDelega
         lastLocation = locations.first?.coordinate
         print(lastLocation ?? "no location")
         if refreshing == false {
-            getBackendlessAppventure()
             refreshing = true
         }
     }
@@ -110,7 +118,6 @@ class LocalTableViewController: BaseTableViewController, CLLocationManagerDelega
     //MARK: Actions
     
     @IBAction func refeshTable(_ sender: UIRefreshControl) {
-        showProgressView()
         publicAppventures.removeAll()
         tableView.reloadData()
         locationManager.requestLocation()
@@ -220,7 +227,7 @@ extension LocalTableViewController {
     
     /// Move to backendless/model layer.
     func getBackendlessAppventure() {
-        
+        showProgressView()
         let queryOptions = QueryOptions()
         queryOptions.relationsDepth = 1;
         

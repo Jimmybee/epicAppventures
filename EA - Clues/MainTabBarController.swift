@@ -34,18 +34,8 @@ class MainTabBarController: UITabBarController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        UserManager.setupUser(completion: setupComplete)
+
     }
 
-    func setupComplete() {
-        if CoreUser.user?.userType == .noLogin {
-            self.performSegue(withIdentifier: StoryboardNames.startupLogin, sender: nil)
-            if let pvc = self.viewControllers![1] as? ProfileWrapperViewController {
-                pvc.showForUser()
-            }
-        } else {
-            NotificationCenter.default.post(name: Notification.Name(rawValue: Notifications.reloadCatalogue), object: self)
-        }
-    }
     
 }

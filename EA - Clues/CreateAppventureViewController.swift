@@ -15,7 +15,7 @@ protocol CreateAppventureViewControllerDelegate: NSObjectProtocol {
     func reloadTable()
 }
 
-class CreateAppventureViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, UITextViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class CreateAppventureViewController: BaseViewController, UITextFieldDelegate, UITextViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     struct Constants {
         static let cellName = "StepCell"
@@ -114,17 +114,13 @@ class CreateAppventureViewController: UIViewController, UITableViewDelegate, UIT
         if newAppventure == nil {
             newAppventure = Appventure()
             User.user?.ownedAppventures.append(newAppventure)
-            setupForNewAppventure()
             performSegue(withIdentifier: Constants.editAppventureDetailsSegue, sender: nil)
-        } else {
-            updateUI()
         }
         
         detailsView.addSubview(detailsSubView)
-        detailsSubView.appventure = self.newAppventure
         detailsSubView.autoCenterInSuperview()
         detailsSubView.autoPinEdgesToSuperviewEdges()
-        detailsSubView.setup()
+        detailsSubView.shareOrSave.setTitle("SAVE", for: .normal)
         self.containerView.bringSubview(toFront: detailsView)
 
         //Location Manager
@@ -135,12 +131,20 @@ class CreateAppventureViewController: UIViewController, UITableViewDelegate, UIT
         navigationItem.rightBarButtonItem = editBarButton
     }
     
-    func stepsLoaded(){
-        tableView.reloadData()
+    
+    override func viewDidAppear(_ animated: Bool) {
+        updateUI()
+        if newAppventure!.appventureSteps.count > 1 {
+            if CLLocationCoordinate2DIsValid(newAppventure!.appventureSteps[0].location!.coordinate) {
+                newAppventure!.location = newAppventure!.appventureSteps[0].location!
+                drawMap()
+            }
+        }
     }
     
-    func setupForNewAppventure() {
-
+    
+    func stepsLoaded(){
+        tableView.reloadData()
     }
 
     @IBAction func shareWithFriends(_ sender: AnyObject) {
@@ -154,22 +158,13 @@ class CreateAppventureViewController: UIViewController, UITableViewDelegate, UIT
         }
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        updateUI()
-        if newAppventure!.appventureSteps.count > 1 {
-            if CLLocationCoordinate2DIsValid(newAppventure!.appventureSteps[0].location!.coordinate) {
-                newAppventure!.location = newAppventure!.appventureSteps[0].location!
-                drawMap()
-            }
-        }
-        tableView.reloadData()
-    }
-    
     
     //MARK: UI Interface
     
     func updateUI () {
         tableView.reloadData()
+        detailsSubView.appventure = self.newAppventure
+        detailsSubView.setup()
     }
     
     //MARK: Private functions
@@ -178,6 +173,14 @@ class CreateAppventureViewController: UIViewController, UITableViewDelegate, UIT
         let stepViewController = storyboard.instantiateViewController(withIdentifier: ViewControllerIds.Step) as! StepViewController
         stepViewController.appventure = self.newAppventure
         present(stepViewController, animated: true, completion: nil)
+
+    }
+    
+    @IBAction func shareBttnPressed(_ sender: UIButton) {
+        performSegue(withIdentifier: Constants.shareWithFriend, sender: self)
+    }
+    
+    @IBAction func publishBttnPressed(_ sender: UIButton) {
     }
     
     func goodForLive() -> String {
@@ -275,10 +278,14 @@ class CreateAppventureViewController: UIViewController, UITableViewDelegate, UIT
         }
     }
     
-    
-    //MARK: Table functions
-    
+}
 
+
+//MARK: - Table 
+
+extension CreateAppventureViewController : UITableViewDelegate, UITableViewDataSource {
+    
+    
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
@@ -302,7 +309,7 @@ class CreateAppventureViewController: UIViewController, UITableViewDelegate, UIT
             }
         } else {
             cell.stepNameOrLocation.text = Constants.placeholderText
-
+            
         }
         
         return cell
@@ -346,8 +353,6 @@ class CreateAppventureViewController: UIViewController, UITableViewDelegate, UIT
         }
     }
     
-
-    
     func confirmDeletePopup (_ indexPath: IndexPath) {
         let alert = UIAlertController(title: "Delete Step?", message: "Step data will be lost!", preferredStyle: UIAlertControllerStyle.alert)
         alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: nil))
@@ -371,7 +376,6 @@ class CreateAppventureViewController: UIViewController, UITableViewDelegate, UIT
         BackendlessStep.removeBy(id: id)
     }
 
-    
 }
 
 //MARK: AppventureDetails Container functions
@@ -383,11 +387,11 @@ extension CreateAppventureViewController : AppventureDetailsViewDelegate {
     }
     
     func rightBttnPressed() {
+        showProgressView()
         BackendlessAppventure.save(appventure: newAppventure, withImage: true) { 
+            self.hideProgressView()
             self.saveComplete()
         }
-        
-        performSegue(withIdentifier: Constants.shareWithFriend, sender: self)
     }
     
     func saveComplete() {

@@ -32,13 +32,13 @@ class BaseViewController: UIViewController {
 extension BaseViewController {
     
     func showProgressView() {
-        let appdelegate = UIApplication.shared.delegate as! AppDelegate
-        appdelegate.window?.addSubview(progressView)
-        activityView.startAnimating()
+//        let appdelegate = UIApplication.shared.delegate as! AppDelegate
+//        appdelegate.window?.addSubview(progressView)
+//        activityView.startAnimating()
     }
     
     func hideProgressView() {
-        activityView.stopAnimating()
-        progressView.removeFromSuperview()
+//        activityView.stopAnimating()
+//        progressView.removeFromSuperview()
     }
 }
