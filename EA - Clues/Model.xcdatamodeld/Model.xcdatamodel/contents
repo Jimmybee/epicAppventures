@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="11759" systemVersion="15G31" minimumToolsVersion="Xcode 8.0" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="11759" systemVersion="16C67" minimumToolsVersion="Xcode 8.0" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Appventure" representedClassName=".Appventure" syncable="YES">
         <attribute name="backendlessId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="duration" optional="YES" attributeType="String" syncable="YES"/>
@@ -45,6 +45,7 @@
         <attribute name="pictureUrl" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="userTypeInt" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <relationship name="downloaded" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Appventure" inverseName="buyer" inverseEntity="Appventure" syncable="YES"/>
+        <relationship name="grantedAppventures" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Appventure" syncable="YES"/>
         <relationship name="ownedAppventures" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Appventure" inverseName="owner" inverseEntity="Appventure" syncable="YES"/>
     </entity>
     <entity name="StepSetup" representedClassName=".StepSetup" syncable="YES">
@@ -62,7 +63,7 @@
     <elements>
         <element name="Appventure" positionX="-63" positionY="-18" width="128" height="285"/>
         <element name="AppventureStep" positionX="-54" positionY="90" width="128" height="300"/>
-        <element name="CoreUser" positionX="-63" positionY="135" width="128" height="165"/>
+        <element name="CoreUser" positionX="-63" positionY="135" width="128" height="180"/>
         <element name="StepSetup" positionX="-54" positionY="135" width="128" height="195"/>
     </elements>
 </model>

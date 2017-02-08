@@ -9,6 +9,11 @@
 import Foundation
 import FBSDKLoginKit
 
+protocol FacebookLoginController {
+    func facebookLoginSucceed()
+    func facebookLoginFailed()
+}
+
 class UserManager {
     
     static var backendless = Backendless.sharedInstance()
@@ -89,14 +94,17 @@ class UserManager {
     }
     
     static func loginWithFacebookSDK(viewController: UIViewController) {
+        guard let facebookLoginController = viewController as? FacebookLoginController else { return }
         let loginManager = FBSDKLoginManager()
         loginManager.logIn(withReadPermissions: ["public_profile", "email", "user_friends"], from: viewController) { (result, error) in
             let token = FBSDKAccessToken.current()
             backendless?.userService.login(withFacebookSDK: token, fieldsMapping: fieldsMapping, response: { (user) in
                 mapBackendlessToCoreUser()
                 viewController.dismiss(animated: true, completion: nil)
+                facebookLoginController.facebookLoginSucceed()
             }, error: { (fault) in
                 print("Server reported an error: \(fault)")
+                facebookLoginController.facebookLoginFailed()
             })
         }
     }
@@ -106,3 +114,5 @@ class UserManager {
     }
     
 }
+
+

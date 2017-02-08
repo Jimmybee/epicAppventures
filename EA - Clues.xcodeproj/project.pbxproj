@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		660055371C5F20050094F0A1 /* AppventureStepTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660055361C5F20050094F0A1 /* AppventureStepTableViewCell.swift */; };
 		6600553A1C5F3DD00094F0A1 /* LocationSettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660055391C5F3DD00094F0A1 /* LocationSettingsTableViewController.swift */; };
+		661228041E4B8BFA0077BF98 /* Backendless.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661228031E4B8BFA0077BF98 /* Backendless.swift */; };
 		661472661D5A522E0093C65B /* DevelopLocalPublicSegmented.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661472651D5A522E0093C65B /* DevelopLocalPublicSegmented.swift */; };
 		661472681D5A82D90093C65B /* ProfileWrapperViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661472671D5A82D90093C65B /* ProfileWrapperViewController.swift */; };
 		6614726A1D5A86A70093C65B /* UserSignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661472691D5A86A70093C65B /* UserSignInViewController.swift */; };
@@ -139,6 +140,7 @@
 		660055391C5F3DD00094F0A1 /* LocationSettingsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationSettingsTableViewController.swift; sourceTree = "<group>"; };
 		660055481C5F44B60094F0A1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchAppventure.storyboard; sourceTree = "<group>"; };
 		6600554A1C5F44B60094F0A1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = "../EA Clues Client/Assets.xcassets"; sourceTree = "<group>"; };
+		661228031E4B8BFA0077BF98 /* Backendless.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Backendless.swift; sourceTree = "<group>"; };
 		661472631D5A4F5A0093C65B /* InstructionsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstructionsViewController.swift; sourceTree = "<group>"; };
 		661472651D5A522E0093C65B /* DevelopLocalPublicSegmented.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DevelopLocalPublicSegmented.swift; sourceTree = "<group>"; };
 		661472671D5A82D90093C65B /* ProfileWrapperViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileWrapperViewController.swift; sourceTree = "<group>"; };
@@ -716,6 +718,7 @@
 			children = (
 				66D7CD5E1C5B3F4E00ACB8E3 /* AppDelegate.swift */,
 				668953551E2A49A8002163EC /* CoreDataStack.swift */,
+				661228031E4B8BFA0077BF98 /* Backendless.swift */,
 			);
 			name = AppDelegate;
 			sourceTree = "<group>";
@@ -978,6 +981,7 @@
 				66D7CDA01C5B40BD00ACB8E3 /* ParseFunc.swift in Sources */,
 				661472661D5A522E0093C65B /* DevelopLocalPublicSegmented.swift in Sources */,
 				66F32C861D575A6700D99701 /* RateViewController.swift in Sources */,
+				661228041E4B8BFA0077BF98 /* Backendless.swift in Sources */,
 				66F32C7B1D575A5C00D99701 /* AnswerHintViewController.swift in Sources */,
 				6663EAC51D62E961000F7BF9 /* WriteReviewViewController.swift in Sources */,
 				66F32C851D575A6700D99701 /* EditTextClueViewController.swift in Sources */,

@@ -13,6 +13,7 @@ class SharedAdventure: NSObject {
     var creatorFbId: String?
     var shareeFbId: String?
     var appventureId: String?
+    var fullAccessLevel: Bool = true
     
     init(shareeFbId: String, appventureId: String) {
         self.creatorFbId = CoreUser.user!.facebookId!
@@ -20,6 +21,12 @@ class SharedAdventure: NSObject {
         self.appventureId = appventureId
     }
     
+    
+    init(backendlessDictionary: Dictionary<String,  Any>) {
+        self.creatorFbId = backendlessDictionary["creatorFbId"] as? String
+        self.shareeFbId = backendlessDictionary["shareeFbId"] as? String
+        self.appventureId = backendlessDictionary["appventureId"] as? String
+    }
     
     func save(completion: @escaping () -> ()) {
         BackendlessAppventure.dataStore?.save(self, response: { (returnObject) in
@@ -31,52 +38,36 @@ class SharedAdventure: NSObject {
         }
     }
     
-    
-    static func fetchFriendAdventures(_ handler: ([Appventure]) -> Void) {
-//        var friendsAdventures = [Appventure]()
-//        if let user = User.user {
-//            let query = PFQuery(className:parseCol.pfClass)
-//            print("facebookid: \(user.facebookId)")
-//            query.whereKey(parseCol.fbUserID, equalTo: user.facebookId)
-//            query.limit = 100
-//            var friendAdventures = [String]()
-//            query.findObjectsInBackgroundWithBlock {
-//                (objects: [PFObject]?, error: NSError?) -> Void in
-//                if error == nil {
-//                    for object in objects! {
-//                        let appventureID = object.objectForKey(parseCol.appventureFKID) as! String
-//                        friendAdventures.append(appventureID)
-//                    }
-//                    let uniqueAdventureIDs = Array(Set(friendAdventures))
-//
-//                    for adventureID in uniqueAdventureIDs {
-//                        let query = PFQuery(className: Appventure.pfAppventure.pfClass)
-//                        query.getObjectInBackgroundWithId(adventureID) {
-//                            (object: PFObject?, error: NSError?) -> Void in
-//                            if error != nil {
-//                                print("Get parse object error: /(error)")
-//                            } else {
-//                                if let isObject = object {
-//                                    let adventure = Appventure(object: isObject)
-//                                    if adventure.liveStatus != LiveStatus.inDevelopment {
-//                                        friendsAdventures.append(adventure)
-//                                        AppventureRating.loadRating(adventure, handler: nil)
-//                                    }
-//                                }
-//                                handler(friendsAdventures)
-//                            }
-//                        }
-//                    }
-//                    
-//                } else {
-//                    // Log details of the failure
-//                    print("Error: \(error!) \(error!.userInfo)")
-//                }
-//            }
-//            
-//        }
+    class func getGrantedSharedAppventures(shareeFbId: String, completion: @escaping ([Appventure]?) -> ()) {
+        let dataQuery = BackendlessDataQuery()
+        dataQuery.whereClause = "shareeFbId = \(shareeFbId)"
+        
+        let dataStore = Backendless.sharedInstance().data.of(SharedAdventure.ofClass())
+        dataStore?.find(dataQuery, response: { (collection) in
+            guard let page1 = collection!.getCurrentPage() else { return completion(nil) }
+            let sharedAppventures = page1.map(self.convertToSharedAppventure).flatMap( { $0 })
+            let dataQuery = BackendlessDataQuery()
+            dataQuery.whereClause = "objectId in (\(sharedAppventures.joined(separator: " OR ")))"
+            BackendlessAppventure.loadBackendlessAppventures(persistent: true, dataQuery: dataQuery, completion: { (appventures, fault) in
+                if fault != nil {
+                    completion(nil)
+                } else {
+                    completion(appventures as! [Appventure]?)
+                }
+            })
+        }, error: { (fault) in
+            print("Server reported an error: \(fault)")
+            completion(nil)
+        })
         
     }
+    
+    private class func convertToSharedAppventure(obj: Any?) -> String? {
+        guard let dict = obj as? Dictionary<String, Any> else { return nil }
+        guard let sharedName = SharedAdventure(backendlessDictionary: dict).appventureId else { return nil }
+        return ("'\(sharedName)'")
+    }
+    
     
 
 }

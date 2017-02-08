@@ -30,6 +30,7 @@ class ProfileTableViewController: BaseTableViewController {
             }
         }
         
+        getSharedAppventures()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -63,6 +64,12 @@ class ProfileTableViewController: BaseTableViewController {
                 AppDelegate.coreDataStack.saveContext(completion: nil)
                 self.tableView.reloadData()
             }
+        }
+    }
+    
+    func getSharedAppventures() {
+        SharedAdventure.getGrantedSharedAppventures(shareeFbId: CoreUser.user!.facebookId!) { appventures in
+            
         }
     }
     

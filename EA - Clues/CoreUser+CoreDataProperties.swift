@@ -23,6 +23,7 @@ extension CoreUser {
     @NSManaged public var pictureUrl: String?
     @NSManaged public var userTypeInt: Int16
     @NSManaged public var ownedAppventures: Set<Appventure>?
+    @NSManaged public var grantedAppventures: Set<Appventure>?
     @NSManaged public var downloaded: Set<Appventure>?
 
 }

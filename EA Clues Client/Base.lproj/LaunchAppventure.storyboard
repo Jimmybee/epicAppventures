@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="15G1217" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="skn-cX-nSS">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="skn-cX-nSS">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -662,8 +662,8 @@ Adventure Completed!</string>
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="285"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rrS-Md-xFC">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="301"/>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="rrS-Md-xFC">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="300.5"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="150" id="Xb2-uT-LzI"/>
                                                 <constraint firstAttribute="width" secondItem="rrS-Md-xFC" secondAttribute="height" multiplier="138:95" id="ggt-hi-pXA"/>
@@ -674,57 +674,57 @@ Adventure Completed!</string>
                                                 </mask>
                                             </variation>
                                         </imageView>
-                                        <imageView userInteractionEnabled="NO" alpha="0.40000000000000002" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="greyMask300" translatesAutoresizingMaskIntoConstraints="NO" id="B2C-0g-7SZ">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="301"/>
+                                        <imageView userInteractionEnabled="NO" alpha="0.40000000000000002" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="greyMask300" translatesAutoresizingMaskIntoConstraints="NO" id="B2C-0g-7SZ">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="300"/>
                                         </imageView>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g1R-xf-tyA">
-                                            <rect key="frame" x="184" y="114" width="47" height="21"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g1R-xf-tyA">
+                                            <rect key="frame" x="164" y="113.5" width="47" height="21"/>
                                             <fontDescription key="fontDescription" name="Palatino-Roman" family="Palatino" pointSize="19"/>
                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
                                             <color key="shadowColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <size key="shadowOffset" width="0.0" height="0.0"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dse-3l-gw8">
-                                            <rect key="frame" x="189" y="167" width="37" height="17"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dse-3l-gw8">
+                                            <rect key="frame" x="169" y="166.5" width="37" height="17"/>
                                             <fontDescription key="fontDescription" name="Palatino-Roman" family="Palatino" pointSize="15"/>
                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
                                             <color key="shadowColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <size key="shadowOffset" width="0.0" height="0.0"/>
                                         </label>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="locationPinA1" translatesAutoresizingMaskIntoConstraints="NO" id="7Ef-m5-ser">
-                                            <rect key="frame" x="168" y="165" width="15" height="15"/>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="locationPinA1" translatesAutoresizingMaskIntoConstraints="NO" id="7Ef-m5-ser">
+                                            <rect key="frame" x="148" y="164.5" width="15" height="15"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="15" id="K7o-dv-eAU"/>
                                                 <constraint firstAttribute="height" constant="15" id="p9a-cF-oQt"/>
                                             </constraints>
                                         </imageView>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eFc-Wm-EVg">
-                                            <rect key="frame" x="189" y="192" width="37" height="17"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eFc-Wm-EVg">
+                                            <rect key="frame" x="169" y="191.5" width="37" height="17"/>
                                             <fontDescription key="fontDescription" name="Palatino-Roman" family="Palatino" pointSize="15"/>
                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
                                             <color key="shadowColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <size key="shadowOffset" width="0.0" height="0.0"/>
                                         </label>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="stopwatch" translatesAutoresizingMaskIntoConstraints="NO" id="heT-aU-G6f">
-                                            <rect key="frame" x="168" y="190" width="15" height="15"/>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="stopwatch" translatesAutoresizingMaskIntoConstraints="NO" id="heT-aU-G6f">
+                                            <rect key="frame" x="148" y="189.5" width="15" height="15"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="15" id="CA9-13-sal"/>
                                                 <constraint firstAttribute="width" constant="15" id="aHp-OU-7XO"/>
                                             </constraints>
                                         </imageView>
-                                        <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bJL-ba-mp9" customClass="RatingControlOrangeDisplay" customModule="EA___Clues" customModuleProvider="target">
-                                            <rect key="frame" x="167" y="143" width="80" height="16"/>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bJL-ba-mp9" customClass="RatingControlOrangeDisplay" customModule="EA___Clues" customModuleProvider="target">
+                                            <rect key="frame" x="147.5" y="142.5" width="80" height="16"/>
                                             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="80" id="QPr-WV-5DW"/>
                                                 <constraint firstAttribute="width" secondItem="bJL-ba-mp9" secondAttribute="height" multiplier="5:1" id="Shb-DC-sYf"/>
                                             </constraints>
                                         </view>
-                                        <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0K1-OU-Maz">
-                                            <rect key="frame" x="0.0" y="293" width="414" height="8"/>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0K1-OU-Maz">
+                                            <rect key="frame" x="0.0" y="292.5" width="375" height="8"/>
                                             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="8" id="Edh-BI-aJe"/>
@@ -741,6 +741,7 @@ Adventure Completed!</string>
                                         <constraint firstItem="rrS-Md-xFC" firstAttribute="centerX" secondItem="e4F-sp-dOA" secondAttribute="centerX" id="DGn-w0-AIA"/>
                                         <constraint firstItem="bJL-ba-mp9" firstAttribute="centerX" secondItem="g1R-xf-tyA" secondAttribute="centerX" id="IWx-vz-r5g"/>
                                         <constraint firstItem="B2C-0g-7SZ" firstAttribute="centerY" secondItem="rrS-Md-xFC" secondAttribute="centerY" id="QcK-EG-Z07"/>
+                                        <constraint firstItem="eFc-Wm-EVg" firstAttribute="leading" secondItem="heT-aU-G6f" secondAttribute="trailing" constant="6" id="RP7-dp-snt"/>
                                         <constraint firstItem="bJL-ba-mp9" firstAttribute="centerY" secondItem="e4F-sp-dOA" secondAttribute="centerY" id="UIb-pg-zOY"/>
                                         <constraint firstItem="rrS-Md-xFC" firstAttribute="height" secondItem="e4F-sp-dOA" secondAttribute="height" id="WMS-ga-Wuo"/>
                                         <constraint firstItem="0K1-OU-Maz" firstAttribute="width" secondItem="B2C-0g-7SZ" secondAttribute="width" id="X5e-BQ-0IZ"/>
@@ -748,7 +749,6 @@ Adventure Completed!</string>
                                         <constraint firstItem="rrS-Md-xFC" firstAttribute="centerY" secondItem="e4F-sp-dOA" secondAttribute="centerY" id="cOp-94-o2G"/>
                                         <constraint firstItem="B2C-0g-7SZ" firstAttribute="width" secondItem="rrS-Md-xFC" secondAttribute="width" id="f9M-Cu-R8Z"/>
                                         <constraint firstItem="eFc-Wm-EVg" firstAttribute="top" secondItem="Dse-3l-gw8" secondAttribute="bottom" constant="8" id="fif-q3-GWD"/>
-                                        <constraint firstItem="heT-aU-G6f" firstAttribute="trailing" secondItem="7Ef-m5-ser" secondAttribute="trailing" id="j7m-M5-vJ9"/>
                                         <constraint firstItem="heT-aU-G6f" firstAttribute="bottom" secondItem="eFc-Wm-EVg" secondAttribute="bottom" constant="-4" id="jjR-KE-zA0"/>
                                         <constraint firstItem="Dse-3l-gw8" firstAttribute="centerX" secondItem="B2C-0g-7SZ" secondAttribute="centerX" id="mes-Gm-2Zy"/>
                                         <constraint firstItem="Dse-3l-gw8" firstAttribute="top" secondItem="bJL-ba-mp9" secondAttribute="bottom" constant="8" id="pBW-vh-9bz"/>
@@ -757,6 +757,9 @@ Adventure Completed!</string>
                                         <constraint firstItem="g1R-xf-tyA" firstAttribute="centerX" secondItem="rrS-Md-xFC" secondAttribute="centerX" id="zru-hA-gBb"/>
                                     </constraints>
                                 </tableViewCellContentView>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="heroID" value="appventureImage"/>
+                                </userDefinedRuntimeAttributes>
                                 <connections>
                                     <outlet property="appventureImage" destination="rrS-Md-xFC" id="QEw-7p-a3b"/>
                                     <outlet property="appventureTitle" destination="g1R-xf-tyA" id="XLF-A0-rdA"/>
@@ -779,6 +782,9 @@ Adventure Completed!</string>
                             <action selector="refeshTable:" destination="4BS-rB-9SW" eventType="valueChanged" id="ken-BE-Gw9"/>
                         </connections>
                     </refreshControl>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="boolean" keyPath="isHeroEnabled" value="YES"/>
+                    </userDefinedRuntimeAttributes>
                     <connections>
                         <outlet property="localPublicControl" destination="scA-WX-wR2" id="muM-SK-zz0"/>
                         <outlet property="refreshSpinner" destination="HPa-e5-TB3" id="uyv-eD-deV"/>
@@ -966,7 +972,7 @@ Adventure Completed!</string>
                     <tabBarItem key="tabBarItem" title="Adventure" image="trailIcon-X" id="Dt4-3B-Ro2"/>
                     <toolbarItems/>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" translucent="NO" id="U8e-dP-2Ft">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="U8e-dP-2Ft">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -975,6 +981,9 @@ Adventure Completed!</string>
                         </textAttributes>
                     </navigationBar>
                     <nil name="viewControllers"/>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="boolean" keyPath="isHeroEnabled" value="NO"/>
+                    </userDefinedRuntimeAttributes>
                     <connections>
                         <segue destination="4BS-rB-9SW" kind="relationship" relationship="rootViewController" id="mD0-wY-2gX"/>
                     </connections>
@@ -1361,7 +1370,7 @@ Cg
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="ofg-Dh-DBt" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="HS7-xK-ZO5">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="HS7-xK-ZO5">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="barTintColor" red="0.053199561809999997" green="0.1702644401" blue="0.20602509469999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

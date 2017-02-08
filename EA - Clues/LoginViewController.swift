@@ -15,10 +15,16 @@ import AVFoundation
 
 var centralDispatchGroup = DispatchGroup()
 
+protocol LoginViewControllerDelegate: class {
+    func loginSucceed()
+    func loginFailed()
+}
+
 class LoginViewController: UIViewController {
     
     var player: AVPlayer?
     
+    weak var delegate: LoginViewControllerDelegate!
     let backendless = Backendless.sharedInstance()
     var user = BackendlessUser()
     
@@ -44,11 +50,6 @@ class LoginViewController: UIViewController {
     @IBAction func facebookLogin(_ sender: UIButton) {
         centralDispatchGroup.enter()
         UserManager.loginWithFacebookSDK(viewController: self)
-        centralDispatchGroup.notify(queue: .main) {
-            UserManager.mapBackendlessToCoreUser()
-            NotificationCenter.default.post(name: Notification.Name(rawValue: Notifications.reloadCatalogue), object: self)
-            self.dismiss(animated: true, completion: nil)
-        }
     }
     
     func addVideoPlayer() {
@@ -80,5 +81,15 @@ class LoginViewController: UIViewController {
     func loopVideo() {
         player?.seek(to: kCMTimeZero)
         player?.play()
+    }
+}
+
+extension LoginViewController : FacebookLoginController {
+    func facebookLoginSucceed() {
+        delegate.loginSucceed()
+    }
+    
+    func facebookLoginFailed() {
+        delegate.loginFailed()
     }
 }

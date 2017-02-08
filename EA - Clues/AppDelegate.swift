@@ -61,68 +61,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         GMSServices.provideAPIKey("AIzaSyDhyHZPC_SW2khLb02QqQ57fF5Wj68tjGs")
         GMSPlacesClient.provideAPIKey("AIzaSyDhyHZPC_SW2khLb02QqQ57fF5Wj68tjGs")
         
-//        PFFacebookUtils.initializeFacebookWithApplicationLaunchOptions(launchOptions)
-//        PFUser.enableAutomaticUser()
-        
-//        let defaultACL = PFACL();
-        
-        // If you would like all objects to be private by default, remove this line.
-//        defaultACL.publicReadAccess = true
-        
-//        PFACL.setDefaultACL(defaultACL, withAccessForCurrentUser:true)
-//        
-//        if application.applicationState != UIApplicationState.Background {
-//            
-//            
-//            let preBackgroundPush = !application.respondsToSelector("backgroundRefreshStatus:")
-//            let oldPushHandlerOnly = !self.respondsToSelector("didReceiveRemoteNotification:fetchCompletionHandler:")
-//
-////            let oldPushHandlerOnly = !self.respondsToSelector(#selector(UIApplicationDelegate.application(_:didReceiveRemoteNotification:fetchCompletionHandler:)))
-//            var noPushPayload = false;
-//            if let options = launchOptions {
-//                noPushPayload = options[UIApplicationLaunchOptionsRemoteNotificationKey] != nil;
-//            }
-//            if (preBackgroundPush || oldPushHandlerOnly || noPushPayload) {
-//                PFAnalytics.trackAppOpenedWithLaunchOptions(launchOptions)
-//            }
-//        }
-        
-        
-        //
-        //  Swift 2.0
-        //
-        //        if #available(iOS 8.0, *) {
-        //            let types: UIUserNotificationType = [.Alert, .Badge, .Sound]
-        //            let settings = UIUserNotificationSettings(forTypes: types, categories: nil)
-        //            application.registerUserNotificationSettings(settings)
-        //            application.registerForRemoteNotifications()
-        //        } else {
-        //            let types: UIRemoteNotificationType = [.Alert, .Badge, .Sound]
-        //            application.registerForRemoteNotificationTypes(types)
-        //        }
-        
-        //Set status bar update
-        
         return true
     }
-    
-//    func application(_ application: UIApplication,
-//                     open url: URL,
-//                     sourceApplication: String?,
-//                     annotation: Any) -> Bool {
-//        centralDispatchGroup.leave()
-//        print("AppDelegate -> application:openURL: \(url.scheme)")
-//        
-//        let backendless = Backendless.sharedInstance()
-//        let user = backendless?.userService.handleOpen(url)
-//        if user != nil {
-//            print("AppDelegate -> application:openURL: user = \(user)")
-//            print(backendless?.userService.currentUser.getToken() ?? "no backendless token *******")
-//            print(FBSDKAccessToken.current() ?? "no token")
-//        }
-//        
-//        return true
-//    }
     
     func application(_ application: UIApplication,
         open url: URL,

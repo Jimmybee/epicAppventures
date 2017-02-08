@@ -12,7 +12,10 @@ import CoreLocation
 import FBSDKCoreKit
 import SwiftyJSON
 
-class LocalTableViewController: BaseTableViewController, CLLocationManagerDelegate{
+class LocalTableViewController: BaseTableViewController{
+    
+    var publicAppventuresMessage = "There are no adventures available on our servers at the moment."
+    var friendsAppventuresMessage = "There are no adventures that your friends have shared with you."
     
     let firstLaunchKey = "firstLaunch"
     let howToVC = "HowToVC"
@@ -39,37 +42,15 @@ class LocalTableViewController: BaseTableViewController, CLLocationManagerDelega
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("\(CLLocationManager.authorizationStatus())")
-        
-        //MARK: LocationManager
-        self.locationManager.delegate = self
-        self.locationManager.requestWhenInUseAuthorization()
 
-        //Notifications
-        let notificationCenter = NotificationCenter.default
-        notificationCenter.addObserver(self, selector: #selector(LocalTableViewController.beginRefresh), name: NSNotification.Name(rawValue: User.userInitCompleteNotification), object: nil)
-        notificationCenter.addObserver(self, selector: #selector(LocalTableViewController.beginRefresh), name: NSNotification.Name(rawValue: User.userLoggedOutNotification), object: nil)
-
-        notificationCenter.addObserver(self, selector: #selector(LocalTableViewController.beginRefresh), name: NSNotification.Name(rawValue: skipLoginNotification), object: nil)
-        
-        notificationCenter.addObserver(self, selector: #selector(getBackendlessAppventure), name: NSNotification.Name(rawValue: Notifications.reloadCatalogue), object: nil)
-        //MARK: TableViewLoad
-        
-        tableView.estimatedRowHeight = tableView.rowHeight
-        tableView.rowHeight = UITableViewAutomaticDimension
-        
-        tableView.dataSource = self
-        tableView.delegate = self
-        
+        setupLocationManager()
+        setupTableView()
 
         if let mtvc = self.tabBarController as? MainTabBarController {
             mtvc.stdFrame  = self.tabBarController?.tabBar.frame
-
         }
         
         UserManager.setupUser(completion: setupComplete)
-
-        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -77,50 +58,22 @@ class LocalTableViewController: BaseTableViewController, CLLocationManagerDelega
         HelperFunctions.unhideTabBar(self)
     }
     
-    func setupComplete() {
+    private func setupComplete() {
         if CoreUser.user?.userType == .noLogin {
             self.performSegue(withIdentifier: StoryboardNames.startupLogin, sender: nil)
         } else {
-            NotificationCenter.default.post(name: Notification.Name(rawValue: Notifications.reloadCatalogue), object: self)
+           getBackendlessAppventure()
         }
-    }
-
-    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-        locationManager.requestLocation()
-    }
-    
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        lastLocation = locations.first?.coordinate
-        print(lastLocation ?? "no location")
-        if refreshing == false {
-            refreshing = true
-        }
-    }
-    
-    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        publicAppventuresMessage = "Update location settings to get adventures in your area."
-        let london = CLLocationCoordinate2D(latitude: 51.5072, longitude: 0.1275)
-        if lastLocation == nil {lastLocation = london}
-
-    }
-    
-    func beginRefresh() {
-        refreshSpinner.beginRefreshing()
-        tableView.isUserInteractionEnabled = false
-        self.refeshTable(refreshSpinner)
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     //MARK: Actions
     
     @IBAction func refeshTable(_ sender: UIRefreshControl) {
+        sender.endRefreshing()
         publicAppventures.removeAll()
         tableView.reloadData()
-        locationManager.requestLocation()
+        getBackendlessAppventure()
+//        locationManager.requestLocation()
     }
     
     @IBAction func localPublicChange(_ sender: UISegmentedControl) {
@@ -144,6 +97,10 @@ class LocalTableViewController: BaseTableViewController, CLLocationManagerDelega
                 }
             }
         }
+        
+        if let lvc = segue.destination as? LoginViewController {
+            lvc.delegate = self
+        }
     }
     
     func checkFirstLaunch() {
@@ -158,10 +115,20 @@ class LocalTableViewController: BaseTableViewController, CLLocationManagerDelega
         defaults.set(false, forKey: firstLaunchKey)
     }
 
-    //MARK: Table functions
-    var publicAppventuresMessage = "There are no adventures available on our servers at the moment."
-    var friendsAppventuresMessage = "There are no adventures that your friends have shared with you."
+}
 
+// MARK: - Table Delegate 
+
+extension LocalTableViewController {
+    
+    func setupTableView() {
+        tableView.estimatedRowHeight = tableView.rowHeight
+        tableView.rowHeight = UITableViewAutomaticDimension
+        
+        tableView.dataSource = self
+        tableView.delegate = self
+    }
+    
     override func numberOfSections(in tableView: UITableView) -> Int {
         switch localPublicControl.selectedSegmentIndex {
         case 0:
@@ -192,7 +159,7 @@ class LocalTableViewController: BaseTableViewController, CLLocationManagerDelega
         var rows = 0
         switch localPublicControl.selectedSegmentIndex {
         case 0:
-           rows = CoreUser.user!.downloadedArray.count
+            rows = CoreUser.user!.downloadedArray.count
         case 1:
             rows = publicAppventures.count
         default:
@@ -218,7 +185,39 @@ class LocalTableViewController: BaseTableViewController, CLLocationManagerDelega
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         performSegue(withIdentifier: "Alt1", sender: indexPath)
     }
+
+}
+
+
+// MARK: - Location Manager Delegate
+
+extension LocalTableViewController: CLLocationManagerDelegate {
     
+    func setupLocationManager() {
+        print("\(CLLocationManager.authorizationStatus())")
+        self.locationManager.delegate = self
+        self.locationManager.requestWhenInUseAuthorization()
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        locationManager.requestLocation()
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        lastLocation = locations.first?.coordinate
+        print(lastLocation ?? "no location")
+        if refreshing == false {
+            refreshing = true
+        }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        publicAppventuresMessage = "Update location settings to get adventures in your area."
+        let london = CLLocationCoordinate2D(latitude: 51.5072, longitude: 0.1275)
+        if lastLocation == nil {lastLocation = london}
+        
+    }
+
 }
 
 // MARK: API Calls
@@ -228,13 +227,13 @@ extension LocalTableViewController {
     /// Move to backendless/model layer.
     func getBackendlessAppventure() {
         showProgressView()
-        let queryOptions = QueryOptions()
-        queryOptions.relationsDepth = 1;
+
+
+        let dataQuery = BackendlessDataQuery()
         
         let liveWhere = "liveStatusNum = \(2)"
-        let dataQuery = BackendlessDataQuery()
-        dataQuery.queryOptions = queryOptions;
         let distanceWhere = "distance( 30.26715, -97.74306, location.latitude, location.longitude ) < mi(2000000)"
+        
         dataQuery.whereClause = distanceWhere + " AND " + liveWhere
         
         BackendlessAppventure.loadBackendlessAppventures(persistent: false, dataQuery: dataQuery) { (response, fault) in
@@ -267,51 +266,14 @@ extension LocalTableViewController {
     }
 }
 
-extension LocalTableViewController : ParseQueryHandler {
-    
-    func getRatings() {
-        
+// MARK: - LoginViewController Delegate
+
+extension LocalTableViewController : LoginViewControllerDelegate {
+    func loginSucceed() {
+        getBackendlessAppventure()
     }
     
-    func handleQueryResults(_ objects: [AnyObject]?, handlerCase: String?) {
-//        if let isPFArray = objects as [AnyObject]! {
-//            for object in isPFArray {
-//                let appventure = Appventure(object: object)
-//                let appventureLocation = CLLocation(latitude: appventure.coordinate!.latitude, longitude: appventure.coordinate!.longitude)
-////                if let gotLocation = lastLocation as CLLocation! {
-////                    appventure.distanceToSearch = gotLocation.distanceFromLocation(appventureLocation)
-////                }
-//                
-//                if let handle = handlerCase {
-//                    switch handle {
-//                    case liveAppventures:
-//                        if appventure.liveStatus == .live {
-//                            self.publicAppventures.append(appventure)
-//                        }
-//                    case LocalAppventures:
-//                        if appventure.liveStatus == .local {
-//                            if appventure.userID == User.user?.pfObject {
-//                                self.localAppventures.append(appventure)
-//                            }
-//                        }
-//                        if appventure.liveStatus == .waitingForApproval {
-//                            if appventure.userID == User.user?.pfObject {
-//                                self.localAppventures.append(appventure)
-//                            }
-//                        }
-//                    default:
-//                        break
-//                    }
-//                }
-//                
-//            }
-        
-//        }
-        
-        self.tableView.reloadData()
-        self.tableView.isUserInteractionEnabled = true
-        self.refreshSpinner.endRefreshing()
-        self.refreshing = false
-        
+    func loginFailed() {
+        print("failed login")
     }
 }

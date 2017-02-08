@@ -147,6 +147,9 @@ class BackendlessAppventure: NSObject {
     
     
     class func loadBackendlessAppventures(persistent: Bool, dataQuery: BackendlessDataQuery, completion: @escaping ServiceNewResponse) {
+        let queryOptions = QueryOptions()
+        queryOptions.relationsDepth = 2
+        dataQuery.queryOptions = queryOptions
         var appventures = [Appventure]()
         let dataStore = Backendless.sharedInstance().data.of(BackendlessAppventure.ofClass())
         dataStore?.find(dataQuery, response: { (collection) in
