@@ -17,6 +17,8 @@
 		6615D8391E427219003492AC /* CompassViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6615D8381E427219003492AC /* CompassViewController.swift */; };
 		661A156D1D58F5FA002877B8 /* FlaggedContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661A156C1D58F5FA002877B8 /* FlaggedContent.swift */; };
 		661A15711D590080002877B8 /* AppventureHelpTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661A15701D590080002877B8 /* AppventureHelpTableViewController.swift */; };
+		661C9A991E4E30AE0084B948 /* AddTagsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661C9A981E4E30AE0084B948 /* AddTagsViewController.swift */; };
+		661C9A9B1E4E35510084B948 /* AddTagsCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661C9A9A1E4E35510084B948 /* AddTagsCollectionCell.swift */; };
 		662A74B01C7701510052C71C /* AppventureRating.swift in Sources */ = {isa = PBXBuildFile; fileRef = 662A74AF1C7701510052C71C /* AppventureRating.swift */; };
 		663166EF1D49ED910043064B /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663166EE1D49ED910043064B /* SettingsViewController.swift */; };
 		6633C7431E30F13500F65D50 /* BackendlessStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6633C7421E30F13500F65D50 /* BackendlessStep.swift */; };
@@ -149,6 +151,8 @@
 		6615D8381E427219003492AC /* CompassViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompassViewController.swift; sourceTree = "<group>"; };
 		661A156C1D58F5FA002877B8 /* FlaggedContent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlaggedContent.swift; sourceTree = "<group>"; };
 		661A15701D590080002877B8 /* AppventureHelpTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppventureHelpTableViewController.swift; sourceTree = "<group>"; };
+		661C9A981E4E30AE0084B948 /* AddTagsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddTagsViewController.swift; sourceTree = "<group>"; };
+		661C9A9A1E4E35510084B948 /* AddTagsCollectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddTagsCollectionCell.swift; sourceTree = "<group>"; };
 		661E5F551C634A7800DB2612 /* LocalTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalTableViewController.swift; sourceTree = "<group>"; };
 		661E5F581C635F9B00DB2612 /* AppventureStartViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppventureStartViewController.swift; sourceTree = "<group>"; };
 		662A74AF1C7701510052C71C /* AppventureRating.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppventureRating.swift; sourceTree = "<group>"; };
@@ -310,6 +314,14 @@
 			name = Redundant;
 			sourceTree = "<group>";
 		};
+		661C9A9C1E4E35580084B948 /* CollectionCells */ = {
+			isa = PBXGroup;
+			children = (
+				661C9A9A1E4E35510084B948 /* AddTagsCollectionCell.swift */,
+			);
+			name = CollectionCells;
+			sourceTree = "<group>";
+		};
 		661E5F571C634A7D00DB2612 /* Alt */ = {
 			isa = PBXGroup;
 			children = (
@@ -376,10 +388,10 @@
 		667411F31CAFB9B200F42F81 /* AppventureComplete */ = {
 			isa = PBXGroup;
 			children = (
-				661472631D5A4F5A0093C65B /* InstructionsViewController.swift */,
 				66D7CD881C5B405400ACB8E3 /* AppventureCompleteViewController.swift */,
 				667411F61CAFB9E700F42F81 /* RateViewController.swift */,
 				6663EAC41D62E961000F7BF9 /* WriteReviewViewController.swift */,
+				661472631D5A4F5A0093C65B /* InstructionsViewController.swift */,
 			);
 			name = AppventureComplete;
 			sourceTree = "<group>";
@@ -452,6 +464,7 @@
 			isa = PBXGroup;
 			children = (
 				66DA2F2F1C5B6D3D00751528 /* TableCells */,
+				661C9A9C1E4E35580084B948 /* CollectionCells */,
 				669A97851E34DCDE0023A641 /* AppventureDetailsView */,
 				669A977E1E33D7300023A641 /* File.swift */,
 				669A97841E34DCD70023A641 /* TimePicker */,
@@ -503,6 +516,14 @@
 				6615D8361E427163003492AC /* CompassViewController.xib */,
 			);
 			name = ClueViews;
+			sourceTree = "<group>";
+		};
+		66AD9F261E50A1B30023AE87 /* CompletedAppventure */ = {
+			isa = PBXGroup;
+			children = (
+				66D7CD9A1C5B40A700ACB8E3 /* CompletedAppventure.swift */,
+			);
+			name = CompletedAppventure;
 			sourceTree = "<group>";
 		};
 		66B3DB821E2BA10800CEB1AA /* Old */ = {
@@ -576,7 +597,7 @@
 				66345AC61DA924340095F6D8 /* Appventure */,
 				66345AC71DA9243D0095F6D8 /* AppventureStep */,
 				669F6C4B1E3D193D002AE722 /* SharedAppventure */,
-				66D7CD9A1C5B40A700ACB8E3 /* CompletedAppventure.swift */,
+				66AD9F261E50A1B30023AE87 /* CompletedAppventure */,
 				662A74AF1C7701510052C71C /* AppventureRating.swift */,
 				666149DC1C60A72C0068D416 /* AppventureReviews.swift */,
 				6644AF371D6E2CD1007B7AEF /* UserFriend.swift */,
@@ -601,6 +622,7 @@
 				660055381C5F203C0094F0A1 /* Cells */,
 				661472651D5A522E0093C65B /* DevelopLocalPublicSegmented.swift */,
 				66C097011E3561880003F455 /* TimePenaltyVC */,
+				661C9A981E4E30AE0084B948 /* AddTagsViewController.swift */,
 			);
 			name = Create;
 			path = "EA - Clues";
@@ -975,12 +997,14 @@
 				666149DA1C607D6B0068D416 /* Filter.swift in Sources */,
 				66F32C741D575A5600D99701 /* LocalTableViewController.swift in Sources */,
 				666678BA1C64772F00C4309C /* Alt1ProfileViewController.swift in Sources */,
+				661C9A9B1E4E35510084B948 /* AddTagsCollectionCell.swift in Sources */,
 				662A74B01C7701510052C71C /* AppventureRating.swift in Sources */,
 				66D4913A1E4218DB00918115 /* FacebookFriendTableCell.swift in Sources */,
 				66E5A9E91E2C0DF8008A1A6C /* UserManager.swift in Sources */,
 				66D7CDA01C5B40BD00ACB8E3 /* ParseFunc.swift in Sources */,
 				661472661D5A522E0093C65B /* DevelopLocalPublicSegmented.swift in Sources */,
 				66F32C861D575A6700D99701 /* RateViewController.swift in Sources */,
+				661C9A991E4E30AE0084B948 /* AddTagsViewController.swift in Sources */,
 				661228041E4B8BFA0077BF98 /* Backendless.swift in Sources */,
 				66F32C7B1D575A5C00D99701 /* AnswerHintViewController.swift in Sources */,
 				6663EAC51D62E961000F7BF9 /* WriteReviewViewController.swift in Sources */,

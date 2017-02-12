@@ -48,9 +48,12 @@ class AppventureStartViewController: BaseViewController {
         
         detailsView.addSubview(detailsSubView)
         detailsSubView.appventure = self.appventure
+        detailsSubView.delegate = self
         detailsSubView.autoCenterInSuperview()
         detailsSubView.autoPinEdgesToSuperviewEdges()
         detailsSubView.setup()
+        
+        getLeaderboard()    
         
     }
     
@@ -164,6 +167,17 @@ extension AppventureStartViewController {
         }
     }
     
+    func getLeaderboard() {
+        CompletedAppventure.loadLeaderboardFor(appventureId: appventure.backendlessId!) { (completedAppventures) in
+            if completedAppventures == nil {
+                return
+            } else {
+                self.completedAppventures = completedAppventures!
+                self.tableView.reloadData()
+            }
+        }
+    }
+    
 }
 
 extension AppventureStartViewController : ParseQueryHandler {
@@ -176,14 +190,6 @@ extension AppventureStartViewController : ParseQueryHandler {
                 let review = object.object(forKey: AppventureReviews.parseCol.review) as! String
                 reviews.append(review)
             }
-            tableView.reloadData()
-        case CompletedAppventure.allCompletedHC:
-            completedAppventures.removeAll()
-            for object in objects! {
-                let completdAppventure = CompletedAppventure(object: object)
-                completedAppventures.append(completdAppventure)
-            }
-            completedAppventures.sort(by: { $0.time < $1.time })
             tableView.reloadData()
         default:
             break
@@ -262,4 +268,22 @@ extension AppventureStartViewController : UITableViewDataSource, UITableViewDele
     }
 }
 
-
+extension AppventureStartViewController : AppventureDetailsViewDelegate {
+    func leftBttnPressed() {
+        //go to map
+    }
+    
+    func rightBttnPressed(sender: UIButton) {
+        let textToShare = "Check out this Appventure, \(appventure.title!)"
+        if let myWebsite = NSURL(string: "http://www.epicappventures.com/") {
+            let objectsToShare: [Any] = [textToShare, myWebsite]
+            let activityVC = UIActivityViewController(activityItems: objectsToShare, applicationActivities: nil)
+            
+            activityVC.excludedActivityTypes = [.airDrop, .addToReadingList]
+            
+            activityVC.popoverPresentationController?.sourceView = sender
+            present(activityVC, animated: true, completion: nil)
+        }
+        // link to ios share.
+    }
+}

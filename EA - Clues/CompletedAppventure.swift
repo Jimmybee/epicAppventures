@@ -7,101 +7,76 @@
 //
 
 import Foundation
-//import Parse
 
- class CompletedAppventure: NSObject {
+class CompletedAppventure: NSObject {
     
-    static let allCompletedHC = "allCompletedAppventures"
+    var teamName: String?
+    var appventureId: String?
+    var time: Double = 0.0
     
-    struct parseCol {
-        static let pfClass = "CompletedAppventure"
-        static let userFKID = "userID"
-        static let date = "date"
-        static let appventureFKID = "appventureFKID"
-        static let time = "time"
-        static let teamName = "teamName"
-    }
- 
-    
-     var pfObjectID = ""
-     var userFKID = ""
-     var teamName = ""
-     var appventureFKID = ""
-     var date = Date()
-     var time = 0.0
-    
-    init(userFKID: String, teamName: String, appventureFKID: String, date: Date, time: Double) {
-        self.userFKID = userFKID
+    init(teamName: String?, appventureId: String?, time: Double) {
         self.teamName = teamName
-        self.appventureFKID = appventureFKID
-        self.date = date
+        self.appventureId = appventureId
         self.time = time
     }
     
-    init(object: AnyObject) {
-//        self.pfObjectID = object.objectId!
-//        self.userFKID = object.objectForKey(parseCol.userFKID) as! String
-//        self.appventureFKID = object.objectForKey(parseCol.appventureFKID) as! String
-//        self.teamName = object.objectForKey(parseCol.teamName) as! String
-//        self.date = object.objectForKey(parseCol.date) as! NSDate
-//        self.time = object.objectForKey(parseCol.time) as! Double
+    init(backendlessDictionary: Dictionary<String,  Any>) {
+        teamName = backendlessDictionary["teamName"] as? String
+        appventureId = backendlessDictionary["appventureId"] as? String
+        time = backendlessDictionary["time"] as? Double ?? 0.0
     }
     
-    func save(){
-//        if self.pfObjectID == "" {
-//            let saveObj = PFObject(className: parseCol.pfClass)
-//            saveObject(saveObj)
-//        } else {
-//            ParseFunc.getParseObject(self.pfObjectID, pfClass:  parseCol.pfClass, objFunc: saveObject)
-//        }
+    func save(completion: @escaping () -> ()){
+        BackendlessAppventure.dataStore?.save(self, response: { (returnObject) in
+            guard let dict = returnObject as? Dictionary<String, Any> else { return }
+            completion()
+            print(dict)
+        }) { (error) in
+            print(error ?? "no error?")
+        }
     }
     
-    fileprivate func saveObject(_ save: AnyObject) {
-//        save[parseCol.userFKID] = self.userFKID
-//        save[parseCol.appventureFKID] = self.appventureFKID
-//        save[parseCol.teamName] = self.teamName
-//        save[parseCol.date] = self.date
-//        save[parseCol.time] = self.time
-//        save.saveInBackgroundWithBlock { (success: Bool, error: NSError?) -> Void in
-//            if let error = error {
-//                let errorString = error.userInfo["error"] as? NSString
-//                print(errorString)
-//            } else {
-//                self.pfObjectID = save.objectId!
-//                print("savedCompleted")
-//            }
-//        }
+    class func loadLeaderboardFor(appventureId: String, completion: @escaping ([CompletedAppventure]?) -> ()) {
+        let dataQuery = BackendlessDataQuery()
+        dataQuery.whereClause = "appventureId = '\(appventureId)'"
+        
+        let queryOptions = QueryOptions()
+        queryOptions.sort(by: ["time"])
+        dataQuery.queryOptions = queryOptions
+        
+        let dataStore = Backendless.sharedInstance().data.of(self.ofClass())
+        dataStore?.find(dataQuery, response: { (collection) in
+            guard let page1 = collection!.getCurrentPage() else { return completion(nil) }
+            let completedAppventures = page1.map(convertToCompletedAppventure).flatMap({$0})
+            completion(completedAppventures)
+        }, error: { (fault) in
+            print("Server reported an error: \(fault)")
+            completion(nil)
+        })
+        
     }
     
-    class func loadAppventuresCompleted(_ appventureID: String, handler: ParseQueryHandler) {
-//        ParseFunc.parseQuery(parseCol.pfClass, location2D: nil, whereClause: appventureID, WhereKey: parseCol.appventureFKID, vcHandler: handler, handlerCase: allCompletedHC)
+    private class func convertToCompletedAppventure(obj: Any) -> CompletedAppventure? {
+        guard let dict = obj as? Dictionary<String, Any> else { return nil }
+        return CompletedAppventure(backendlessDictionary: dict)
     }
     
-    class func loadUserCompleted(_ userID: String, handler: ParseQueryHandler) {
-//        ParseFunc.parseQuery(parseCol.pfClass, location2D: nil, whereClause: userID, WhereKey: parseCol.userFKID, vcHandler: handler)
-    }
-    
-    class func countCompleted(_ handler: AppventureCompletedDelegate) {
-//        let query = PFQuery(className:parseCol.pfClass)
-//        query.whereKey(parseCol.userFKID, equalTo: User.user!.pfObject)
-//        query.limit = 100
-//        query.findObjectsInBackgroundWithBlock {
-//            (objects: [PFObject]?, error: NSError?) -> Void in
-//            if error == nil {
-//                if let counted = objects?.count {
-//                    User.user?.completedAdventures = counted
-//                    handler.countCompleted()
-//                }
-//            } else {
-//                // Log details of the failure
-//                print("Error: \(error!) \(error!.userInfo)")
-//            }
-//        }
+    class func countCompleted(completion: @escaping ([CompletedAppventure]?) -> ()) {
+        let dataQuery = BackendlessDataQuery()
+
+        guard let userId = Backendless.sharedInstance().userService.currentUser.objectId else { return }
+        dataQuery.whereClause = "ownerId = \(userId)"
+        
+        let dataStore = Backendless.sharedInstance().data.of(self.ofClass())
+        dataStore?.find(dataQuery, response: { (collection) in
+            guard let page1 = collection!.getCurrentPage() else { return }
+            let completedAppventures = page1.map(convertToCompletedAppventure).flatMap({$0})
+            completion(completedAppventures)
+        }, error: { (fault) in
+            print("Server reported an error: \(fault)")
+            completion(nil)
+        })
     }
 
 
-}
-
-protocol AppventureCompletedDelegate {
-    func countCompleted()
 }

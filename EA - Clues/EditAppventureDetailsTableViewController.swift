@@ -31,11 +31,12 @@ class EditAppventureDetailsTableViewController: UITableViewController {
     @IBOutlet weak var endTimeLabel: UILabel!
     @IBOutlet weak var restrictionsPicker: UIDatePicker!
     
+    @IBOutlet weak var tags: UILabel!
     
     let imageViewIndex = IndexPath(row: 0, section: 1)
-    let descriptionTextIndex = IndexPath(row:0, section: 2)
-    let duationLabelIndex = IndexPath(row: 0, section: 4)
-    let durationPickerIndex = IndexPath(row: 1, section: 4)
+    let descriptionTextIndex = IndexPath(row:0, section: 3)
+    let duationLabelIndex = IndexPath(row: 0, section: 5)
+    let durationPickerIndex = IndexPath(row: 1, section: 5)
     let startTimeIndex = IndexPath(row:0, section: 6)
     let endTimeIndex = IndexPath(row: 1, section: 6)
     let restrictionTimePickerIndex = IndexPath(row: 2, section: 6)
@@ -83,13 +84,11 @@ class EditAppventureDetailsTableViewController: UITableViewController {
         startingLocation.text = appventure!.startingLocationName
         startTimeLabel.text = appventure?.startTime
         endTimeLabel.text = appventure?.endTime
-//        keyFeatures.text = appventure!.keyFeatures?.joined(separator: ",")
+        tags.text = appventure!.tags?.joined(separator: ",")
     }
     
     func checkSave() {
-        
         self.saveBtt.isEnabled = true
-
     }
 
     
@@ -111,7 +110,6 @@ class EditAppventureDetailsTableViewController: UITableViewController {
         appventure!.startingLocationName = startingLocation.text
         appventure?.startTime = startTimeLabel.text
         appventure?.endTime = endTimeLabel.text
-//        appventure!.keyFeatures = keyFeatures.text!.splitStringToArray()
         appventure!.image = imageView.image
         AppDelegate.coreDataStack.saveContext(completion: nil)
     }
@@ -129,6 +127,18 @@ class EditAppventureDetailsTableViewController: UITableViewController {
         if edittingEndTime { endTimeLabel.text = dateFormatter.string(from: sender.date)}
     }
     
+}
+
+//MARK: - Navigation 
+
+extension EditAppventureDetailsTableViewController  {
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        self.appventure?.tags.insert("easy")
+        if let atvc = segue.destination as? AddTagsViewController {
+            atvc.appventure = self.appventure
+        }
+    }
 }
 
 //MARK: UIImagePickerControllerDelegate
@@ -274,6 +284,8 @@ extension EditAppventureDetailsTableViewController {
     
     
 }
+
+
 
 
 

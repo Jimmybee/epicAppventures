@@ -18,7 +18,7 @@ class BackendlessAppventure: NSObject {
     public var objectId: String?
     
     public var duration: String?
-    public var keyFeatures: String?
+    public var tags: String?
     public var liveStatusNum: Int16 = 0
     public var startingLocationName: String?
     public var subtitle: String?
@@ -34,7 +34,7 @@ class BackendlessAppventure: NSObject {
         self.startTime = appventure.startTime
         self.endTime = appventure.endTime
         self.startingLocationName  = appventure.startingLocationName
-        self.keyFeatures = appventure.keyFeatures?.joined(separator: ",")
+        self.tags = appventure.tags?.joined(separator: ",")
         self.liveStatusNum = appventure.liveStatusNum
         self.objectId = appventure.backendlessId
         self.title = appventure.title!
@@ -55,7 +55,7 @@ class BackendlessAppventure: NSObject {
         self.objectId = dict["objectId"] as? String
         self.duration = dict["duration"] as? String
         self.startingLocationName  = dict["startingLocationName"] as? String
-        self.keyFeatures = dict["keyFeatures"] as? String
+        self.tags = dict["tags"] as? String
         self.startTime = dict["startTime"] as? String
         self.endTime = dict["endTime"] as? String
         self.liveStatusNum = dict["liveStatusNum"] as! Int16

@@ -18,9 +18,9 @@ class AppventureCompleteViewController: UIViewController {
         static let segueToRate = ""
     }
     
-    lazy var appventure = Appventure()
-    lazy var completedAppventures = [CompletedAppventure]()
-    lazy var completeTime = 0.0
+    var appventure = Appventure()
+    var completedAppventures = [CompletedAppventure]()
+    var completeTime = 0.0
     
     var userFKID = ""
 
@@ -55,15 +55,15 @@ class AppventureCompleteViewController: UIViewController {
     //MARK: IB actions
     
     @IBAction func appventureDone(_ sender: UIButton) {
-//        saveCompletedAppventure()
+        saveCompletedAppventure()
         self.dismiss(animated: true, completion: nil)
     }
 
     
     func saveCompletedAppventure() {
-        let teamName = teamNameField.text
-        let completedAppventure = CompletedAppventure(userFKID: userFKID, teamName: teamName!, appventureFKID: appventure.backendlessId!, date: Date(), time: completeTime)
-        completedAppventure.save()
+        let teamName: String = teamNameField.text ?? "Batman"
+        let completedAppventure = CompletedAppventure(teamName: teamName, appventureId: appventure.backendlessId, time: completeTime)
+        completedAppventure.save(completion: {})
     }
     
     

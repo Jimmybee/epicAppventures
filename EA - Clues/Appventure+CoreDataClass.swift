@@ -47,6 +47,7 @@ public class Appventure: NSManagedObject {
         let coordinate: CLLocationCoordinate2D = kCLLocationCoordinate2DInvalid
         self.location = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
         self.liveStatus = .inDevelopment
+        self.tags = Set<String>()
         self.owner = CoreUser.user!
     }
     
@@ -57,7 +58,9 @@ public class Appventure: NSManagedObject {
         self.init(entity: entity!, insertInto: context)
         self.startTime = backendlessAppventure.startTime
         self.endTime = backendlessAppventure.endTime
-        self.keyFeatures = backendlessAppventure.keyFeatures?.splitStringToArray()
+        if let tagArray = backendlessAppventure.tags?.splitStringToArray() {
+            self.tags = Set(tagArray)
+        }
         self.backendlessId = backendlessAppventure.objectId
         self.title = backendlessAppventure.title
         self.liveStatusNum = backendlessAppventure.liveStatusNum

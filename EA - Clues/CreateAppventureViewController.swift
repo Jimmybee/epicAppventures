@@ -127,6 +127,7 @@ class CreateAppventureViewController: BaseViewController, UITextFieldDelegate, U
         self.locationManager.delegate = self
         getQuickLocationUpdate()
         
+        updateUI()
         //Set default edit button action
         navigationItem.rightBarButtonItem = editBarButton
     }
@@ -386,7 +387,7 @@ extension CreateAppventureViewController : AppventureDetailsViewDelegate {
         //show map
     }
     
-    func rightBttnPressed() {
+    func rightBttnPressed(sender: UIButton) {
         showProgressView()
         BackendlessAppventure.save(appventure: newAppventure, withImage: true) { 
             self.hideProgressView()

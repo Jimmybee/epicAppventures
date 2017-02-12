@@ -12,7 +12,7 @@ import PureLayout
 protocol AppventureDetailsViewDelegate: class {
     
     func leftBttnPressed()
-    func rightBttnPressed()
+    func rightBttnPressed(sender: UIButton)
 
 }
 
@@ -57,7 +57,7 @@ class AppventureDetailsView: UIView, UIScrollViewDelegate{
     }
     
     @IBAction func rightBttnPressed(_ sender: UIButton) {
-        delegate.rightBttnPressed()
+        delegate.rightBttnPressed(sender: sender)
     }
     
     func setupModel() {

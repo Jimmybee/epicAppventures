@@ -28,7 +28,7 @@ extension Appventure {
         self.startingLocationName = appventure.startingLocationName
         self.duration = appventure.duration
         self.image = appventure.image
-        self.keyFeatures = appventure.keyFeatures
+//        self.keyFeatures = appventure.keyFeatures
         self.liveStatus = appventure.liveStatus
         self.rating = appventure.rating
         

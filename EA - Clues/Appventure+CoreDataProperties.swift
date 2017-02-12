@@ -18,7 +18,7 @@ extension Appventure {
 
     @NSManaged public var duration: String?
     @NSManaged public var image: UIImage?
-    @NSManaged public var keyFeatures: [String]?
+    @NSManaged public var tags: Set<String>!
     @NSManaged public var liveStatusNum: Int16
     @NSManaged public var backendlessId: String?
     @NSManaged public var startingLocationName: String?
