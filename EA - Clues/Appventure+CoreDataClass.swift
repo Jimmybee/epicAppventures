@@ -22,7 +22,7 @@ public class Appventure: NSManagedObject {
             set { self.liveStatusNum = newValue.rawValue }
     }
     var appventureSteps: [AppventureStep] {
-        get { return Array(steps) }
+        get { return Array(steps).sorted(by: { $0.stepNumber < $1.stepNumber }) }
         set { print("*setting steps**")}
     }
     
@@ -47,6 +47,9 @@ public class Appventure: NSManagedObject {
         let coordinate: CLLocationCoordinate2D = kCLLocationCoordinate2DInvalid
         self.location = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
         self.liveStatus = .inDevelopment
+        self.duration = 0
+        self.startTime = "12:00"
+        self.endTime = "12:00"
         self.tags = Set<String>()
         self.owner = CoreUser.user!
     }
@@ -84,7 +87,6 @@ public class Appventure: NSManagedObject {
     }
     
     //Delete from context
-    
     func deleteAppventure() {
 //        self.deleteAppventureFromBackend()
         AppDelegate.coreDataStack.delete(object: self, completion: nil)
@@ -93,6 +95,7 @@ public class Appventure: NSManagedObject {
     
     //MARK: Load Image
     func loadImageFor(cell: AppventureImageCell) {
+        print("loading Image")
         loadImage(completion: {
             cell.appventureImage.image = self.image
             UIView.animate(withDuration: 0.3, animations: {

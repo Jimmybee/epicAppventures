@@ -17,7 +17,7 @@ class BackendlessAppventure: NSObject {
 
     public var objectId: String?
     
-    public var duration: String?
+    public var duration: Int64 = 3600
     public var tags: String?
     public var liveStatusNum: Int16 = 0
     public var startingLocationName: String?
@@ -53,7 +53,9 @@ class BackendlessAppventure: NSObject {
     
     init(dict:  Dictionary<String, Any> ) {
         self.objectId = dict["objectId"] as? String
-        self.duration = dict["duration"] as? String
+        if let duration = dict["duration"] as? Int64 {
+            self.duration = duration
+        }
         self.startingLocationName  = dict["startingLocationName"] as? String
         self.tags = dict["tags"] as? String
         self.startTime = dict["startTime"] as? String

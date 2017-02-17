@@ -16,7 +16,7 @@ extension Appventure {
         return NSFetchRequest<Appventure>(entityName: "Appventure");
     }
 
-    @NSManaged public var duration: String?
+    @NSManaged public var duration: Int64
     @NSManaged public var image: UIImage?
     @NSManaged public var tags: Set<String>!
     @NSManaged public var liveStatusNum: Int16

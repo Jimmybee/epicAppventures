@@ -64,7 +64,7 @@ class AppventureDetailsView: UIView, UIScrollViewDelegate{
         if let image = appventure.image { appventureImage.image = image }
         appventureTitle.text = appventure.title
         descriptionLabel.text = appventure.subtitle
-        durationLabel.text = appventure.duration
+        durationLabel.text = appventure.duration.secondsComponentToLongTimeString()
         startingLocation.text = appventure.startingLocationName
         numberOfStepsLabel.text = "\(appventure.appventureSteps.count) clues"
     }

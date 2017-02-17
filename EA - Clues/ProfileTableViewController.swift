@@ -29,7 +29,7 @@ class ProfileTableViewController: BaseTableViewController {
                 restoreAppventures()
             }
         }
-        
+        tableView.refreshControl?.tintColor = .white
         getSharedAppventures()
     }
     
@@ -63,6 +63,7 @@ class ProfileTableViewController: BaseTableViewController {
                 CoreUser.user?.addToOwnedAppventures(orderedSet)
                 AppDelegate.coreDataStack.saveContext(completion: nil)
                 self.tableView.reloadData()
+                self.tableView.refreshControl?.endRefreshing()
             }
         }
     }
@@ -76,7 +77,6 @@ class ProfileTableViewController: BaseTableViewController {
     
     
     @IBAction func refeshTable(_ sender: UIRefreshControl) {
-        sender.endRefreshing()
         CoreUser.user?.ownedAppventures?.map { AppDelegate.coreDataStack.delete(object: $0, completion: nil) }
         tableView.reloadData()
         restoreAppventures()
@@ -156,9 +156,10 @@ class ProfileTableViewController: BaseTableViewController {
     func deleteAppventureFromDB (_ indexPath: IndexPath) {
         let appventureArray = Array(CoreUser.user!.ownedAppventures!)
         let appventure = appventureArray[indexPath.row]
+        guard  let backendlessId = appventure.backendlessId else { return }
+        BackendlessAppventure.removeBy(id: backendlessId)
         AppDelegate.coreDataStack.delete(object: appventure, completion: nil)
         tableView.reloadData()
-        // TODO: remove from backendless
     }
     
 }

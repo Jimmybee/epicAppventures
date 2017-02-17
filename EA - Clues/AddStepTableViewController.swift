@@ -116,6 +116,25 @@ class AddStepTableViewController: UITableViewController, UITextFieldDelegate, UI
     //section 4 - Completion
     @IBOutlet weak var completionTextView: UITextView!
     
+    //Index Paths
+    let locationButton = IndexPath(row: 0, section: 0)
+    let pickLocationPath = IndexPath(row: 1, section: 0)
+    let locationSettingsPath = IndexPath(row: 2, section: 0)
+    
+    let intitalTextPath = IndexPath(row: 1, section: 1)
+    let imagePath = IndexPath(row: 3, section: 1)
+    let soundPath = IndexPath(row: 5, section: 1)
+    
+    let textAnswerArray = IndexPath(row: 1, section: 2)
+    let checkInLocation = IndexPath(row: 2, section: 2)
+    let checkInDistance = IndexPath(row: 3, section: 2)
+    let proximityPickerIndex = IndexPath(row: 4, section:2)
+    
+    let hintArray = IndexPath(row: 0, section: 3)
+    let freeHints = IndexPath(row: 1, section: 3)
+    
+    let completion = IndexPath(row: 0, section: 4)
+    
     //MARK: View Controller Lifecycle
     override func viewDidLoad() {
         completionTextView.delegate = self
@@ -290,28 +309,17 @@ class AddStepTableViewController: UITableViewController, UITextFieldDelegate, UI
     }
     
     func updateStep() {
-        //add in all step sections here 
-//        if let penalty = Int16(self.hintPenalty.text!) { self.appventureStep.hintPenalty = penalty }
-//        if let freeHints = Int16(self.freeHintsTextField.text!) { self.appventureStep.freeHints = freeHints }
-        if checkInControl.selectedSegmentIndex == 0 {
-            appventureStep.setup.checkIn = true
-        } else {
-            appventureStep.setup.checkIn = false
-        }
+        appventureStep.setup.checkIn = checkInControl.selectedSegmentIndex == 0 ? true : false
+
         appventureStep.setup.soundClue = soundSwitch.isOn
         appventureStep.setup.pictureClue = pictureSwitch.isOn
         appventureStep.setup.textClue = intialTextSwitch.isOn
-        if let distanceText = proximityLabel.text {
-            if let distance = Int16(distanceText) {
-                appventureStep.checkInProximity = distance
-            }
-        }
 
-        self.appventureStep.completionText = self.completionTextView.text
-        self.appventureStep.sound = soundDataCache
-        self.appventureStep.location = placeCache!.coordinate
-        self.appventureStep.nameOrLocation = placeCache!.name
-        self.appventureStep.locationSubtitle = placeCache!.address
+        appventureStep.completionText = completionTextView.text
+        appventureStep.sound = soundDataCache
+        appventureStep.location = placeCache!.coordinate
+        appventureStep.nameOrLocation = placeCache!.name
+        appventureStep.locationSubtitle = placeCache!.address
         
     }
     
@@ -584,31 +592,12 @@ class AddStepTableViewController: UITableViewController, UITextFieldDelegate, UI
   
     }
     
-//    MARK: Table Methods
-    
-    
-    let locationButton = IndexPath(row: 0, section: 0)
-    let pickLocationPath = IndexPath(row: 1, section: 0)
-    let locationSettingsPath = IndexPath(row: 2, section: 0)
-    
-    let intitalTextPath = IndexPath(row: 1, section: 1)
-    let imagePath = IndexPath(row: 3, section: 1)
-    let soundPath = IndexPath(row: 5, section: 1)
-    
-    let textAnswerArray = IndexPath(row: 1, section: 2)
-    let checkInLocation = IndexPath(row: 2, section: 2)
-    let checkInDistance = IndexPath(row: 3, section: 2)
-    let proximityPickerIndex = IndexPath(row: 4, section:2)
-    
-    let hintArray = IndexPath(row: 0, section: 3)
-    let freeHints = IndexPath(row: 1, section: 3)
 
-    
-    let completion = IndexPath(row: 0, section: 4)
 
     
 }
 
+//MARK: - Table Methods
 extension AddStepTableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -624,8 +613,7 @@ extension AddStepTableViewController {
             } else {
                 showDatePickerCell(containingDatePicker: requiredProximityPicker)
             }
-//            let set = NSIndexSet(index: indexPath.section)
-//            tableView.reloadSections(set as IndexSet, with: .automatic)
+
         default:
             break
         }
@@ -679,6 +667,8 @@ extension AddStepTableViewController {
             showPenaltyPicker = true
         }
         
+        let row = proximity.index(of: "\(appventureStep.checkInProximity)") ?? 0
+        picker.selectRow(row, inComponent: 0, animated: false)
         tableView.beginUpdates()
         tableView.endUpdates()
         
@@ -688,6 +678,8 @@ extension AddStepTableViewController {
         UIView.animate(withDuration: 0.25) { () -> Void in
             picker.alpha = 1.0
         }
+        tableView.scrollToRow(at: proximityPickerIndex, at: .bottom, animated: true)
+
     }
     
     func hideDatePickerCell(containingDatePicker picker: UIPickerView)
@@ -738,6 +730,7 @@ extension AddStepTableViewController: UIPickerViewDelegate, UIPickerViewDataSour
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        appventureStep.checkInProximity = Int16(proximity[row]) ?? 0
         proximityLabel.text = proximity[row]
     }
 }

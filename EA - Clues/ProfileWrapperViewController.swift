@@ -56,6 +56,7 @@ class ProfileWrapperViewController: UIViewController {
         }
         if let vc = segue.destination as? UserSignInViewController {
             self.embeddedSignIn = vc
+            vc.parentContainer = self
         }
     }
 

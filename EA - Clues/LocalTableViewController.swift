@@ -30,6 +30,7 @@ class LocalTableViewController: BaseTableViewController{
     let locationManager = CLLocationManager()
     var publicAppventures = [Appventure]()
     var searchController = UISearchController()
+    var mainTabController: MainTabBarController!
     
     @IBOutlet weak var localPublicControl: UISegmentedControl!
     
@@ -47,6 +48,7 @@ class LocalTableViewController: BaseTableViewController{
         setupTableView()
 
         if let mtvc = self.tabBarController as? MainTabBarController {
+            mainTabController = mtvc
             mtvc.stdFrame  = self.tabBarController?.tabBar.frame
         }
         
@@ -69,7 +71,6 @@ class LocalTableViewController: BaseTableViewController{
     //MARK: Actions
     
     @IBAction func refeshTable(_ sender: UIRefreshControl) {
-        sender.endRefreshing()
         publicAppventures.removeAll()
         tableView.reloadData()
         getBackendlessAppventure()
@@ -243,6 +244,7 @@ extension LocalTableViewController {
                 self.publicAppventures = appventures
                 DispatchQueue.main.async {
                     self.tableView.reloadData()
+                    self.tableView.refreshControl?.endRefreshing()
                 }
                 self.setDownloadForAppventures()
             } else {
@@ -271,6 +273,7 @@ extension LocalTableViewController {
 extension LocalTableViewController : LoginViewControllerDelegate {
     func loginSucceed() {
         getBackendlessAppventure()
+        print("login succeed")
     }
     
     func loginFailed() {

@@ -35,10 +35,12 @@ extension BaseTableViewController {
         let appdelegate = UIApplication.shared.delegate as! AppDelegate
         appdelegate.window?.addSubview(progressView)
         activityView.startAnimating()
+        UIApplication.shared.beginIgnoringInteractionEvents()
     }
     
     func hideProgressView() {
         activityView.stopAnimating()
         progressView.removeFromSuperview()
+        UIApplication.shared.endIgnoringInteractionEvents()
     }
 }

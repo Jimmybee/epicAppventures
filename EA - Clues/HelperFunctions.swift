@@ -293,5 +293,30 @@ class clickParentScroll : UIView {
         return self.point(inside: point, with: event) ? myScroll : nil
     }
     
+}
+
+extension Int64 {
+    func secondsComponentToDate() -> Date {
+        let calendar = Calendar.current
+        return calendar.date(from: DateComponents(second: Int(self)))!
+    }
     
+    func secondsComponentToLongTimeString() -> String {
+        let calendar = Calendar.current
+        let date = calendar.date(from: DateComponents(second: Int(self)))!
+        let hours = calendar.component(.hour, from: date)
+        let minutes = calendar.component(.minute, from: date)
+        let plural = hours == 1 ? "" : "s"
+        return ("\(hours) hour\(plural) \(minutes) minutes")
+    }
+}
+
+extension Date {
+    func asTimeSecondsComponent() -> Int64 {
+        let calendar = Calendar.current
+        let hours = calendar.component(.hour, from: self)
+        let minutes = calendar.component(.minute, from: self)
+        let seconds = hours * 60 * 60 + minutes * 60
+        return Int64(seconds)
+    }
 }

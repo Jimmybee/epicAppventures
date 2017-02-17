@@ -40,7 +40,7 @@ class LocalAppventureTableViewCell: UITableViewCell, AppventureImageCell {
     
     func updateUI() {
         startingLocation.text = appventure?.startingLocationName
-        duration.text = appventure?.duration
+        duration.text = appventure?.duration.secondsComponentToLongTimeString()
         appventureTitle.text = appventure?.title
         ratingDisplay.rating = (appventure?.rating)!
         if let image = appventure?.image {

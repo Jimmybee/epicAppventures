@@ -88,6 +88,7 @@ class UserManager {
         CoreUser.user?.name = user?.getProperty(backendlessFields.name) as? String
         CoreUser.user?.facebookId = user?.getProperty(backendlessFields.facebookId) as? String
         CoreUser.user?.pictureUrl = "https://graph.facebook.com/\(CoreUser.user!.facebookId!)/picture?type=large"
+        CoreUser.user?.userType = .facebook
         DispatchQueue.main.async {
             AppDelegate.coreDataStack.saveContext(completion: nil)
         }

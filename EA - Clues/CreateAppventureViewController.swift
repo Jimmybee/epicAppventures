@@ -112,8 +112,6 @@ class CreateAppventureViewController: BaseViewController, UITextFieldDelegate, U
         HelperFunctions.hideTabBar(self)
         
         if newAppventure == nil {
-            newAppventure = Appventure()
-            User.user?.ownedAppventures.append(newAppventure)
             performSegue(withIdentifier: Constants.editAppventureDetailsSegue, sender: nil)
         }
         
@@ -265,7 +263,12 @@ class CreateAppventureViewController: BaseViewController, UITextFieldDelegate, U
         if segue.identifier == Constants.editAppventureDetailsSegue {
             if let nvc = segue.destination as? UINavigationController {
                 if let eadvc = nvc.childViewControllers[0] as? EditAppventureDetailsTableViewController {
-                    eadvc.appventure = self.newAppventure
+                    if newAppventure == nil {
+                        newAppventure = Appventure()
+                        User.user?.ownedAppventures.append(newAppventure)
+                    }
+                    eadvc.appventure = newAppventure
+                    eadvc.delegate = self
                 }
             }
         }
@@ -484,6 +487,16 @@ extension CreateAppventureViewController: CLLocationManagerDelegate {
         
     }
 
+}
+
+//MARK: = EditAppventureDetailsTableViewControllerDelegate
+
+extension CreateAppventureViewController: EditAppventureDetailsTableViewControllerDelegate{
+    func appventureRolledBack() {
+        if self.newAppventure.title == "" {
+            _ = navigationController?.popViewController(animated: false)
+        }
+    }
 }
 
 

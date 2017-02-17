@@ -9,9 +9,14 @@
 import UIKit
 import PureLayout
 
+protocol EditAppventureDetailsTableViewControllerDelegate: class {
+    func appventureRolledBack()
+}
+
 class EditAppventureDetailsTableViewController: UITableViewController {
     
     var appventure: Appventure?
+    weak var delegate: EditAppventureDetailsTableViewControllerDelegate!
     
     //MARK: Outlets
     //TextView
@@ -80,7 +85,7 @@ class EditAppventureDetailsTableViewController: UITableViewController {
         }
         appventureNameField.text =  appventure!.title
         appventureDescription.text = appventure!.subtitle
-        durationLabel.text = appventure!.duration
+        durationLabel.text = appventure!.duration.secondsComponentToLongTimeString()
         startingLocation.text = appventure!.startingLocationName
         startTimeLabel.text = appventure?.startTime
         endTimeLabel.text = appventure?.endTime
@@ -96,6 +101,7 @@ class EditAppventureDetailsTableViewController: UITableViewController {
     @IBAction func cancel(_ sender: UIBarButtonItem) {
         AppDelegate.coreDataStack.rollbackContext()
         self.dismiss(animated: true, completion: nil)
+        delegate.appventureRolledBack()
     }
     
     @IBAction func save(_ sender: AnyObject) {
@@ -106,25 +112,24 @@ class EditAppventureDetailsTableViewController: UITableViewController {
     func updateAppventure() {
         appventure!.title = appventureNameField.text
         appventure!.subtitle = appventureDescription.text
-        appventure!.duration = durationLabel.text
         appventure!.startingLocationName = startingLocation.text
-        appventure?.startTime = startTimeLabel.text
-        appventure?.endTime = endTimeLabel.text
         appventure!.image = imageView.image
         AppDelegate.coreDataStack.saveContext(completion: nil)
     }
     
     @IBAction func durationPickerChanged(_ sender: UIDatePicker) {
-        let calendar = Calendar.current
-        let components = calendar.dateComponents([.hour, .minute], from: sender.date)
-        durationLabel.text = ("\(components.hour!) hours \(components.minute!) minutes")
+        appventure?.duration = sender.date.asTimeSecondsComponent()
+        durationLabel.text = appventure!.duration.secondsComponentToLongTimeString()
     }
     
     @IBAction func restrictionsPickerChanged(_ sender: UIDatePicker) {
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "HH : mm"
-        if edittingStartTime { startTimeLabel.text = dateFormatter.string(from: sender.date)}
-        if edittingEndTime { endTimeLabel.text = dateFormatter.string(from: sender.date)}
+        dateFormatter.dateFormat = "HH:mm"
+        if edittingStartTime { appventure?.startTime =  dateFormatter.string(from: sender.date)}
+        if edittingEndTime { appventure?.endTime = dateFormatter.string(from: sender.date)}
+        startTimeLabel.text = appventure?.startTime
+        endTimeLabel.text = appventure?.endTime
+        
     }
     
 }
@@ -207,12 +212,16 @@ extension EditAppventureDetailsTableViewController {
         switch indexPath {
         case duationLabelIndex:
             edittingDuration = !edittingDuration
+            edittingEndTime = false
+            edittingStartTime = false
         case startTimeIndex:
             edittingStartTime = !edittingStartTime
             edittingEndTime = false
+            edittingDuration = false
         case endTimeIndex:
             edittingEndTime = !edittingEndTime
             edittingStartTime = false
+            edittingDuration = false
         default:
             break
         }
@@ -224,6 +233,10 @@ extension EditAppventureDetailsTableViewController {
         
         if self.edittingStartTime || self.edittingEndTime {
             self.tableView.scrollToRow(at: self.restrictionTimePickerIndex, at: .bottom, animated: true)
+        }
+        
+        if edittingDuration {
+            tableView.scrollToRow(at: durationPickerIndex, at: .bottom, animated: true)
         }
         
         if indexPath.section == 1 {
@@ -276,6 +289,13 @@ extension EditAppventureDetailsTableViewController {
         
         }
         
+        durationPicker.date = appventure!.duration.secondsComponentToDate()
+       
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "HH:mm"
+        if edittingStartTime { restrictionsPicker.date = dateFormatter.date(from: appventure!.startTime!)! }
+        if edittingEndTime { restrictionsPicker.date = dateFormatter.date(from: appventure!.endTime!)! }
+
         durationLabel.textColor = edittingDuration ? UIColor.blue : UIColor.black
         startTimeLabel.textColor = edittingStartTime ? UIColor.blue : UIColor.black
         endTimeLabel.textColor = edittingEndTime ? UIColor.blue : UIColor.black

@@ -36,6 +36,18 @@ class MainTabBarController: UITabBarController {
         super.viewDidAppear(animated)
 
     }
+    
+    func showUserSettings() {
+        for (index, controller) in self.viewControllers!.enumerated() {
+            if let nvc = controller as? UINavigationController  {
+                print("\(index) for \(nvc.viewControllers.first)")
+            }
+        }
+        if let nvc = self.viewControllers?[1] as? UINavigationController,
+            let pwvc = nvc.viewControllers.first as? ProfileWrapperViewController {
+//            pwvc.showForUser()
+        }
+    }
 
     
 }
