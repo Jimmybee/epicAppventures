@@ -254,13 +254,17 @@ extension LocalTableViewController {
     }
     
     private func setDownloadForAppventures() {
+        var removedAppventures = 0
         for (index, appventure) in publicAppventures.enumerated() {
             let appventureId = appventure.backendlessId
             if CoreUser.user!.downloadedArray.contains(where: { (appventure) -> Bool in
                 appventure.backendlessId == appventureId
             }) {
+                print(appventure.title)
+                print(index)
                 appventure.downloaded = true
-                publicAppventures.remove(at: index)
+                publicAppventures.remove(at: index - removedAppventures)
+                removedAppventures += 1
             } else {
                 appventure.downloaded = false
             }
