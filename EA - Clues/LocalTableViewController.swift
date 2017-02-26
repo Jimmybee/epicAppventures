@@ -260,8 +260,6 @@ extension LocalTableViewController {
             if CoreUser.user!.downloadedArray.contains(where: { (appventure) -> Bool in
                 appventure.backendlessId == appventureId
             }) {
-                print(appventure.title)
-                print(index)
                 appventure.downloaded = true
                 publicAppventures.remove(at: index - removedAppventures)
                 removedAppventures += 1

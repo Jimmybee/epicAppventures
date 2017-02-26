@@ -45,7 +45,7 @@ class AppventureStepTableCell: UITableViewCell {
 
         if step.setup.textClue == true {clueTypes.append(UIImageView(image: file))}
         if step.setup.pictureClue == true {clueTypes.append(UIImageView(image: camera))}
-        if step.setup.textClue == true {clueTypes.append(UIImageView(image: sound))}
+        if step.setup.soundClue == true {clueTypes.append(UIImageView(image: sound))}
         
         locationImage1.image = step.setup.locationShown ? ImageNames.VcCreate.locationOnMap : ImageNames.VcCreate.locationOnMapStrike
         locationImage2.image = step.setup.compassShown ? ImageNames.VcCreate.compass : ImageNames.VcCreate.compassStrike
