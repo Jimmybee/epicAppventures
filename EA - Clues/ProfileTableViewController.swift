@@ -83,8 +83,6 @@ class ProfileTableViewController: BaseTableViewController {
     }
 
     //MARK: Navigation
-
-    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let cavc = segue.destination as? CreateAppventureViewController {
             if segue.identifier == Constants.segueEditAppventure {

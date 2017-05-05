@@ -183,6 +183,7 @@ extension StepViewController {
         
         for view in clueTypeStackView.arrangedSubviews {
             clueTypeStackView.removeArrangedSubview(view)
+            view.removeFromSuperview()
         }
         
         //Text
@@ -239,7 +240,8 @@ extension StepViewController {
     func setupBttnConstraints() {
         purpleLineVertical?.autoRemove()
         purpleLineWidth?.autoRemove()
-
+        
+        
         for (index ,bttn) in activeBttns.enumerated() {
             clueTypeStackView.addArrangedSubview(bttn)
             bttn.tag = index

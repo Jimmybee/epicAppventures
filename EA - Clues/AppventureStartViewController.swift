@@ -142,12 +142,14 @@ extension AppventureStartViewController {
         self.showProgressView()
         BackendlessAppventure.loadBackendlessAppventures(persistent: true, dataQuery: dataQuery) { (response, fault) in
             DispatchQueue.main.async {
-                self.hideProgressView()
                 guard let appventures = response as? [Appventure] else { return }
                 let appventure = appventures.first
                 appventure?.downloaded = true
+                self.appventure.downloaded = true
+                
                 CoreUser.user?.insertIntoDownloaded(appventure!, at: 0)
-               
+                self.appventure = appventure!
+
                 for step in (appventure?.steps)! {
                     self.apiDownloadGroup.enter()
                     step.loadImage(completion: {

@@ -391,10 +391,11 @@ extension CreateAppventureViewController : AppventureDetailsViewDelegate {
     }
     
     func rightBttnPressed(sender: UIButton) {
-        showProgressView()
+        self.showProgressView()
         BackendlessAppventure.save(appventure: newAppventure, withImage: true) { 
             self.hideProgressView()
             self.saveComplete()
+            UIAlertController.showAlertToast("Saved")
         }
     }
     
