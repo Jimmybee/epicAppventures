@@ -178,21 +178,21 @@ extension SettingsTableViewController {
 
 extension SettingsTableViewController : UserDataHandler {
     func userFuncComplete(_ funcKey: String) {
-        switch funcKey{
-        case User.funcKeys.fbGraphLoaded:
-            print("fbGraphloaded")
-//            profileHeaderView.nameLabel.text = "\(User.user!.firstName) \(User.user!.lastName)"
-        case User.funcKeys.fbImageLoaded:
-            print("fbGraphloaded")
-
-//            self.setupHeaderView()
-//            self.saveLocalData()
-        case User.funcKeys.localDataLoaded:
-            print("fbGraphloaded")
-
-//            self.setupHeaderView()
-        default: break
-        }
+//        switch funcKey{
+//        case User.funcKeys.fbGraphLoaded:
+//            print("fbGraphloaded")
+////            profileHeaderView.nameLabel.text = "\(User.user!.firstName) \(User.user!.lastName)"
+//        case User.funcKeys.fbImageLoaded:
+//            print("fbGraphloaded")
+//
+////            self.setupHeaderView()
+////            self.saveLocalData()
+//        case User.funcKeys.localDataLoaded:
+//            print("fbGraphloaded")
+//
+////            self.setupHeaderView()
+//        default: break
+//        }
     }
 }
 

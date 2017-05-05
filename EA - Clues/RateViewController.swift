@@ -37,12 +37,13 @@ class RateViewController: UIViewController {
 
     @IBAction func submitRating(_ sender: AnyObject) {
         
-        if let currentUser = User.user {
-            if  let appventureID = Appventure.currentAppventureID() {
-                let newRating = AppventureRating(userFKID: currentUser.pfObject, appventureFKID: appventureID, rating: ratingControl.rating)
-                newRating.save()
-            }
+        guard let currentUser = CoreUser.user else {
+            self.dismiss(animated: true, completion: nil)
+            return
         }
+        
+//        let newRating = AppventureRating(userFKID: currentUser, appventureFKID: appventureID, rating: ratingControl.rating)
+//        newRating.save()
         self.dismiss(animated: true, completion: nil)
     }
     

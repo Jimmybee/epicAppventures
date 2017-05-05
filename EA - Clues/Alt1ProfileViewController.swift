@@ -17,7 +17,6 @@ class Alt1ProfileViewController: UserSummaryViewController {
     @IBOutlet weak var blueImage: UIImageView!
     @IBOutlet weak var circleImage: UIImageView!
 
-    let user = User()
     override func viewDidLoad() {
         super.viewDidLoad()
         

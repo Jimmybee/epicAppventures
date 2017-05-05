@@ -18,6 +18,7 @@ extension Appventure {
 
     @NSManaged public var duration: Int64
     @NSManaged public var image: UIImage?
+    @NSManaged public var imageUrl: String?
     @NSManaged public var tags: Set<String>!
     @NSManaged public var liveStatusNum: Int16
     @NSManaged public var backendlessId: String?
@@ -28,6 +29,7 @@ extension Appventure {
     @NSManaged public var userID: String?
     @NSManaged public var steps: Set<AppventureStep>
     @NSManaged public var owner: CoreUser
+    @NSManaged public var contributer: CoreUser
     @NSManaged public var buyer: CoreUser
     @NSManaged public var location: CLLocation
     @NSManaged public var startTime: String?

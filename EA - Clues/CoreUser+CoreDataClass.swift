@@ -11,6 +11,7 @@ import Foundation
 import CoreData
 import FBSDKCoreKit
 
+
 //@objc(CoreUser)
 public class CoreUser: NSManagedObject {
     

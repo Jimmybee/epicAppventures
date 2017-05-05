@@ -45,7 +45,7 @@ class UserSummaryViewController: UIViewController, UITableViewDelegate, UITableV
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        if User.checkLogin(true, vc: self) {
+        if CoreUser.checkLogin(true, vc: self) {
 //            loadUserData()
         }
     }

@@ -147,14 +147,14 @@ class CreateAppventureViewController: BaseViewController, UITextFieldDelegate, U
     }
 
     @IBAction func shareWithFriends(_ sender: AnyObject) {
-        if User.user?.facebookConnected == true {
-            performSegue(withIdentifier: Constants.shareWithFriend, sender: nil)
-        } else {
-            let alert = UIAlertController(title: "Share", message: "Log in with facebook to share.", preferredStyle: UIAlertControllerStyle.alert)
-        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: nil))
-        
-        self.present(alert, animated: true, completion: nil)
-        }
+//        if CoreUser.user?.facebookConnected == true {
+//            performSegue(withIdentifier: Constants.shareWithFriend, sender: nil)
+//        } else {
+//            let alert = UIAlertController(title: "Share", message: "Log in with facebook to share.", preferredStyle: UIAlertControllerStyle.alert)
+//        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: nil))
+//        
+//        self.present(alert, animated: true, completion: nil)
+//        }
     }
     
     
@@ -265,7 +265,7 @@ class CreateAppventureViewController: BaseViewController, UITextFieldDelegate, U
                 if let eadvc = nvc.childViewControllers[0] as? EditAppventureDetailsTableViewController {
                     if newAppventure == nil {
                         newAppventure = Appventure()
-                        User.user?.ownedAppventures.append(newAppventure)
+//                        CoreUser.user?.ownedAppventures.append(newAppventure)
                     }
                     eadvc.appventure = newAppventure
                     eadvc.delegate = self

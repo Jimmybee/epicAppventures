@@ -30,11 +30,8 @@ public class Appventure: NSManagedObject {
         static let entityName = "Appventure"
     }
     
-    var appventureRating = AppventureRating()
     var saveImage = false
     
-//    var distanceToSearch = 0.0
-//    var tags: [String]?
     var rating = 5
     
     
@@ -64,6 +61,7 @@ public class Appventure: NSManagedObject {
         if let tagArray = backendlessAppventure.tags?.splitStringToArray() {
             self.tags = Set(tagArray)
         }
+        self.imageUrl = backendlessAppventure.imageUrl
         self.backendlessId = backendlessAppventure.objectId
         self.title = backendlessAppventure.title
         self.liveStatusNum = backendlessAppventure.liveStatusNum
@@ -107,11 +105,10 @@ public class Appventure: NSManagedObject {
     }
     
     func loadImage(completion: ((Void) -> (Void))?) {
-        guard let objectId = self.backendlessId else { return }
-        let url = "https://api.backendless.com/\(AppDelegate.APP_ID)/\(AppDelegate.VERSION_NUM)/files/myfiles/\(objectId)/image.jpg"
-        Alamofire.request(url).response { response in
-            guard let data = response.data else {return}
-            guard let image = UIImage(data: data) else { return }
+        guard let imageUrl = self.imageUrl else { return }
+        Alamofire.request(imageUrl).response { response in
+            guard let data = response.data,
+             let image = UIImage(data: data) else { return }
             self.image = image
             guard let function = completion else { return }
             function()
@@ -119,29 +116,3 @@ public class Appventure: NSManagedObject {
     }
     
 }
-
-enum LiveStatus: Int16 {
-    case live = 0
-    case waitingForApproval = 1
-    case inDevelopment = 2
-    case local = 3
-    
-    var label: String {
-        switch self {
-        case .live: return "Live"
-        case .waitingForApproval: return "Awaiting Approval"
-        case .inDevelopment: return "In Develoopment"
-        case .local: return "Local"
-        }
-    }
-    
-    func segmentValue() -> Int {
-        switch self {
-        case .inDevelopment: return 0
-        case .local: return 1
-        case .waitingForApproval: return 2
-        case .live: return 3
-        }
-    }
-}
-

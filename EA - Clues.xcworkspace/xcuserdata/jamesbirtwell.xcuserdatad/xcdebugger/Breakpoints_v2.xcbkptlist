@@ -64,7 +64,7 @@
             startingLineNumber = "235"
             endingLineNumber = "235"
             landmarkName = "userFuncComplete(_:)"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -138,29 +138,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "EA - Clues/AppventureStartViewController.swift"
-            timestampString = "507310917.11337"
+            timestampString = "515591964.625008"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "193"
-            endingLineNumber = "193"
-            landmarkName = "AppventureStartViewController"
-            landmarkType = "4">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "EA - Clues/User.swift"
-            timestampString = "506032166.630893"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "21"
-            endingLineNumber = "21"
-            landmarkName = "UserDataHandler"
-            landmarkType = "5">
+            startingLineNumber = "192"
+            endingLineNumber = "192"
+            landmarkName = "handleQueryResults(_:handlerCase:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -207,22 +191,6 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "43"
             endingLineNumber = "43"
-            landmarkName = "submitRating(_:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "EA - Clues/RateViewController.swift"
-            timestampString = "492378633.788068"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "41"
-            endingLineNumber = "41"
             landmarkName = "submitRating(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -319,54 +287,6 @@
             endingLineNumber = "193"
             landmarkName = "goodForLive()"
             landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "EA - Clues/User.swift"
-            timestampString = "506032166.630893"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "21"
-            endingLineNumber = "21"
-            landmarkName = "UserDataHandler"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "EA - Clues/User.swift"
-            timestampString = "506032166.630893"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "21"
-            endingLineNumber = "21"
-            landmarkName = "UserDataHandler"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "EA - Clues/User.swift"
-            timestampString = "506032166.630893"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "21"
-            endingLineNumber = "21"
-            landmarkName = "UserDataHandler"
-            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -479,118 +399,6 @@
             endingLineNumber = "477"
             landmarkName = "record(_:)"
             landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "EA - Clues/User.swift"
-            timestampString = "506032166.630893"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "21"
-            endingLineNumber = "21"
-            landmarkName = "UserDataHandler"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "EA - Clues/User.swift"
-            timestampString = "506032166.630893"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "21"
-            endingLineNumber = "21"
-            landmarkName = "UserDataHandler"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "EA - Clues/User.swift"
-            timestampString = "506032166.630893"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "21"
-            endingLineNumber = "21"
-            landmarkName = "UserDataHandler"
-            landmarkType = "5">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "EA___Clues.User.(getFriends () -&gt; ()).(closure #1)"
-                  moduleName = "EA - Clues"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/jamesbirtwell/Documents/Xcode%20Project/EA%20-%20Clues/EA%20-%20Clues/User.swift"
-                  timestampString = "493758308.46666"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "178"
-                  endingLineNumber = "178"
-                  offsetFromSymbolStart = "534">
-               </Location>
-               <Location
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "EA___Clues.User.(getFriends () -&gt; ()).(closure #1)"
-                  moduleName = "EA - Clues"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/jamesbirtwell/Documents/Xcode%20Project/EA%20-%20Clues/EA%20-%20Clues/User.swift"
-                  timestampString = "493758308.466828"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "178"
-                  endingLineNumber = "178"
-                  offsetFromSymbolStart = "965">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "EA - Clues/User.swift"
-            timestampString = "506032166.630893"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "21"
-            endingLineNumber = "21"
-            landmarkName = "UserDataHandler"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "EA - Clues/User.swift"
-            timestampString = "506032166.630893"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "21"
-            endingLineNumber = "21"
-            landmarkName = "UserDataHandler"
-            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -804,7 +612,7 @@
                   moduleName = "FBSDKShareKit"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/jamesbirtwell/epicAppventures/Pods/FBSDKShareKit/FBSDKShareKit/FBSDKShareKit/FBSDKAppGroupAddDialog.h"
-                  timestampString = "509047322.056474"
+                  timestampString = "515594799.168191"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "43"
@@ -819,7 +627,7 @@
                   moduleName = "FBSDKShareKit"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/jamesbirtwell/epicAppventures/Pods/FBSDKShareKit/FBSDKShareKit/FBSDKShareKit/FBSDKAppGroupAddDialog.h"
-                  timestampString = "509047322.058227"
+                  timestampString = "515594799.170178"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "43"
@@ -841,7 +649,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "173"
             endingLineNumber = "173"
-            landmarkName = "loadFBData()"
+            landmarkName = "singUpLogIn(_:password:restore:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -931,13 +739,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "EA - Clues/Appventure+CoreDataClass.swift"
-            timestampString = "509043656.824679"
+            timestampString = "515594795.861013"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "83"
             endingLineNumber = "83"
-            landmarkName = "Appventure"
-            landmarkType = "3">
+            landmarkName = "downloadAndSaveToCoreData(_:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -968,8 +776,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "89"
             endingLineNumber = "89"
-            landmarkName = "mapBackendlessToCoreUser()"
-            landmarkType = "7">
+            landmarkName = "UserManager"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1016,8 +824,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "43"
             endingLineNumber = "43"
-            landmarkName = "setupUser(completion:)"
-            landmarkType = "7">
+            landmarkName = "UserManager"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1283,11 +1091,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "EA - Clues/BackendlessAppventure.swift"
-            timestampString = "508946900.854538"
+            timestampString = "515592948.273588"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "91"
-            endingLineNumber = "91"
+            startingLineNumber = "93"
+            endingLineNumber = "93"
             landmarkName = "save(appventure:withImage:completion:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1299,11 +1107,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "EA - Clues/BackendlessAppventure.swift"
-            timestampString = "508946900.854538"
+            timestampString = "515592948.273588"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "79"
-            endingLineNumber = "79"
+            startingLineNumber = "81"
+            endingLineNumber = "81"
             landmarkName = "save(completion:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1315,11 +1123,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "EA - Clues/BackendlessAppventure.swift"
-            timestampString = "508946900.854538"
+            timestampString = "515592948.273588"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "92"
-            endingLineNumber = "92"
+            startingLineNumber = "94"
+            endingLineNumber = "94"
             landmarkName = "save(appventure:withImage:completion:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1347,7 +1155,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "EA - Clues/Appventure+CoreDataClass.swift"
-            timestampString = "509043656.824679"
+            timestampString = "515594795.861013"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "70"
@@ -1555,11 +1363,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "EA - Clues/BackendlessAppventure.swift"
-            timestampString = "507920488.088418"
+            timestampString = "515592948.273588"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "37"
-            endingLineNumber = "37"
+            startingLineNumber = "38"
+            endingLineNumber = "38"
             landmarkName = "init(appventure:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1619,11 +1427,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "EA - Clues/AppventureStartViewController.swift"
-            timestampString = "507310917.11337"
+            timestampString = "515591964.625008"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "159"
-            endingLineNumber = "159"
+            startingLineNumber = "158"
+            endingLineNumber = "158"
             landmarkName = "downloadAppventure()"
             landmarkType = "7">
          </BreakpointContent>
@@ -2065,11 +1873,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "EA - Clues/LocalTableViewController.swift"
-            timestampString = "508855412.277803"
+            timestampString = "515592483.548217"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "274"
-            endingLineNumber = "274"
+            startingLineNumber = "271"
+            endingLineNumber = "271"
             landmarkName = "loginSucceed()"
             landmarkType = "7">
          </BreakpointContent>

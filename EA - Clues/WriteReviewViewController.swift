@@ -10,6 +10,8 @@ import UIKit
 
 class WriteReviewViewController: UIViewController {
     
+    var appventure: Appventure!
+    
     struct Constants {
         static let reviewTextViewDefaults = "write a review..."
     }
@@ -38,11 +40,11 @@ class WriteReviewViewController: UIViewController {
     
     
     @IBAction func submit(_ sender: UIBarButtonItem) {
-        if let currentUser = User.user {
-            let reviewObject = AppventureReviews(userFKID: currentUser.pfObject, review: reviewTextView.text, appventureFKID: Appventure.currentAppventureID()!, date: Date())
-            reviewObject.save()
-        }
-        self.dismiss(animated: true, completion: nil)
+//        if let currentUser = CoreUser.user {
+//            let reviewObject = AppventureReviews(userFKID: currentUser.pfObject, review: reviewTextView.text, appventureFKID: appventure.backendlessId!, date: Date())
+//            reviewObject.save()
+//        }
+//        self.dismiss(animated: true, completion: nil)
     }
     
     @IBAction func cancel(_ sender: AnyObject) {

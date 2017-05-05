@@ -254,18 +254,15 @@ extension LocalTableViewController {
     }
     
     private func setDownloadForAppventures() {
-        for (index, appventure) in publicAppventures.enumerated() {
-            let appventureId = appventure.backendlessId
-            if CoreUser.user!.downloadedArray.contains(where: { (appventure) -> Bool in
-                appventure.backendlessId == appventureId
-            }) {
-                appventure.downloaded = true
-                publicAppventures.remove(at: index)
-            } else {
-                appventure.downloaded = false
-            }
+        let downloadedAppventures = CoreUser.user!.downloadedArray.flatMap( { $0.backendlessId })
+        let unownedAppventures = publicAppventures.filter { (appventure) -> Bool in
+            return !downloadedAppventures.contains(appventure.backendlessId!)
         }
+        
+        for appventure in unownedAppventures { appventure.downloaded = false }
+        publicAppventures = unownedAppventures
     }
+    
 }
 
 // MARK: - LoginViewController Delegate

@@ -77,7 +77,7 @@ class ProfileTableViewController: BaseTableViewController {
     
     
     @IBAction func refeshTable(_ sender: UIRefreshControl) {
-        CoreUser.user?.ownedAppventures?.map { AppDelegate.coreDataStack.delete(object: $0, completion: nil) }
+        CoreUser.user?.ownedAppventures?.forEach { AppDelegate.coreDataStack.delete(object: $0, completion: nil) }
         tableView.reloadData()
         restoreAppventures()
     }

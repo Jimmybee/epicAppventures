@@ -14,6 +14,10 @@ protocol FacebookLoginController {
     func facebookLoginFailed()
 }
 
+protocol UserDataHandler : NSObjectProtocol {
+    func userFuncComplete(_ funcKey: String)
+}
+
 class UserManager {
     
     static var backendless = Backendless.sharedInstance()

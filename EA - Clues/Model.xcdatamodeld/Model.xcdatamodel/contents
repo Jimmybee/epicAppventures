@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="11759" systemVersion="16D32" minimumToolsVersion="Xcode 8.0" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="11759" systemVersion="16E195" minimumToolsVersion="Xcode 8.0" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Appventure" representedClassName=".Appventure" syncable="YES">
         <attribute name="backendlessId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="duration" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="endTime" optional="YES" attributeType="String" customClassName="[String]" syncable="YES"/>
         <attribute name="image" optional="YES" attributeType="Transformable" customClassName="[UIImage]" syncable="YES"/>
+        <attribute name="imageUrl" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="liveStatusNum" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="location" optional="YES" attributeType="Transformable" customClassName="CLLocation" syncable="YES"/>
         <attribute name="startingLocationName" optional="YES" attributeType="String" syncable="YES"/>
@@ -15,6 +16,7 @@
         <attribute name="totalDistance" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="userID" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="buyer" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CoreUser" inverseName="downloaded" inverseEntity="CoreUser" syncable="YES"/>
+        <relationship name="contributer" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CoreUser" inverseName="grantedAppventures" inverseEntity="CoreUser" syncable="YES"/>
         <relationship name="owner" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CoreUser" inverseName="ownedAppventures" inverseEntity="CoreUser" syncable="YES"/>
         <relationship name="steps" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="AppventureStep" inverseName="appventure" inverseEntity="AppventureStep" syncable="YES"/>
     </entity>
@@ -45,7 +47,7 @@
         <attribute name="pictureUrl" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="userTypeInt" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <relationship name="downloaded" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Appventure" inverseName="buyer" inverseEntity="Appventure" syncable="YES"/>
-        <relationship name="grantedAppventures" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Appventure" syncable="YES"/>
+        <relationship name="grantedAppventures" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Appventure" inverseName="contributer" inverseEntity="Appventure" syncable="YES"/>
         <relationship name="ownedAppventures" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Appventure" inverseName="owner" inverseEntity="Appventure" syncable="YES"/>
     </entity>
     <entity name="StepSetup" representedClassName=".StepSetup" syncable="YES">
@@ -61,7 +63,7 @@
         <relationship name="step" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="AppventureStep" inverseName="setup" inverseEntity="AppventureStep" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Appventure" positionX="-63" positionY="-18" width="128" height="285"/>
+        <element name="Appventure" positionX="-63" positionY="-18" width="128" height="315"/>
         <element name="AppventureStep" positionX="-54" positionY="90" width="128" height="300"/>
         <element name="CoreUser" positionX="-63" positionY="135" width="128" height="180"/>
         <element name="StepSetup" positionX="-54" positionY="135" width="128" height="195"/>

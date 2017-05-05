@@ -24,8 +24,8 @@ class UserSignInViewController: UIViewController {
         super.viewDidLoad()
         
         let nsCenter = NotificationCenter.default
-        nsCenter.addObserver(self, selector:  #selector(UserSignInViewController.failedSingup), name: NSNotification.Name(rawValue: User.failedParseSignup), object: nil)
-        nsCenter.addObserver(self, selector:  #selector(UserSignInViewController.completedSignup), name: NSNotification.Name(rawValue: User.userInitCompleteNotification), object: nil)
+//        nsCenter.addObserver(self, selector:  #selector(UserSignInViewController.failedSingup), name: NSNotification.Name(rawValue: User.failedParseSignup), object: nil)
+//        nsCenter.addObserver(self, selector:  #selector(UserSignInViewController.completedSignup), name: NSNotification.Name(rawValue: User.userInitCompleteNotification), object: nil)
 
         emailTextField.delegate = self
         passwordTextField.delegate = self
@@ -66,7 +66,7 @@ class UserSignInViewController: UIViewController {
         view.endEditing(true)
         if let email = emailTextField.text {
             if let password = passwordTextField.text {
-                User.singUpLogIn(email, password: password, restore: restore())
+//                User.singUpLogIn(email, password: password, restore: restore())
             } else {
                 //reject
             }

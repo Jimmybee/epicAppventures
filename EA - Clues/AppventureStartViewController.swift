@@ -117,7 +117,6 @@ class AppventureStartViewController: BaseViewController {
             performSegue(withIdentifier: Constants.StartAdventureSegue, sender: nil)
         } else {
             downloadAppventure()
-            
         }
     }
 

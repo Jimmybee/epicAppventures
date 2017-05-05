@@ -16,7 +16,7 @@ class BackendlessAppventure: NSObject {
     static let dataStore = backendless?.persistenceService.of(BackendlessAppventure.ofClass())
 
     public var objectId: String?
-    
+    public var imageUrl: String?
     public var duration: Int64 = 3600
     public var tags: String?
     public var liveStatusNum: Int16 = 0
@@ -33,6 +33,7 @@ class BackendlessAppventure: NSObject {
         self.duration = appventure.duration
         self.startTime = appventure.startTime
         self.endTime = appventure.endTime
+        self.imageUrl = appventure.imageUrl
         self.startingLocationName  = appventure.startingLocationName
         self.tags = appventure.tags?.joined(separator: ",")
         self.liveStatusNum = appventure.liveStatusNum
@@ -56,11 +57,12 @@ class BackendlessAppventure: NSObject {
         if let duration = dict["duration"] as? Int64 {
             self.duration = duration
         }
+        self.imageUrl = dict["imageUrl"] as? String
         self.startingLocationName  = dict["startingLocationName"] as? String
         self.tags = dict["tags"] as? String
         self.startTime = dict["startTime"] as? String
         self.endTime = dict["endTime"] as? String
-        self.liveStatusNum = dict["liveStatusNum"] as! Int16
+        self.liveStatusNum = dict["liveStatusNum"] as? Int16 ?? 2
         self.title = dict["title"] as? String
         self.subtitle = dict["subtitle"] as? String
         self.totalDistance = dict["totalDistance"] as? Double

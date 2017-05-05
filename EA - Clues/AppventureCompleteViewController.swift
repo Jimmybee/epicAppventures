@@ -78,19 +78,19 @@ class AppventureCompleteViewController: UIViewController {
     
     func fbShareButton () {
         
-        if User.user?.facebookConnected == false {
-            //try to connect to facebook
-        } else {
-            let formatTime = HelperFunctions.formatTime(completeTime, nano: false)
-            let content : FBSDKShareLinkContent = FBSDKShareLinkContent()
-            content.contentURL = URL(string: "http://epicappventure.com/")
-            content.contentTitle = "Appventure Completed"
-            content.contentDescription = "I have just completed \(appventure.title!) in \(formatTime!)"
-//            if let imageURL = appventure.pfFile?.url {
-//                content.imageURL = URL(string: String(describing: imageURL))
-//            }
-            shareButton.shareContent = content
-        }
+//        if CoreUser.user?.facebookConnected == false {
+//            //try to connect to facebook
+//        } else {
+//            let formatTime = HelperFunctions.formatTime(completeTime, nano: false)
+//            let content : FBSDKShareLinkContent = FBSDKShareLinkContent()
+//            content.contentURL = URL(string: "http://epicappventure.com/")
+//            content.contentTitle = "Appventure Completed"
+//            content.contentDescription = "I have just completed \(appventure.title!) in \(formatTime!)"
+////            if let imageURL = appventure.pfFile?.url {
+////                content.imageURL = URL(string: String(describing: imageURL))
+////            }
+//            shareButton.shareContent = content
+//        }
     }
 
 }
